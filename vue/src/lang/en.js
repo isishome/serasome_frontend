@@ -1,0 +1,396 @@
+export default {
+  system: {
+    message: {
+      occurErrorRequest: "There was a problem while requesting service",
+      requireSignIn: "This service requires sign in",
+      unavailableService: "Diablo® II: Resurrection™ Test Account is not available"
+    }
+  },
+  language: "Language",
+  btn: {
+    search: "Search",
+    modify: "Modify",
+    posting: "Posting",
+    cancel: "Cancel",
+    confirm: "Confirm",
+    list: "List",
+    delete: "Delete",
+    finish: "Finish",
+    regist: 'Leave',
+    leave: "Leave a comments",
+    reply: "Reply"
+  },
+  search: {
+    title: "Search",
+    result: "Search Results",
+    noData: "no matching quests found",
+    message: {
+      invalidWord: "Please enter a search term between 2 and 20 characters."
+    }
+  },
+  main: {
+    category: "Category",
+    popularWeekOld: "Popular posts 2 weeks ago",
+    popularLastWeek: "Last week's Popular Something",
+    popularToday: "Today's Popular Something",
+    carousel: {
+      "1": {
+        title: "Like an echo in the forest",
+        cont: "Each day will keep turning, right? Like nothing wrong has happened"
+      },
+      "2": {
+        title: "Yeah, life goes on Like an arrow in the blue sky",
+        cont: "Another day flies by again"
+      },
+      "3": {
+        title: "Life Goes On",
+        cont: "Just like before, starting and ending with 'hi' Let's see today and tomorrow to the end together"
+      }
+    }
+  },
+  lotto: {
+    title: "Lotto",
+    desc: "Touch swipe or click-drag (up/down/left/right) on each ball, or hit a draw to choose a lucky number!",
+    draw: "Draw"
+  },
+  annuity: {
+    title: "Pension Lottery"
+  },
+  link: {
+    title: "Link"
+  },
+  auth: {
+    title: "Email Authentication",
+    message: {
+      success: "Authentication success! After 5 seconds, you will be redirected to the login page"
+    }
+  },
+  signIn: {
+    title: "Sign In",
+    email: "Email",
+    password: "Password",
+    message: {
+      noRegisterAccount: "There is no registered account",
+      noGetGoogleInfo: "Could not get google account information",
+      gotoJoinPage: "Go to the join page",
+      alreadyLoggedIn: "You are already logged in."
+    },
+    btn: {
+      join: "Join"
+    }
+  },
+  join: {
+    title: "Join",
+    confirmPassword: "Confirm Password",
+    uniqueSomeName: "Unique SomeName",
+    message: {
+      haveRegisterAccount: "I have a registered account",
+      success: "Sign up success! You can log in after email verification"
+    },
+    termsPolicy: "By joining, you agree to SeraSome |#terms#Terms|, |#privacy-policy#Privacy Policy| and |#cookies-policy#Cookies Policy|."
+  },
+  signOut: {
+    title: "Sign Out"
+  },
+  myInfo: {
+    title: "My Info",
+    currentPassword: "Current Password",
+    NewPassword: "New Password",
+    confirmNewPassword: "Confirm New Password",
+    message: {
+      disconnectGoogle: "Should I disconnect Google?"
+    }
+  },
+  post: {
+    thing: "Thing",
+    title: "Title",
+    contents: "Contents",
+    youtubeUrl: "Youtube URL",
+    link: "Link",
+    image: "Image",
+    message: {
+      invalidLink: "Invalid link URL",
+      invalidImage: "Invalid image URL",
+      successClipboard: "Image URL copied to clipboard",
+      failedClipboard: "Clipboard copy failed",
+      completeModify: "Modification completed!",
+      completePosting: "Post completed!"
+    },
+    alreadyAttachCount: "Previous Attached Count",
+    currentAttachCount: "Now Attached Count",
+    limitNumber: "Number Limit",
+    fileSize: "File Size",
+    limitSize: "Capacity Limit"
+  },
+  postRead: {
+    attachments: "Attachments",
+    copyLink: "Copy Link",
+    download: "Download",
+    delete: "Delete",
+    comment: {
+      valid: "comment (1 ~ 200 characters)"
+    },
+    message: {
+      deleteAttachments: "do you want to delete attachments?",
+      deletePost: "do you want to delete post?",
+      successDeletePost: "Post deletion complete!",
+      deleteComment: "do you want to delete comment?",
+      successCopyLink: "File link copied to clipboard",
+      failedCopyClipboard: "Clipboard copy failed",
+      successImageLink: "Image link has been copied to the clipboard",
+      successDelete: "The file has been deleted",
+      noExistsPost: "This post does not exist",
+      successModifyComment: "Comments have been modified!",
+      successAddComment: "Comments have been added!",
+      successDeleteComment: "Comments have been deleted!",
+      deletedComment: "This comment has been deleted"
+    }
+  },
+  postList: {
+    image: "Failed to Load image"
+  },
+  pnf: {
+    desc1: "The page cannot be found.",
+    desc2: "The address of the page you are trying to visit was entered incorrectly,",
+    desc3: "or the address of the page was changed or deleted, so the requested page could not be found."
+  },
+  d2r: {
+    comingSoon: "Coming Soon",
+    news: "News",
+    trade: "Trade",
+    forum: "Forum",
+    account: {
+      title: "Account",
+      avatar: "Avatar Image 40x40 (1m)",
+      basic: "Basic Information",
+      message: {
+        failed: "Basic information application failed"
+      }
+    },
+    main: {
+      recentPosts: "Recent Posts",
+      topPosts: "Top Posts",
+      storage: "Storage",
+      carousel: [
+        {
+          "name": "first",
+          "img": "main_01",
+          "title": "A Timeless Classic, Resurrected",
+          "sub": "Diablo® II: Resurrected™ is a remastered version of the quintessential action RPG Diablo®II"
+        },
+        {
+          "name": "second",
+          "img": "main_02",
+          "title": "The Lord of Destruction Returns",
+          "sub": " Battle your way through icy caverns, horrific tombs filled with undead abominations, and frozen wastelands to the frigid summit of Mount Arreat and stop Baal, the Lord of Destruction"
+        },
+        {
+          "name": "third",
+          "img": "main_03",
+          "title": "Resurrected World",
+          "sub": "Fearsome demons, brave adventurers, and the world of Sanctuary, resurrected"
+        }
+      ]
+    },
+    bbs: {
+      classify: "Classify",
+      title: "Title",
+      writer: "Writer",
+      regDate: "Date",
+      view: "view",
+      mine: "View my post",
+      finish: "Hide Finished",
+      filterBy: "Search Target",
+      filter: "Search Word",
+      titleWithContents: "Title / Contents",
+      message: {
+        deletePost: "Are you sure you want to delete the post?",
+        successDelete: "Deleted",
+        finishTran: "Do you want to finish the transaction?",
+        successFinish: "Processed",
+      }
+    },
+    classify: {
+      information: "Information",
+      chat: "Chat",
+      question: "Question"
+    },
+    beginner: {
+      title: "Enter basic information",
+      welcome: "Welcome to Diablo® II Resurrected™ - By SeraSome.",
+      notice: "Please enter basic information for normal site use.",
+      prev: "Prev",
+      next: "Next",
+      submit: "Submit",
+      nickname: "Nickname",
+      check: "duplicate check",
+      hint: "English case, Korean, numbers 1 to 32",
+      invalid: "This is an invalid nickname.",
+      requireCheck: "Please check the nickname duplicate.",
+      inUse: "This is a duplicate nickname.",
+      reserved: "This nickname cannot be used."
+    },
+    knowledge: {
+      title: "Knowledge",
+      list: [
+        {
+          "value": "Classes",
+          "name": "Classes",
+          "icon": "group"
+        },
+        {
+          "value": "Skills",
+          "name": "Skills",
+          "icon": "local_fire_department"
+        },
+        {
+          "value": "Items",
+          "name": "Items",
+          "icon": "category"
+        },
+        {
+          "value": "Monsters",
+          "name": "Monsters",
+          "icon": "fas fa-pastafarianism"
+        },
+        {
+          "value": "NPCS",
+          "name": "NPCS",
+          "icon": "emoji_people"
+        },
+        {
+          "value": "Quests",
+          "name": "Quests",
+          "icon": "history_edu"
+        },
+        {
+          "value": "Shrines",
+          "name": "Shrines",
+          "icon": "fas fa-campground"
+        },
+        {
+          "value": "Maps",
+          "name": "Maps",
+          "icon": "map"
+        }
+      ],
+      maps: {
+        act: "Act",
+        secret1: "The Secret Cow Level",
+        secret2: "Uber Diablo Quest",
+        secret3: "Pandemonium Event"
+      },
+      npcs: {
+        desc: "Description",
+        voice: "Voice"
+      },
+      quests: {
+        given: "Given",
+        tip: "Tip",
+        reward: "Multiplayer Reward",
+        note: "Note",
+        search: "Search Quest Name"
+      },
+      shrines: {
+        name: "Name",
+        effect: "Effect",
+        regeneration: "Regeneration Time (Minutes)",
+        duration: "Duration (Seconds)"
+      },
+      source: "Source",
+      arreatSummit: "Arreat Summit",
+      namuWiki: "Namu.Wiki",
+      diabloWiki: "Diablo.Wiki"
+    },
+    storage: {
+      btn: {
+        add: "Add",
+        modify: "Modify"
+      },
+      title: "Storage",
+      account: {
+        title: "Game Account",
+        name: "Account Name",
+        rule: "English upper and lower case, numbers 2 to 16",
+        invalid: "This is an invalid account name."
+      },
+      upload: {
+        title: "[Required] Attach an item image - Limited capacity: 2MB"
+      },
+      character: {
+        title: "Character",
+        name: "Character Name",
+        rule: "English upper and lower case, numbers 2 to 16",
+        invalidName: "This is an invalid character name.",
+        selectClass: "Please select a character class.",
+        class: "Character Class"
+      },
+      item: {
+        title: "Item",
+        name: "Item Name",
+        tradeTitle: "Title to use when trading",
+        tradeContents: "Contents to use when trading"
+      },
+      help: {
+        addAccount: "Click to add account",
+        addCharacter: "Click to add character",
+        addItem: "Click to add item"
+      },
+      message: {
+        deleteAccount: "Are you sure you want to delete this account?",
+        deleteCharacter: "Are you sure you want to delete this character?",
+        deleteItem: "Are you sure you want to delete this item?",
+        deleteAccountList: "Are you sure you want to delete the selected account?",
+        deleteCharacterList: "Are you sure you want to delete the selected character?",
+        deleteItemList: "Are you sure you want to delete the selected items?",
+        tradeItem: "Do you want to register this item for sale?",
+        tradeItemList: "Do you want to register the selected item for sale?",
+        requiredImage: "An image attachment is required to register the item",
+        failed: "Item application failed",
+        successRegist: "The transaction registration was successful",
+        failedRegist: "The transaction registration failed",
+        someFailed: "Some transaction registration failed"
+      }
+    },
+    comments: {
+      title: "Comments",
+      contents: "Contents",
+      replyContents: "reply content",
+      contentsHint: "within 500 characters",
+      modify: "modified",
+      all: "Get all comments",
+      message: {
+        confirmDelete: "Are you sure you want to delete this comments?",
+        invalidContents: "Invalid comments format"
+      }
+    },
+    message: {
+      noPermission: "You don't have permission to use the page",
+      noPage: "Page does not exist"
+    }
+  },
+  comments: {
+    title: "Comments",
+    noList: "There are no comments registered",
+    leave: "Please leave a comment",
+    write: "Write a comment"
+  },
+  date: {
+    now: "just now",
+    minute: " minute",
+    hour: " hour",
+    day: " day",
+    month: " month",
+    year: " year",
+    minutes: " minutes",
+    hours: " hours",
+    days: " days",
+    months: " months",
+    years: " years",
+    ago: "ago",
+    moment: "just now"
+  },
+  table: {
+    noData: "No data"
+  }
+}

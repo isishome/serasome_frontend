@@ -1,0 +1,190 @@
+  /** font place **********************************************************************************************************************/
+  .nunito {
+    font-family: 'Nunito', sans-serif !important;
+  }
+
+  .font-logo {
+    font-weight: 900 !important;
+  }
+
+  .font-title {
+    font-weight: 700 !important;
+    font-size: 1.4em !important;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif !important;
+    word-break: keep-all;
+  }
+
+  /** app place **********************************************************************************************************************/
+  .body--light,
+  .q-light {
+    color: #17213b !important;
+    background: #FAFAFA !important;
+  }
+
+  .body--dark,
+  .q-dark {
+    color: #DDDDDD !important;
+    background: #17213b !important;
+  }
+
+  .body--light .q-separator {
+    background: rgba(200, 200, 200, 0.4);
+  }
+
+  .body--dark .q-separator {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .ss-header img {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 2px;
+  }
+
+  .ss-footer img {
+    width: 30px !important;
+    height: 30px !important;
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+  }
+
+  .word-wrap {
+    word-break: break-all;
+  }
+
+  .word-keep {
+    word-break: keep-all;
+  }
+
+  .q-tabs__arrow {
+    display: none !important;
+  }
+
+  .q-toolbar .q-btn{
+    font-weight: bold !important;
+  }
+
+  /** post place **********************************************************************************************************************/
+  .card-title {
+    font-size: 1em;
+    font-weight: bold;
+  }
+
+  .card-author {
+    font-size: .9em;
+  }
+
+  @media screen and (max-width:599px) {
+    .card-title {
+      font-weight: normal !important;
+      font-size: .8em !important;
+    }
+  
+    .card-author {
+      font-size: .7em !important;
+    }
+  }
+
+  .comment-avatar {
+    min-width: 24px !important;
+    padding-right: 10px !important;
+  }
+
+  .body--light .font-ss {
+    color: #17213b !important;
+  }
+
+  .body--dark .font-ss {
+    color: #DDDDDD !important;
+  }
+
+  .q-chip__icon--left {
+    margin-right: .3em !important;
+  }
+
+  .btn-place .q-fab__actions .q-btn--fab .q-icon,
+  .btn-place .q-fab__actions .q-btn--fab-mini .q-icon {
+    font-size: 17.14px !important;
+    margin: 1vw;
+  }
+
+  .btn-place .q-fab__actions {
+    margin: 0;
+    padding: 2vw;
+  }
+
+  .btn-place .q-fab__actions .q-btn {
+    margin: 3px !important;
+  }
+
+  .q-field__messages {
+    line-height: 1.6 !important;
+  }
+
+  /** number place **********************************************************************************************************************/
+  @keyframes ball-move-u {
+    0% {
+      transform: translateX(-50%) translateY(-50%) scaleX(1);
+      opacity: 1;
+    }
+
+    50% {
+      transform: translateX(-50%) translateY(-250%) scaleY(0.25);
+      opacity: 0;
+    }
+
+    51% {
+      transform: translateX(-50%) translateY(150%) scaleY(0.25);
+    }
+  }
+
+  @keyframes ball-move-r {
+    0% {
+      transform: translateX(-50%) translateY(-50%) scaleX(1);
+      opacity: 1;
+    }
+
+    50% {
+      transform: translateX(150%) translateY(-50%) scaleX(0.25);
+      opacity: 0;
+    }
+
+    51% {
+      transform: translateX(-250%) translateY(-50%) scaleX(0.25);
+    }
+  }
+
+  @keyframes ball-move-d {
+    0% {
+      transform: translateX(-50%) translateY(-50%) scaleX(1);
+      opacity: 1;
+    }
+
+    50% {
+      transform: translateX(-50%) translateY(150%) scaleY(0.25);
+      opacity: 0;
+    }
+
+    51% {
+      transform: translateX(-50%) translateY(-250%) scaleY(0.25);
+    }
+  }
+
+  @keyframes ball-move-l {
+    0% {
+      transform: translateX(-50%) translateY(-50%) scaleX(1);
+      opacity: 1;
+    }
+
+    50% {
+      transform: translateX(-250%) translateY(-50%) scaleX(0.25);
+      opacity: 0;
+    }
+
+    51% {
+      transform: translateX(150%) translateY(-50%) scaleX(0.25);
+    }
+  }
