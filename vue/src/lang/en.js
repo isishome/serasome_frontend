@@ -274,6 +274,10 @@ export default {
           "icon": "map"
         }
       ],
+      items: {
+        cube: "Horadric Cube Recipes",
+        rune: "Runewords"
+      },
       maps: {
         act: "Act",
         secret1: "The Secret Cow Level",

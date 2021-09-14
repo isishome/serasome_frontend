@@ -273,6 +273,10 @@ export default {
             "icon": "map"
           }
         ],
+        items: {
+          cube: "호라드릭 큐브조합법",
+          rune: "룬워드 아이템"
+        },
         maps: {
           act: "액트",
           secret1: "카우 레벨",
