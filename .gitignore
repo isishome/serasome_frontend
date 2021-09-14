@@ -24,4 +24,3 @@ pnpm-debug.log*
 
 # Custome directories
 dist
-/vue/node_modules
