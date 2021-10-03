@@ -8,6 +8,10 @@ import routes from './router/routes'
 import store from './store/'
 import axios from 'axios'
 import vuePlugin from "./plugin/highlight"
+import Adsense from 'vue-google-adsense/dist/Adsense.min.js'
+//import InArticleAdsense from 'vue-google-adsense/dist/InArticleAdsense.min.js'
+//import InFeedAdsense from 'vue-google-adsense/dist/InFeedAdsense.min.js'
+
 const Logo = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Logo')
 const PostList = () => import(/* webpackPrefetch: true */ '@/components/seras/PostList')
 const PostRead = () => import(/* webpackPrefetch: true */ '@/components/seras/PostRead')
@@ -41,6 +45,12 @@ const router = new VueRouter({
       return savedPosition
     else
       return
+  }
+})
+
+router.onError((error) => {
+  if (error.name === 'ChunkLoadError') {
+    window.location.reload()
   }
 })
 
@@ -234,6 +244,11 @@ Vue.component('d2r-summary', d2rSummary)
 Vue.component('d2r-tap-panel', d2rTapPanel)
 Vue.component('d2r-zoom', d2rZoom)
 //Vue.component('v-facebook-login', VFacebookLogin)
+
+Vue.use(require('vue-script2'))
+Vue.use(Adsense)
+//Vue.use(InArticleAdsense)
+//Vue.use(InFeedAdsense)
 
 Vue.mixin(mixin)
 Vue.use(vuePlugin)

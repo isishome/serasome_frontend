@@ -179,7 +179,19 @@
           <q-scroll-observer debounce="100" @scroll="onScroll" />
         </q-page-sticky>
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
-          <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-xs-12">
+          <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-xs-12 relative-position">
+            <div class="gt-md ad-left text-title row justify-center items-center">
+              google ad place
+              <!-- <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
+                ins-style="display:inline-block;width:935px;height:130px">
+              </Adsense> -->
+            </div>
+            <div class="gt-md ad-right text-title row justify-center items-center">
+              google ad place
+              <!-- <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" data-ad-format="auto"
+                ins-style="display:inline-block;width:935px;height:130px">
+              </Adsense> -->
+            </div>
             <router-view />
             <q-dialog v-model="d2rInfo.beginner" transition-show="rotate" transition-hide="rotate" persistent>
               <q-card class="full-width non-selectable bg-grey-3">
@@ -672,5 +684,29 @@
 
   .ss-d2r {
     filter: hue-rotate(50deg) invert(100%);
+  }
+
+  .ad-left {
+    background-color: rgba(15, 15, 15, 1);
+    box-shadow: inset 0 0 0 1px rgba(184, 156, 91, .2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 800px;
+    margin-left: -204px;
+    writing-mode: vertical-lr;
+  }
+
+  .ad-right {
+    background-color: rgba(15, 15, 15, 1);
+    box-shadow: inset 0 0 0 1px rgba(184, 156, 91, .2);
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 800px;
+    margin-right: -204px;
+    writing-mode: vertical-rl;
   }
 </style>

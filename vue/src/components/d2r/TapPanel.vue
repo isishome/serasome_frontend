@@ -17,11 +17,23 @@
     </div>
     <q-separator v-if="noWide === false" vertical class="lt-sm separator" :class="[show ? 'show' : 'hide']" />
     <div class="col">
+      <div class="lt-lg ad-top text-title row justify-center items-center">
+        google ad place
+        <!-- <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" data-ad-format="auto"
+          ins-style="display:inline-block;width:935px;height:130px">
+        </Adsense> -->
+      </div>
       <q-tab-panels ref="panels" dark class="bg-transparent q-mt-md" :value="part" @input="change"
         :transition-prev="$q.screen.lt.sm ? 'none' : 'jump-down'"
         :transition-next="$q.screen.lt.sm ? 'none' : 'jump-up'" @transition="injectImg" animated vertical>
         <slot name="panels"></slot>
       </q-tab-panels>
+      <div class="lt-lg ad-bot text-title row justify-center items-center">
+        google ad place
+        <!-- <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="2547161427" data-ad-format="auto"
+          ins-style="display:inline-block;width:935px;height:130px">
+        </Adsense> -->
+      </div>
     </div>
     <q-scroll-observer debounce="300" ref="observer" @scroll="onScroll" scroll-target="body" />
   </div>
@@ -179,5 +191,14 @@
     opacity: .3;
     color: #ffffff !important;
     margin-left: 0;
+  }
+
+  .ad-top,
+  .ad-bot {
+    background-color: rgba(15, 15, 15, 1);
+    box-shadow: inset 0 0 0 1px rgba(184, 156, 91, .2);
+    width: 100%;
+    height: 200px;
+    margin-right: -204px;
   }
 </style>
