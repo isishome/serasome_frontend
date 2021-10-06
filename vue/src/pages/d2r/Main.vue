@@ -1,7 +1,6 @@
 <template>
   <div class="q-pa-sm">
-    <q-responsive :ratio="1" class="absolute-top" style="top:50px;"
-      :style="$q.screen.gt.xs ? 'height:400px' : 'height:200px'">
+    <q-responsive :ratio="1" class="absolute-top" :style="$q.screen.gt.xs ? 'height:400px' : 'height:200px'">
       <q-carousel class="bg-black" dark animated :autoplay="10000" infinite v-model="slide">
         <q-carousel-slide v-for="(no, index) in $t('d2r.main.carousel')" :key="index" :name="no.name"
           :img-src="require(`@/assets/images/d2r/${ltmd}${no.img}.jpg`)">
@@ -15,7 +14,7 @@
         </q-carousel-slide>
       </q-carousel>
     </q-responsive>
-    <div :style="$q.screen.lt.sm ? 'margin-top: 200px;' : 'margin-top: 380px;'"></div>
+    <div :style="$q.screen.lt.sm ? 'margin-top: 200px;' : 'margin-top: 400px;'"></div>
     <q-toolbar class="title">
       <q-toolbar-title>
         <div class="title-text font-kodia">

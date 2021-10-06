@@ -9,7 +9,7 @@
         <q-btn no-caps dense class="row fit" :class="rune.selected ? 'selected' : ''" @click="selectedRune(rune)">
           <div class="col-12 full-width"><img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)"
               style="width: 100%;" /></div>
-          <div class="col-1 full-height full-width word-keep rune-name text-body1 ellipsis">{{rune.name}}</div>
+          <div class="col-1 full-height full-width word-keep rune-name text-body1">{{rune.name}}</div>
         </q-btn>
       </div>
     </div>
@@ -17,22 +17,31 @@
       :grid="$q.screen.lt.lg" dark :data="filtering" :columns="columns" row-key="name" :filter="filter"
       :filter-method="customFilter" :pagination="{rowsPerPage :0}" :hide-header="$q.screen.lt.sm" hide-pagination>
       <template v-slot:no-data>
-        <div class="row justify-center full-width text-body2">{{$t('d2r.knowledge.items.noData')}}</div>
+        <div class="row justify-center full-width" :class="$q.screen.lt.md ? 'text-caption' : 'text-body2'">
+          {{$t('d2r.knowledge.items.noData')}}</div>
       </template>
       <template v-slot:top>
-        <div class="row justify-end full-width">
-          <q-input dark dense debounce="400" :label="$t('btn.search')" color="grey-4 text-title" v-model="filter">
-            <template v-slot:append>
-              <q-icon name="search" color="grey-4 text-title" />
-            </template>
-          </q-input>
+        <div class="row justify-between full-width">
+          <div class="col-12 col-sm-5 col-md-4">
+            <q-select outlined dark dense options-dense map-options emit-value behavior="menu" color="orange"
+              popup-content-class="bg-black" v-model="selectedMaterial" :options="meterialOptions"
+              :label="$t('d2r.knowledge.items.runewordMaterialType')" />
+          </div>
+          <div class="col-12 col-sm-5 col-md-4">
+            <q-input dark dense debounce="400" :label="$t('btn.search')" color="grey-4 text-title" v-model="filter">
+              <template v-slot:append>
+                <q-icon name="search" color="grey-4 text-title" />
+              </template>
+            </q-input>
+          </div>
         </div>
       </template>
       <template #body="props">
         <q-tr :props="props">
           <q-td key="name" :props="props">
             <div class="text-h6 word-keep text-amber-6 column">
-              <div class="col">{{props.row.name}}</div>
+              <div class="col">{{props.row.name}}<span class="text-body1 text-brown" v-if="props.row.oldName">
+                  ({{props.row.oldName}})</span></div>
               <div class="col text-teal-4 text-subtitle2">clvl
                 {{props.row.level}}
               </div>
@@ -46,8 +55,10 @@
             </div>
           </q-td>
           <q-td key="material" :props="props">
-            <div class="text-subtitle1 word-keep">{{props.row.material}}<span
-                class="text-red-5">({{props.row.runeword.length}})</span>
+            <div class="text-subtitle1 word-keep column">
+              <div class="col" v-for="(m, idx) in parsMaterial(props.row.materials)" :key="idx">{{m}}<span
+                  class="text-red-5">({{props.row.runeword.length}})</span>
+              </div>
             </div>
           </q-td>
           <q-td key="stats" :props="props">
@@ -70,7 +81,8 @@
           <q-card dark class="card text-center" bordered>
             <q-card-section class="text-grey-6 text-h6 word-keep">
               <div class="text-h6 word-keep text-amber-6 column">
-                <div class="col">{{props.row.name}}</div>
+                <div class="col">{{props.row.name}}<span class="text-body1 text-brown" v-if="props.row.oldName">
+                    ({{props.row.oldName}})</span></div>
                 <div class="col text-teal-4 text-subtitle2">clvl
                   {{props.row.level}}
                 </div>
@@ -85,8 +97,10 @@
             </q-card-section>
             <q-separator />
             <q-card-section>
-              <div class="text-subtitle1 word-keep">{{props.row.material}}<span
-                  class="text-red-5">({{props.row.runeword.length}})</span>
+              <div class="text-subtitle1 word-keep column">
+                <div class="col" v-for="(m, idx) in parsMaterial(props.row.materials)" :key="idx">{{m}}<span
+                    class="text-red-5">({{props.row.runeword.length}})</span>
+                </div>
               </div>
             </q-card-section>
             <q-separator />
@@ -135,17 +149,23 @@
           { name: 'runeword', label: this.$t('d2r.knowledge.items.runeword'), align: 'center', style: 'width:30%' },
         ],
         runes: this.$t('d2r.knowledge.items.runeData').map(r => ({ ...r, selected: false })),
+        selectedMaterial: 0,
+        materials: this.$t('d2r.knowledge.items.materials'),
         runeWords: this.$t('d2r.knowledge.items.runeWords')
       }
     },
     computed: {
+      meterialOptions() {
+        return this.materials.map(m => { return { 'label': m.name, 'value': m.no } })
+      },
       filtering() {
-        const selected = this.runes.filter(r => r.selected === true)
+        const selectedRunes = this.runes.filter(r => r.selected === true)
+        const resultRuneWords = this.selectedMaterial === 0 ? this.runeWords : this.selectedMaterial === 1 ? this.runeWords.filter(r => r.materials.filter(m => ![2, 3, 4, 5].includes(m)).length > 0) : this.runeWords.filter(r => r.materials.includes(this.selectedMaterial))
 
-        if (selected.length > 0)
-          return this.runeWords.filter(rw => selected.filter(r => !rw.runeword.includes(r.no)).length === 0)
+        if (selectedRunes.length > 0)
+          return resultRuneWords.filter(rw => selectedRunes.filter(r => !rw.runeword.includes(r.no)).length === 0)
         else
-          return this.runeWords
+          return resultRuneWords
       }
     },
     methods: {
@@ -154,14 +174,31 @@
       },
       refresh() {
         this.runes.filter(r => r.selected === true).forEach(r => { r.selected = false })
+        this.selectedMaterial = 0
+        this.filter = ''
       },
       parsRuneWord(runeword) {
         return runeword.map(r => this.runes.find(rl => rl.no === r).name).join(' <span class="text-grey-7">+</span> ')
       },
+      parsMaterial(material) {
+        let result = []
+        if (material.includes(2) && material.filter(m => ![3, 4, 5].includes(m)).length > 2)
+          result.push(this.$t('d2r.knowledge.items.allWeapon'))
+
+        if (!material.includes(2) && material.filter(m => ![3, 4, 5].includes(m)).length > 3)
+          result.push(this.$t('d2r.knowledge.items.meleeWeapon'))
+
+        if (result.length > 0 && material.filter(m => [3, 4, 5].includes(m)).length > 0)
+          result = [...result, ...material.filter(m => [3, 4, 5].includes(m)).map(m => this.materials.find(ms => ms.no === m).name)]
+        else if (result.length === 0)
+          result = material.map(m => this.materials.find(ms => ms.no === m).name)
+
+        return result
+      },
       customFilter(rows, terms) {
         if (terms !== '') {
           terms = terms.toLowerCase().split(' ')
-          const filter2 = this.filtering.filter(c => new RegExp(terms.join('|'), 'gi').test(c.name) || new RegExp(terms.join('|'), 'gi').test(c.stats.join('|')))
+          const filter2 = this.filtering.filter(c => new RegExp(terms.join('|'), 'gi').test(c.name) || (c.oldName && new RegExp(terms.join('|'), 'gi').test(c.oldName)) || new RegExp(terms.join('|'), 'gi').test(c.stats.join('|')))
           return filter2
         }
         else

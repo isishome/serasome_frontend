@@ -611,7 +611,6 @@
 </script>
 <style scoped>
   .d2r-write {
-    margin-top: 2vh;
     padding: 1em 1em 2em 1em;
     box-shadow: 0 0 0 1px rgba(45, 45, 45, 1);
     background-color: rgba(12, 12, 12, 1) !important;

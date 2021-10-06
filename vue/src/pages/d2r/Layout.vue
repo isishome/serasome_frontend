@@ -32,6 +32,18 @@
               <div class="text-h7">{{$t('d2r.storage.title')}}</div>
             </q-route-tab>
           </q-tabs>
+          <div class="gt-sm q-ml-xl row justify-center">
+            <q-btn to="/d2r/knowledge/Items/Cube">
+              <q-avatar size="xl" rounded>
+                <img :src="require('@/assets/images/d2r/items/cube.png')">
+              </q-avatar>
+            </q-btn>
+            <q-btn to="/d2r/knowledge/Items/Rune">
+              <q-avatar size="xl" rounded>
+                <img :src="require('@/assets/images/d2r/items/rune.png')">
+              </q-avatar>
+            </q-btn>
+          </div>
           <div class="lt-md absolute-center">
             <q-btn @click="home" flat dense class="row justify-center items-center" size="22px">
               <q-avatar flat class="text-d2r d2r-logo-b" icon="fas fa-star-of-david" size="30px" />
@@ -174,23 +186,30 @@
         </q-scroll-area>
       </q-drawer>
       <q-page-container>
+        <q-scroll-observer debounce="100" @scroll="onScroll" />
         <q-page-sticky v-if="$route.meta.progress" style="z-index: 1;" expand position="top" class="desktop-only">
           <q-linear-progress :value="progress" color="d2r" size="xs" />
-          <q-scroll-observer debounce="100" @scroll="onScroll" />
         </q-page-sticky>
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-xs-12 relative-position">
-            <div class="gt-md ad-left text-title row justify-center items-center">
-              google ad place
-              <!-- <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
-                ins-style="display:inline-block;width:935px;height:130px">
-              </Adsense> -->
+            <div v-if="pageLoad && $q.screen.gt.sm && $route.name.indexOf('d2r-knowledge') === -1 && isProduction"
+              class="ad-left ad-box" :style="`top:${scrollTop}px`">
+              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
+                ins-style="display:inline-block;width:164px;height:600px" :key="key1">
+              </Adsense>
             </div>
-            <div class="gt-md ad-right text-title row justify-center items-center">
-              google ad place
-              <!-- <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" data-ad-format="auto"
-                ins-style="display:inline-block;width:935px;height:130px">
-              </Adsense> -->
+            <div class="column q-gutter-y-sm ad-right" v-if="pageLoad && $q.screen.gt.sm && isProduction"
+              :style="`top:${scrollTop}px`">
+              <div class="ad-box">
+                <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
+                  ins-style="display:inline-block;width:164px;height:600px" :key="key2">
+                </Adsense>
+              </div>
+              <div class="ad-box" v-if="$route.name.indexOf('d2r-knowledge') !== -1">
+                <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" data-ad-format="auto"
+                  ins-style="display:inline-block;width:164px;height:600px" :key="key3">
+                </Adsense>
+              </div>
             </div>
             <router-view />
             <q-dialog v-model="d2rInfo.beginner" transition-show="rotate" transition-hide="rotate" persistent>
@@ -309,10 +328,19 @@
     mapActions
   } from 'vuex'
 
+
+  import { uid } from 'quasar'
+
   export default {
     name: 'd2r-layout',
     data() {
       return {
+        isProduction: process.env.NODE_ENV === 'production',
+        scrollTop: 0,
+        key1: uid(),
+        key2: uid(),
+        key3: uid(),
+        pageLoad: false,
         progress: 0,
         loading: false,
         wrapClass: ['d2r-body'],
@@ -338,9 +366,17 @@
     created() {
       this.initD2R(true)
     },
+    beforeMount() {
+      this.pageLoad = true
+    },
     watch: {
-      '$route': function () {
+      '$route': function (to, old) {
         this.initD2R()
+        if (to !== old) {
+          this.key1 = uid()
+          this.key2 = uid()
+          this.key3 = uid()
+        }
       },
       lang: function (val, old) {
         if (val !== old) {
@@ -371,10 +407,10 @@
         setD2RInfo: 'setD2RInfo'
       }),
       onScroll(info) {
-        let scrollTop = info.position
+        this.scrollTop = info.position
         let docHeight = document.body.offsetHeight
         let winHeight = window.innerHeight
-        let scrollPercent = scrollTop / (docHeight - winHeight) || 0
+        let scrollPercent = this.scrollTop / (docHeight - winHeight) || 0
         let scrollPercentRounded = Math.round(scrollPercent * 100) / 100
         this.progress = scrollPercentRounded
       },
@@ -684,29 +720,5 @@
 
   .ss-d2r {
     filter: hue-rotate(50deg) invert(100%);
-  }
-
-  .ad-left {
-    background-color: rgba(15, 15, 15, 1);
-    box-shadow: inset 0 0 0 1px rgba(184, 156, 91, .2);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 200px;
-    height: 800px;
-    margin-left: -204px;
-    writing-mode: vertical-lr;
-  }
-
-  .ad-right {
-    background-color: rgba(15, 15, 15, 1);
-    box-shadow: inset 0 0 0 1px rgba(184, 156, 91, .2);
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 200px;
-    height: 800px;
-    margin-right: -204px;
-    writing-mode: vertical-rl;
   }
 </style>

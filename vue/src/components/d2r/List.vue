@@ -40,7 +40,8 @@
       <template #header="{props}">
         <q-tr class="text-center text-title">
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
-            {{ col.label }}
+            <template v-if="col.label">{{ col.label }}</template>
+            <q-icon v-else :name="col.icon" />
           </q-th>
         </q-tr>
       </template>
@@ -68,9 +69,12 @@
             <span :class="`${props.row.classify}-title`"
               v-html="parsSearch(['title', 'titleWithContents'], props.row.title)"></span>
           </q-td>
+          <q-td>
+            {{props.row.cmt || 0}}
+          </q-td>
           <q-td class="text-title">
             <div class="row items-center q-gutter-x-xs">
-              <q-avatar rounded color="transparent" text-color="grey-4" class="q-mr-xs" size="30px">
+              <q-avatar rounded color="brown-10" text-color="white" class="q-mr-xs" size="30px">
                 <q-img basic v-if="props.row.avatar" :src="props.row.avatar" :ratio="1">
                   <template #error>
                     <div class="bg-d2r absolute-center">
@@ -120,13 +124,14 @@
               </template>
             </q-img>
             <q-card-section :class="$q.screen.lt.sm ? 'q-py-xs q-px-sm' : 'q-pa-sm'">
-              <div class="text-caption ellipsis text-grey-5 text-weight-bold">
-                <span :class="`${props.row.classify}-title`"
-                  v-html="parsSearch(['title', 'titleWithContents'], props.row.title)"></span>
+              <div class="text-weight-bold row no-wrap justify-start q-col-gutter-x-xs">
+                <div class="ellipsis text-caption text-grey-5" :class="`${props.row.classify}-title`"
+                  v-html="parsSearch(['title', 'titleWithContents'], props.row.title)"></div>
+                <div class="col-1 text-body2 text-grey-1" v-if="props.row.cmt">[{{isView(props.row.cmt)}}]</div>
               </div>
             </q-card-section>
             <q-card-section :class="$q.screen.lt.sm ? 'q-py-xs q-px-sm' : 'q-pa-sm'">
-              <div class="text-caption row justify-end items-center text-amber-7">
+              <div class="text-caption row justify-between items-center text-title">
                 <div v-html="parsSearch(['writer'], props.row.writer)"></div>
               </div>
               <div class="text-caption text-right">{{parsDateTime(props.row.upd_date)}}</div>
@@ -175,6 +180,7 @@
               { name: 'classify', align: 'center', label: this.$t('d2r.bbs.classify'), headerStyle: 'width:100px;' },
               { name: 'thumbnail', align: 'center', headerStyle: 'width:80px;' },
               { name: 'title', align: 'center', label: this.$t('d2r.bbs.title') },
+              { name: 'comments', align: 'center', icon: 'fas fa-comment-dots', headerStyle: 'width:80px;' },
               { name: 'writer', align: 'center', label: this.$t('d2r.bbs.writer'), headerStyle: 'width:180px;' },
               { name: 'regDate', align: 'center', label: this.$t('d2r.bbs.regDate'), headerStyle: 'width:100px;' },
               { name: 'view', align: 'center', label: this.$t('d2r.bbs.view'), headerStyle: 'width:100px;' }
@@ -281,7 +287,6 @@
 </style>
 <style scoped>
   .d2r-list {
-    margin-top: 2vh;
     padding: 1em 1em 2em 1em;
     box-shadow: 0 0 0 1px rgba(45, 45, 45, 1);
     background-color: rgba(5, 5, 5, 1) !important;

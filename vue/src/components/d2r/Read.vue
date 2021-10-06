@@ -7,14 +7,14 @@
             {{secInfo.label}}
           </q-chip>
         </div>
-        <q-chip square size="sm" color="grey-5" text-color="black">
-          <q-avatar color="d2r" text-color="white" size="sm" icon="article" />
+        <q-chip class="glossy" square size="sm" color="grey-4" text-color="black" icon="article">
           {{classifyName(sec, data.classify)}}
         </q-chip>
       </q-card-section>
       <q-separator dark inset />
       <q-card-section>
-        <div style="word-break: break-all;" :class="$q.screen.gt.sm ? 'text-h5' : 'text-h6'">{{data.title}}</div>
+        <div style="word-break: break-all;" :class="$q.screen.gt.sm ? 'text-h5' : 'text-h6'">
+          {{data.title}}</div>
       </q-card-section>
       <q-card-section class="q-pt-none">
         <div class="text-subtitle2 text-title">

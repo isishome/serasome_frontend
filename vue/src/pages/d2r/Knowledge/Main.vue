@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="lt-md">
+      <!-- <Adsense v-if="pageLoad" class="mobile-only" data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238"
+        data-ad-format="auto" ins-style="display:inline-block;width:300px;height:100px">
+      </Adsense> -->
       <div class="row items-center">
         <q-icon name="fas fa-book" class="q-ma-sm" size="20px" color="title" />
         <div class="font-title q-ml-xs text-uppercase font-kodia">{{$t('d2r.knowledge.title')}}</div>
@@ -41,6 +44,7 @@
     },
     data() {
       return {
+        pageLoad: false,
         list: this.$t('d2r.knowledge.list'),
         loading: false,
         sectionComponent: null,
@@ -61,6 +65,9 @@
         if (val !== old)
           this.loading = false
       }
+    },
+    beforeMount() {
+      this.pageLoad = true
     },
     mounted() {
       if (this.d2rClass.length === 0)
