@@ -195,19 +195,19 @@
             <div v-if="pageLoad && $q.screen.gt.sm && $route.name.indexOf('d2r-knowledge') === -1 && isProduction"
               class="ad-left ad-box" :style="`top:${scrollTop}px`">
               <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
-                ins-style="display:inline-block;width:164px;height:600px" :key="key1">
+                ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
               </Adsense>
             </div>
             <div class="column q-gutter-y-sm ad-right" v-if="pageLoad && $q.screen.gt.sm && isProduction"
               :style="`top:${scrollTop}px`">
               <div class="ad-box">
                 <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
-                  ins-style="display:inline-block;width:164px;height:600px" :key="key2">
+                  ins-style="display:inline-block;width:164px;height:600px" :key="`lte_${key}`">
                 </Adsense>
               </div>
               <div class="ad-box" v-if="$route.name.indexOf('d2r-knowledge') !== -1">
                 <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" data-ad-format="auto"
-                  ins-style="display:inline-block;width:164px;height:600px" :key="key3">
+                  ins-style="display:inline-block;width:164px;height:600px" :key="`rt_${key}`">
                 </Adsense>
               </div>
             </div>
@@ -337,9 +337,7 @@
       return {
         isProduction: process.env.NODE_ENV === 'production',
         scrollTop: 0,
-        key1: uid(),
-        key2: uid(),
-        key3: uid(),
+        key: uid(),
         pageLoad: false,
         progress: 0,
         loading: false,
@@ -355,7 +353,7 @@
         },
         text: '',
         processSignOut: false,
-        lang: this.$q.cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? this.$q.cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : 'ko',
+        lang: this.$q.cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? this.$q.cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : this.$q.lang.getLocale().substring(0, 2) || 'ko',
         options: [
           { label: '한국어', value: 'ko' },
           { label: 'ENGLISH', value: 'en' }
@@ -372,11 +370,8 @@
     watch: {
       '$route': function (to, old) {
         this.initD2R()
-        if (to !== old) {
-          this.key1 = uid()
-          this.key2 = uid()
-          this.key3 = uid()
-        }
+        if (to !== old)
+          this.key = uid()
       },
       lang: function (val, old) {
         if (val !== old) {

@@ -21,18 +21,66 @@
           {{$t('d2r.knowledge.items.noData')}}</div>
       </template>
       <template v-slot:top>
-        <div class="row justify-between full-width">
-          <div class="col-12 col-sm-5 col-md-4">
-            <q-select outlined dark dense options-dense map-options emit-value behavior="menu" color="orange"
-              popup-content-class="bg-black" v-model="selectedMaterial" :options="meterialOptions"
-              :label="$t('d2r.knowledge.items.runewordMaterialType')" />
+        <div class="row justify-between items-center full-width q-col-gutter-sm">
+          <div class="col-12 col-md-8 row justify-start items-center q-col-gutter-sm">
+            <div class="col-12 col-lg-3">
+              <q-checkbox dense dark color="amber-10" size="md" v-model="own" class="word-keep"
+                :label="$t('d2r.knowledge.items.own')" />
+            </div>
+            <div class="col-12 col-lg-3">
+              <q-select :transition-show="$q.screen.lt.md ? 'slide-up' : 'none'"
+                :transition-hide="$q.screen.lt.md ? 'slide-down' : 'none'" menu-self="center left" color="amber-9"
+                popup-content-class="bg-black" popup-content-style="border:solid 1px #888888" v-model="selectedMaterial"
+                :options="meterialOptions" dropdown-icon="keyboard_arrow_down"
+                :label="$t('d2r.knowledge.items.runewordMaterialType')" dense dark outlined emit-value map-options
+                no-error-icon menu-shrink options-dense />
+            </div>
+            <div class="col-12 col-lg-3">
+              <q-select :transition-show="$q.screen.lt.md ? 'slide-up' : 'none'"
+                :transition-hide="$q.screen.lt.md ? 'slide-down' : 'none'" menu-self="center left" color="amber-9"
+                popup-content-class="bg-black" popup-content-style="border:solid 1px #888888" v-model="selectedClass"
+                :options="d2rClassOptions" :label="$t('d2r.knowledge.items.recommendedClass')"
+                dropdown-icon="keyboard_arrow_down" dense dark outlined emit-value map-options no-error-icon menu-shrink
+                options-dense>
+                <template v-slot:option="scope">
+                  <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
+                    <q-item-section avatar>
+                      <q-avatar v-if="scope.opt.src" size="60px" rounded>
+                        <q-img basic :ratio="1" :src="scope.opt.src" />
+                      </q-avatar>
+                      <q-avatar v-else size="60px" rounded>
+                        All
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>
+                        {{scope.opt.label}}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
+            </div>
+            <div class="col-12 col-lg-2 row items-center" :class="$q.screen.lt.lg ? 'q-pt-xl q-px-lg' : 'q-ml-sm'">
+              <q-range dark dense v-model="socket" color="green-9" label-text-color="text-weight-bold" :min="2" :max="6"
+                snap label-always markers />
+            </div>
           </div>
-          <div class="col-12 col-sm-5 col-md-4">
-            <q-input dark dense debounce="400" :label="$t('btn.search')" color="grey-4 text-title" v-model="filter">
-              <template v-slot:append>
-                <q-icon name="search" color="grey-4 text-title" />
-              </template>
-            </q-input>
+          <div class="col-12 col-md-4 row justify-end q-col-gutter-sm">
+            <div class="col-12 col-lg-5">
+              <q-select :transition-show="$q.screen.lt.md ? 'slide-up' : 'none'"
+                :transition-hide="$q.screen.lt.md ? 'slide-down' : 'none'" menu-self="center left" color="amber-9"
+                popup-content-class="bg-black" popup-content-style="border:solid 1px #888888" v-model="selectedSort"
+                :options="sortOptions" dropdown-icon="keyboard_arrow_down" :label="$t('d2r.knowledge.items.sort')" dense
+                dark outlined emit-value map-options no-error-icon menu-shrink options-dense />
+            </div>
+            <div class="col-12 col-lg-5">
+              <q-input dark dense debounce="400" :label="$t('btn.search')" color="grey-4 text-title" v-model="filter">
+                <template v-slot:append>
+                  <q-icon name="search" color="grey-4 text-title" />
+                </template>
+              </q-input>
+            </div>
           </div>
         </div>
       </template>
@@ -46,10 +94,7 @@
                 {{props.row.level}}
               </div>
               <div class="col q-gutter-x-xs">
-                <q-badge color="red" v-if="props.row.hot === true">{{$t('d2r.knowledge.items.runewordTip.hot')}}
-                </q-badge>
-                <q-badge color="blue-9" v-if="props.row.mercenary === true">
-                  {{$t('d2r.knowledge.items.runewordTip.mercenary')}}
+                <q-badge color="red" v-if="props.row.hot === true">{{$t('d2r.knowledge.items.hot')}}
                 </q-badge>
               </div>
             </div>
@@ -87,10 +132,7 @@
                   {{props.row.level}}
                 </div>
                 <div class="col q-gutter-x-xs">
-                  <q-badge color="red" v-if="props.row.hot === true">{{$t('d2r.knowledge.items.runewordTip.hot')}}
-                  </q-badge>
-                  <q-badge color="blue-9" v-if="props.row.mercenary === true">
-                    {{$t('d2r.knowledge.items.runewordTip.mercenary')}}
+                  <q-badge color="red" v-if="props.row.hot === true">{{$t('d2r.knowledge.items.hot')}}
                   </q-badge>
                 </div>
               </div>
@@ -138,6 +180,10 @@
   </div>
 </template>
 <script>
+  import {
+    mapGetters
+  } from 'vuex'
+
   export default {
     data() {
       return {
@@ -149,21 +195,56 @@
           { name: 'runeword', label: this.$t('d2r.knowledge.items.runeword'), align: 'center', style: 'width:30%' },
         ],
         runes: this.$t('d2r.knowledge.items.runeData').map(r => ({ ...r, selected: false })),
+        own: false,
         selectedMaterial: 0,
+        selectedClass: 'all',
+        selectedSort: 'hot',
+        socket: {
+          min: 2,
+          max: 6
+        },
         materials: this.$t('d2r.knowledge.items.materials'),
-        runeWords: this.$t('d2r.knowledge.items.runeWords')
+        runeWords: this.$t('d2r.knowledge.items.runeWords'),
+        meterialOptions: this.$t('d2r.knowledge.items.materials').map(m => { return { 'label': m.name, 'value': m.no } }),
+        sortOptions: [{ 'label': this.$t('d2r.knowledge.items.hot'), 'value': 'hot' }, { 'label': this.$t('d2r.knowledge.items.runewordName'), 'value': 'name' }]
       }
     },
     computed: {
-      meterialOptions() {
-        return this.materials.map(m => { return { 'label': m.name, 'value': m.no } })
+      ...mapGetters({
+        d2rClass: 'getD2RClass'
+      }),
+      d2rClassOptions() {
+        return [{ 'value': 'all', 'label': this.$t('d2r.knowledge.items.all'), 'src': '' }, ...this.d2rClass.map(c => {
+          c.value = c.clsid
+          return c
+        }), { 'value': 'mercenary', 'label': this.$t('d2r.knowledge.items.mercenary'), 'src': require('@/assets/images/d2r/items/etc/mercenary.png') }]
       },
       filtering() {
         const selectedRunes = this.runes.filter(r => r.selected === true)
-        const resultRuneWords = this.selectedMaterial === 0 ? this.runeWords : this.selectedMaterial === 1 ? this.runeWords.filter(r => r.materials.filter(m => ![2, 3, 4, 5].includes(m)).length > 0) : this.runeWords.filter(r => r.materials.includes(this.selectedMaterial))
+        let resultRuneWords = this.selectedMaterial === 0 ? this.runeWords : this.selectedMaterial === 1 ? this.runeWords.filter(r => r.materials.filter(m => ![2, 3, 4, 5].includes(m)).length > 0) : this.runeWords.filter(r => r.materials.includes(this.selectedMaterial))
 
-        if (selectedRunes.length > 0)
-          return resultRuneWords.filter(rw => selectedRunes.filter(r => !rw.runeword.includes(r.no)).length === 0)
+        resultRuneWords = this.selectedClass === 'all' ? resultRuneWords : resultRuneWords.filter(r => r.recc.includes(this.selectedClass))
+        resultRuneWords = resultRuneWords.filter(r => r.runeword.length >= this.socket.min && r.runeword.length <= this.socket.max)
+
+        if (this.selectedSort === 'name')
+          resultRuneWords.sort((a, b) => {
+            a = a.name.toLowerCase()
+            b = b.name.toLowerCase()
+            if (a < b) return -1
+            if (a > b) return 1
+            return 0
+          })
+        else if (this.selectedSort === 'hot')
+          resultRuneWords.sort((a, b) => {
+            return (a.hot === b.hot) ? 0 : b.hot === true ? 1 : -1
+          })
+
+        if (selectedRunes.length > 0) {
+          if (this.own === true)
+            return resultRuneWords.filter(rw => selectedRunes.filter(r => rw.runeword.includes(r.no)).length > 0)
+          else
+            return resultRuneWords.filter(rw => selectedRunes.filter(r => !rw.runeword.includes(r.no)).length === 0)
+        }
         else
           return resultRuneWords
       }
@@ -174,7 +255,12 @@
       },
       refresh() {
         this.runes.filter(r => r.selected === true).forEach(r => { r.selected = false })
+        this.own = false
         this.selectedMaterial = 0
+        this.selectedClass = 'all'
+        this.selectedSort = 'hot'
+        this.socket.min = 2
+        this.socket.max = 6
         this.filter = ''
       },
       parsRuneWord(runeword) {

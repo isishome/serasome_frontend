@@ -28,7 +28,7 @@ const d2rComments = () => import(/* webpackChunkName: "d2r-component" */ '@/comp
 const d2rSummary = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Summary')
 const d2rTapPanel = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/TapPanel')
 const d2rZoom = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Zoom')
-import { Notify, Cookies, Dark, Loading } from 'quasar'
+import { Quasar, Notify, Cookies, Dark, Loading } from 'quasar'
 //import VFacebookLogin from 'vue-facebook-login-component'
 import GAuth from 'vue-google-oauth2'
 
@@ -56,7 +56,7 @@ router.onError((error) => {
 
 router.beforeEach((to, from, next) => {
   Loading.hide()
-  const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : 'ko'
+  const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
   if (lang !== i18n.locale)
     i18n.loadLanguageAsync(lang).then(() => { }).catch(() => { }).then(() => { next() })
   else
@@ -155,7 +155,7 @@ let axiosObject = axios.create({
 })
 
 axiosObject.interceptors.request.use((config) => {
-  const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : 'ko'
+  const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
   config.headers.common['Accept-Language'] = lang
   return config
 })

@@ -257,7 +257,7 @@
         text: '',
         processSignOut: false,
         scrollVisible: false,
-        lang: this.$q.cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? this.$q.cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : 'ko',
+        lang: this.$q.cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? this.$q.cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : this.$q.lang.getLocale().substring(0, 2) || 'ko',
         options: [
           { label: '한국어', value: 'ko' },
           { label: 'ENGLISH', value: 'en' }

@@ -97,8 +97,7 @@
       </template>
       <template #item="{props}">
         <div class="q-pa-sm col-xs-6 col-sm-4">
-          <q-card flat bordered class="bg-transparent table-card" @click="rowClick(props.row.pid)"
-            :class="props.row.status === 'FIN' ? 'finish' : ''">
+          <q-card @click="rowClick(props.row.pid)" :class="props.row.status === 'FIN' ? 'finish' : ''">
             <q-card-section class="no-padding absolute-top-left" style="z-index:1;left:-8px;opacity: 0.9;">
               <q-chip square size="xs" style="padding:10px 6px" color="grey-4" text-color="black"
                 :class="['row justify-center items-center shadow-1 text-weight-bold', props.row.classify]">
@@ -124,14 +123,15 @@
               </template>
             </q-img>
             <q-card-section :class="$q.screen.lt.sm ? 'q-py-xs q-px-sm' : 'q-pa-sm'">
-              <div class="text-weight-bold row no-wrap justify-start q-col-gutter-x-xs">
+              <div class="row justify-start no-wrap q-gutter-x-xs">
                 <div class="ellipsis text-caption text-grey-5" :class="`${props.row.classify}-title`"
                   v-html="parsSearch(['title', 'titleWithContents'], props.row.title)"></div>
-                <div class="col-1 text-body2 text-grey-1" v-if="props.row.cmt">[{{isView(props.row.cmt)}}]</div>
+                <div class="text-caption text-amber-8 text-weight-bold" v-if="props.row.cmt">[{{isView(props.row.cmt)}}]
+                </div>
               </div>
             </q-card-section>
             <q-card-section :class="$q.screen.lt.sm ? 'q-py-xs q-px-sm' : 'q-pa-sm'">
-              <div class="text-caption row justify-between items-center text-title">
+              <div class="text-caption row justify-end items-center text-title">
                 <div v-html="parsSearch(['writer'], props.row.writer)"></div>
               </div>
               <div class="text-caption text-right">{{parsDateTime(props.row.upd_date)}}</div>

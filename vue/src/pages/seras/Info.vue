@@ -7,11 +7,17 @@
           <q-input :disable="processModify || key === 'email' || key === 'name'" color="teal-4"
             v-for="(field, key) in joinForm" :key="key" maxlength="32"
             :type="!field.isPwd && field.type === 'password'? 'text' : field.type" v-model="field.value"
-            :label="field.label" :rules="field.rules" outlined hide-hint dense no-error-icon hide-bottom-space>
+            :label="field.label" :rules="field.rules" @blur="field.error = false"
+            @input="field.error = !field.rules[0](field.value)" outlined hide-hint dense no-error-icon
+            hide-bottom-space>
             <template v-slot:append>
               <q-icon v-if="field.type === 'password'" :name="field.isPwd ? 'visibility_off' : 'visibility'"
                 class="cursor-pointer" @click="field.isPwd = !field.isPwd" />
             </template>
+            <q-tooltip v-if="field.hint" no-parent-event :offset="[0, 0]" anchor="top start" self="bottom start"
+              v-model="field.error" content-class="input-tip">
+              {{field.hint}}
+            </q-tooltip>
           </q-input>
           <q-btn-dropdown outline dense unelevated cover menu-anchor="top left" size="md" class="q-pa-xs"
             :text-color="$q.dark.mode ? 'blue-grey-4' : 'grey-6'">
@@ -100,8 +106,10 @@
             type: 'password',
             label: this.$t('myInfo.NewPassword'),
             value: '',
-            rules: [val => new RegExp('^(|(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$ %\\^&\\*])(?=.{8,}).*$)').test(val)],
-            isPwd: true
+            rules: [val => new RegExp('^(|(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$ %\\^&\\*])(?=.{8,}).*)$').test(val)],
+            isPwd: true,
+            error: false,
+            hint: this.$t('signIn.passwordHint')
           },
           'passwordConfirm': {
             type: 'password',
