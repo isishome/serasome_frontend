@@ -48,8 +48,7 @@
                       <q-avatar v-if="scope.opt.src" size="60px" rounded>
                         <q-img basic :ratio="1" :src="scope.opt.src" />
                       </q-avatar>
-                      <q-avatar v-else size="60px" rounded>
-                        All
+                      <q-avatar v-else-if="scope.opt.icon" rounded size="60px" :icon="scope.opt.icon">
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
@@ -95,6 +94,8 @@
               </div>
               <div class="col q-gutter-x-xs">
                 <q-badge color="red" v-if="props.row.hot === true">{{$t('d2r.knowledge.items.hot')}}
+                </q-badge>
+                <q-badge color="blue" v-if="props.row.recc.includes('beginner')">{{$t('d2r.knowledge.items.beginner')}}
                 </q-badge>
               </div>
             </div>
@@ -214,7 +215,7 @@
         d2rClass: 'getD2RClass'
       }),
       d2rClassOptions() {
-        return [{ 'value': 'all', 'label': this.$t('d2r.knowledge.items.all'), 'src': '' }, ...this.d2rClass.map(c => {
+        return [{ 'value': 'all', 'label': this.$t('d2r.knowledge.items.all'), 'icon': 'groups' }, { 'value': 'beginner', 'label': this.$t('d2r.knowledge.items.beginner'), 'icon': 'person' }, ...this.d2rClass.map(c => {
           c.value = c.clsid
           return c
         }), { 'value': 'mercenary', 'label': this.$t('d2r.knowledge.items.mercenary'), 'src': require('@/assets/images/d2r/items/etc/mercenary.png') }]

@@ -72,7 +72,7 @@
               <span class="q-ml-sm gt-lg">{{ signStatus ? $t('signOut.title') : $t('signIn.title') }}</span>
             </q-btn>
             <q-btn-dropdown class="gt-sm" dense dropdown-icon="language" no-icon-animation size="md"
-              content-style="background-color:rgba(200,200,200,0.1) !important;box-shadow: 0 0 4px 0 rgba(200,200,200,0.6)">
+              content-style="background-color:rgba(20,20,20,1) !important;box-shadow: 0 0 4px 0 rgba(200,200,200,0.6)">
               <q-list class="text-grey-7" dark separator>
                 <q-item dense v-for="(option, index) in options" :key="index" clickable v-close-popup
                   @click="lang = option.value" :active="lang === option.value"
