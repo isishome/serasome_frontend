@@ -214,6 +214,9 @@ const routes = [
         path: 'knowledge',
         component: d2rKnowledge,
         props: true,
+        meta: {
+          topScroll: true
+        },
         children: [
           {
             name: 'd2r-knowledge-section',

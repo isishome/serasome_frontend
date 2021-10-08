@@ -290,6 +290,7 @@ export default {
         runeword: "Runeword",
         runewordStats: "Stats",
         hot: "HOT",
+        level: 'Level',
         reset: "Reset",
         noData: "No results match your search criteria",
         cubeData: [

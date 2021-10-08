@@ -13,9 +13,10 @@
         </q-btn>
       </div>
     </div>
-    <q-table class="bg-transparent" table-class="table-style" card-container-class="q-col-gutter-md justify-center"
-      :grid="$q.screen.lt.lg" dark :data="filtering" :columns="columns" row-key="name" :filter="filter"
-      :filter-method="customFilter" :pagination="{rowsPerPage :0}" :hide-header="$q.screen.lt.sm" hide-pagination>
+    <q-table dense class="bg-transparent" table-class="table-style"
+      card-container-class="q-col-gutter-md justify-center" :grid="$q.screen.lt.lg" dark :data="filtering"
+      :columns="columns" row-key="name" :filter="filter" :filter-method="customFilter" :pagination="{rowsPerPage :0}"
+      :hide-header="$q.screen.lt.sm" hide-pagination>
       <template v-slot:no-data>
         <div class="row justify-center full-width" :class="$q.screen.lt.md ? 'text-caption' : 'text-body2'">
           {{$t('d2r.knowledge.items.noData')}}</div>
@@ -118,14 +119,31 @@
             </ul>
           </q-td>
           <q-td key="runeword" :props="props">
-            <div class="text-h6 word-keep text-grey-5" v-html="parsRuneWord(props.row.runeword)"></div>
+            <div class="row items-baseline">
+              <template v-for="(rune, idx) in parsRuneWord(props.row.runeword)">
+                <div v-if="idx !== 0" class="word-keep" :key="`name_${idx}`">
+                  <q-icon size="sm" color="grey-8" name="add" />
+                </div>
+                <div class="col column items-center content-center" :key="`img_${idx}`" style="height:140px">
+                  <div class="col">
+                    <img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)" />
+                  </div>
+                  <div class="col-4 row items-center text-body1 word-keep text-grey-5">
+                    {{rune.name}}
+                  </div>
+                  <div class="col text-body1 text-title">
+                    ({{rune.no}})
+                  </div>
+                </div>
+              </template>
+            </div>
           </q-td>
         </q-tr>
       </template>
       <template #item="props">
         <div class="col-md-6 col-12">
           <q-card dark class="card text-center" bordered>
-            <q-card-section class="text-grey-6 text-h6 word-keep">
+            <q-card-section class="text-grey-6 text-h6 word-keep q-pa-xs">
               <div class="text-h6 word-keep text-amber-6 column">
                 <div class="col">{{props.row.name}}<span class="text-body1 text-brown" v-if="props.row.oldName">
                     ({{props.row.oldName}})</span></div>
@@ -139,15 +157,15 @@
               </div>
             </q-card-section>
             <q-separator />
-            <q-card-section>
-              <div class="text-subtitle1 word-keep column">
+            <q-card-section class="q-pa-xs">
+              <div class="text-subtitle2 word-keep column">
                 <div class="col" v-for="(m, idx) in parsMaterial(props.row.materials)" :key="idx">{{m}}<span
                     class="text-red-5">({{props.row.runeword.length}})</span>
                 </div>
               </div>
             </q-card-section>
             <q-separator />
-            <q-card-section>
+            <q-card-section class="q-pa-xs">
               <ul class="column text-body2 stats">
                 <li v-for="(stat, idx) in props.row.stats" :key="idx" class="col word-keep" v-html="stat">
                 </li>
@@ -158,8 +176,22 @@
               </ul>
             </q-card-section>
             <q-separator />
-            <q-card-section>
-              <div class="text-h6 word-keep text-grey-5" v-html="parsRuneWord(props.row.runeword)"></div>
+            <q-card-section class="q-pa-xs">
+              <div class="row items-center content-center">
+                <template v-for="(rune, idx) in parsRuneWord(props.row.runeword)">
+                  <div class="col column items-center content-center" :key="`img_${idx}`" style="height:140px">
+                    <div class="col row items-center">
+                      <img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)" style="width:30px" />
+                    </div>
+                    <div class="col-4 row items-center text-caption word-keep text-grey-5">
+                      {{rune.name}}
+                    </div>
+                    <div class="col row items-center text-caption text-title">
+                      ({{rune.no}})
+                    </div>
+                  </div>
+                </template>
+              </div>
             </q-card-section>
           </q-card>
         </div>
@@ -193,7 +225,7 @@
           { name: 'name', label: this.$t('d2r.knowledge.items.runewordName'), align: 'center', style: 'width:20%' },
           { name: 'material', label: this.$t('d2r.knowledge.items.runewordMaterial'), align: 'center', style: 'width:10%' },
           { name: 'stats', label: this.$t('d2r.knowledge.items.runewordStats'), align: 'center' },
-          { name: 'runeword', label: this.$t('d2r.knowledge.items.runeword'), align: 'center', style: 'width:30%' },
+          { name: 'runeword', label: this.$t('d2r.knowledge.items.runeword'), align: 'center', style: 'width:40%' },
         ],
         runes: this.$t('d2r.knowledge.items.runeData').map(r => ({ ...r, selected: false })),
         own: false,
@@ -207,7 +239,7 @@
         materials: this.$t('d2r.knowledge.items.materials'),
         runeWords: this.$t('d2r.knowledge.items.runeWords'),
         meterialOptions: this.$t('d2r.knowledge.items.materials').map(m => { return { 'label': m.name, 'value': m.no } }),
-        sortOptions: [{ 'label': this.$t('d2r.knowledge.items.hot'), 'value': 'hot' }, { 'label': this.$t('d2r.knowledge.items.runewordName'), 'value': 'name' }]
+        sortOptions: [{ 'label': this.$t('d2r.knowledge.items.hot'), 'value': 'hot' }, { 'label': this.$t('d2r.knowledge.items.runewordName'), 'value': 'name' }, { 'label': this.$t('d2r.knowledge.items.level'), 'value': 'level' }]
       }
     },
     computed: {
@@ -221,7 +253,7 @@
         }), { 'value': 'mercenary', 'label': this.$t('d2r.knowledge.items.mercenary'), 'src': require('@/assets/images/d2r/items/etc/mercenary.png') }]
       },
       filtering() {
-        const selectedRunes = this.runes.filter(r => r.selected === true)
+        const selectedRunes = this.runes.filter(r => r.selected === true).map(r => r.no)
         let resultRuneWords = this.selectedMaterial === 0 ? this.runeWords : this.selectedMaterial === 1 ? this.runeWords.filter(r => r.materials.filter(m => ![2, 3, 4, 5].includes(m)).length > 0) : this.runeWords.filter(r => r.materials.includes(this.selectedMaterial))
 
         resultRuneWords = this.selectedClass === 'all' ? resultRuneWords : resultRuneWords.filter(r => r.recc.includes(this.selectedClass))
@@ -239,12 +271,14 @@
           resultRuneWords.sort((a, b) => {
             return (a.hot === b.hot) ? 0 : b.hot === true ? 1 : -1
           })
+        else if (this.selectedSort === 'level')
+          resultRuneWords.sort((a, b) => { return a.level - b.level })
 
         if (selectedRunes.length > 0) {
           if (this.own === true)
-            return resultRuneWords.filter(rw => selectedRunes.filter(r => rw.runeword.includes(r.no)).length > 0)
+            return resultRuneWords.filter(rw => rw.runeword.filter(r => !selectedRunes.includes(r)).length === 0)
           else
-            return resultRuneWords.filter(rw => selectedRunes.filter(r => !rw.runeword.includes(r.no)).length === 0)
+            return resultRuneWords.filter(rw => selectedRunes.filter(r => !rw.runeword.includes(r)).length === 0)
         }
         else
           return resultRuneWords
@@ -265,7 +299,7 @@
         this.filter = ''
       },
       parsRuneWord(runeword) {
-        return runeword.map(r => this.runes.find(rl => rl.no === r).name).join(' <span class="text-grey-7">+</span> ')
+        return runeword.map(r => this.runes.find(rl => rl.no === r))
       },
       parsMaterial(material) {
         let result = []

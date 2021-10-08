@@ -289,6 +289,7 @@ export default {
           runeword: "룬워드",
           runewordStats: "속성",
           hot: "인기",
+          level: "레벨",
           reset: "초기화",
           noData: "조건에 맞는 자료가 없습니다",
           cubeData: [

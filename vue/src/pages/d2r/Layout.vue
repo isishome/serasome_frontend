@@ -32,18 +32,6 @@
               <div class="text-h7">{{$t('d2r.storage.title')}}</div>
             </q-route-tab>
           </q-tabs>
-          <div class="gt-sm q-ml-xl row justify-center">
-            <q-btn to="/d2r/knowledge/Items/Cube">
-              <q-avatar size="xl" rounded>
-                <img :src="require('@/assets/images/d2r/items/cube.png')">
-              </q-avatar>
-            </q-btn>
-            <q-btn to="/d2r/knowledge/Items/Rune">
-              <q-avatar size="xl" rounded>
-                <img :src="require('@/assets/images/d2r/items/rune.png')">
-              </q-avatar>
-            </q-btn>
-          </div>
           <div class="lt-md absolute-center">
             <q-btn @click="home" flat dense class="row justify-center items-center" size="22px">
               <q-avatar flat class="text-d2r d2r-logo-b" icon="fas fa-star-of-david" size="30px" />
@@ -56,7 +44,17 @@
             </q-btn>
           </div>
           <!-- toolbar 3 -->
-          <div class="absolute-right col-xl-4 col-lg-3 col-md-2 row justify-end items-center q-gutter-x-sm">
+          <div class="absolute-right col-xl-5 col-lg-4 col-md-3 row justify-end items-center q-gutter-x-sm">
+            <q-btn dense to="/d2r/knowledge/Items/Cube">
+              <q-avatar size="md" rounded>
+                <img :src="require('@/assets/images/d2r/items/cube.png')">
+              </q-avatar>
+            </q-btn>
+            <q-btn dense to="/d2r/knowledge/Items/Rune">
+              <q-avatar size="md" rounded>
+                <img :src="require('@/assets/images/d2r/items/rune.png')">
+              </q-avatar>
+            </q-btn>
             <q-btn dense flat class="gt-sm" to="/">
               <q-avatar class="ss-logo" size="30px">
                 <img src="@/assets/images/logo.svg" />
@@ -85,7 +83,7 @@
             </q-btn-dropdown>
             <q-input v-if="$route.name !== 'd2r-search'" dark dense standout outlined color="yellow-10"
               :label="$t('btn.search')" v-model="text" input-class="text-left" input-style="width:50vw"
-              class="col-6 q-ml-md gt-md" @keyup.enter="search" :error="text.length > 20" hide-bottom-space
+              class="col-5 q-ml-md gt-lg" @keyup.enter="search" :error="text.length > 20" hide-bottom-space
               no-error-icon>
               <template v-slot:append>
                 <q-icon v-if="text === ''" name="search" />
