@@ -2,7 +2,7 @@
   <div>
     <q-ajax-bar ref="bar" position="bottom" color="red" size="4px" skip-hijack />
     <q-ajax-bar ref="uploadBar" position="bottom" color="primary" size="4px" skip-hijack />
-    <ss-post-read :sname="sname" v-model="pid" @done="done" @reading="loading = true" />
+    <ss-post-read ref="postRead" :sname="sname" v-model="pid" @done="done" @reading="loading = true" />
     <q-dialog v-model="postAddModify" :maximized="$q.screen.lt.md" full-height transition-show="show"
       transition-hide="hide" @before-hide="beforeHide" @hide="hide" no-esc-dismiss no-backdrop-dismiss>
       <q-card :class="['column no-padding no-scroll', $q.screen.gt.sm ? 'dialog-width' : '']">
@@ -219,7 +219,18 @@
       </q-card>
     </q-dialog>
     <div class="row">
-      <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 q-mt-md">
+      <q-scroll-observer debounce="100" @scroll="onScroll" />
+      <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 q-mt-md relative-position">
+        <div v-if="pageLoad && $q.screen.gt.sm && isProduction" class="ad-left ad-box" :style="`top:${scrollTop}px`">
+          <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" data-ad-format="auto"
+            ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
+          </Adsense>
+        </div>
+        <div v-if="pageLoad && $q.screen.gt.sm && isProduction" class="ad-right ad-box" :style="`top:${scrollTop}px`">
+          <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" data-ad-format="auto"
+            ins-style="display:inline-block;width:164px;height:600px" :key="`rt_${key}`">
+          </Adsense>
+        </div>
         <div v-if="some" class="row justify-between items-center q-px-md">
           <div class="row items-center">
             <q-icon
@@ -235,7 +246,8 @@
           </div>
         </div>
         <q-separator inset spaced />
-        <q-infinite-scroll ref="some" @load="onLoad" :offset="250" class="q-mt-md relative-position">
+        <q-infinite-scroll ref="some" @load="onLoad" :offset="250" scroll-target="body"
+          class="q-mt-md relative-position">
           <ss-post-list v-if="some" :list="items" :pid="pid" :loading="loading" @view="view"></ss-post-list>
           <template v-slot:loading>
             <div class="row justify-center q-my-md">
@@ -254,7 +266,8 @@
 
 <script>
   import {
-    copyToClipboard
+    copyToClipboard,
+    uid
   } from 'quasar'
 
   import {
@@ -372,7 +385,11 @@
         loadFailed: false,
         limitFileSize: 10485760,
         limitFileCnt: 5,
-        thumb: null
+        thumb: null,
+        key: uid(),
+        isProduction: process.env.NODE_ENV === 'production',
+        pageLoad: false,
+        scrollTop: 0
       }
     },
     created() {
@@ -382,6 +399,9 @@
       this.pid = this.$route.params.pid
       this.someInfo()
       this.postInit()
+    },
+    beforeMount() {
+      this.pageLoad = true
     },
     beforeDestroy() {
       this.editor.destroy()
@@ -394,6 +414,9 @@
         this.sname = to.params.sname
         this.pid = to.params.pid
         this.tempPid = to.params.tempPid
+
+        if (to !== from)
+          this.key = uid()
 
         if (to.params.sname !== from.params.sname) {
           this.someInfo()
@@ -442,6 +465,9 @@
         modifyItem: 'modifyItem',
         deleteItem: 'deleteItem'
       }),
+      onScroll(info) {
+        this.scrollTop = info.position
+      },
       showLink(command, attrs) {
         if (!this.isSelectionEmpty) {
           this.command = command
@@ -584,6 +610,7 @@
         let stop = false
         const ajaxBar = this.$refs.bar
         const requestSname = this.sname
+        this.loading = true
 
         ajaxBar.start()
 
@@ -625,6 +652,7 @@
                 }
               }
             })
+            self.loading = false
           })
       },
       postCont() {

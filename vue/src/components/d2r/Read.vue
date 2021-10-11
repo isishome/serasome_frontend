@@ -18,7 +18,7 @@
       </q-card-section>
       <q-card-section class="q-pt-none">
         <div class="text-subtitle2 text-title">
-          <q-avatar rounded color="transparent" text-color="transparent" class="q-mr-xs" size="40px">
+          <q-avatar rounded color="brown-10" text-color="white" class="q-mr-xs" size="30px">
             <q-img basic v-if="data.avatar" :src="data.avatar" :ratio="1">
               <template #error>
                 <div class="bg-d2r absolute-center">
@@ -46,6 +46,11 @@
         </div>
         <p v-if="data" ref="contents" class="word-wrap contents" v-html="viewContents">
         </p>
+        <div class="row justify-center items-center" v-if="isProduction">
+          <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9230987257" data-ad-format="auto"
+            ins-style="display:inline-block;min-width:320px;max-width:780px;height:250px;" :key="`t_${key}`">
+          </Adsense>
+        </div>
       </q-card-section>
       <q-separator dark inset />
       <q-card-actions class="row justify-between">
@@ -78,6 +83,8 @@
 <script>
   import { mapGetters, mapActions } from 'vuex'
 
+  import { uid } from 'quasar'
+
   import hljs from 'highlight.js'
 
   export default {
@@ -109,7 +116,9 @@
           color: 'd2r',
           textColor: 'white',
           message: null
-        }
+        },
+        key: uid(),
+        isProduction: process.env.NODE_ENV === 'production'
       }
     },
     computed: {
@@ -142,6 +151,7 @@
             pid: this.pid
           }
         }).then(function (response) {
+          vm.key = uid()
           vm.data = response.data
           document.title = (vm.$route.meta.title || document.title)
           document.title = document.title.concat(' - ', vm.data.title)

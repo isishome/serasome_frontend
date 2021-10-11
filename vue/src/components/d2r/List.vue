@@ -88,7 +88,12 @@
             </div>
           </q-td>
           <q-td>
-            {{parsDateTime(props.row.upd_date)}}
+            <div class="row no-wrap items-center q-gutter-x-xs">
+              <q-avatar v-if="isNew(props.row.upd_date)" color="red-14" size="4px" />
+              <div>
+                {{parsDateTime(props.row.upd_date)}}
+              </div>
+            </div>
           </q-td>
           <q-td>
             {{isView(props.row.seq)}}
@@ -131,10 +136,25 @@
               </div>
             </q-card-section>
             <q-card-section :class="$q.screen.lt.sm ? 'q-py-xs q-px-sm' : 'q-pa-sm'">
-              <div class="text-caption row justify-end items-center text-title">
-                <div v-html="parsSearch(['writer'], props.row.writer)"></div>
+              <div class="text-caption row justify-end no-wrap items-center text-title">
+                <q-avatar rounded color="brown-10" text-color="white" class="q-mr-xs" size="16px">
+                  <q-img basic v-if="props.row.avatar" :src="props.row.avatar" width="100%" :ratio="1">
+                    <template #error>
+                      <div class="bg-d2r absolute-center">
+                        {{props.row.writer.toUpperCase().substring(0,1)}}
+                      </div>
+                    </template>
+                  </q-img>
+                  <template v-else>{{props.row.writer.toUpperCase().substring(0,1)}}</template>
+                </q-avatar>
+                <div class="ellipsis" v-html="parsSearch(['writer'], props.row.writer)"></div>
               </div>
-              <div class="text-caption text-right">{{parsDateTime(props.row.upd_date)}}</div>
+              <div class="text-caption row justify-end no-wrap items-center q-gutter-x-xs">
+                <q-avatar v-if="isNew(props.row.upd_date)" color="red-14" size="4px" />
+                <div>
+                  {{parsDateTime(props.row.upd_date)}}
+                </div>
+              </div>
             </q-card-section>
           </q-card>
         </div>
@@ -182,7 +202,7 @@
               { name: 'title', align: 'center', label: this.$t('d2r.bbs.title') },
               { name: 'comments', align: 'center', icon: 'fas fa-comment-dots', headerStyle: 'width:80px;' },
               { name: 'writer', align: 'center', label: this.$t('d2r.bbs.writer'), headerStyle: 'width:180px;' },
-              { name: 'regDate', align: 'center', label: this.$t('d2r.bbs.regDate'), headerStyle: 'width:100px;' },
+              { name: 'regDate', align: 'center', label: this.$t('d2r.bbs.regDate'), headerStyle: 'width:110px;' },
               { name: 'view', align: 'center', label: this.$t('d2r.bbs.view'), headerStyle: 'width:100px;' }
             ]
         },
@@ -342,6 +362,26 @@
   .notice {
     background-color: #880000 !important;
     color: #dddddd !important;
+  }
+
+  .sell {
+    color: rgb(69, 142, 238) !important;
+  }
+
+  .buy {
+    color: rgb(55, 180, 164) !important;
+  }
+
+  @media screen and (max-width:599px) {
+    .sell {
+      background-color: rgb(69, 142, 238) !important;
+      color: rgba(0, 0, 0, .8) !important;
+    }
+
+    .buy {
+      background-color: rgb(55, 180, 164) !important;
+      color: rgba(0, 0, 0, .8) !important;
+    }
   }
 
   .notice-title {

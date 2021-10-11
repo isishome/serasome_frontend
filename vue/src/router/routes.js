@@ -166,7 +166,8 @@ const routes = [
         component: d2rBbs,
         props: true,
         meta: {
-          checkGrade: 'list'
+          checkGrade: 'list',
+          topScroll: true
         },
         children: [
           {
