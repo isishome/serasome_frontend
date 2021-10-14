@@ -64,9 +64,10 @@
         </div>
       </q-card-section>
       <q-separator />
-      <q-card-section class="no-padding row justify-end items-center q-mt-md text-teal-4">
-        <div class="text-caption">{{$t('join.message.haveRegisterAccount')}}</div>
-        <q-btn to="/sign" flat color="amber-7" :label="$t('signIn.title')" style="text-decoration: underline;" />
+      <q-card-section class="row justify-end items-center text-teal-4 q-gutter-x-md text-caption">
+        <div>{{$t('join.message.haveRegisterAccount')}}</div>
+        <router-link to="/sign" class="text-amber-7">
+          {{$t('signIn.title')}}</router-link>
       </q-card-section>
     </q-card>
     <q-dialog v-model="dialogShow" full-height :maximized="$q.screen.lt.md" @before-hide="beforeCloseDialog">
@@ -151,7 +152,6 @@
         dialogName: null,
         dialogShow: false,
         termsPolicy: this.$t('join.termsPolicy').split('|'),
-        loading: false,
         processJoin: false
       }
     },
@@ -179,9 +179,17 @@
           this.googleLogin()
       },
       onSubmit(fuid, guid) {
-        let self = this
-        self.processJoin = true
-        const router = self.$router
+        const vm = this
+        this.processJoin = true
+        window.grecaptcha.ready(function () {
+          window.grecaptcha.execute(process.env.VUE_APP_GOOGLE_RC_SITEKEY, { action: 'submit' }).then(function (token) {
+            vm.checkToken(token, fuid, guid)
+          })
+        })
+      },
+      checkToken(token, fuid, guid) {
+        let vm = this
+        const router = vm.$router
 
         this.axios
           .post('/seras/account/join', {
@@ -190,23 +198,24 @@
             uniqueName: this.joinForm.uniqueName.value,
             cid: this.category.cid,
             fuid: fuid,
-            guid: guid
+            guid: guid,
+            token: token
           }).then(function (response) {
             if (response.data == '') {
-              self.$q.notify({
+              vm.$q.notify({
                 type: 'positive',
                 color: 'positive',
-                message: self.$t('join.message.success')
+                message: vm.$t('join.message.success')
               })
 
-              self.timer = setTimeout(() => {
+              vm.timer = setTimeout(() => {
                 router.push('/').catch(() => { })
               }, 5000)
             }
           })
           .catch(function () { })
           .then(function () {
-            self.processJoin = false
+            vm.processJoin = false
           })
       },
       handleSdkInit({ FB, scope }) {
@@ -283,5 +292,13 @@
   .join-card {
     width: 100%;
     max-width: 400px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 </style>

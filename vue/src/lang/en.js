@@ -72,6 +72,7 @@ export default {
     passwordHint: "Contains uppercase and lowercase letters, numbers and letters 8~",
     message: {
       noRegisterAccount: "There is no registered account",
+      forgotYourPassword: "Forgot your password?",
       noGetGoogleInfo: "Could not get google account information",
       gotoJoinPage: "Go to the join page",
       alreadyLoggedIn: "You are already logged in."
@@ -93,13 +94,33 @@ export default {
   signOut: {
     title: "Sign Out"
   },
+  forgot: {
+    btn: {
+      send: "Send verification email"
+    },
+    message: {
+      successSendMail: "An email has been sent with a link to change your password",
+      failedSendMail: "If you have a previous request, please request it again after a certain period of time"
+    }
+  },
+  change: {
+    password: "New Password",
+    confirmPassword: "Confirm New Password",
+    btn: {
+      change: "Change"
+    },
+    message: {
+      successChange: "Password change is complete"
+    }
+  },
   myInfo: {
     title: "My Info",
     currentPassword: "Current Password",
     NewPassword: "New Password",
     confirmNewPassword: "Confirm New Password",
     message: {
-      disconnectGoogle: "Should I disconnect Google?"
+      disconnectGoogle: "Should I disconnect Google?",
+      successChange: "My information change has been completed"
     }
   },
   post: {

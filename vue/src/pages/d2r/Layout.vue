@@ -191,13 +191,14 @@
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="col-xl-6 offset-xl-3 col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-xs-12 relative-position">
             <div v-if="pageLoad && $q.screen.gt.sm && $route.name.indexOf('d2r-knowledge') === -1 && isProduction"
-              class="ad-left ad-box" :style="`top:${scrollTop}px`">
-              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
-                ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
-              </Adsense>
+              class="ad-left">
+              <div class="ad-box">
+                <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
+                  ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
+                </Adsense>
+              </div>
             </div>
-            <div class="column q-gutter-y-sm ad-right" v-if="pageLoad && $q.screen.gt.sm && isProduction"
-              :style="`top:${scrollTop}px`">
+            <div class="column q-gutter-y-sm ad-right" v-if="pageLoad && $q.screen.gt.sm && isProduction">
               <div class="ad-box">
                 <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
                   ins-style="display:inline-block;width:164px;height:600px" :key="`lte_${key}`">
@@ -400,10 +401,9 @@
         setD2RInfo: 'setD2RInfo'
       }),
       onScroll(info) {
-        this.scrollTop = info.position
-        let docHeight = document.body.offsetHeight
         let winHeight = window.innerHeight
-        let scrollPercent = this.scrollTop / (docHeight - winHeight) || 0
+        this.scrollTop = info.position
+        let scrollPercent = this.scrollTop / (document.body.offsetHeight - winHeight) || 0
         let scrollPercentRounded = Math.round(scrollPercent * 100) / 100
         this.progress = scrollPercentRounded
       },

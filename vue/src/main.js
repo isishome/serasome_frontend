@@ -86,6 +86,7 @@ router.beforeEach((to, from, next) => {
 
   const requireAuth = to.matched.some(route => route.meta.requireAuth)
   const signedIn = Cookies.has(process.env.VUE_APP_STATUS_NAME) && Cookies.get(process.env.VUE_APP_STATUS_NAME) === true
+  const checkForgot = to.matched.some(route => route.name.indexOf('forgot') !== -1)
   if (requireAuth && !signedIn) {
     Notify.create({
       type: 'negative',
@@ -95,6 +96,8 @@ router.beforeEach((to, from, next) => {
 
     router.replace({ name: 'sign', params: { redirect: encodeURIComponent(to.path) } }).catch(() => { })
   }
+  else if (signedIn && checkForgot)
+    router.replace({ name: 'main' }).catch(() => { })
 
   next()
 })

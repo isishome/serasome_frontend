@@ -369,7 +369,7 @@
   }
 
   .buy {
-    color: rgb(55, 180, 164) !important;
+    color: rgb(111, 218, 159) !important;
   }
 
   @media screen and (max-width:599px) {
@@ -379,7 +379,7 @@
     }
 
     .buy {
-      background-color: rgb(55, 180, 164) !important;
+      background-color: rgb(111, 218, 159) !important;
       color: rgba(0, 0, 0, .8) !important;
     }
   }

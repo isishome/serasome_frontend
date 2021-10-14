@@ -32,9 +32,18 @@
         </div>
       </q-card-section>
       <q-separator />
-      <q-card-section class="no-padding row justify-end items-center q-mt-md text-teal-4">
-        <div class="text-caption">{{$t('signIn.message.noRegisterAccount')}}</div>
-        <q-btn to="/join" flat color="amber-7" :label="$t('join.title')" style="text-decoration: underline;" />
+      <q-card-section class="no-padding q-mt-md">
+        <div class="column">
+          <div class="row justify-end items-center text-teal-4 q-gutter-x-md text-caption">
+            <div>{{$t('signIn.message.noRegisterAccount')}}</div>
+            <router-link to="/join" class="text-amber-7">
+              {{$t('join.title')}}</router-link>
+          </div>
+          <div class="row justify-end q-mt-sm">
+            <router-link to="/forgot" class="text-amber-7 text-caption">
+              {{$t('signIn.message.forgotYourPassword')}}</router-link>
+          </div>
+        </div>
       </q-card-section>
     </q-card>
   </div>
@@ -74,7 +83,6 @@
             isPwd: true
           }
         },
-        loading: false,
         processSign: false
       }
     },
@@ -117,11 +125,20 @@
       onSubmit() {
         const vm = this
         this.processSign = true
+        window.grecaptcha.ready(function () {
+          window.grecaptcha.execute(process.env.VUE_APP_GOOGLE_RC_SITEKEY, { action: 'submit' }).then(function (token) {
+            vm.checkToken(token)
+          })
+        })
+      },
+      checkToken(token) {
+        const vm = this
 
         this.axios
           .post('/seras/account/signin', {
             email: this.joinForm.email.value,
-            pwd: this.joinForm.password.value
+            pwd: this.joinForm.password.value,
+            token: token
           }).then(function (response) {
             vm.setSignStatus(true)
             vm.setSomeList(response.data)
@@ -268,5 +285,13 @@
   .sign-card {
     width: 100%;
     max-width: 400px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 </style>

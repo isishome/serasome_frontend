@@ -96,9 +96,8 @@
           else
             this.marginTop = max
         }
-        else {
-          this.marginTop = info.position
-        }
+        else
+          this.marginTop = info.position - 54 < 0 ? 0 : info.position - 54
       },
       change() {
         this.tabsWrapHeight = 0
@@ -150,6 +149,7 @@
   }
 
   .show {
+    position: -webkit-sticky;
     position: sticky;
     transition: all 0.4s;
     max-width: 50vw;
@@ -164,6 +164,7 @@
 
   .wide {
     transition: all 0.4s;
+    position: -webkit-sticky;
     position: sticky;
     z-index: 1;
     margin: 14px 3px 0 -3px;

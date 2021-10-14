@@ -1,8 +1,8 @@
 <template>
   <div>
     <q-table class="bg-transparent" table-class="table-style" card-container-class="q-col-gutter-md justify-center"
-      :grid="$q.screen.lt.lg" dark :data="data" :columns="columns" row-key="name" :filter="filter"
-      :filter-method="customFilter" :pagination="{rowsPerPage :0}" hide-header hide-pagination>
+      :grid="$q.screen.lt.lg" dark :data="filtering" :columns="columns" row-key="name" :pagination.sync="pagination"
+      hide-header hide-pagination>
       <template v-slot:no-data>
         <div class="row justify-center full-width text-body2">{{$t('d2r.knowledge.items.noData')}}</div>
       </template>
@@ -48,18 +48,18 @@
           <q-card dark class="card" bordered>
             <q-card-section class="font-kodia text-h6 word-keep">{{props.row.title}}</q-card-section>
             <q-separator />
-            <q-card-section>
-              <ul class="column text-caption">
+            <q-card-section class="no-padding">
+              <ul class="no-margin column text-caption">
                 <li v-for="(n, idx) in props.row.notice" :key="idx" class="col word-keep" v-html="n">
                 </li>
               </ul>
             </q-card-section>
-            <q-card-section>
+            <q-card-section class="no-padding">
               <div class="row justify-between items-center text-center">
                 <div v-for="(img, idx) in props.row.recipe" :key="`img_${idx}`"
                   :class="`col${props.row.width ? '' : '-4'}`">
                   <img :src="require(`@/assets/images/d2r/items/${img}`)"
-                    :style="`max-width: ${props.row.width ? props.row.width : '50px'};`" />
+                    :style="`max-width: ${props.row.width ? props.row.width : '30px'};`" />
                 </div>
               </div>
               <div v-if="props.row.desc" class="row justify-center">
@@ -80,6 +80,11 @@
         </q-input>
       </template>
     </q-table>
+    <div v-if="pagesNumber !== 0" class="mobile-only row justify-center full-width q-mt-md">
+      <q-pagination color="title text-black" v-model="pagination.page" :max="pagesNumber"
+        :max-pages="$q.screen.gt.sm ? 5 : 3" :ellipses="false" direction-links :boundary-numbers="false"
+        :boundary-links="$q.screen.gt.sm" />
+    </div>
     <p class="q-mt-xl text-right text-grey-6" :class="$q.screen.lt.md ? 'text-caption' : ''">
       {{$t('d2r.knowledge.source')}} :
       <a style="text-decoration: none;" class="text-green-4" target="_blank"
@@ -93,6 +98,10 @@
   export default {
     data() {
       return {
+        pagination: {
+          page: 1,
+          rowsPerPage: this.$q.platform.is.mobile ? 5 : 10000
+        },
         filter: '',
         columns: [
           { name: 'title', align: 'center', style: 'width:20%' },
@@ -102,13 +111,18 @@
         data: this.$t('d2r.knowledge.items.cubeData')
       }
     },
-    methods: {
-      customFilter(rows, terms) {
-        if (terms !== '') {
-          terms = terms.toLowerCase().split(' ')
-          rows = rows.filter(c => new RegExp(terms.join('|'), 'gi').test(c.title) || new RegExp(terms.join('|'), 'gi').test(c.notice.join('|')) || (c.desc && new RegExp(terms.join('|'), 'gi').test(c.desc.join('|'))))
+    computed: {
+      pagesNumber() {
+        return Math.ceil(this.filtering.length / this.pagination.rowsPerPage)
+      },
+      filtering() {
+        let result = this.data
+        if (this.filter !== '') {
+          const terms = this.filter.toLowerCase().split(' ')
+          result = result.filter(c => new RegExp(terms.join('|'), 'gi').test(c.title) || new RegExp(terms.join('|'), 'gi').test(c.notice.join('|')) || (c.desc && new RegExp(terms.join('|'), 'gi').test(c.desc.join('|'))))
         }
-        return rows
+
+        return result
       }
     }
   }
@@ -140,5 +154,11 @@
 
   .text-underline {
     text-decoration: underline;
+  }
+
+  ul {
+    list-style: inside;
+    padding: 0;
+    padding-left: 10px;
   }
 </style>

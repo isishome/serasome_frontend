@@ -184,7 +184,7 @@
               self.$q.notify({
                 type: 'positive',
                 color: 'positive',
-                message: '내 정보가 수정되었습니다'
+                message: self.$t('myInfo.message.successChange')
               })
 
               router.push('/').catch(() => { })

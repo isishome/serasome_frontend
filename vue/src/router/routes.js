@@ -3,6 +3,8 @@ const main = () => import(/* webpackChunkName: "group-default" */ '@/pages/seras
 
 const join = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Join')
 const sign = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Sign')
+const forgot = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Forgot')
+const change = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Change')
 const auth = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Auth')
 const info = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Info')
 const linked = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Linked')
@@ -94,6 +96,16 @@ const routes = [
     props: true
   },
   {
+    name: 'forgot',
+    path: '/forgot',
+    component: forgot
+  },
+  {
+    name: 'change',
+    path: '/change',
+    component: change
+  },
+  {
     name: 'info',
     path: '/info',
     component: info,
@@ -166,8 +178,7 @@ const routes = [
         component: d2rBbs,
         props: true,
         meta: {
-          checkGrade: 'list',
-          topScroll: true
+          checkGrade: 'list'
         },
         children: [
           {

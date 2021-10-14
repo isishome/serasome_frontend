@@ -72,7 +72,7 @@
                 <q-video :ratio="16/9" :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
               </div>
               <p class="word-wrap contents" v-html="viewContents"></p>
-              <div class="row justify-center" v-if="isProduction">
+              <div class="row justify-center" v-if="contLoaded && isProduction">
                 <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" data-ad-format="auto"
                   ins-style="display:inline-block;min-width:320px;max-width:780px;height:250px;" :key="`t_${key}`">
                 </Adsense>
@@ -287,7 +287,8 @@
         fileInfo: null,
         postInfo: null,
         key: uid(),
-        isProduction: process.env.NODE_ENV === 'production'
+        isProduction: process.env.NODE_ENV === 'production',
+        contLoaded: false
       }
     },
     computed: {
@@ -482,6 +483,7 @@
               self.postView = true
               self.$nextTick(() => {
                 self.$emit('done')
+                self.contLoaded = true
               })
             } else {
               self.$q.notify({

@@ -219,14 +219,13 @@
       </q-card>
     </q-dialog>
     <div class="row">
-      <q-scroll-observer debounce="100" @scroll="onScroll" />
       <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 q-mt-md relative-position">
-        <div v-if="pageLoad && $q.screen.gt.sm && isProduction" class="ad-left ad-box" :style="`top:${scrollTop}px`">
+        <div v-if="pageLoad && $q.screen.gt.sm && isProduction" class="ad-left ad-box">
           <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" data-ad-format="auto"
             ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
           </Adsense>
         </div>
-        <div v-if="pageLoad && $q.screen.gt.sm && isProduction" class="ad-right ad-box" :style="`top:${scrollTop}px`">
+        <div v-if="pageLoad && $q.screen.gt.sm && isProduction" class="ad-right ad-box">
           <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" data-ad-format="auto"
             ins-style="display:inline-block;width:164px;height:600px" :key="`rt_${key}`">
           </Adsense>
@@ -388,8 +387,7 @@
         thumb: null,
         key: uid(),
         isProduction: process.env.NODE_ENV === 'production',
-        pageLoad: false,
-        scrollTop: 0
+        pageLoad: false
       }
     },
     created() {
@@ -465,9 +463,6 @@
         modifyItem: 'modifyItem',
         deleteItem: 'deleteItem'
       }),
-      onScroll(info) {
-        this.scrollTop = info.position
-      },
       showLink(command, attrs) {
         if (!this.isSelectionEmpty) {
           this.command = command

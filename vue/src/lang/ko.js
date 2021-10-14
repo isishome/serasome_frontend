@@ -74,6 +74,7 @@ export default {
       passwordHint: "영문 대소문자, 숫자, 특수문자 포함 8자 이상",
       message: {
         noRegisterAccount: "등록된 계정이 없습니다",
+        forgotYourPassword: "비밀번호를 잃어버렸나요?",
         noGetGoogleInfo: "구글 계정정보를 가져올 수 없습니다.",
         gotoJoinPage: "가입 페이지로 이동합니다.",
         alreadyLoggedIn: "이미 로그인 된 상태입니다."
@@ -95,13 +96,33 @@ export default {
     signOut: {
       title: "로그아웃"
     },
+    forgot: {
+      btn: {
+        send: "인증메일 발송하기"
+      },
+      message: {
+        successSendMail: "비밀번호 변경 링크가 포함된 메일이 발송되었습니다",
+        failedSendMail: "이전 요청사항이 있는경우, 일정 시간후 다시 요청 하시기 바랍니다"
+      }
+    },
+    change: {
+      password: "새 비밀번호",
+      confirmPassword: "새 비밀번호 확인",
+      btn: {
+        change: "변경하기"
+      },
+      message: {
+        successChange: "비밀번호 변경이 완료되었습니다"
+      }
+    },
     myInfo: {
       title: "내 정보",
       currentPassword: "현재 비밀번호",
       NewPassword: "새 비밀번호",
       confirmNewPassword: "새 비밀번호 확인",
       message: {
-        disconnectGoogle: "구글 연동을 해제할까요?"
+        disconnectGoogle: "구글 연동을 해제할까요?",
+        successChange: "내정보 변경이 완료되었습니다"
       }
     },
     post: {
@@ -318,22 +339,22 @@ export default {
             },
             {
               title: '하급룬',
-              notice: ['<span class="text-weight-bold text-grey-7">주울룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-yellow">토파즈</span> → <span class="text-weight-bold text-grey-7">앰룬</span>', '<span class="text-weight-bold text-grey-7">앰룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-purple-5">자수정</span> → <span class="text-weight-bold text-grey-7">솔룬</span>', '<span class="text-weight-bold text-grey-7">솔룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-blue">사파이어</span> → <span class="text-weight-bold text-grey-7">샤엘룬</span>', '<span class="text-weight-bold text-grey-7">샤엘룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-red">루비</span> → <span class="text-weight-bold text-grey-7">돌룬</span>', '<span class="text-weight-bold text-grey-7">돌룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-light-green">에메랄드</span> → <span class="text-weight-bold text-grey-7">헬룬</span>', '<span class="text-weight-bold text-grey-7">헬룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-white">다이아몬드</span> → <span class="text-weight-bold text-grey-7">아이오(포)룬</span>'],
+              notice: ['<span class="text-weight-bold text-grey-7">주울룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-yellow">토파즈</span> → <span class="text-weight-bold text-grey-7">앰룬</span>', '<span class="text-weight-bold text-grey-7">앰룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-purple-5">자수정</span> → <span class="text-weight-bold text-grey-7">솔룬</span>', '<span class="text-weight-bold text-grey-7">솔룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-blue">사파이어</span> → <span class="text-weight-bold text-grey-7">샤엘룬</span>', '<span class="text-weight-bold text-grey-7">샤엘룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-red">루비</span> → <span class="text-weight-bold text-grey-7">돌룬</span>', '<span class="text-weight-bold text-grey-7">돌룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-light-green">에메랄드</span> → <span class="text-weight-bold text-grey-7">헬룬</span>', '<span class="text-weight-bold text-grey-7">헬룬</span> x 3 + <span class="text-underline">최하급</span> <span class="text-white">다이아몬드</span> → <span class="text-weight-bold text-grey-7">이오룬</span>'],
               recipe: ['runes/thul.png', 'runes/amn.png', 'runes/sol.png', 'runes/shael.png', 'runes/dol.png', 'runes/hel.png', 'runes/io.png']
             },
             {
               title: '일반룬',
-              notice: ['<span class="text-weight-bold text-grey-7">아이오(포)룬</span> x 3 + <span class="text-underline">하급</span> <span class="text-yellow">토파즈</span> → <span class="text-weight-bold text-grey-7">룸룬</span>', '<span class="text-weight-bold text-grey-7">룸룬</span> x 3 + <span class="text-underline">하급</span> <span class="text-purple-5">자수정</span> → <span class="text-weight-bold text-grey-7">코룬</span>', '<span class="text-weight-bold text-grey-7">코룬</span> x 3 + <span class="text-underline">하급</span> <span class="text-blue">사파이어</span> → <span class="text-weight-bold text-grey-7">팔룬</span>', '<span class="text-weight-bold text-grey-7">팔룬</span> x 3 + <span class="text-underline">하급</span> <span class="text-red">루비</span> → <span class="text-weight-bold text-grey-7">Lem</span>', '<span class="text-weight-bold text-grey-7">Lem</span> x 3 + <span class="text-underline">하급</span> <span class="text-light-green">에메랄드</span> → <span class="text-weight-bold text-grey-7">풀룬</span>', '<span class="text-weight-bold text-grey-7">풀룬</span> x 2 + <span class="text-underline">하급</span> <span class="text-white">다이아몬드</span> → <span class="text-weight-bold text-grey-7">움(우움)룬</span>'],
+              notice: ['<span class="text-weight-bold text-grey-7">이오룬</span> x 3 + <span class="text-underline">하급</span> <span class="text-yellow">토파즈</span> → <span class="text-weight-bold text-grey-7">룸룬</span>', '<span class="text-weight-bold text-grey-7">룸룬</span> x 3 + <span class="text-underline">하급</span> <span class="text-purple-5">자수정</span> → <span class="text-weight-bold text-grey-7">코룬</span>', '<span class="text-weight-bold text-grey-7">코룬</span> x 3 + <span class="text-underline">하급</span> <span class="text-blue">사파이어</span> → <span class="text-weight-bold text-grey-7">팔룬</span>', '<span class="text-weight-bold text-grey-7">팔룬</span> x 3 + <span class="text-underline">하급</span> <span class="text-red">루비</span> → <span class="text-weight-bold text-grey-7">Lem</span>', '<span class="text-weight-bold text-grey-7">Lem</span> x 3 + <span class="text-underline">하급</span> <span class="text-light-green">에메랄드</span> → <span class="text-weight-bold text-grey-7">풀룬</span>', '<span class="text-weight-bold text-grey-7">풀룬</span> x 2 + <span class="text-underline">하급</span> <span class="text-white">다이아몬드</span> → <span class="text-weight-bold text-grey-7">우움룬</span>'],
               recipe: ['runes/io.png', 'runes/lum.png', 'runes/ko.png', 'runes/fal.png', 'runes/lem.png', 'runes/pul.png', 'runes/um.png']
             },
             {
               title: '상급룬',
-              notice: ['<span class="text-weight-bold text-grey-7">움(우움)룬</span> x 2 + <span class="text-yellow">토파즈</span> → <span class="text-weight-bold text-grey-7">말룬</span>', '<span class="text-weight-bold text-grey-7">말룬</span> x 2 + <span class="text-purple-5">자수정</span> → <span class="text-weight-bold text-grey-7">아이스트(이슷)룬</span>', '<span class="text-weight-bold text-grey-7">아이스트(이슷)룬</span> x 2 + <span class="text-blue">사파이어</span> → <span class="text-weight-bold text-grey-7">굴룬</span>', '<span class="text-weight-bold text-grey-7">굴룬</span> x 2 + <span class="text-red">루비</span> → <span class="text-weight-bold text-grey-7">벡스룬</span>', '<span class="text-weight-bold text-grey-7">벡스룬</span> x 2 + <span class="text-light-green">에메랄드</span> → <span class="text-weight-bold text-grey-7">오움(옴)룬</span>', '<span class="text-weight-bold text-grey-7">오움(옴)룬</span> x 2 + <span class="text-white">다이아몬드</span> → <span class="text-weight-bold text-grey-7">로룬</span>'],
+              notice: ['<span class="text-weight-bold text-grey-7">우움룬</span> x 2 + <span class="text-yellow">토파즈</span> → <span class="text-weight-bold text-grey-7">말룬</span>', '<span class="text-weight-bold text-grey-7">말룬</span> x 2 + <span class="text-purple-5">자수정</span> → <span class="text-weight-bold text-grey-7">이스트룬</span>', '<span class="text-weight-bold text-grey-7">이스트룬</span> x 2 + <span class="text-blue">사파이어</span> → <span class="text-weight-bold text-grey-7">굴룬</span>', '<span class="text-weight-bold text-grey-7">굴룬</span> x 2 + <span class="text-red">루비</span> → <span class="text-weight-bold text-grey-7">벡스룬</span>', '<span class="text-weight-bold text-grey-7">벡스룬</span> x 2 + <span class="text-light-green">에메랄드</span> → <span class="text-weight-bold text-grey-7">오움룬</span>', '<span class="text-weight-bold text-grey-7">오움룬</span> x 2 + <span class="text-white">다이아몬드</span> → <span class="text-weight-bold text-grey-7">로룬</span>'],
               recipe: ['runes/um.png', 'runes/mal.png', 'runes/ist.png', 'runes/gul.png', 'runes/vex.png', 'runes/ohm.png', 'runes/lo.png']
             },
             {
               title: '최상급룬',
-              notice: ['<span class="text-weight-bold text-grey-7">로룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-yellow">토파즈</span> → <span class="text-weight-bold text-grey-7">수르룬</span>', '<span class="text-weight-bold text-grey-7">수르룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-purple-5">자수정</span> → <span class="text-weight-bold text-grey-7">베르룬</span>', '<span class="text-weight-bold text-grey-7">베르룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-blue">사파이어</span> → <span class="text-weight-bold text-grey-7">자(조)룬</span>', '<span class="text-weight-bold text-grey-7">자(조)룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-red">루비</span> → <span class="text-weight-bold text-grey-7">참룬</span>', '<span class="text-weight-bold text-grey-7">참룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-light-green">에메랄드</span> → <span class="text-weight-bold text-grey-7">조드룬</span>'],
+              notice: ['<span class="text-weight-bold text-grey-7">로룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-yellow">토파즈</span> → <span class="text-weight-bold text-grey-7">수르룬</span>', '<span class="text-weight-bold text-grey-7">수르룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-purple-5">자수정</span> → <span class="text-weight-bold text-grey-7">베르룬</span>', '<span class="text-weight-bold text-grey-7">베르룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-blue">사파이어</span> → <span class="text-weight-bold text-grey-7">자룬</span>', '<span class="text-weight-bold text-grey-7">자룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-red">루비</span> → <span class="text-weight-bold text-grey-7">참룬</span>', '<span class="text-weight-bold text-grey-7">참룬</span> x 2 + <span class="text-underline">상급</span> <span class="text-light-green">에메랄드</span> → <span class="text-weight-bold text-grey-7">조드룬</span>'],
               recipe: ['runes/lo.png', 'runes/sur.png', 'runes/ber.png', 'runes/jah.png', 'runes/cham.png', 'runes/zod.png']
             },
             {
@@ -445,7 +466,7 @@ export default {
             },
             {
               title: '익셉셔널 레어 무기강화',
-              notice: ['<span class="text-weight-bold text-grey-7">팔룬</span> + <span class="text-weight-bold text-grey-7">움(우움)룬</span> + <span class="text-underline">최상급</span> <span class="text-light-green">에메랄드</span> + <span class="text-yellow">익셉셔널 레어 무기</span> → <span class="text-yellow">엘리트 레어 무기</span>'],
+              notice: ['<span class="text-weight-bold text-grey-7">팔룬</span> + <span class="text-weight-bold text-grey-7">우움룬</span> + <span class="text-underline">최상급</span> <span class="text-light-green">에메랄드</span> + <span class="text-yellow">익셉셔널 레어 무기</span> → <span class="text-yellow">엘리트 레어 무기</span>'],
               recipe: ['weapons/crystal_sword.png'],
               width: '30%'
             },
@@ -594,22 +615,22 @@ export default {
             { no: 13, level: 29, name: '샤엘', file: 'shael' },
             { no: 14, level: 31, name: '돌', file: 'dol' },
             { no: 15, level: -1, name: '헬', file: 'hel' },
-            { no: 16, level: 35, name: '아이오(포)', file: 'io' },
+            { no: 16, level: 35, name: '이오', file: 'io' },
             { no: 17, level: 37, name: '룸', file: 'lum' },
             { no: 18, level: 39, name: '코', file: 'ko' },
             { no: 19, level: 41, name: '팔', file: 'fal' },
             { no: 20, level: 43, name: '렘', file: 'lem' },
             { no: 21, level: 45, name: '풀', file: 'pul' },
-            { no: 22, level: 47, name: '움(우움)', file: 'um' },
+            { no: 22, level: 47, name: '우움', file: 'um' },
             { no: 23, level: 49, name: '말', file: 'mal' },
-            { no: 24, level: 51, name: '아이스트(이슷)', file: 'ist' },
+            { no: 24, level: 51, name: '이스트', file: 'ist' },
             { no: 25, level: 53, name: '굴', file: 'gul' },
             { no: 26, level: 55, name: '벡스', file: 'vex' },
-            { no: 27, level: 57, name: '오움(옴)', file: 'ohm' },
+            { no: 27, level: 57, name: '오움', file: 'ohm' },
             { no: 28, level: 59, name: '로', file: 'lo' },
             { no: 29, level: 61, name: '수르', file: 'sur' },
             { no: 30, level: 63, name: '베르', file: 'ber' },
-            { no: 31, level: 65, name: '자(조)', file: 'jah' },
+            { no: 31, level: 65, name: '자', file: 'jah' },
             { no: 32, level: 67, name: '참', file: 'cham' },
             { no: 33, level: 69, name: '조드', file: 'zod' }
           ],

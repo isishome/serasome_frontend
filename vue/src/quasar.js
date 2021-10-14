@@ -7,7 +7,7 @@ import '@quasar/extras/fontawesome-v5/fontawesome-v5.css'
 import { Quasar, Notify, Cookies } from 'quasar'
 
 Notify.setDefaults({
-  timeout: 1000
+  timeout: 2000
 })
 
 Vue.use(Quasar, {

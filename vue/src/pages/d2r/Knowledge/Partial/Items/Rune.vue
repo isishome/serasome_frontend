@@ -15,8 +15,7 @@
     </div>
     <q-table dense class="bg-transparent" table-class="table-style"
       card-container-class="q-col-gutter-md justify-center" :grid="$q.screen.lt.lg" dark :data="filtering"
-      :columns="columns" row-key="name" :filter="filter" :filter-method="customFilter" :pagination="{rowsPerPage :0}"
-      :hide-header="$q.screen.lt.sm" hide-pagination>
+      :columns="columns" row-key="name" :pagination.sync="pagination" :hide-header="$q.screen.lt.sm" hide-pagination>
       <template v-slot:no-data>
         <div class="row justify-center full-width" :class="$q.screen.lt.md ? 'text-caption' : 'text-body2'">
           {{$t('d2r.knowledge.items.noData')}}</div>
@@ -88,13 +87,16 @@
         <q-tr :props="props">
           <q-td key="name" :props="props">
             <div class="text-h6 word-keep text-amber-6 column">
-              <div class="col">{{props.row.name}}<span class="text-body1 text-brown" v-if="props.row.oldName">
-                  ({{props.row.oldName}})</span></div>
+              <div class="col">
+                {{props.row.name}}
+              </div>
+              <div v-if="props.row.oldName" class="text-body1 text-brown">({{props.row.oldName}})</div>
               <div class="col text-teal-4 text-subtitle2">clvl
                 {{props.row.level}}
               </div>
               <div class="col q-gutter-x-xs">
-                <q-badge color="red" v-if="props.row.hot === true">{{$t('d2r.knowledge.items.hot')}}
+                <q-badge color="red" v-if="props.row.hot === true">
+                  {{$t('d2r.knowledge.items.hot')}}
                 </q-badge>
                 <q-badge color="blue" v-if="props.row.recc.includes('beginner')">{{$t('d2r.knowledge.items.beginner')}}
                 </q-badge>
@@ -158,35 +160,35 @@
             </q-card-section>
             <q-separator />
             <q-card-section class="q-pa-xs">
-              <div class="text-subtitle2 word-keep column">
-                <div class="col" v-for="(m, idx) in parsMaterial(props.row.materials)" :key="idx">{{m}}<span
+              <div class="text-subtitle2 word-keep row justify-around">
+                <div v-for="(m, idx) in parsMaterial(props.row.materials)" :key="idx">{{m}}<span
                     class="text-red-5">({{props.row.runeword.length}})</span>
                 </div>
               </div>
             </q-card-section>
             <q-separator />
             <q-card-section class="q-pa-xs">
-              <ul class="column text-body2 stats">
+              <ul class="column text-caption stats">
                 <li v-for="(stat, idx) in props.row.stats" :key="idx" class="col word-keep" v-html="stat">
                 </li>
               </ul>
-              <ul class="column text-body2 stats">
+              <ul class="column text-body2 stats" v-if="props.row.part">
                 <li v-for="(p, idx) in props.row.part" :key="idx" class="col word-keep part" v-html="p">
                 </li>
               </ul>
             </q-card-section>
             <q-separator />
             <q-card-section class="q-pa-xs">
-              <div class="row items-center content-center">
+              <div class="row justify-center full-width items-start content-center">
                 <template v-for="(rune, idx) in parsRuneWord(props.row.runeword)">
-                  <div class="col column items-center content-center" :key="`img_${idx}`" style="height:140px">
-                    <div class="col row items-center">
+                  <div class="col-2 column items-center content-center" :key="`img_${idx}`">
+                    <div class="row items-center">
                       <img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)" style="width:30px" />
                     </div>
-                    <div class="col-4 row items-center text-caption word-keep text-grey-5">
+                    <div class="row items-center word-keep text-grey-5" style="font-size: 0.6em">
                       {{rune.name}}
                     </div>
-                    <div class="col row items-center text-caption text-title">
+                    <div class="row items-center text-caption text-title">
                       ({{rune.no}})
                     </div>
                   </div>
@@ -204,6 +206,11 @@
         </q-input>
       </template>
     </q-table>
+    <div v-if="pagesNumber.length !== 0" class="mobile-only row justify-center full-width q-mt-md">
+      <q-pagination color="title text-black" v-model="pagination.page" :max="pagesNumber"
+        :max-pages="$q.screen.gt.sm ? 5 : 3" :ellipses="false" direction-links :boundary-numbers="false"
+        :boundary-links="$q.screen.gt.sm" />
+    </div>
     <p class="q-mt-xl text-right text-grey-6" :class="$q.screen.lt.md ? 'text-caption' : ''">
       {{$t('d2r.knowledge.source')}} : <a style="text-decoration: none;" class="text-green-4" target="_blank"
         href="https://namu.wiki/w/%EB%A3%AC%EC%96%B4%20%EC%95%84%EC%9D%B4%ED%85%9C">{{$t('d2r.knowledge.namuWiki')}}</a>
@@ -220,6 +227,10 @@
   export default {
     data() {
       return {
+        pagination: {
+          page: 1,
+          rowsPerPage: this.$q.platform.is.mobile ? 5 : 10000
+        },
         filter: '',
         columns: [
           { name: 'name', label: this.$t('d2r.knowledge.items.runewordName'), align: 'center', style: 'width:20%' },
@@ -252,7 +263,11 @@
           return c
         }), { 'value': 'mercenary', 'label': this.$t('d2r.knowledge.items.mercenary'), 'src': require('@/assets/images/d2r/items/etc/mercenary.png') }]
       },
+      pagesNumber() {
+        return Math.ceil(this.filtering.length / this.pagination.rowsPerPage)
+      },
       filtering() {
+        let result = []
         const selectedRunes = this.runes.filter(r => r.selected === true).map(r => r.no)
         let resultRuneWords = this.selectedMaterial === 0 ? this.runeWords : this.selectedMaterial === 1 ? this.runeWords.filter(r => r.materials.filter(m => ![2, 3, 4, 5].includes(m)).length > 0) : this.runeWords.filter(r => r.materials.includes(this.selectedMaterial))
 
@@ -276,12 +291,19 @@
 
         if (selectedRunes.length > 0) {
           if (this.own === true)
-            return resultRuneWords.filter(rw => rw.runeword.filter(r => !selectedRunes.includes(r)).length === 0)
+            result = resultRuneWords.filter(rw => rw.runeword.filter(r => !selectedRunes.includes(r)).length === 0)
           else
-            return resultRuneWords.filter(rw => selectedRunes.filter(r => !rw.runeword.includes(r)).length === 0)
+            result = resultRuneWords.filter(rw => selectedRunes.filter(r => !rw.runeword.includes(r)).length === 0)
         }
         else
-          return resultRuneWords
+          result = resultRuneWords
+
+        if (this.filter !== '') {
+          const terms = this.filter.toLowerCase().split(' ')
+          result = result.filter(c => new RegExp(terms.join('|'), 'gi').test(c.name) || (c.oldName && new RegExp(terms.join('|'), 'gi').test(c.oldName)) || new RegExp(terms.join('|'), 'gi').test(c.stats.join('|')))
+        }
+
+        return result
       }
     },
     methods: {
@@ -315,15 +337,6 @@
           result = material.map(m => this.materials.find(ms => ms.no === m).name)
 
         return result
-      },
-      customFilter(rows, terms) {
-        if (terms !== '') {
-          terms = terms.toLowerCase().split(' ')
-          const filter2 = this.filtering.filter(c => new RegExp(terms.join('|'), 'gi').test(c.name) || (c.oldName && new RegExp(terms.join('|'), 'gi').test(c.oldName)) || new RegExp(terms.join('|'), 'gi').test(c.stats.join('|')))
-          return filter2
-        }
-        else
-          return this.filtering
       }
     }
   }
@@ -370,6 +383,7 @@
   }
 
   .stats li {
+    line-height: 1.4em;
     color: rgba(100, 100, 250, 1);
   }
 

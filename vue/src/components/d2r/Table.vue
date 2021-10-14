@@ -122,6 +122,7 @@
     },
     methods: {
       go(page) {
+        window.scrollTo(0, 0)
         this.$router.push({ path: this.$route.path, query: { page: page || this.page } }).catch(() => { })
       },
       onRequest(props) {

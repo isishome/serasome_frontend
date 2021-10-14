@@ -11,7 +11,7 @@
             <div class="font-title text-h6 text-teal-7 q-ml-sm">{{category.name}}</div>
           </div>
           <q-separator inset spaced />
-          <q-infinite-scroll ref="some" @load="onLoad" :offset="250" class="q-mt-md">
+          <q-infinite-scroll ref="some" @load="onLoad" :offset="250" class="q-mt-md" scroll-target="body">
             <ss-post-list :list="items" :loading="loading" :pid="pid" @view="view"></ss-post-list>
             <template v-slot:loading>
               <div class="row justify-center q-my-md">
