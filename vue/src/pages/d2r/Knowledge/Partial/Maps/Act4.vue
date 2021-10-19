@@ -2,10 +2,10 @@
   <div class="knowledge">
     <template v-if="$i18n.locale === 'ko'">
       <q-timeline dense :layout="layout">
-        <q-timeline-entry color="grey-8" class="text-title" side="left" icon="fab fa-fort-awesome">
+        <q-timeline-entry color="grey-8" side="left" icon="fab fa-fort-awesome">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Pandemonium Fortress</div>
               </q-card-section>
@@ -19,10 +19,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="yellow-10" class="text-title" side="right" icon="border_outer">
+        <q-timeline-entry color="yellow-10" side="right" icon="border_outer">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Outer Steppes</div>
               </q-card-section>
@@ -37,10 +36,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="indigo" class="text-title" side="left" icon="fas fa-campground">
+        <q-timeline-entry color="indigo" side="left" icon="fas fa-campground">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Plains of Despair</div>
               </q-card-section>
@@ -54,10 +53,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="green-10" class="text-title" side="right" icon="stairs">
+        <q-timeline-entry color="green-10" side="right" icon="stairs">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">City of the Damned</div>
               </q-card-section>
@@ -72,10 +70,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="orange-8" class="text-title" side="left" icon="local_fire_department">
+        <q-timeline-entry color="orange-8" side="left" icon="local_fire_department">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">River of Flame</div>
               </q-card-section>
@@ -89,10 +87,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="red-10" class="text-title" side="right" icon="fas fa-dice-d20">
+        <q-timeline-entry color="red-10" side="right" icon="fas fa-dice-d20">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Chaos Sanctuary</div>
               </q-card-section>
@@ -111,15 +108,15 @@
           액트 IV 완료
         </q-timeline-entry>
       </q-timeline>
-      <p class="text-right text-grey-6">출처 : <a style="text-decoration: none;" class="text-title" target="_blank"
+      <p class="text-right text-grey-6">출처 : <a style="text-decoration: none;" target="_blank"
           href="http://classic.battle.net/diablo2exp/maps/act4.shtml">아리앗서밋</a></p>
     </template>
     <template v-if="$i18n.locale === 'en'">
       <q-timeline dense :layout="layout">
-        <q-timeline-entry color="grey-8" class="text-title" side="left" icon="fab fa-fort-awesome">
+        <q-timeline-entry color="grey-8" side="left" icon="fab fa-fort-awesome">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Pandemonium Fortress</div>
               </q-card-section>
@@ -133,10 +130,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="yellow-10" class="text-title" side="right" icon="border_outer">
+        <q-timeline-entry color="yellow-10" side="right" icon="border_outer">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Outer Steppes</div>
               </q-card-section>
@@ -151,10 +147,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="indigo" class="text-title" side="left" icon="fas fa-campground">
+        <q-timeline-entry color="indigo" side="left" icon="fas fa-campground">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Plains of Despair</div>
               </q-card-section>
@@ -168,10 +164,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="green-10" class="text-title" side="right" icon="stairs">
+        <q-timeline-entry color="green-10" side="right" icon="stairs">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">City of the Damned</div>
               </q-card-section>
@@ -186,10 +181,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="orange-8" class="text-title" side="left" icon="local_fire_department">
+        <q-timeline-entry color="orange-8" side="left" icon="local_fire_department">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">River of Flame</div>
               </q-card-section>
@@ -203,10 +198,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="red-10" class="text-title" side="right" icon="fas fa-dice-d20">
+        <q-timeline-entry color="red-10" side="right" icon="fas fa-dice-d20">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Chaos Sanctuary</div>
               </q-card-section>
@@ -225,7 +219,7 @@
           Act IV Completed
         </q-timeline-entry>
       </q-timeline>
-      <p class="text-right text-grey-6">Source : <a style="text-decoration: none;" class="text-title" target="_blank"
+      <p class="text-right text-grey-6">Source : <a style="text-decoration: none;" target="_blank"
           href="http://classic.battle.net/diablo2exp/maps/act4.shtml">Arreat Summit</a></p>
     </template>
   </div>

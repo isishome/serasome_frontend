@@ -1,10 +1,10 @@
 <template>
   <div class="wrap row justify-start q-gutter-sm">
     <div class="col-8 col-sm-5 col-md-4 col-lg-3 column">
-      <q-input class="col-12 full-width" dense dark outlined clearable v-model="searchText"
+      <q-input class="col-12 full-width" dense outlined clearable v-model="searchText"
         :label="$t('d2r.knowledge.quests.search')" color="title" />
     </div>
-    <q-tree ref="tree" dark class="col-12 bg-transparent no-padding" :nodes="customize[$i18n.locale]" node-key="label"
+    <q-tree ref="tree" class="col-12 bg-transparent no-padding" :nodes="customize[$i18n.locale]" node-key="label"
       :filter="searchText" :filter-method="filter" :no-results-label="$t('search.noData')" :expanded.sync="expanded"
       accordion :no-connectors="$q.screen.lt.sm">
       <template v-slot:header-root="prop">
@@ -15,7 +15,7 @@
         </div>
       </template>
       <template v-slot:header-generic="prop">
-        <q-item dark class="no-margin no-padding quest-title">
+        <q-item class="no-margin no-padding quest-title">
           <q-item-section side class="no-padding">
             <q-img :src="prop.node.avatar" :width="$q.screen.lt.sm ? '30px' : '50px'" />
           </q-item-section>
@@ -28,47 +28,46 @@
         </q-item>
       </template>
       <template v-slot:body-info="prop">
-        <q-item dark class="quest-info no-padding row items-center" :class="$q.screen.lt.sm ? 'q-mb-sm' : 'q-mb-xl'">
+        <q-item class="quest-info no-padding row items-center" :class="$q.screen.lt.sm ? 'q-mb-sm' : 'q-mb-xl'">
           <q-item-section class="no-margin no-wrap">
             <q-item-label>
               <img v-if="prop.node.image" class="quest-image" :src="prop.node.image" @load="onload($event.target)" />
-              <p class="word-keep text-grey-4" v-for="(d, index) in prop.node.desc"
-                :class="index === 0 ? 'p-margin' : ''" :key="index">{{d}}</p>
+              <p class="word-keep" v-for="(d, index) in prop.node.desc" :class="index === 0 ? 'p-margin' : ''"
+                :key="index">{{d}}</p>
             </q-item-label>
             <q-item-label v-if="prop.node.given" class="row q-gutter-x-sm quest-caption q-pb-xs">
               <div class="font-kodia text-title text-weight-bold" :class="$q.screen.lt.sm ? 'col-12' : ''">
                 {{$t('d2r.knowledge.quests.given')}}</div>
               <div>ㆍ</div>
-              <div class="col word-keep text-grey-5">{{prop.node.given}}</div>
+              <div class="col word-keep">{{prop.node.given}}</div>
             </q-item-label>
             <q-item-label v-if="prop.node.tip" class="row q-gutter-x-sm quest-caption q-pb-xs">
               <div class="font-kodia text-title text-weight-bold" :class="$q.screen.lt.sm ? 'col-12' : ''">
                 {{$t('d2r.knowledge.quests.tip')}}</div>
               <div>ㆍ</div>
-              <div class="col word-keep text-grey-5">{{prop.node.tip}}</div>
+              <div class="col word-keep">{{prop.node.tip}}</div>
             </q-item-label>
             <q-item-label v-if="prop.node.reward" class="row q-gutter-x-sm quest-caption q-pb-xs">
               <div class="font-kodia text-title text-weight-bold" :class="$q.screen.lt.sm ? 'col-12' : ''">
                 {{$t('d2r.knowledge.quests.reward')}}
               </div>
               <div>ㆍ</div>
-              <div class="word-keep text-grey-5">{{prop.node.reward}}</div>
+              <div class="word-keep">{{prop.node.reward}}</div>
             </q-item-label>
             <q-item-label v-if="prop.node.note" class="row q-gutter-x-sm quest-caption q-pb-xs">
               <div class="font-kodia text-title text-weight-bold" :class="$q.screen.lt.sm ? 'col-12' : ''">
                 {{$t('d2r.knowledge.quests.note')}}</div>
               <div>ㆍ</div>
-              <div class="col word-keep text-grey-5">{{prop.node.note}}</div>
+              <div class="col word-keep">{{prop.node.note}}</div>
             </q-item-label>
           </q-item-section>
         </q-item>
       </template>
     </q-tree>
     <div class="full-width quest-source">
-      <p class="text-right text-grey-6">{{$t('d2r.knowledge.source')}} : <a style="text-decoration: none;"
-          class="text-title" target="_blank"
-          href="http://classic.battle.net/diablo2exp/quests">{{$t('d2r.knowledge.arreatSummit')}}</a> & <a
-          style="text-decoration: none;" class=" text-green-4" target="_blank"
+      <p class="text-right">{{$t('d2r.knowledge.source')}} : <a style="text-decoration: none;" class="text-title"
+          target="_blank" href="http://classic.battle.net/diablo2exp/quests">{{$t('d2r.knowledge.arreatSummit')}}</a> &
+        <a style="text-decoration: none;" class=" text-green-4" target="_blank"
           href="https://namu.wiki/w/%EB%94%94%EC%95%84%EB%B8%94%EB%A1%9C%202/%ED%80%98%EC%8A%A4%ED%8A%B8">{{$t('d2r.knowledge.namuWiki')}}</a>
       </p>
     </div>
@@ -754,7 +753,6 @@
   .quest-title {
     font-size: 1.6em;
     font-weight: bold;
-    color: rgba(200, 200, 200, 1);
   }
 
   .quest-info {
@@ -766,7 +764,6 @@
   .quest-info p {
     text-indent: 0.8em;
     line-height: 1.6em !important;
-    color: rgba(180, 180, 180, 1) !important;
   }
 
   .quest-info p.p-margin {

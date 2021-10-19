@@ -1,9 +1,6 @@
 <template>
   <div>
     <div class="lt-md">
-      <!-- <Adsense v-if="pageLoad" class="mobile-only" data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238"
-        data-ad-format="auto" ins-style="display:inline-block;width:300px;height:100px">
-      </Adsense> -->
       <div class="row items-center">
         <q-icon name="fas fa-book" class="q-ma-sm" size="20px" color="title" />
         <div class="font-title q-ml-xs text-uppercase font-kodia">{{$t('d2r.knowledge.title')}}</div>
@@ -17,8 +14,8 @@
           class="overflow-hidden col-4 col-sm q-py-md tab-btn font-kodia" :icon="tab.icon" :label="tab.name"
           @click="swapSection(tab.value)" :disable="loading" />
       </div>
-      <q-tab-panels dark class="bg-knowledge tab-panels" :class="!leftTabs ? 'no-left-tabs' : ''" v-model="section"
-        animated vertical :transition-prev="$q.screen.lt.sm ? 'none' : 'jump-right'"
+      <q-tab-panels class="bg-knowledge tab-panels" :class="!leftTabs ? 'no-left-tabs' : ''" v-model="section" animated
+        vertical :transition-prev="$q.screen.lt.sm ? 'none' : 'jump-right'"
         :transition-next="$q.screen.lt.sm ? 'none' : 'jump-left'">
         <q-tab-panel v-for="tab in list" :key="tab.value" :name="tab.value"
           class="no-padding row justify-start items-start no-scroll">
@@ -141,10 +138,14 @@
 
   .know-wrap {
     margin-left: 122px;
-    box-shadow: 0 0 0 1px rgba(163, 106, 0, 0.4);
-    border-radius: 4px;
+    box-shadow: 1px 0 0 0 rgba(163, 106, 0, 0.4), -1px 0 0 0 rgba(163, 106, 0, 0.4), 0 1px 0 0 rgba(163, 106, 0, 0.4);
     background-color: rgba(5, 5, 5, 1);
-    color: #CCCCCC;
+    border-radius: 10px;
+  }
+
+  .body--light .know-wrap {
+    box-shadow: 1px 0 0 0 rgba(5, 5, 5, .2), -1px 0 0 0 rgba(5, 5, 5, .2), 0 1px 0 0 rgba(5, 5, 5, .2) !important;
+    background-color: rgba(245, 245, 245, 1);
   }
 
   .tab-panels {
@@ -157,14 +158,21 @@
 
   .tab-btn {
     filter: grayscale(30%);
-    opacity: .5;
     padding: 4px 2px;
+    opacity: .5;
     background: linear-gradient(to bottom, rgba(70, 70, 70, .9) 10%, rgba(20, 20, 20, 0.9) 60%, rgba(0, 0, 0, 1)), url('/static/images/d2r_back.jpg') repeat !important;
     box-shadow: inset 0 1px 1px 0 rgba(214, 139, 0, .7), inset 0 -1px 1px 0 rgba(214, 139, 0, .7), inset 0 -2px 1px 0 rgba(65, 44, 6, 0.7), inset 0 0 10px 3px rgba(0, 0, 0, 1);
     color: #b89c5b !important;
     font-weight: bold;
     font-size: 1em !important;
-    border-radius: 4px 4px 0 0;
+    border-radius: 10px 10px 0 0 !important;
+  }
+
+  .body--light .tab-btn {
+    opacity: .2;
+    background: linear-gradient(to bottom, rgba(150, 150, 150, .9) 10%, rgba(200, 200, 200, 0.9) 60%, rgba(245, 245, 245, 1)), url('/static/images/d2r_back.jpg') repeat !important;
+    box-shadow: inset 0 1px 1px 0 rgba(50, 50, 50, .7), inset 0 -1px 1px 0 rgba(50, 50, 50, .7), inset 0 -2px 1px 0 rgba(20, 20, 20, .7), inset 0 0 10px 3px rgba(0, 0, 0, 1);
+    color: rgba(5, 5, 5, 1) !important;
   }
 
   .tab-btn.active {

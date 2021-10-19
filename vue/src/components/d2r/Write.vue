@@ -2,13 +2,12 @@
   <div class="d2r-write">
     <q-form class="no-wrap column q-gutter-y-sm" @submit="onSubmit">
       <div class="row justify-start">
-        <q-select dark borderless dense emit-value no-error-icon hide-bottom-space map-options
-          class="col-12 col-lg-3 input-place q-px-sm" color="grey-5" popup-content-class="bg-grey-10"
-          v-model="writeInfo.classify" :options="classifies" :label="$t('d2r.bbs.classify')" behavior="menu"
-          :rules="[val => val && val !== null || '']" />
+        <q-select borderless dense emit-value no-error-icon hide-bottom-space map-options
+          class="col-12 col-lg-3 input-place q-px-sm" color="grey-5" v-model="writeInfo.classify" :options="classifies"
+          :label="$t('d2r.bbs.classify')" behavior="menu" :rules="[val => val && val !== null || '']" />
       </div>
       <div>
-        <q-input dark dense borderless hide-bottom-space no-error-icon class="q-px-sm input-place" color="grey-5"
+        <q-input dense borderless hide-bottom-space no-error-icon class="q-px-sm input-place" color="grey-5"
           :disable="processPosting" maxlength="200" type="text" :label="$t('post.title')" v-model="writeInfo.title"
           :rules="[val => val && val.trim() !== '' || '']" />
       </div>
@@ -99,18 +98,18 @@
       <q-list separator v-if="sec !== 'trade'">
         <q-item dense class="input-place">
           <q-item-section side>
-            <q-radio dark dense :disable="getYoutubeId(writeInfo.youtube) === null" v-model="writeInfo.thumb"
+            <q-radio dense :disable="getYoutubeId(writeInfo.youtube) === null" v-model="writeInfo.thumb"
               :val="writeInfo.youtube" size="xs" />
           </q-item-section>
           <q-item-section>
-            <q-input borderless dark dense hide-bottom-space no-error-icon color="grey-5" :disable="processPosting"
+            <q-input borderless dense hide-bottom-space no-error-icon color="grey-5" :disable="processPosting"
               type="text" v-model="writeInfo.youtube" :label="$t('post.youtubeUrl')"
               :rules="[val => (!val || val.trim() === '' || getYoutubeId(val) !== null) || '']" @input="validYoutube" />
           </q-item-section>
         </q-item>
       </q-list>
       <div class="input-place">
-        <q-uploader dark class="full-width bg-transparent" color="transparent" ref="uploader" :disable="processPosting"
+        <q-uploader class="full-width bg-transparent" color="grey-10" ref="uploader" :disable="processPosting"
           :accept="limitFileCnt !== -1 ? 'image/*' : '.exe, .zip, .tar, .jar, .7z, .rar, .bat, .cmd, .hwp, .txt, .doc, .docx, .ppt, .pptx, .xls, .xlss, image/*, video/*, audio/*'"
           :factory="postWihtUpload"
           :label="limitFileCnt !== -1 ? `attach image (10m * ${limitFileCnt})` : 'attach file (10m)'" @added="added"
@@ -120,8 +119,7 @@
             <q-list separator>
               <q-item dense v-for="file in scope.files" :key="file.name">
                 <q-item-section side v-if="file.__img">
-                  <q-radio dark dense v-if="file.__img" v-model="writeInfo.thumb" :val="file.name" size="xs"
-                    color="d2r" />
+                  <q-radio dense v-if="file.__img" v-model="writeInfo.thumb" :val="file.name" size="xs" color="d2r" />
                 </q-item-section>
                 <q-item-section v-if="file.__img" thumbnail>
                   <img :src="file.__img.src">
@@ -152,7 +150,7 @@
           <template v-for="file in writeInfo.files">
             <q-item dense v-if="file.deleted !== true" :key="file.fid" class="input-place">
               <q-item-section v-if="file.type === 'image'" side>
-                <q-radio dark dense v-model="writeInfo.thumb" :val="file.origin" size="xs" color="d2r" />
+                <q-radio dense v-model="writeInfo.thumb" :val="file.origin" size="xs" color="d2r" />
               </q-item-section>
               <q-item-section v-if="file.type === 'image'" thumbnail>
                 <img :src="file.path">
@@ -172,19 +170,19 @@
       </div>
       <div class="row justify-end q-gutter-x-sm">
         <div>
-          <q-btn dense push class="bg-d2r" :loading="loading" type="submit"
+          <q-btn dense push class="bg-d2r" text-color="grey-4" :loading="loading" type="submit"
             :label="pid ? $t('btn.modify') :$t('btn.posting')" />
         </div>
         <div>
-          <q-btn dense push class="bg-grey-10" :disable="loading" :label="$t('btn.cancel')"
+          <q-btn dense push class="bg-grey-10" text-color="grey-4" :disable="loading" :label="$t('btn.cancel')"
             :to="pid !== null ? `/d2r/bbs/${sec}/read/${pid}` :`/d2r/bbs/${sec}`" />
         </div>
       </div>
     </q-form>
-    <ss-prompt :dark="false" no-persistent v-model="add.linkPop" :title="$t('post.link')" :contents="add.url"
+    <ss-prompt :dark="$q.dark.isActive" no-persistent v-model="add.linkPop" :title="$t('post.link')" :contents="add.url"
       :rules="add.rules" @ok="setLink" @cancel="cancelPrompt" color="grey-5" />
-    <ss-prompt :dark="false" no-persistent v-model="add.imagePop" :title="$t('post.image')" :contents="add.url"
-      :rules="add.rules" @ok="setImage" @cancel="cancelPrompt" color="grey-5" />
+    <ss-prompt :dark="$q.dark.isActive" no-persistent v-model="add.imagePop" :title="$t('post.image')"
+      :contents="add.url" :rules="add.rules" @ok="setImage" @cancel="cancelPrompt" color="grey-5" />
   </div>
 </template>
 <script>
@@ -617,6 +615,11 @@
     border-radius: 4px;
   }
 
+  .body--light .d2r-write {
+    box-shadow: 0 0 0 1px rgba(200, 200, 200, 1);
+    background-color: rgba(245, 245, 245, 1) !important;
+  }
+
   @keyframes wiggle {
     0% {
       margin-left: -4px;
@@ -645,6 +648,10 @@
     border-radius: 4px;
   }
 
+  .body--light .input-place {
+    background-color: rgba(200, 200, 200, 0.3);
+  }
+
   .editor-menu-bar .is-active {
     background-color: rgba(255, 0, 0, 0.3);
   }
@@ -662,6 +669,10 @@
     top: 4px;
   }
 
+  .body--light .contents-label {
+    color: rgba(0, 0, 0, 0.7);
+  }
+
   .contents-label.focused {
     top: -4px;
     font-size: 0.8em;
@@ -674,5 +685,9 @@
 
   .textarea {
     color: #FFFFFF;
+  }
+
+  .body--light .textarea {
+    color: #000000;
   }
 </style>

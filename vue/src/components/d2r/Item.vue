@@ -1,14 +1,14 @@
 <template>
-  <div class="bg-grey-4 q-pa-sm" :style="$q.screen.gt.xs ? 'height:700px' : ''">
+  <div class="bg-grey-2 q-pa-sm" :style="$q.screen.gt.xs ? 'height:700px' : ''">
     <q-form class="full-height no-padding no-margin column q-col-gutter-y-xs" @submit="onSubmit">
       <div class="col-1">
-        <q-input dense hide-bottom-space no-error-icon class="q-px-sm" color="grey-5" :disable="processPosting"
-          maxlength="200" type="text" :label="$t('d2r.storage.item.name')" v-model="writeInfo.name"
-          :rules="[val => val && val.trim() !== '' || '']" />
+        <q-input :dark="false" dense hide-bottom-space no-error-icon class="q-px-sm" color="grey-5"
+          :disable="processPosting" maxlength="200" type="text" :label="$t('d2r.storage.item.name')"
+          v-model="writeInfo.name" :rules="[val => val && val.trim() !== '' || '']" />
       </div>
       <div class="col-3 input-place full-width ">
-        <q-uploader text-color="black" class="full-width bg-transparent" color="transparent" ref="uploader"
-          :disable="processPosting"
+        <q-uploader :dark="false" text-color="black" class="full-width bg-transparent" color="transparent"
+          ref="uploader" :disable="processPosting"
           :accept="limitFileCnt !== -1 ? 'image/*' : '.exe, .zip, .tar, .jar, .7z, .rar, .bat, .cmd, .hwp, .txt, .doc, .docx, .ppt, .pptx, .xls, .xlss, image/*, video/*, audio/*'"
           :factory="postWihtUpload"
           :label="limitFileCnt !== -1 ? `attach image (10m * ${limitFileCnt})` : 'attach file (10m)'" @added="added"
@@ -65,13 +65,14 @@
         </q-uploader>
       </div>
       <div class="col-1">
-        <q-input dense hide-bottom-space no-error-icon class="q-px-sm" color="grey-5" :disable="processPosting"
-          maxlength="200" type="text" :label="$t('d2r.storage.item.tradeTitle')" v-model="writeInfo.title" />
+        <q-input :dark="false" dense hide-bottom-space no-error-icon class="q-px-sm" color="grey-5"
+          :disable="processPosting" maxlength="200" type="text" :label="$t('d2r.storage.item.tradeTitle')"
+          v-model="writeInfo.title" />
       </div>
       <div class="col-6 input-place column">
         <editor-menu-bar ref="editor" class="editor-menu-bar" :editor="editor"
           v-slot="{ commands, isActive, getMarkAttrs, getNodeAttrs }">
-          <q-toolbar class="row justify-between items-start" v-show="processPosting === false">
+          <q-toolbar class="row justify-between items-start text-grey-10" v-show="processPosting === false">
             <div class="row justify-start q-gutter-x-md">
               <div>
                 <q-btn flat dense size="sm" icon="format_bold" :class="{ 'is-active': isActive.bold() }"

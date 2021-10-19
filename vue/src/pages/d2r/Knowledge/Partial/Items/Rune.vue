@@ -6,16 +6,16 @@
     </div>
     <div class="row justify-start text-center q-col-gutter-sm rune-wrap full-width non-selectable">
       <div v-for="rune in runes" :key="rune.no" class="rune">
-        <q-btn no-caps dense class="row fit" :class="rune.selected ? 'selected' : ''" @click="selectedRune(rune)">
+        <q-btn no-caps dense flat class="row fit" :class="rune.selected ? 'selected' : ''" @click="selectedRune(rune)">
           <div class="col-12 full-width"><img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)"
               style="width: 100%;" /></div>
           <div class="col-1 full-height full-width word-keep rune-name text-body1">{{rune.name}}</div>
         </q-btn>
       </div>
     </div>
-    <q-table dense class="bg-transparent" table-class="table-style"
-      card-container-class="q-col-gutter-md justify-center" :grid="$q.screen.lt.lg" dark :data="filtering"
-      :columns="columns" row-key="name" :pagination.sync="pagination" :hide-header="$q.screen.lt.sm" hide-pagination>
+    <q-table dense class="bg-transparent" table-class="table-style-rune"
+      card-container-class="q-col-gutter-md justify-center" :grid="$q.screen.lt.lg" :data="filtering" :columns="columns"
+      row-key="name" :pagination.sync="pagination" :hide-header="$q.screen.lt.sm" hide-pagination>
       <template v-slot:no-data>
         <div class="row justify-center full-width" :class="$q.screen.lt.md ? 'text-caption' : 'text-body2'">
           {{$t('d2r.knowledge.items.noData')}}</div>
@@ -24,24 +24,22 @@
         <div class="row justify-between items-center full-width q-col-gutter-sm">
           <div class="col-12 col-md-8 row justify-start items-center q-col-gutter-sm">
             <div class="col-12 col-lg-3">
-              <q-checkbox dense dark color="amber-10" size="md" v-model="own" class="word-keep"
+              <q-checkbox dense color="amber-10" size="md" v-model="own" class="word-keep"
                 :label="$t('d2r.knowledge.items.own')" />
             </div>
             <div class="col-12 col-lg-3">
               <q-select :transition-show="$q.screen.lt.md ? 'slide-up' : 'none'"
                 :transition-hide="$q.screen.lt.md ? 'slide-down' : 'none'" menu-self="center left" color="amber-9"
-                popup-content-class="bg-black" popup-content-style="border:solid 1px #888888" v-model="selectedMaterial"
-                :options="meterialOptions" dropdown-icon="keyboard_arrow_down"
-                :label="$t('d2r.knowledge.items.runewordMaterialType')" dense dark outlined emit-value map-options
-                no-error-icon menu-shrink options-dense />
+                popup-content-style="border:solid 1px #888888" v-model="selectedMaterial" :options="meterialOptions"
+                dropdown-icon="keyboard_arrow_down" :label="$t('d2r.knowledge.items.runewordMaterialType')" dense
+                outlined emit-value map-options no-error-icon menu-shrink options-dense />
             </div>
             <div class="col-12 col-lg-3">
               <q-select :transition-show="$q.screen.lt.md ? 'slide-up' : 'none'"
                 :transition-hide="$q.screen.lt.md ? 'slide-down' : 'none'" menu-self="center left" color="amber-9"
-                popup-content-class="bg-black" popup-content-style="border:solid 1px #888888" v-model="selectedClass"
-                :options="d2rClassOptions" :label="$t('d2r.knowledge.items.recommendedClass')"
-                dropdown-icon="keyboard_arrow_down" dense dark outlined emit-value map-options no-error-icon menu-shrink
-                options-dense>
+                popup-content-style="border:solid 1px #888888" v-model="selectedClass" :options="d2rClassOptions"
+                :label="$t('d2r.knowledge.items.recommendedClass')" dropdown-icon="keyboard_arrow_down" dense outlined
+                emit-value map-options no-error-icon menu-shrink options-dense>
                 <template v-slot:option="scope">
                   <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
                     <q-item-section avatar>
@@ -61,22 +59,22 @@
               </q-select>
             </div>
             <div class="col-12 col-lg-2 row items-center" :class="$q.screen.lt.lg ? 'q-pt-xl q-px-lg' : 'q-ml-sm'">
-              <q-range dark dense v-model="socket" color="green-9" label-text-color="text-weight-bold" :min="2" :max="6"
-                snap label-always markers />
+              <q-range dense v-model="socket" color="green-9" label-text-color="text-weight-bold" :min="2" :max="6" snap
+                label-always markers />
             </div>
           </div>
           <div class="col-12 col-md-4 row justify-end q-col-gutter-sm">
             <div class="col-12 col-lg-5">
               <q-select :transition-show="$q.screen.lt.md ? 'slide-up' : 'none'"
                 :transition-hide="$q.screen.lt.md ? 'slide-down' : 'none'" menu-self="center left" color="amber-9"
-                popup-content-class="bg-black" popup-content-style="border:solid 1px #888888" v-model="selectedSort"
-                :options="sortOptions" dropdown-icon="keyboard_arrow_down" :label="$t('d2r.knowledge.items.sort')" dense
-                dark outlined emit-value map-options no-error-icon menu-shrink options-dense />
+                popup-content-style="border:solid 1px #888888" v-model="selectedSort" :options="sortOptions"
+                dropdown-icon="keyboard_arrow_down" :label="$t('d2r.knowledge.items.sort')" dense outlined emit-value
+                map-options no-error-icon menu-shrink options-dense />
             </div>
             <div class="col-12 col-lg-5">
-              <q-input dark dense debounce="400" :label="$t('btn.search')" color="grey-4 text-title" v-model="filter">
+              <q-input dense debounce="400" :label="$t('btn.search')" color="title" v-model="filter">
                 <template v-slot:append>
-                  <q-icon name="search" color="grey-4 text-title" />
+                  <q-icon name="search" color="title" />
                 </template>
               </q-input>
             </div>
@@ -130,7 +128,7 @@
                   <div class="col">
                     <img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)" />
                   </div>
-                  <div class="col-4 row items-center text-body1 word-keep text-grey-5">
+                  <div class="col-4 row items-center text-body1 word-keep">
                     {{rune.name}}
                   </div>
                   <div class="col text-body1 text-title">
@@ -144,7 +142,7 @@
       </template>
       <template #item="props">
         <div class="col-md-6 col-12">
-          <q-card dark class="card text-center" bordered>
+          <q-card class="card text-center" bordered>
             <q-card-section class="text-grey-6 text-h6 word-keep q-pa-xs">
               <div class="text-h6 word-keep text-amber-6 column">
                 <div class="col">{{props.row.name}}<span class="text-body1 text-brown" v-if="props.row.oldName">
@@ -185,7 +183,7 @@
                     <div class="row items-center">
                       <img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)" style="width:30px" />
                     </div>
-                    <div class="row items-center word-keep text-grey-5" style="font-size: 0.6em">
+                    <div class="row items-center word-keep" style="font-size: 0.6em">
                       {{rune.name}}
                     </div>
                     <div class="row items-center text-caption text-title">
@@ -198,18 +196,10 @@
           </q-card>
         </div>
       </template>
-      <template v-slot:top-right>
-        <q-input dark borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
     </q-table>
     <div v-if="pagesNumber.length !== 0" class="mobile-only row justify-center full-width q-mt-md">
-      <q-pagination color="title text-black" v-model="pagination.page" :max="pagesNumber"
-        :max-pages="$q.screen.gt.sm ? 5 : 3" :ellipses="false" direction-links :boundary-numbers="false"
-        :boundary-links="$q.screen.gt.sm" />
+      <q-pagination color="title" v-model="pagination.page" :max="pagesNumber" :max-pages="$q.screen.gt.sm ? 5 : 3"
+        :ellipses="false" direction-links :boundary-numbers="false" :boundary-links="$q.screen.gt.sm" />
     </div>
     <p class="q-mt-xl text-right text-grey-6" :class="$q.screen.lt.md ? 'text-caption' : ''">
       {{$t('d2r.knowledge.source')}} : <a style="text-decoration: none;" class="text-green-4" target="_blank"
@@ -229,7 +219,7 @@
       return {
         pagination: {
           page: 1,
-          rowsPerPage: this.$q.platform.is.mobile ? 5 : 10000
+          rowsPerPage: this.$q.platform.is.mobile ? 10 : 10000
         },
         filter: '',
         columns: [
@@ -342,14 +332,14 @@
   }
 </script>
 <style>
-  th {
+  .table-style-rune th {
     background-color: rgba(184, 156, 91, .2) !important;
     color: rgba(184, 156, 91, 1) !important;
     font-size: 1.4em !important;
     font-family: 'Kodia';
   }
 
-  td {
+  .table-style-rune td {
     white-space: normal !important;
   }
 
@@ -359,18 +349,37 @@
     border-radius: 4px;
   }
 
+  .body--light .card {
+    background-color: rgba(245, 245, 245, 1) !important;
+    border-color: rgba(200, 200, 200, .5) !important;
+  }
+
   .card hr {
     background-color: rgba(184, 156, 91, .5) !important;
   }
 
-  .table-style table {
+  .body--light .card hr {
+    background-color: rgba(200, 200, 200, .5) !important;
+  }
+
+  .table-style-rune table {
     box-shadow: inset 0 0 1px 1px rgba(184, 156, 91, .5) !important;
     background-color: rgba(10, 10, 10, 1) !important;
     border-radius: 4px;
   }
 
-  .table-style td {
+  .table-style-rune td {
     border-color: rgba(184, 156, 91, .5) !important;
+  }
+
+  .body--light .table-style-rune table {
+    box-shadow: inset 0 0 1px 1px rgba(200, 200, 200, .5) !important;
+    background-color: rgba(245, 245, 245, 1) !important;
+    border-radius: 4px;
+  }
+
+  .body--light .table-style-rune td {
+    border-color: rgba(200, 200, 200, .5) !important;
   }
 
   .text-underline {

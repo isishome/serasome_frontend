@@ -6,9 +6,9 @@
         <div class="font-title q-ml-xs text-uppercase">{{$t('d2r.account.basic')}}</div>
       </div>
     </div>
-    <q-card class="account-wrap">
+    <q-card class="account-wrap" flat bordered>
       <q-card-section>
-        <q-input outlined dark borderless no-error-icon hide-bottom-space ref="nickname" color="grey-5"
+        <q-input outlined borderless no-error-icon hide-bottom-space ref="nickname" color="grey-5"
           v-model="basicInfo.nickname" :label="$t('d2r.beginner.nickname')" :error="basicInfo.error" @input="enter()"
           :error-message="basicInfo.message" readonly>
           <template v-slot:append>
@@ -26,7 +26,7 @@
             </template>
           </q-img>
         </q-avatar>
-        <q-uploader dark bordered class="col bg-transparent" color="transparent" ref="uploader" :disable="loading"
+        <q-uploader bordered class="col bg-transparent" color="grey-7" ref="uploader" :disable="loading"
           accept="image/*" :factory="postWithAvatar" :label="$t('d2r.account.avatar')" @added="added" @removed="removed"
           @uploaded="complete" @failed="failed" @start="start" @finish="finish" hide-upload-btn>
           <template v-slot:list="scope">
@@ -54,7 +54,7 @@
           </template>
         </q-uploader>
       </q-card-section>
-      <q-separator dark inset />
+      <q-separator inset />
       <q-card-actions align="right">
         <q-btn dense class="bg-d2r" :loading="loading" type="submit" size="16px" :label="$t('btn.modify')"
           @click="onSubmit" />
@@ -206,11 +206,19 @@
     color: #CCCCCC;
   }
 
+  .body--light .account-wrap {
+    background-color: rgba(230, 230, 230, 0.4);
+  }
+
   .account-wrap .q-card__section {
     padding: 1vw;
   }
 
   .account-wrap hr {
-    background-color: rgba(200, 200, 200, 0.1);
+    background-color: rgba(200, 200, 200, 0.2);
+  }
+
+  .body--light .account-wrap hr {
+    background-color: rgba(100, 100, 100, 0.2);
   }
 </style>

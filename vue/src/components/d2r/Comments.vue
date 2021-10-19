@@ -1,7 +1,7 @@
 <template>
   <div class="full-width">
     <q-separator v-if="data.length > 0" class="separator-1" />
-    <q-list dark padding class="rounded-borders full-width bg-transparent text-grey-5">
+    <q-list padding class="rounded-borders full-width bg-transparent text-grey-5">
       <template v-if="data.length > 0 || authority">
         <q-item-label header class="row justify-between">
           <div class="col lt-sm"></div>
@@ -61,8 +61,8 @@
               </div>
             </q-item-label>
             <q-item-label class="q-pt-sm">
-              <q-input class="col" input-class="no-padding no-scroll" :input-style="{'color':'#bdbdbd'}"
-                v-model="c.contents" dark dense readonly borderless autogrow>
+              <q-input class="col" input-class="no-padding no-scroll comments-text" v-model="c.contents" dark dense
+                readonly borderless autogrow>
                 <template #prepend>
                   <div class="full-height">
                     <q-icon v-if="c.secret === true && (c.owner === true || owner === true)" name="lock" size="14px"
@@ -117,8 +117,8 @@
                 </div>
               </q-item-label>
               <q-item-label class="q-pt-sm">
-                <q-input class="col" input-class="no-padding no-scroll" :input-style="{'color':'#bdbdbd'}"
-                  v-model="r.contents" dark dense readonly borderless autogrow>
+                <q-input class="col" input-class="no-padding no-scroll comments-text" v-model="r.contents" dark dense
+                  readonly borderless autogrow>
                   <template #prepend>
                     <div class="full-height">
                       <q-icon v-if="r.secret === true && (r.owner === true || owner === true || r.towner === true)"
@@ -142,8 +142,8 @@
             class="gt-xs full-width" v-model="desktop.contents" type="textarea" :input-style="{'min-height':'140px'}"
             style="border-color: transparent;" :error="desktop.error"
             :error-message="$t('d2r.comments.message.invalidContents')" :hint="$t('d2r.comments.contentsHint')"
-            maxlength="500" :label="$t('d2r.comments.contents')" spellcheck="false" dark flat outlined standout
-            no-error-icon clearable autogrow>
+            maxlength="500" :label="$t('d2r.comments.contents')" spellcheck="false" flat outlined standout no-error-icon
+            clearable autogrow>
             <template v-slot:append>
               <div class="absolute-bottom-right q-mr-md q-mb-md">
                 <q-toggle :disable="loading" v-model="desktop.secret" size="md" unchecked-icon="lock_open"
@@ -195,14 +195,14 @@
         </q-card-section>
         <q-card-actions class="no-padding">
           <div class="full-width row justify-end q-gutter-x-sm">
-            <q-toggle :disable="loading" dark dense flat v-model="info.secret" size="lg" unchecked-icon="lock_open"
+            <q-toggle :disable="loading" dense flat v-model="info.secret" size="lg" unchecked-icon="lock_open"
               color="grey-10" icon-color="amber-8" text-color="grey-10" checked-icon="lock" />
             <q-btn :disable="loading" size="10px" padding="xs" dense push color="grey-8" text-color="grey-4"
               :label="$t('btn.regist')" @click="process" />
           </div>
         </q-card-actions>
       </q-card>
-      <q-card class="comments-card" v-else-if="info.mode === 'delete'">
+      <q-card dark class="comments-card" v-else-if="info.mode === 'delete'">
         <q-card-section class="q-pa-sm row items-center">
           <div>
             <q-avatar icon="delete" size="md" color="red" text-color="white" />
@@ -382,6 +382,14 @@
   .d2r-comments2 {
     padding: 0 2px 0 12px !important;
   }
+
+  .comments-text {
+    color: #bdbdbd !important;
+  }
+
+  .body--light .comments-text {
+    color: #888888 !important;
+  }
 </style>
 <style scoped>
   .separator-1 {
@@ -396,6 +404,18 @@
     background-color: #181818;
   }
 
+  .body--light .separator-1 {
+    background-color: #cccccc;
+  }
+
+  .body--light .separator-2 {
+    background-color: #dddddd;
+  }
+
+  .body--light .separator-3 {
+    background-color: #dfdfdf;
+  }
+
   .comments-card {
     padding: 10px;
     background-color: rgba(200, 200, 200, 1) !important;
@@ -404,13 +424,23 @@
   }
 
   .text-name {
+    color: #bdbdbd;
     font-size: 0.8em;
     font-weight: bold;
   }
 
+  .body--light .text-name {
+    color: #888888 !important;
+  }
+
   .text-time {
+    color: #bdbdbd;
     font-size: 0.6em;
     opacity: 0.6;
+  }
+
+  .body--light .text-time {
+    color: #888888 !important;
   }
 
   .text-target {
@@ -421,6 +451,10 @@
   }
 
   .reply {
-    background-color: rgba(12, 12, 12, 1);
+    background-color: rgba(50, 50, 50, .1);
+  }
+
+  .body--light .reply {
+    background-color: rgba(200, 200, 200, .1);
   }
 </style>

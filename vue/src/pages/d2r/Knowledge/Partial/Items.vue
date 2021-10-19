@@ -5,13 +5,13 @@
         <q-tab :ripple="false" content-class="no-padding" v-for="s in sub" :key="s" :name="s" @click="swapPart(s)">
           <q-img basic :width="$q.screen.lt.sm ? '80px' : '110px'" :ratio="1"
             :src="require(`@/assets/images/d2r/items/${s.toLowerCase()}.png`)" />
-          <div class="absolute-center title font-kodia word-keep" style="white-space: normal;">
+          <div class="absolute-center font-kodia word-keep" style="white-space: normal;">
             {{$t(`d2r.knowledge.items.${s.toLowerCase()}`)}}
           </div>
         </q-tab>
       </template>
       <template #panels>
-        <q-tab-panel v-for="s in sub" :key="s" dark :name="s" class="no-scroll word-wrap non-selectable"
+        <q-tab-panel v-for="s in sub" :key="s" :name="s" class="no-scroll word-wrap non-selectable"
           :class="$q.screen.lt.sm ? 'q-px-sm' : 'q-px-lg'">
           <div class="q-mb-xl font-kodia text-weight-bold text-title"
             :class="$q.screen.lt.sm ? 'text-center text-h5 word-keep' : 'text-left q-ml-md text-h4'">

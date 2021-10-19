@@ -2,25 +2,23 @@
   <div>
     <q-ajax-bar ref="bar" position="bottom" color="red" size="4px" skip-hijack />
     <ss-post-read :sname="sname" v-model="pid" @done="done" @reading="loading = true" />
-    <div class="row">
-      <div v-for="category in categoryInfo" :key="category.cid"
-        class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12">
-        <div v-if="category.cid === cid" class="q-mt-md">
-          <div class="q-mb-sm q-px-md row no-wrap justify-start items-center">
-            <q-icon :name="category.icon" size="xs" :color="category.color" />
-            <div class="font-title text-h6 text-teal-7 q-ml-sm">{{category.name}}</div>
-          </div>
-          <q-separator inset spaced />
-          <q-infinite-scroll ref="some" @load="onLoad" :offset="250" class="q-mt-md" scroll-target="body">
-            <ss-post-list :list="items" :loading="loading" :pid="pid" @view="view"></ss-post-list>
-            <template v-slot:loading>
-              <div class="row justify-center q-my-md">
-                <q-spinner-dots color="primary" size="40px" />
-              </div>
-            </template>
-          </q-infinite-scroll>
-          <q-space class="q-my-xl" />
+    <div v-for="category in categoryInfo" :key="category.cid"
+      class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12">
+      <div v-if="category.cid === cid" class="q-mt-md">
+        <div class="q-mb-sm q-px-md row no-wrap justify-start items-center">
+          <q-icon :name="category.icon" size="xs" :color="category.color" />
+          <div class="font-title text-h6 text-teal-7 q-ml-sm">{{category.name}}</div>
         </div>
+        <q-separator inset spaced />
+        <q-infinite-scroll ref="some" @load="onLoad" :offset="250" class="q-mt-md" scroll-target="body">
+          <ss-post-list :list="items" :loading="loading" :pid="pid" @view="view"></ss-post-list>
+          <template v-slot:loading>
+            <div class="row justify-center q-my-md">
+              <q-spinner-dots color="primary" size="40px" />
+            </div>
+          </template>
+        </q-infinite-scroll>
+        <q-space class="q-my-xl" />
       </div>
     </div>
   </div>

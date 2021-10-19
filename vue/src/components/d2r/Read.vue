@@ -11,14 +11,14 @@
           {{classifyName(sec, data.classify)}}
         </q-chip>
       </q-card-section>
-      <q-separator dark inset />
+      <q-separator inset />
       <q-card-section>
         <div style="word-break: break-all;" :class="$q.screen.gt.sm ? 'text-h5' : 'text-h6'">
           {{data.title}}</div>
       </q-card-section>
       <q-card-section class="q-pt-none">
         <div class="text-subtitle2 text-title">
-          <q-avatar rounded color="brown-10" text-color="white" class="q-mr-xs" size="30px">
+          <q-avatar rounded color="transparent" text-color="white" class="q-mr-xs" size="30px">
             <q-img basic v-if="data.avatar" :src="data.avatar" :ratio="1">
               <template #error>
                 <div class="bg-d2r absolute-center">
@@ -39,7 +39,7 @@
           </div>
         </div>
       </q-card-section>
-      <q-separator dark inset />
+      <q-separator inset />
       <q-card-section class="read-contents">
         <div v-if="data && data.youtube">
           <q-video :ratio="16/9" :src="`https://www.youtube.com/embed/${getYoutubeId(data.youtube)}?rel=0`" />
@@ -52,7 +52,7 @@
           </Adsense>
         </div>
       </q-card-section>
-      <q-separator dark inset />
+      <q-separator inset />
       <q-card-actions class="row justify-between">
         <div class="row justify-end q-gutter-x-sm">
           <q-btn v-if="authority(sec, 'delete') || data.owner === true" dense push class="bg-grey-5 text-grey-10"
@@ -305,7 +305,11 @@
     box-shadow: 0 0 0 1px rgba(45, 45, 45, 1);
     background-color: rgba(5, 5, 5, 1) !important;
     border-radius: 4px;
-    color: #CCCCCC;
+  }
+
+  .body--light .read-card {
+    box-shadow: 0 0 0 1px rgba(220, 220, 220, 1);
+    background-color: rgba(245, 245, 245, 1) !important;
   }
 
   .read-card .q-card__section {
@@ -318,6 +322,10 @@
 
   .read-card hr {
     background-color: rgba(100, 100, 100, 0.4);
+  }
+
+  .body--light .read-card hr {
+    background-color: rgba(100, 100, 100, 0.1);
   }
 
   @media screen and (max-width:599px) {

@@ -218,43 +218,30 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-    <div class="row">
-      <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 q-mt-md relative-position">
-        <div v-if="pageLoad && $q.screen.gt.sm && isProduction" class="ad-left ad-box">
-          <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" data-ad-format="auto"
-            ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
-          </Adsense>
+    <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-xs-12 q-mt-md relative-position">
+      <div v-if="some" class="row justify-between items-center q-px-md">
+        <div class="row items-center">
+          <q-icon
+            :name="some.icon ? some.icon : some.owner === true ? 'fas fa-cube' : some.linked === true ? 'fas fa-cubes' : 'fas fa-question'"
+            class="q-ma-sm" size="20px" color="amber-7" />
+          <div class="font-title text-h5 text-teal-7 q-ml-xs">{{ some.name }}</div>
         </div>
-        <div v-if="pageLoad && $q.screen.gt.sm && isProduction" class="ad-right ad-box">
-          <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" data-ad-format="auto"
-            ins-style="display:inline-block;width:164px;height:600px" :key="`rt_${key}`">
-          </Adsense>
+        <div>
+          <q-btn dense round flat size="sm" v-if="postingAvailable && signStatus && !owner"
+            :icon="linked === true ? 'fas fa-unlink' : 'fas fa-link'" :color="linked ? 'red-10' : 'green-10'"
+            class="q-pa-xs" @click="link">
+          </q-btn>
         </div>
-        <div v-if="some" class="row justify-between items-center q-px-md">
-          <div class="row items-center">
-            <q-icon
-              :name="some.icon ? some.icon : some.owner === true ? 'fas fa-cube' : some.linked === true ? 'fas fa-cubes' : 'fas fa-question'"
-              class="q-ma-sm" size="20px" color="amber-7" />
-            <div class="font-title text-h5 text-teal-7 q-ml-xs">{{ some.name }}</div>
-          </div>
-          <div>
-            <q-btn dense round flat size="sm" v-if="postingAvailable && signStatus && !owner"
-              :icon="linked === true ? 'fas fa-unlink' : 'fas fa-link'" :color="linked ? 'red-10' : 'green-10'"
-              class="q-pa-xs" @click="link">
-            </q-btn>
-          </div>
-        </div>
-        <q-separator inset spaced />
-        <q-infinite-scroll ref="some" @load="onLoad" :offset="250" scroll-target="body"
-          class="q-mt-md relative-position">
-          <ss-post-list v-if="some" :list="items" :pid="pid" :loading="loading" @view="view"></ss-post-list>
-          <template v-slot:loading>
-            <div class="row justify-center q-my-md">
-              <q-spinner-dots :color="$q.dark.isActive ? 'grey-4' : 'teal-4'" size="40px" />
-            </div>
-          </template>
-        </q-infinite-scroll>
       </div>
+      <q-separator inset spaced />
+      <q-infinite-scroll ref="some" @load="onLoad" :offset="250" scroll-target="body" class="q-mt-md relative-position">
+        <ss-post-list v-if="some" :list="items" :pid="pid" :loading="loading" @view="view"></ss-post-list>
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots :color="$q.dark.isActive ? 'grey-4' : 'teal-4'" size="40px" />
+          </div>
+        </template>
+      </q-infinite-scroll>
     </div>
     <ss-prompt v-model="linkPop" :title="$t('post.link')" :contents="url" :rules="rules" @ok="setLink"
       @cancel="cancelPrompt" />
@@ -265,8 +252,7 @@
 
 <script>
   import {
-    copyToClipboard,
-    uid
+    copyToClipboard
   } from 'quasar'
 
   import {
@@ -384,10 +370,7 @@
         loadFailed: false,
         limitFileSize: 10485760,
         limitFileCnt: 5,
-        thumb: null,
-        key: uid(),
-        isProduction: process.env.NODE_ENV === 'production',
-        pageLoad: false
+        thumb: null
       }
     },
     created() {
@@ -397,9 +380,6 @@
       this.pid = this.$route.params.pid
       this.someInfo()
       this.postInit()
-    },
-    beforeMount() {
-      this.pageLoad = true
     },
     beforeDestroy() {
       this.editor.destroy()
@@ -412,9 +392,6 @@
         this.sname = to.params.sname
         this.pid = to.params.pid
         this.tempPid = to.params.tempPid
-
-        if (to !== from)
-          this.key = uid()
 
         if (to.params.sname !== from.params.sname) {
           this.someInfo()

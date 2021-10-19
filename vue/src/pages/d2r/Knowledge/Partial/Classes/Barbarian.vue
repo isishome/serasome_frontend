@@ -35,7 +35,7 @@
         통계 및 수치
       </p>
       <p class="row justify-start">
-        <q-markup-table dark class="bg-grey-10" separator="vertical" flat bordered>
+        <q-markup-table class="table-back" separator="vertical" flat bordered>
           <thead>
             <tr>
               <th class="text-center" colspan="2">시작 속성</th>
@@ -124,7 +124,7 @@
         패스트 블럭
       </p>
       <p class="row justify-start">
-        <q-markup-table dark class="bg-grey-10" separator="cell" flat bordered>
+        <q-markup-table class="table-back" separator="cell" flat bordered>
           <tbody>
             <tr class="frame-rate">
               <td>프레임</td>
@@ -157,7 +157,7 @@
         패스트 캐스트
       </p>
       <p class="row justify-start">
-        <q-markup-table dark class="bg-grey-10" separator="horizontal" flat bordered>
+        <q-markup-table class="table-back" separator="horizontal" flat bordered>
           <tbody>
             <tr class="frame-rate">
               <td>프레임</td>
@@ -186,7 +186,7 @@
         패스트 힛 리커버리
       </p>
       <p class="row justify-start">
-        <q-markup-table dark class="bg-grey-10" separator="horizontal" flat bordered>
+        <q-markup-table class="table-back" separator="horizontal" flat bordered>
           <tbody>
             <tr class="frame-rate">
               <td>프레임</td>
@@ -244,7 +244,7 @@
         STATISTICS AND FIGURES
       </p>
       <p class="row justify-start">
-        <q-markup-table dark class="bg-grey-10" separator="vertical" flat bordered>
+        <q-markup-table class="table-back" separator="vertical" flat bordered>
           <thead>
             <tr>
               <th class="text-center" colspan="2">Starting Attributes</th>
@@ -335,7 +335,7 @@
         Faster Block Rate
       </p>
       <p class="row justify-start">
-        <q-markup-table dark class="bg-grey-10" separator="cell" flat bordered>
+        <q-markup-table class="table-back" separator="cell" flat bordered>
           <tbody>
             <tr class="frame-rate">
               <td>Frames</td>
@@ -368,7 +368,7 @@
         Faster Cast Rate
       </p>
       <p class="row justify-start">
-        <q-markup-table dark class="bg-grey-10" separator="horizontal" flat bordered>
+        <q-markup-table class="table-back" separator="horizontal" flat bordered>
           <tbody>
             <tr class="frame-rate">
               <td>Frames</td>
@@ -397,7 +397,7 @@
         Faster Hit Recovery
       </p>
       <p class="row justify-start">
-        <q-markup-table dark class="bg-grey-10" separator="horizontal" flat bordered>
+        <q-markup-table class="table-back" separator="horizontal" flat bordered>
           <tbody>
             <tr class="frame-rate">
               <td>Frames</td>

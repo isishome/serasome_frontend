@@ -1,5 +1,6 @@
 const pnf = () => import(/* webpackChunkName: "group-default" */ '@/pages/seras/PNF')
 const main = () => import(/* webpackChunkName: "group-default" */ '@/pages/seras/Main')
+const carousel = () => import(/* webpackChunkName: "group-default" */ '@/components/seras/Carousel')
 
 const join = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Join')
 const sign = () => import(/* webpackChunkName: "group-account" */ '@/pages/seras/Sign')
@@ -16,14 +17,6 @@ const search = () => import(/* webpackChunkName: "group-post" */ '@/pages/seras/
 const lotto = () => import(/* webpackChunkName: "group-favorite" */ '@/pages/etc/Lotto')
 const annuity = () => import(/* webpackChunkName: "group-favorite" */ '@/pages/etc/Annuity')
 
-const d2rLayout = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Layout')
-const d2rMain = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Main')
-const d2rBbs = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Bbs')
-const d2rAccount = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Account')
-const d2rKnowledge = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Knowledge/Main')
-const d2rStorage = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Storage')
-const d2rSearch = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Search')
-
 const routes = [
   {
     name: 'pnf',
@@ -36,7 +29,10 @@ const routes = [
   {
     name: 'main',
     path: '/',
-    component: main
+    components: {
+      carousel: carousel,
+      default: main
+    }
   },
   {
     name: 'some',
@@ -76,6 +72,9 @@ const routes = [
     name: 'join',
     path: '/join',
     component: join,
+    meta: {
+      noAD: true
+    },
     children: [
       {
         name: 'join-facebook',
@@ -93,23 +92,33 @@ const routes = [
     name: 'sign',
     path: '/sign',
     component: sign,
-    props: true
+    props: true,
+    meta: {
+      noAD: true
+    }
   },
   {
     name: 'forgot',
     path: '/forgot',
-    component: forgot
+    component: forgot,
+    meta: {
+      noAD: true
+    }
   },
   {
     name: 'change',
     path: '/change',
-    component: change
+    component: change,
+    meta: {
+      noAD: true
+    }
   },
   {
     name: 'info',
     path: '/info',
     component: info,
     meta: {
+      noAD: true,
       requireAuth: true
     }
   },
@@ -118,6 +127,7 @@ const routes = [
     path: '/auth',
     component: auth,
     meta: {
+      noAD: true,
       independent: true
     }
   },
@@ -157,121 +167,6 @@ const routes = [
     path: '/search',
     component: search,
     props: true
-  },
-  {
-    name: '',
-    path: '/d2r',
-    component: d2rLayout,
-    meta: {
-      title: `Sera's Something - Diablo® II Resurrected`,
-      independent: true
-    },
-    children: [
-      {
-        name: 'd2r-main',
-        path: '',
-        component: d2rMain
-      },
-      {
-        name: 'd2r-bbs',
-        path: 'bbs/:sec',
-        component: d2rBbs,
-        props: true,
-        meta: {
-          checkGrade: 'list'
-        },
-        children: [
-          {
-            name: 'd2r-read',
-            path: 'read/:pid',
-            component: d2rBbs,
-            props: true,
-            meta: {
-              checkGrade: 'read',
-              progress: true
-            }
-          },
-          {
-            name: 'd2r-write',
-            path: 'write',
-            component: d2rBbs,
-            meta: {
-              requireAuth: true,
-              checkGrade: 'write'
-            },
-            children: [
-              {
-                name: 'd2r-modify',
-                path: ':pid',
-                component: d2rBbs,
-                props: true,
-                meta: {
-                  requireAuth: true,
-                  checkGrade: 'write'
-                }
-              }]
-          },
-        ]
-      },
-      {
-        name: 'd2r-account',
-        path: 'account',
-        component: d2rAccount,
-        meta: {
-          requireAuth: true
-        }
-      },
-      {
-        name: 'd2r-knowledge',
-        path: 'knowledge',
-        component: d2rKnowledge,
-        props: true,
-        meta: {
-          topScroll: true
-        },
-        children: [
-          {
-            name: 'd2r-knowledge-section',
-            path: ':section',
-            component: d2rKnowledge,
-            children: [
-              {
-                name: 'd2r-knowledge-part',
-                path: ':part',
-                component: d2rKnowledge,
-              }
-            ]
-          }
-        ]
-      },
-      {
-        name: 'd2r-storage',
-        path: 'storage',
-        component: d2rStorage,
-        props: true,
-        meta: {
-          requireAuth: true
-        },
-        children: [
-          {
-            name: 'd2r-storage-account',
-            path: ':aid',
-            component: d2rStorage,
-            children: [
-              {
-                name: 'd2r-storage-character',
-                path: ':cid',
-                component: d2rStorage
-              }]
-          }]
-      },
-      {
-        name: 'd2r-search',
-        path: 'search',
-        component: d2rSearch,
-        props: true
-      },
-    ]
   }
 ]
 

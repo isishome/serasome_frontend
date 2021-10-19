@@ -177,6 +177,8 @@ export default {
     desc3: "or the address of the page was changed or deleted, so the requested page could not be found."
   },
   d2r: {
+    cube: "Cube",
+    rune: "Rune",
     comingSoon: "Coming Soon",
     news: "News",
     trade: "Trade",

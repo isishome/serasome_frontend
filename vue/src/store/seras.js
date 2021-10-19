@@ -12,9 +12,7 @@ export default new Vuex.Store({
     items: [],
     pageScroller: true,
     independent: false,
-    d2rInfo: null,
-    d2rClass: [],
-    d2rImages: []
+    noAD: false
   },
   getters: {
     getSignStatus: state => {
@@ -38,44 +36,8 @@ export default new Vuex.Store({
     getIndependent: state => {
       return state.independent
     },
-    getSection: state => {
-      return state.d2rInfo.section
-    },
-    getSecInfo: state => (sec) => {
-      let result = {
-        name: null,
-        icon: null,
-        classifies: [],
-        authority: {}
-      }
-
-      if (Array.isArray(state.d2rInfo.section)) {
-        const findSec = state.d2rInfo.section.find(s => s.value === sec)
-        if (findSec)
-          result = findSec
-      }
-
-      return result
-    },
-    getClassifyName: (state, getters) => (sec, classify) => {
-      const findClassify = getters.getSecInfo(sec).classifies.find(c => c.value === classify)
-      return findClassify ? findClassify.label.toUpperCase() : ''
-    },
-    getD2RInfo: state => {
-      return state.d2rInfo
-    },
-    getAuthority: state => (sec, action) => {
-      const findSection = state.d2rInfo.section.find(s => s.value === sec)
-      if (findSection)
-        return findSection.authority[action] <= state.d2rInfo.grade
-      else
-        return false
-    },
-    getD2RClass: state => {
-      return state.d2rClass
-    },
-    getD2RImages: state => {
-      return state.d2rImages
+    getNoAD: state => {
+      return state.noAD
     }
   },
   mutations: {
@@ -141,21 +103,10 @@ export default new Vuex.Store({
     },
     setIndependent(state, payload) {
       state.independent = payload
-    },
-    setSection(state, payload) {
-      state.d2rInfo.section = payload
-    },
-    setD2RInfo(state, payload) {
-      state.d2rInfo = payload
-    },
-    setBeginner(state, payload) {
-      state.d2rInfo.beginner = payload
-    },
-    setD2RClass(state, payload) {
-      state.d2rClass = payload
-    },
-    setD2RImages(state, payload) {
-      state.d2rImages = payload
+    }
+    ,
+    setNoAD(state, payload) {
+      state.noAD = payload
     }
   },
   actions: {
@@ -198,20 +149,8 @@ export default new Vuex.Store({
     setIndependent(context, payload) {
       context.commit('setIndependent', payload)
     },
-    setSection(context, payload) {
-      context.commit('setSection', payload)
-    },
-    setD2RInfo(context, payload) {
-      context.commit('setD2RInfo', payload)
-    },
-    setBeginner(context, payload) {
-      context.commit('setBeginner', payload)
-    },
-    setD2RClass(context, payload) {
-      context.commit('setD2RClass', payload)
-    },
-    setD2RImages(context, payload) {
-      context.commit('setD2RImages', payload)
+    setNoAD(context, payload) {
+      context.commit('setNoAD', payload)
     }
   }
 })

@@ -1,0 +1,89 @@
+  /** app place **********************************************************************************************************************/
+  .body--light,
+  .q-light {
+    color:rgba(50, 50, 50, 1) !important;
+    background: #DDDDDD!important;
+  }
+
+  .body--dark,
+  .q-dark {
+    color: #DDDDDD !important;
+    background: rgba(10, 10, 10, 1) !important;
+  }
+
+  .body--light .q-separator {
+    background: rgba(200, 200, 200, 0.4);
+  }
+
+  .body--dark .q-separator {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .body--light .q-tree {
+    color:rgba(50, 50, 50, 1) !important;
+  }
+
+  .body--dark .q-tree {
+    color: #DDDDDD !important;
+  }
+
+  .text-d2r {
+    color: #660000 !important;
+  }
+
+  @font-face {
+    font-family: 'Kodia';
+    src: url('/static/fonts/kodia.woff2') format('woff2'),
+      url('/static/fonts/kodia.woff') format('woff');
+    font-weight: bolder;
+  }
+
+  .font-kodia {
+    font-family: 'Kodia';
+  }
+
+  .bg-d2r {
+    background-color: #660000 !important;
+  }
+
+  .d2r-logo-b {
+    text-shadow: 0 -1px 2px rgb(255, 255, 255, 0.4);
+  }
+
+  .d2r-logo-w {
+    text-shadow: 0 1px 2px rgb(0, 0, 0, 0.6);
+  }
+
+  .text-title {
+    color: #b89c5b !important;
+  }
+
+  .bg-title {
+    background-color: #b89c5b !important;
+  }
+
+  .title-size {
+    font-size: 1.2em;
+  }
+
+  .d2r-drawer .q-separator {
+    background-color: rgba(28, 32, 32, 1);
+  }
+
+  .body--light .d2r-drawer .q-separator {
+    background-color: rgba(200, 200, 200, 0.4) !important;
+  }
+
+  .d2r-drawer .active {
+    color: rgba(10, 13, 13, 1) !important;
+    background-color: rgba(184, 156, 91, 0.7) !important;
+    font-weight: bold;
+  }
+
+  .table-back {
+    background-color: rgba(184, 156, 91, .2) !important;
+  }
+
+  .body--light .table-back {
+    background-color: rgba(100, 100, 100, .2) !important;
+  }

@@ -11,30 +11,32 @@
       <template v-if="mode === 'default'" #top-right>
         <div class="row justify-end q-gutter-x-md" :class="[$q.screen.gt.sm ? '' : 'no-margin']">
           <div v-if="sec === 'trade'">
-            <q-checkbox dense dark v-model=" filter.finish" val="d2r" class="text-caption" :label="$t('d2r.bbs.finish')"
+            <q-checkbox dense v-model=" filter.finish" val="d2r" class="text-caption" :label="$t('d2r.bbs.finish')"
               size="xs" color="d2r" />
           </div>
           <div v-if="signStatus">
-            <q-checkbox dense dark v-model="filter.mine" val="d2r" class="text-caption" :label="$t('d2r.bbs.mine')"
-              size="xs" color="d2r" />
+            <q-checkbox dense v-model="filter.mine" val="d2r" class="text-caption" :label="$t('d2r.bbs.mine')" size="xs"
+              color="d2r" />
           </div>
         </div>
       </template>
       <template #search>
         <q-form :class="[$q.screen.gt.xs ? 'justify-end' : 'justify-center']"
-          class="q-py-md row items-center q-gutter-x-sm" @submit="search">
-          <q-select :disable="loading" color="amber-8" class="col-xs-6 col-sm-4 col-md-3 col-lg-2 bg-transparent"
-            popup-content-class="bg-grey-10" v-model="filter.filterBy" :options="filter.options"
-            :label="$t('d2r.bbs.filterBy')" behavior="menu" style="max-width:60%" dark dense emit-value no-error-icon
-            hide-bottom-space map-options outlined options-cover options-dense />
-          <q-input :disable="loading" class="col-xs-6 col-sm-4 col-md-3 col-lg-2" v-model="filter.filter"
-            :label="$t('d2r.bbs.filter')" color="amber-8" standout style="max-width:40%"
-            :rules="[ val => /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\s]{2,20}$/.test(val)|| $t('search.message.invalidWord') ]" dark dense
-            hide-bottom-space no-error-icon clearable>
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
+          class="q-py-md row items-start q-gutter-sm" @submit="search">
+          <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+            <q-select :disable="loading" color="amber-8" class="bg-transparent" v-model="filter.filterBy"
+              :options="filter.options" :label="$t('d2r.bbs.filterBy')" behavior="menu" dense emit-value no-error-icon
+              hide-bottom-space map-options outlined options-cover options-dense />
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+            <q-input :disable="loading" v-model="filter.filter" :label="$t('d2r.bbs.filter')" color="amber-8" standout
+              :rules="[ val => /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\s]{2,20}$/.test(val)|| $t('search.message.invalidWord') ]" dense
+              no-error-icon clearable>
+              <template v-slot:append>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+          </div>
         </q-form>
       </template>
       <template #header="{props}">
@@ -49,8 +51,7 @@
         <q-tr class="cursor-pointer text-center" @click="rowClick(props.row.pid)"
           :class="[props.row.status === 'FIN' ? 'finish' : '']">
           <q-td>
-            <q-chip dense square color="transparent" text-color="grey-6"
-              :class="['text-weight-bold', props.row.classify]">
+            <q-chip dense square color="transparent" :class="['text-weight-bold', props.row.classify]">
               {{classifyName(sec, props.row.classify)}}
               <q-icon v-if="props.row.status === 'FIN'" name="check_circle_outline" class="absolute-center finish-icon"
                 size="xl" />
@@ -74,7 +75,7 @@
           </q-td>
           <q-td class="text-title">
             <div class="row items-center q-gutter-x-xs">
-              <q-avatar rounded color="brown-10" text-color="white" class="q-mr-xs" size="30px">
+              <q-avatar rounded color="transparent" text-color="white" class="q-mr-xs" size="30px">
                 <q-img basic v-if="props.row.avatar" :src="props.row.avatar" :ratio="1">
                   <template #error>
                     <div class="bg-d2r absolute-center">
@@ -103,7 +104,7 @@
       <template #item="{props}">
         <div class="q-pa-sm col-xs-6 col-sm-4">
           <q-card @click="rowClick(props.row.pid)" :class="props.row.status === 'FIN' ? 'finish' : ''">
-            <q-card-section class="no-padding absolute-top-left" style="z-index:1;left:-8px;opacity: 0.9;">
+            <q-card-section class="no-padding absolute-top-left" style="z-index:1;left:-10px;opacity: 0.9;">
               <q-chip square size="xs" style="padding:10px 6px" color="grey-4" text-color="black"
                 :class="['row justify-center items-center shadow-1 text-weight-bold', props.row.classify]">
                 <div class="lt-sm">
@@ -116,7 +117,7 @@
                   class="absolute-center finish-icon" size="md" />
               </q-chip>
             </q-card-section>
-            <q-card-section class="no-padding absolute-top-right" style="z-index:1;right:-8px;opacity: 0.9;">
+            <q-card-section class="no-padding absolute-top-right" style="z-index:1;right:-10px;opacity: 0.9;">
               <q-chip square icon="far fa-eye" size="xs" style="padding:10px 6px" color="title" text-color="black"
                 class="row justify-center items-center shadow-1 text-weight-bold" :label="isView(props.row.seq)" />
             </q-card-section>
@@ -129,15 +130,16 @@
             </q-img>
             <q-card-section :class="$q.screen.lt.sm ? 'q-py-xs q-px-sm' : 'q-pa-sm'">
               <div class="row justify-start no-wrap q-gutter-x-xs">
-                <div class="ellipsis text-caption text-grey-5" :class="`${props.row.classify}-title`"
+                <div class="ellipsis text-caption" :class="`${props.row.classify}-title`"
                   v-html="parsSearch(['title', 'titleWithContents'], props.row.title)"></div>
-                <div class="text-caption text-amber-8 text-weight-bold" v-if="props.row.cmt">[{{isView(props.row.cmt)}}]
+                <div class="text-caption text-amber-8 text-weight-bold" v-if="props.row.cmt">
+                  [{{isView(props.row.cmt)}}]
                 </div>
               </div>
             </q-card-section>
             <q-card-section :class="$q.screen.lt.sm ? 'q-py-xs q-px-sm' : 'q-pa-sm'">
               <div class="text-caption row justify-end no-wrap items-center text-title">
-                <q-avatar rounded color="brown-10" text-color="white" class="q-mr-xs" size="16px">
+                <q-avatar rounded color="transparent" text-color="white" class="q-mr-xs" size="16px">
                   <q-img basic v-if="props.row.avatar" :src="props.row.avatar" width="100%" :ratio="1">
                     <template #error>
                       <div class="bg-d2r absolute-center">
@@ -192,7 +194,7 @@
         loading: false,
         pagination: {
           page: 1,
-          rowsPerPage: 10
+          rowsPerPage: 20
         },
         columns: {
           'default':
@@ -308,25 +310,44 @@
 <style scoped>
   .d2r-list {
     padding: 1em 1em 2em 1em;
+    border-radius: 4px;
+  }
+
+  .body--light .d2r-list {
+    box-shadow: 0 0 0 1px rgba(200, 200, 200, 1);
+    background-color: rgba(245, 245, 245, 1);
+  }
+
+  .body--dark .d2r-list {
     box-shadow: 0 0 0 1px rgba(45, 45, 45, 1);
     background-color: rgba(5, 5, 5, 1) !important;
-    border-radius: 4px;
   }
 
   .q-card {
     border: solid 1px #333333;
+  }
+
+  .body--dark .q-card {
     background-color: rgba(100, 100, 100, 0.1) !important;
   }
 
-  tbody tr {
+  .body--light .q-card {
+    border-color: rgba(180, 180, 180, 1) !important;
+  }
+
+  .body--dark tbody tr {
     background-color: rgba(14, 14, 10, .5);
   }
 
-  tbody tr:hover {
+  .body--dark tbody tr:hover {
     background-color: rgba(22, 22, 22, 1) !important;
   }
 
-  tbody tr:nth-child(even) {
+  .body--light tbody tr:nth-child(even) {
+    background-color: rgb(255, 255, 255, .4) !important;
+  }
+
+  .body--dark tbody tr:nth-child(even) {
     background-color: rgb(10, 10, 4, .5);
   }
 
@@ -337,12 +358,25 @@
     line-height: 1.8em;
   }
 
+  .body--light tbody td {
+    border-top-color: rgba(200, 200, 200, .2);
+    border-right-color: rgba(200, 200, 200, .2);
+  }
+
   tbody td:first-child {
     border-left: solid 1px rgba(22, 22, 22, 1);
   }
 
+  .body--light td:first-child {
+    border-left-color: rgba(200, 200, 200, .2);
+  }
+
   tbody tr:last-child td {
     border-bottom: solid 1px rgba(22, 22, 22, 1);
+  }
+
+  .body--light tr:last-child td {
+    border-bottom-color: rgba(200, 200, 200, .2);
   }
 
   thead th {
@@ -365,22 +399,26 @@
   }
 
   .sell {
-    color: rgb(69, 142, 238) !important;
+    color: rgb(51, 130, 233) !important;
   }
 
   .buy {
-    color: rgb(111, 218, 159) !important;
+    color: rgb(35, 170, 98) !important;
   }
 
   @media screen and (max-width:599px) {
     .sell {
-      background-color: rgb(69, 142, 238) !important;
-      color: rgba(0, 0, 0, .8) !important;
+      color: rgb(51, 130, 233) !important;
+      background-color: #000000 !important;
+      box-shadow: inset 0 0 0 1px rgb(51, 130, 233);
+      border-radius: 1px;
     }
 
     .buy {
-      background-color: rgb(111, 218, 159) !important;
-      color: rgba(0, 0, 0, .8) !important;
+      color: rgb(35, 170, 98) !important;
+      background-color: #000000 !important;
+      box-shadow: inset 0 0 0 1px rgb(35, 170, 98);
+      border-radius: 1px;
     }
   }
 
@@ -391,6 +429,12 @@
       2px -2px 0 #880000,
       -2px 2px 0 #880000,
       2px 2px 0 #880000;
+  }
+
+  .body--light .notice-title {
+    color: #880000;
+    font-weight: bold;
+    text-shadow: none !important;
   }
 
   .finish {

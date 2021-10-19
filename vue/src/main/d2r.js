@@ -1,36 +1,30 @@
 import Vue from 'vue'
-import App from './App.vue'
-import './quasar'
-import i18n from './setup/i18n-setup'
-import mixin from './setup/mixin'
+import App from '@/app/D2R.vue'
+import '@/quasar'
+import i18n from '@/setup/i18n-setup'
+import mixin from '@/setup/mixin'
 import VueRouter from 'vue-router'
-import routes from './router/routes'
-import store from './store/'
+import routes from '@/router/d2r'
+import store from '@/store/d2r'
 import axios from 'axios'
-import vuePlugin from "./plugin/highlight"
+import vuePlugin from "@/plugin/highlight"
 import Adsense from 'vue-google-adsense/dist/Adsense.min.js'
 //import InArticleAdsense from 'vue-google-adsense/dist/InArticleAdsense.min.js'
 //import InFeedAdsense from 'vue-google-adsense/dist/InFeedAdsense.min.js'
 
-const Logo = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Logo')
-const PostList = () => import(/* webpackPrefetch: true */ '@/components/seras/PostList')
-const PostRead = () => import(/* webpackPrefetch: true */ '@/components/seras/PostRead')
-const Confirm = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Confirm')
 const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
-const d2rTable = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Table')
-const d2rTh = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Th')
-const d2rList = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/List')
+const d2rTable = () => import(/* webpackPrefetch: true */ '@/components/d2r/Table')
+const d2rTh = () => import(/* webpackPrefetch: true */ '@/components/d2r/Th')
+const d2rList = () => import(/* webpackPrefetch: true */ '@/components/d2r/List')
 const d2rRead = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Read')
 const d2rWrite = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Write')
 const d2rConfirm = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Confirm')
 const d2rItem = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Item')
-const d2rComments = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Comments')
-const d2rSummary = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Summary')
+const d2rComments = () => import(/* webpackPrefetch: true */ '@/components/d2r/Comments')
+const d2rSummary = () => import(/* webpackPrefetch: true */ '@/components/d2r/Summary')
 const d2rTapPanel = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/TapPanel')
 const d2rZoom = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Zoom')
-import { Quasar, Notify, Cookies, Dark, Loading } from 'quasar'
-//import VFacebookLogin from 'vue-facebook-login-component'
-import GAuth from 'vue-google-oauth2'
+import { Quasar, Notify, Cookies, Loading, Dark } from 'quasar'
 
 // Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
 const router = new VueRouter({
@@ -65,7 +59,7 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   const findTitle = to.matched.find(route => route.meta.title)
-  document.title = findTitle ? findTitle.meta.title : process.env.VUE_APP_TITLE
+  document.title = findTitle ? findTitle.meta.title : process.env.VUE_APP_D2R_TITLE
 
   const findIndependent = to.matched.find(route => route.meta.independent)
   if (findIndependent && !findIndependent.components.independent) {
@@ -80,13 +74,12 @@ router.beforeEach((to, from, next) => {
   const preventScroll = to.matched.some(route => route.meta.preventScroll)
   document.body.style.overflow = preventScroll ? 'hidden' : ''
 
-  const cookieDark = Cookies.has(process.env.VUE_APP_DARK_NAME) && Cookies.get(process.env.VUE_APP_DARK_NAME) === true
+  const cookieDark = Cookies.has(process.env.VUE_APP_D2R_DARK_NAME) && Cookies.get(process.env.VUE_APP_D2R_DARK_NAME) === true
   if (cookieDark !== Dark.isActive)
     Dark.set(cookieDark)
 
   const requireAuth = to.matched.some(route => route.meta.requireAuth)
   const signedIn = Cookies.has(process.env.VUE_APP_STATUS_NAME) && Cookies.get(process.env.VUE_APP_STATUS_NAME) === true
-  const checkForgot = to.matched.some(route => route.name.indexOf('forgot') !== -1)
   if (requireAuth && !signedIn) {
     Notify.create({
       type: 'negative',
@@ -94,59 +87,10 @@ router.beforeEach((to, from, next) => {
       message: i18n.t('system.message.requireSignIn')
     })
 
-    router.replace({ name: 'sign', params: { redirect: encodeURIComponent(to.path) } }).catch(() => { })
+    document.location.href = '/sign'
   }
-  else if (signedIn && checkForgot)
-    router.replace({ name: 'main' }).catch(() => { })
 
   next()
-})
-
-const getD2RInfo = function () {
-  return new Promise((resolve, reject) => {
-    if (store.getters.getD2RInfo === null) {
-      axiosObject
-        .get('/d2r/account/info')
-        .then(function (response) {
-          store.dispatch('setD2RInfo', response.data)
-        })
-        .catch(function () {
-          reject()
-        })
-        .then(function () {
-          resolve()
-        })
-    }
-    else
-      resolve()
-  })
-}
-
-router.beforeEach((to, from, next) => {
-  const checkD2R = to.matched.some(route => route.name.indexOf('d2r') !== -1)
-  if (!checkD2R)
-    next()
-  else {
-    Promise.all([getD2RInfo()]).then(function () {
-      const checkGrade = to.matched.some(route => route.meta.checkGrade)
-      const authority = store.getters.getAuthority(to.params.sec, to.meta.checkGrade)
-      if (checkGrade && !authority) {
-        Notify.create({
-          type: 'negative',
-          color: 'negative',
-          message: i18n.t('d2r.message.noPermission')
-        })
-        if (from.name === 'sign' || from.name === null)
-          router.replace('/d2r')
-        else
-          next(false)
-      }
-      else
-        next()
-    }).catch(() => {
-      next(false)
-    })
-  }
 })
 // Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -180,7 +124,7 @@ axiosObject.interceptors.response.use((response) => {
       message: i18n.t('system.message.unavailableService')
     })
 
-    router.push({ name: 'd2r' }).catch(() => { })
+    router.push({ name: 'd2r-main' }).catch(() => { })
     return
   }
 
@@ -204,11 +148,11 @@ axiosObject.interceptors.response.use((response) => {
     store.dispatch('setSignStatus', false)
     store.dispatch('setSomeList', null)
     store.dispatch('setCurrentSome', false)
-    router.push({ name: statusCode === 401 ? 'sign' : 'join' }).catch(() => { })
+    document.location.href = statusCode === 401 ? '/sign' : '/join'
   }
   else if (statusCode === 303) {
-    if (router.currentRoute.name !== 'main')
-      router.push({ name: 'main' }).catch(() => { })
+    if (router.currentRoute.name !== 'd2r-main')
+      router.push({ name: 'd2r-main' }).catch(() => { })
   }
 
   return Promise.reject(error);
@@ -228,12 +172,7 @@ Vue.prototype.thumbStyle = {
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-Vue.use(GAuth, { clientId: process.env.VUE_APP_GOOGLE_CLIENTID, scope: 'profile email' })
 Vue.prototype.axios = axiosObject
-Vue.component('ss-logo', Logo)
-Vue.component('ss-post-list', PostList)
-Vue.component('ss-post-read', PostRead)
-Vue.component('ss-confirm', Confirm)
 Vue.component('ss-prompt', Prompt)
 Vue.component('d2r-table', d2rTable)
 Vue.component('d2r-th', d2rTh)
@@ -246,8 +185,6 @@ Vue.component('d2r-comments', d2rComments)
 Vue.component('d2r-summary', d2rSummary)
 Vue.component('d2r-tap-panel', d2rTapPanel)
 Vue.component('d2r-zoom', d2rZoom)
-//Vue.component('v-facebook-login', VFacebookLogin)
-
 Vue.use(require('vue-script2'))
 Vue.use(Adsense)
 //Vue.use(InArticleAdsense)

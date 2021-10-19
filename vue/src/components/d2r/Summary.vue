@@ -1,8 +1,8 @@
 <template>
-  <q-list dark class="row summary-wrap relative-position">
+  <q-list class="row summary-wrap relative-position">
     <q-item v-if="loading" class="lastest-wrap full-width" style="min-height: 100px;">
       <div class="non-selectable">
-        <q-inner-loading showing size="xs" dark class="bg-transparent">
+        <q-inner-loading showing size="xs" class="bg-transparent">
           <q-spinner-ball size="lg" color="d2r" />
         </q-inner-loading>
       </div>
@@ -18,7 +18,7 @@
               @click="moreClick(sec.value)" />
           </div>
         </q-toolbar>
-        <q-list padding :dense="$q.screen.lt.sm" dark class="text-grey-6 text-body">
+        <q-list padding :dense="$q.screen.lt.sm" class="text-body">
           <q-item-label v-if="sec.summary.length ===0" class="q-ma-md">
             <div class="row justify-center">
               {{$t('table.noData')}}
@@ -32,13 +32,13 @@
                     spinner-color="d2r">
                     <template v-if="blank !== null" #error>
                       <q-img no-default-spinner basic :ratio="2/1" :src="require(`@/assets/images/d2r/${blank}`)"
-                        class="absolute-center" />
+                        class="absolute-center bg-transparent" />
                     </template>
                   </q-img>
                 </q-avatar>
               </q-item-section>
               <q-item-section>
-                <q-item-label class="ellipsis text-grey-4 text-left">{{summary.title}}</q-item-label>
+                <q-item-label class="ellipsis text-left">{{summary.title}}</q-item-label>
                 <q-item-label class="ellipsis text-left">
                   {{summary.contents}}
                 </q-item-label>
@@ -96,25 +96,41 @@
   }
 </script>
 <style scoped>
-  .summary-wrap {
-    box-shadow: -1px -1px 0 0 rgba(45, 45, 45, 1);
+  .body--light .summary-wrap {
+    box-shadow: inset 1px -1px 0 0 rgba(45, 45, 45, .4);
   }
 
-  .summary {
-    background-color: rgba(12, 12, 12, 1);
+  .body--dark .summary-wrap {
+    box-shadow: inset 1px -1px 0 0 rgba(45, 45, 45, .8);
   }
 
   .sub {
     font-size: 1em;
+  }
+
+  .body--light .sub {
+    color: rgb(100, 100, 100);
+    background-color: rgba(24, 30, 30, .2) !important;
+    box-shadow: 0 8px 4px 0 rgba(0, 0, 0, .2) inset;
+  }
+
+  .body--dark .sub {
     color: rgba(184, 156, 91, 1);
-    box-shadow: 0 8px 4px 0 rgba(0, 0, 0, .3) inset;
     background-color: rgba(24, 30, 30, 1) !important;
+    box-shadow: 0 8px 4px 0 rgba(0, 0, 0, .3) inset;
   }
 
   .lastest-wrap {
-    box-shadow: -1px -1px 1px 0 rgba(45, 45, 45, 1) inset;
     border-radius: 4px;
     padding-bottom: 60px;
+  }
+
+  .body--light .lastest-wrap {
+    box-shadow: -1px -1px 1px 0 rgba(45, 45, 45, .4) inset;
+  }
+
+  .body--dark .lastest-wrap {
+    box-shadow: -1px -1px 1px 0 rgba(45, 45, 45, .8) inset;
   }
 
   .outlined {

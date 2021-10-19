@@ -200,8 +200,13 @@
 </script>
 <style scoped>
   .wrap {
+    max-width: 100%;
     box-shadow: 0 0 0 1px rgba(30, 30, 30, 1) !important;
     border-radius: 4px;
+  }
+
+  .body--light .wrap {
+    box-shadow: 0 0 0 1px rgba(200, 200, 200, 1) !important;
   }
 
   .q-card {
@@ -215,16 +220,16 @@
     white-space: normal !important;
   }
 
+  tbody tr>td::before {
+    background-color: transparent !important;
+  }
+
   .npc-top td {
     border-top: solid 1px rgba(33, 33, 33, 1);
   }
 
-  tbody tr:last-child td {
-    border-bottom: solid 1px rgba(33, 33, 33, 1);
-  }
-
-  .bg-other {
-    background-color: rgba(16, 16, 16, 1) !important;
+  .body--light .npc-top td {
+    border-top: solid 1px rgba(200, 200, 200, 1);
   }
 
   thead th {
@@ -239,11 +244,23 @@
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
     color: rgba(184, 156, 91, 1);
     box-shadow: inset 1px 1px 1px 1px rgba(184, 156, 91, 1), inset -1px -1px 1px 1px rgba(184, 156, 91, .6), inset 0 0 4px 4px rgba(0, 0, 0, 1);
+    border-radius: 4px;
+  }
+
+  .body--light .work-popup {
+    background-color: rgb(231, 215, 177) !important;
+    color: rgba(10, 10, 10, 1);
+    text-shadow: none;
+    box-shadow: inset 0 0 0 1px rgba(50, 50, 50, 1);
   }
 
   .table-row {
     text-align: left;
     word-break: keep-all;
     text-overflow: ellipsis;
+  }
+
+  .body--light .table-card {
+    border-color: rgba(200, 200, 200.1);
   }
 </style>

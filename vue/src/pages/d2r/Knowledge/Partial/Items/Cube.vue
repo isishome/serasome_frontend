@@ -1,16 +1,16 @@
 <template>
   <div>
-    <q-table class="bg-transparent" table-class="table-style" card-container-class="q-col-gutter-md justify-center"
-      :grid="$q.screen.lt.lg" dark :data="filtering" :columns="columns" row-key="name" :pagination.sync="pagination"
+    <q-table class="bg-transparent" table-class="table-style-cube" card-container-class="q-col-gutter-md justify-center"
+      :grid="$q.screen.lt.lg" :data="filtering" :columns="columns" row-key="name" :pagination.sync="pagination"
       hide-header hide-pagination>
       <template v-slot:no-data>
         <div class="row justify-center full-width text-body2">{{$t('d2r.knowledge.items.noData')}}</div>
       </template>
       <template v-slot:top>
         <div class="row justify-end full-width">
-          <q-input dark dense debounce="400" :label="$t('btn.search')" color="grey-4 text-title" v-model="filter">
+          <q-input dense debounce="400" :label="$t('btn.search')" color="title" v-model="filter">
             <template v-slot:append>
-              <q-icon name="search" color="grey-4 text-title" />
+              <q-icon name="search" color="title" />
             </template>
           </q-input>
         </div>
@@ -45,7 +45,7 @@
       </template>
       <template #item="props">
         <div class="col-md-6 col-12">
-          <q-card dark class="card" bordered>
+          <q-card class="card" bordered>
             <q-card-section class="font-kodia text-h6 word-keep">{{props.row.title}}</q-card-section>
             <q-separator />
             <q-card-section class="no-padding">
@@ -72,13 +72,6 @@
           </q-card>
         </div>
       </template>
-      <template v-slot:top-right>
-        <q-input dark borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
     </q-table>
     <div v-if="pagesNumber !== 0" class="mobile-only row justify-center full-width q-mt-md">
       <q-pagination color="title text-black" v-model="pagination.page" :max="pagesNumber"
@@ -100,7 +93,7 @@
       return {
         pagination: {
           page: 1,
-          rowsPerPage: this.$q.platform.is.mobile ? 5 : 10000
+          rowsPerPage: this.$q.platform.is.mobile ? 10 : 10000
         },
         filter: '',
         columns: [
@@ -133,23 +126,36 @@
   }
 
   .card {
-    background-color: rgba(10, 10, 10, 1) !important;
+    background-color: rgba(5, 5, 5, 1) !important;
     border-color: rgba(184, 156, 91, .5) !important;
     border-radius: 4px;
+  }
+
+  .body--light .card {
+    background-color: rgba(245, 245, 245, 1) !important;
   }
 
   .card hr {
     background-color: rgba(184, 156, 91, .5) !important;
   }
 
-  .table-style table {
+  .table-style-cube table {
     box-shadow: inset 0 0 1px 1px rgba(184, 156, 91, .5) !important;
-    background-color: rgba(10, 10, 10, 1) !important;
+    background-color: rgba(5, 5, 5, 1) !important;
     border-radius: 4px;
   }
 
-  .table-style td {
+  .body--light .table-style-cube table {
+    box-shadow: none !important;
+    background-color: rgba(245, 245, 245, 1) !important;
+  }
+
+  .table-style-cube td {
     border-color: rgba(184, 156, 91, .5) !important;
+  }
+
+  .body--light .table-style-cube td {
+    border-color: none !important;
   }
 
   .text-underline {
@@ -159,6 +165,10 @@
   ul {
     list-style: inside;
     padding: 0;
-    padding-left: 10px;
+    padding: 10px 0 10px 10px;
+  }
+
+  li {
+    padding: 2px;
   }
 </style>

@@ -12,7 +12,7 @@
         </q-tab>
       </template>
       <template #panels>
-        <q-tab-panel v-for="(act, index) in acts" :key="act" dark :name="act" class="no-scroll word-wrap non-selectable"
+        <q-tab-panel v-for="(act, index) in acts" :key="act" :name="act" class="no-scroll word-wrap non-selectable"
           :class="$q.screen.lt.sm ? 'q-px-sm' : 'q-px-lg'">
           <div class="q-mb-xl font-kodia text-weight-bold text-title"
             :class="$q.screen.lt.sm ? 'text-center text-h5' : 'text-left q-ml-md text-h4'">

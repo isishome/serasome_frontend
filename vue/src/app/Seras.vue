@@ -42,7 +42,7 @@
           </div>
           <!-- toolbar 3 -->
           <div class="absolute-right col-xl-5 col-lg-4 col-md-4 row justify-end items-center q-gutter-x-sm">
-            <q-btn dense flat class="gt-sm" to="/d2r">
+            <q-btn dense flat class="gt-sm" @click="goD2R">
               <q-icon name="fas fa-star-of-david" size="22px" color="d2r" />
               <span class="q-ml-sm gt-lg">D2R</span>
             </q-btn>
@@ -164,7 +164,7 @@
               </q-item-section>
             </q-item>
             <q-separator />
-            <q-item to="/d2r">
+            <q-item clickable @click="goD2R">
               <q-item-section avatar>
                 <q-icon size="24px" name="fas fa-star-of-david" class="text-d2r d2r-logo-w" />
               </q-item-section>
@@ -213,7 +213,27 @@
         </q-scroll-area>
       </q-drawer>
       <q-page-container>
-        <router-view name="default" />
+        <router-view name="carousel" />
+        <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
+          <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding-right:6px;">
+            <div v-if="!noAD && pageLoad && $q.screen.gt.sm && isProduction" class="ad-box">
+              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" data-ad-format="auto"
+                ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
+              </Adsense>
+            </div>
+          </div>
+          <div class="col-xl-6 col-lg-8 col-12">
+            <router-view />
+          </div>
+          <div v-if="!noAD && pageLoad && $q.screen.gt.sm && isProduction"
+            class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding-left:6px;">
+            <div class="ad-box">
+              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" data-ad-format="auto"
+                ins-style="display:inline-block;width:164px;height:600px" :key="`rt_${key}`">
+              </Adsense>
+            </div>
+          </div>
+        </div>
         <div class="platform-ios-only q-py-md"></div>
         <q-page-scroller v-show="pageScroller" position="bottom-left" :scroll-offset="150" :offset="[0, 0]">
           <q-btn push :style="$q.screen.lt.md ? 'left:10px;bottom:30px' : 'left:20vw;bottom:20px'" round size="md"
@@ -243,6 +263,10 @@
 </template>
 <script>
   import {
+    uid
+  } from 'quasar'
+
+  import {
     mapGetters,
     mapActions
   } from 'vuex'
@@ -251,6 +275,7 @@
     name: 'app',
     data() {
       return {
+        slide: 'first',
         language: this.$te('language', navigator.language || 'ko'),
         routeName: '',
         drawer: false,
@@ -261,8 +286,14 @@
         options: [
           { label: '한국어', value: 'ko' },
           { label: 'ENGLISH', value: 'en' }
-        ]
+        ],
+        key: uid(),
+        isProduction: process.env.NODE_ENV === 'production',
+        pageLoad: false
       }
+    },
+    beforeMount() {
+      this.pageLoad = true
     },
     watch: {
       '$route': function (to) {
@@ -270,13 +301,14 @@
         this.routeName = to.name
         this.drawer = false
         this.getCategory()
-        document.body.classList.remove('d2r-black')
 
         if (!to.params.sname)
           this.setCurrentSome(false)
       },
       lang: function (val, old) {
         if (val !== old) {
+          this.key = uid()
+
           this.$i18n.loadLanguageAsync(val).then(() => {
             this.$router.go()
           })
@@ -290,11 +322,9 @@
         someList: 'getSomeList',
         currentSome: 'getCurrentSome',
         pageScroller: 'getPageScroller',
-        independent: 'getIndependent'
+        independent: 'getIndependent',
+        noAD: 'getNoAD'
       })
-    },
-    created() {
-      document.body.classList.remove('d2r-black')
     },
     methods: {
       ...mapActions({
@@ -367,7 +397,13 @@
             })
         } else
           vm.$router.push({ name: 'sign', params: { redirect: encodeURIComponent(vm.$route.path) } }).catch(() => { })
+      },
+      goD2R() {
+        document.location.href = '/d2r'
       }
     }
   }
 </script>
+<style scoped>
+
+</style>

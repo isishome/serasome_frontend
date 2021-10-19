@@ -1,4 +1,16 @@
 module.exports = {
+  pages: {
+    index: {
+      entry: 'src/main/seras.js',
+      template: 'public/seras.html',
+      filename: 'index.html'
+    },
+    d2r: {
+      entry: 'src/main/d2r.js',
+      template: 'public/d2r.html',
+      filename: 'd2rIndex.html'
+    }
+  },
   chainWebpack: (config) => {
     config.plugins.delete('prefetch')
   },

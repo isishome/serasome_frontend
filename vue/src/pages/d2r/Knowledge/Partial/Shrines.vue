@@ -39,16 +39,16 @@
                 </template>
                 <template #item="{props}">
                   <div class="q-pa-sm col-xs-12 col-sm-6">
-                    <q-card dark flat bordered class="table-card">
-                      <q-card-section class="bg-black text-center">
+                    <q-card flat bordered class="table-card">
+                      <q-card-section class="text-center">
                         <q-img :src='props.row.image' width="75px" />
                       </q-card-section>
-                      <q-card-section class="q-pa-sm bg-black">
+                      <q-card-section class="q-pa-sm">
                         <div class="font-kodia text-subtitle1 text-title text-weight-bold text-center">
                           <span> {{props.row.name[locale]}}</span>
                         </div>
                       </q-card-section>
-                      <q-separator color="grey-10" />
+                      <q-separator />
                       <q-card-section class="q-pa-sm">
                         <div class="text-weight-bold sub-title">{{$t('d2r.knowledge.shrines.effect') }}</div>
                         <div class="text-caption text-right column">
@@ -57,13 +57,13 @@
                           </div>
                         </div>
                       </q-card-section>
-                      <q-separator inset color="grey-10" />
+                      <q-separator inset />
                       <q-card-section class="q-pa-sm">
                         <div class="text-weight-bold sub-title">
                           {{$t('d2r.knowledge.shrines.regeneration')}}</div>
                         <div class="text-caption text-right">{{ props.row.regeneration}}</div>
                       </q-card-section>
-                      <q-separator inset color="grey-10" />
+                      <q-separator inset />
                       <q-card-section class="q-pa-sm">
                         <div class="text-weight-bold sub-title">{{$t('d2r.knowledge.shrines.duration') }}</div>
                         <div class="text-caption text-right">{{ props.row.duration}}</div>
@@ -312,8 +312,18 @@
     overflow: hidden;
   }
 
+  .body--light .wrap {
+    box-shadow: 0 0 0 1px rgba(180, 180, 180, 1);
+    background-color: rgba(245, 245, 245, .8) !important;
+  }
+
   .table-card {
     box-shadow: -1px -1px 1px 1px rgba(184, 156, 91, .6), 1px 1px 1px 1px rgba(104, 76, 11, .6), inset 0 0 4px 4px rgba(0, 0, 0, 1) !important;
+    background-color: transparent !important;
+  }
+
+  .body--light .table-card {
+    box-shadow: 0 0 0 1px rgba(100, 100, 100, .4) !important;
     background-color: transparent !important;
   }
 
@@ -325,6 +335,10 @@
 
   tbody tr:nth-child(even) {
     background-color: rgba(15, 15, 15, .4) !important;
+  }
+
+  .body--light tbody tr:nth-child(even) {
+    background-color: rgb(255, 255, 255, .4) !important;
   }
 
   thead tr {
@@ -348,8 +362,17 @@
     text-shadow: 3px 3px 0 rgba(50, 50, 50, 1);
   }
 
+  .body--light .sub-title {
+    color: inherit;
+    text-shadow: none;
+  }
+
   @media screen and (max-width:1439px) {
     .wrap {
+      box-shadow: none;
+    }
+
+    .body--light .wrap {
       box-shadow: none;
     }
   }

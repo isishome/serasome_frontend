@@ -1,7 +1,7 @@
 <template>
   <div>
-    <q-dialog dark v-model="show" @input="change">
-      <q-card>
+    <q-dialog v-model="show" @input="change">
+      <q-card class="d2r-confirm">
         <q-card-section class="row items-center">
           <q-avatar :color="color" size="md" :text-color="textColor">
             <q-icon :name="icon" size="sm" padding="sm" />
@@ -66,4 +66,7 @@
   }
 </script>
 <style scoped>
+  .body--dark .d2r-confirm {
+    background-color: rgba(50, 50, 50, .5) !important;
+  }
 </style>

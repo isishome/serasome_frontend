@@ -4,10 +4,10 @@
       @request="request" :grid="$q.screen.lt.lg">
       <template #body="{props}">
         <q-tr class="text-center npc-top">
-          <q-td style="width:200px" rowspan="3">
+          <q-td class="bg-transparent" style="width:200px" rowspan="3">
             <q-img :src='props.row.image' width="100px" />
           </q-td>
-          <q-td class="font-kodia text-left text-title text-weight-bold bg-other" style="font-size: 1.8em;">
+          <q-td class="font-kodia text-left text-title text-weight-bold" style="font-size: 1.8em;">
             {{props.row.name[locale]}}
           </q-td>
           <q-td rowspan="3">
@@ -16,12 +16,12 @@
           </q-td>
         </q-tr>
         <q-tr>
-          <q-td class="table-row bg-other" style="text-indent: 10px;">
+          <q-td class="table-row" style="text-indent: 10px;">
             {{props.row.desc[locale]}}
           </q-td>
         </q-tr>
         <q-tr>
-          <q-td class="table-row text-grey-6 bg-other">
+          <q-td class="table-row text-grey-6">
             <div v-for="(work, index) in props.row.work[locale]" :key="index">
               {{work}}
             </div>
@@ -208,6 +208,10 @@
     border-radius: 4px;
   }
 
+  .body--light .wrap {
+    box-shadow: 0 0 0 1px rgba(200, 200, 200, 1) !important;
+  }
+
   .q-card {
     border: solid 1px #333333;
     background-color: rgba(100, 100, 100, 0.1) !important;
@@ -219,16 +223,16 @@
     white-space: normal !important;
   }
 
+  tbody tr>td::before {
+    background-color: transparent !important;
+  }
+
   .npc-top td {
     border-top: solid 1px rgba(33, 33, 33, 1);
   }
 
-  tbody tr:last-child td {
-    border-bottom: solid 1px rgba(33, 33, 33, 1);
-  }
-
-  .bg-other {
-    background-color: rgba(16, 16, 16, 1) !important;
+  .body--light .npc-top td {
+    border-top: solid 1px rgba(200, 200, 200, 1);
   }
 
   thead th {
@@ -243,11 +247,23 @@
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 1);
     color: rgba(184, 156, 91, 1);
     box-shadow: inset 1px 1px 1px 1px rgba(184, 156, 91, 1), inset -1px -1px 1px 1px rgba(184, 156, 91, .6), inset 0 0 4px 4px rgba(0, 0, 0, 1);
+    border-radius: 4px;
+  }
+
+  .body--light .work-popup {
+    background-color: rgb(231, 215, 177) !important;
+    color: rgba(10, 10, 10, 1);
+    text-shadow: none;
+    box-shadow: inset 0 0 0 1px rgba(50, 50, 50, 1);
   }
 
   .table-row {
     text-align: left;
     word-break: keep-all;
     text-overflow: ellipsis;
+  }
+
+  .body--light .table-card {
+    border-color: rgba(200, 200, 200.1);
   }
 </style>

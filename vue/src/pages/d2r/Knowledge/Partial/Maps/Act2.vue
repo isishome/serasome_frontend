@@ -2,10 +2,10 @@
   <div class="knowledge">
     <template v-if="$i18n.locale === 'ko'">
       <q-timeline :layout="layout">
-        <q-timeline-entry color="yellow-9" class="text-title" side="left" icon="store">
+        <q-timeline-entry color="yellow-9" side="left" icon="store">
           <div class="q-mb-lg row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Lut Gholein</div>
               </q-card-section>
@@ -19,10 +19,10 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="green-10" class="text-title" side="left" icon="fas fa-swimming-pool">
+        <q-timeline-entry color="green-10" side="left" icon="fas fa-swimming-pool">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Sewers</div>
               </q-card-section>
@@ -36,10 +36,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry dark color="yellow-9" class="text-title" side="right" icon="fas fa-mountain">
+        <q-timeline-entry color="yellow-9" side="right" icon="fas fa-mountain">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Rocky Waste</div>
               </q-card-section>
@@ -54,10 +53,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="yellow-10" class="text-title" side="left" icon="fas fa-dungeon">
+        <q-timeline-entry color="yellow-10" side="left" icon="fas fa-dungeon">
           <div class="row q-mb-lg">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Dry Hills</div>
               </q-card-section>
@@ -72,7 +71,7 @@
           </div>
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Halls of the Dead</div>
               </q-card-section>
@@ -86,10 +85,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="green-5" class="text-title" side="right" icon="fas fa-bug">
+        <q-timeline-entry color="green-5" side="right" icon="fas fa-bug">
           <div class="q-mb-lg row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Far Oasis</div>
               </q-card-section>
@@ -104,8 +102,7 @@
             <div class="col gt-sm"></div>
           </div>
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Maggot Lair</div>
               </q-card-section>
@@ -120,10 +117,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="grey-8" class="text-title" side="left" icon="holiday_village">
+        <q-timeline-entry color="grey-8" side="left" icon="holiday_village">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Lost City</div>
               </q-card-section>
@@ -137,10 +134,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="orange-5" class="text-title" side="right" icon="fas fa-university">
+        <q-timeline-entry color="orange-5" side="right" icon="fas fa-university">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Valley of Snakes</div>
               </q-card-section>
@@ -160,10 +156,10 @@
         </q-timeline-entry>
       </q-timeline>
       <q-timeline :layout="layout">
-        <q-timeline-entry color="yellow-9" class="text-title" side="left" icon="store">
+        <q-timeline-entry color="yellow-9" side="left" icon="store">
           <div class="q-mb-lg row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Lut Gholein</div>
               </q-card-section>
@@ -177,10 +173,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="purple" class="text-title" side="right" icon="fas fa-church">
+        <q-timeline-entry color="purple" side="right" icon="fas fa-church">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Harem</div>
               </q-card-section>
@@ -195,10 +190,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="red-6" class="text-title" side="left" icon="fas fa-church">
+        <q-timeline-entry color="red-6" side="left" icon="fas fa-church">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">The Palace Cellar</div>
               </q-card-section>
@@ -212,10 +207,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="blue-9" class="text-title" side="right" icon="auto_awesome">
+        <q-timeline-entry color="blue-9" side="right" icon="auto_awesome">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Arcane Sanctuary</div>
               </q-card-section>
@@ -230,10 +224,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="orange-5" class="text-title" side="left" icon="fas fa-university">
+        <q-timeline-entry color="orange-5" side="left" icon="fas fa-university">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Canyon of the Magi</div>
               </q-card-section>
@@ -247,10 +241,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="purple-8" class="text-title" side="right" icon="fas fa-cross">
+        <q-timeline-entry color="purple-8" side="right" icon="fas fa-cross">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Tal Rasha's Tomb</div>
               </q-card-section>
@@ -265,10 +258,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="purple-10" class="text-title" side="left" icon="fas fa-cross">
+        <q-timeline-entry color="purple-10" side="left" icon="fas fa-cross">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Tal Rasha's Chamber</div>
               </q-card-section>
@@ -286,15 +279,15 @@
           액트 II - 파트 II 완료
         </q-timeline-entry>
       </q-timeline>
-      <p class="text-right text-grey-6">출처 : <a style="text-decoration: none;" class="text-title" target="_blank"
+      <p class="text-right text-grey-6">출처 : <a style="text-decoration: none;" target="_blank"
           href="http://classic.battle.net/diablo2exp/maps/act2.shtml">아리앗서밋</a></p>
     </template>
     <template v-if="$i18n.locale === 'en'">
       <q-timeline :layout="layout">
-        <q-timeline-entry color="yellow-9" class="text-title" side="left" icon="store">
+        <q-timeline-entry color="yellow-9" side="left" icon="store">
           <div class="q-mb-lg row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Lut Gholein</div>
               </q-card-section>
@@ -308,10 +301,10 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="green-10" class="text-title" side="left" icon="fas fa-swimming-pool">
+        <q-timeline-entry color="green-10" side="left" icon="fas fa-swimming-pool">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Sewers</div>
               </q-card-section>
@@ -325,10 +318,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry dark color="yellow-9" class="text-title" side="right" icon="fas fa-mountain">
+        <q-timeline-entry color="yellow-9" side="right" icon="fas fa-mountain">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Rocky Waste</div>
               </q-card-section>
@@ -343,10 +335,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="yellow-10" class="text-title" side="left" icon="fas fa-dungeon">
+        <q-timeline-entry color="yellow-10" side="left" icon="fas fa-dungeon">
           <div class="row q-mb-lg">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Dry Hills</div>
               </q-card-section>
@@ -361,7 +353,7 @@
           </div>
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Halls of the Dead</div>
               </q-card-section>
@@ -375,10 +367,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="green-5" class="text-title" side="right" icon="fas fa-bug">
+        <q-timeline-entry color="green-5" side="right" icon="fas fa-bug">
           <div class="q-mb-lg row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Far Oasis</div>
               </q-card-section>
@@ -393,8 +384,7 @@
             <div class="col gt-sm"></div>
           </div>
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Maggot Lair</div>
               </q-card-section>
@@ -409,10 +399,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="grey-8" class="text-title" side="left" icon="holiday_village">
+        <q-timeline-entry color="grey-8" side="left" icon="holiday_village">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Lost City</div>
               </q-card-section>
@@ -426,10 +416,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="orange-5" class="text-title" side="right" icon="fas fa-university">
+        <q-timeline-entry color="orange-5" side="right" icon="fas fa-university">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Valley of Snakes</div>
               </q-card-section>
@@ -449,10 +438,10 @@
         </q-timeline-entry>
       </q-timeline>
       <q-timeline :layout="layout">
-        <q-timeline-entry color="yellow-9" class="text-title" side="left" icon="store">
+        <q-timeline-entry color="yellow-9" side="left" icon="store">
           <div class="q-mb-lg row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Lut Gholein</div>
               </q-card-section>
@@ -466,10 +455,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="purple" class="text-title" side="right" icon="fas fa-church">
+        <q-timeline-entry color="purple" side="right" icon="fas fa-church">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Harem</div>
               </q-card-section>
@@ -484,10 +472,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="red-6" class="text-title" side="left" icon="fas fa-church">
+        <q-timeline-entry color="red-6" side="left" icon="fas fa-church">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">The Palace Cellar</div>
               </q-card-section>
@@ -501,10 +489,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="blue-9" class="text-title" side="right" icon="auto_awesome">
+        <q-timeline-entry color="blue-9" side="right" icon="auto_awesome">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Arcane Sanctuary</div>
               </q-card-section>
@@ -519,10 +506,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="orange-5" class="text-title" side="left" icon="fas fa-university">
+        <q-timeline-entry color="orange-5" side="left" icon="fas fa-university">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Canyon of the Magi</div>
               </q-card-section>
@@ -536,10 +523,9 @@
             </q-card>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="purple-8" class="text-title" side="right" icon="fas fa-cross">
+        <q-timeline-entry color="purple-8" side="right" icon="fas fa-cross">
           <div class="row">
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold"
-              style="float:left;clear:both;">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold" style="float:left;clear:both;">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Tal Rasha's Tomb</div>
               </q-card-section>
@@ -554,10 +540,10 @@
             <div class="col gt-sm"></div>
           </div>
         </q-timeline-entry>
-        <q-timeline-entry color="purple-10" class="text-title" side="left" icon="fas fa-cross">
+        <q-timeline-entry color="purple-10" side="left" icon="fas fa-cross">
           <div class="row">
             <div class="col gt-sm"></div>
-            <q-card dark bordered class="map-card bg-knowledge text-grey-5 text-weight-bold">
+            <q-card bordered class="map-card bg-knowledge text-weight-bold">
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Tal Rasha's Chamber</div>
               </q-card-section>
@@ -575,7 +561,7 @@
           Act II - Part II Completed
         </q-timeline-entry>
       </q-timeline>
-      <p class="text-right text-grey-6">Source : <a style="text-decoration: none;" class="text-title" target="_blank"
+      <p class="text-right text-grey-6">Source : <a style="text-decoration: none;" target="_blank"
           href="http://classic.battle.net/diablo2exp/maps/act2.shtml">Arreat Summit</a></p>
     </template>
   </div>

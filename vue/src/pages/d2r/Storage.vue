@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div v-if="loading.global" class="fullscreen non-selectable">
-      <q-inner-loading showing size="xs" dark>
+      <q-inner-loading showing size="xs">
         <q-spinner-ball size="lg" color="d2r" />
       </q-inner-loading>
     </div>
@@ -14,14 +14,13 @@
     </div>
     <div class="relative-position q-pb-lg">
       <div v-if="loading.account" class="loading">
-        <q-inner-loading showing size="xs" dark>
+        <q-inner-loading showing size="xs">
           <q-spinner-ball size="lg" color="d2r" />
         </q-inner-loading>
       </div>
       <div class="q-pa-md text-h6 text-weight-bold row justify-start items-center q-col-gutter-x-md">
         <div class="row items-center">
-          <q-checkbox color="grey-7" size="lg" v-model="selected.account" dark dense
-            :disable="d2rAccounts.length === 0" />
+          <q-checkbox color="grey-7" size="lg" v-model="selected.account" dense :disable="d2rAccounts.length === 0" />
         </div>
         <div class="font-kodia">
           {{$t('d2r.storage.account.title')}}
@@ -59,7 +58,7 @@
             </q-img>
             <q-separator />
             <q-card-actions align="right">
-              <q-checkbox size="sm" color="grey-10" v-model="a.selected" dark dense />
+              <q-checkbox size="sm" color="grey-10" v-model="a.selected" dense />
               <q-space />
               <q-btn flat dense round size="sm" color="grey-7" icon="delete" @click="deleteShow('account', a.aid)" />
               <q-btn flat dense round size="sm" color="title" icon="edit" @click="d2rDialogShow('account', a)" />
@@ -70,7 +69,7 @@
     </div>
     <div v-if="aid !== null" class="relative-position q-pb-lg">
       <div v-if="loading.character" class="loading">
-        <q-inner-loading showing size="xs" dark>
+        <q-inner-loading showing size="xs">
           <q-spinner-ball size="lg" color="d2r" />
         </q-inner-loading>
       </div>
@@ -79,7 +78,7 @@
       </div>
       <div class="q-pa-md text-h6 text-weight-bold row justify-start items-center q-col-gutter-x-md">
         <div class="row items-center">
-          <q-checkbox color="grey-7" size="lg" v-model="selected.character" dark dense
+          <q-checkbox color="grey-7" size="lg" v-model="selected.character" dense
             :disable="d2rCharacters.length === 0" />
         </div>
         <div class="font-kodia">
@@ -94,7 +93,7 @@
       </div>
       <div class="row justify-start q-col-gutter-md q-pa-md">
         <div class="col-6 col-xl-2 col-lg-3 col-sm-4">
-          <q-card flat dark class="bg-transparent grid-btn add cursor-pointer non-selectable" v-ripple
+          <q-card flat class="bg-transparent grid-btn add cursor-pointer non-selectable" v-ripple
             @click="d2rDialogShow('character')">
             <q-img basic :ratio="20/13" :src="require('@/assets/images/d2r/null.png')" />
             <q-card-actions>
@@ -117,7 +116,7 @@
               <div class="text-body ellipsis absolute-bottom text-center title">{{c.name}}</div>
             </q-img>
             <q-card-actions align="right">
-              <q-checkbox color="grey-10" size="sm" v-model="c.selected" dark dense />
+              <q-checkbox color="grey-10" size="sm" v-model="c.selected" dense />
               <q-space />
               <q-btn flat dense round size="sm" color="grey-7" icon="delete" @click="deleteShow('character', c.cid)" />
               <q-btn flat dense round size="sm" color="title" icon="edit" @click="d2rDialogShow('character', c)" />
@@ -128,7 +127,7 @@
     </div>
     <div v-if="cid !== null" class="relative-position">
       <div v-if="loading.item" class="loading">
-        <q-inner-loading showing size="xs" dark>
+        <q-inner-loading showing size="xs">
           <q-spinner-ball size="lg" color="d2r" />
         </q-inner-loading>
       </div>
@@ -137,7 +136,7 @@
       </div>
       <div class="q-pa-md text-h6 text-weight-bold row justify-start items-center q-col-gutter-x-md">
         <div class="row items-center">
-          <q-checkbox color="grey-7" size="lg" v-model="selected.item" dark dense :disable="d2rItems.length === 0" />
+          <q-checkbox color="grey-7" size="lg" v-model="selected.item" dense :disable="d2rItems.length === 0" />
         </div>
         <div class="font-kodia">
           {{$t('d2r.storage.item.title')}}
@@ -153,7 +152,7 @@
       </div>
       <div class="row justify-start q-col-gutter-md q-pa-md relative-position">
         <div class="col-6 col-xl-2 col-lg-3 col-sm-4">
-          <q-card flat dark class="bg-transparent grid-btn add cursor-pointer non-selectable" v-ripple
+          <q-card flat class="bg-transparent grid-btn add cursor-pointer non-selectable" v-ripple
             @click="d2rDialogShow('item')">
             <q-img basic :ratio="20/13" :src="require('@/assets/images/d2r/null.png')" />
             <q-card-actions>
@@ -179,7 +178,7 @@
               <div class="text-body ellipsis absolute-bottom text-center title">{{i.name}}</div>
             </q-img>
             <q-card-actions align="right">
-              <q-checkbox color="grey-10" size="sm" v-model="i.selected" dark dense />
+              <q-checkbox color="grey-10" size="sm" v-model="i.selected" dense />
               <q-space />
               <q-btn flat dense round size="sm" color="grey-7" icon="delete" @click="deleteShow('item', i.iid)" />
               <q-btn v-if="i.trading === 0" flat dense round size="sm" color="brown-5" icon="app_registration"
@@ -200,10 +199,10 @@
         </div>
       </div>
     </div>
-    <d2r-confirm v-model="deleteConfirm" icon="delete" color="negative" text-color="white" :message="deleteMessage"
-      @cancel="deleteCancel" @confirm="deleteProcess" />
-    <d2r-confirm v-model="tradeConfirm" icon="app_registration" color="brown-5" text-color="white"
-      :message="tradeMessage" @cancel="tradeCancel" @confirm="tradeProcess" />
+    <d2r-confirm v-model="deleteConfirm" icon="delete" color="negative" :message="deleteMessage" @cancel="deleteCancel"
+      @confirm="deleteProcess" />
+    <d2r-confirm v-model="tradeConfirm" icon="app_registration" color="brown-5" :message="tradeMessage"
+      @cancel="tradeCancel" @confirm="tradeProcess" />
     <q-dialog v-model="d2rDialog" :persistent="loading.item" :transition-show="$q.screen.gt.xs ? 'scale' : 'slide-up'"
       :transition-hide="$q.screen.gt.xs ? 'scale' : 'slide-down'" @before-hide="d2rDialogBeforeHide"
       @hide="d2rDialogHide" :maximized=" d2rDialogType === 'item' && $q.screen.lt.sm">
@@ -213,8 +212,7 @@
         <q-form @submit="d2rDialogProcess" class="column">
           <template v-if="d2rDialogType === 'account'">
             <q-card-section class="col">
-              <q-input v-model="d2rAccountInfo.name" color="d2r" label-color="grey-8"
-                :label="$t('d2r.storage.account.name')" input-class="text-black text-grey-8"
+              <q-input v-model="d2rAccountInfo.name" color="d2r" :label="$t('d2r.storage.account.name')"
                 :hint="$t('d2r.storage.account.rule')"
                 :rules="[val => valid(val) || $t('d2r.storage.account.invalid') ]" maxlength="16"
                 :disable="loading.item" outlined dense :autofocus="$q.screen.gt.sm" no-error-icon />
@@ -222,8 +220,7 @@
           </template>
           <template v-else-if="d2rDialogType === 'character'">
             <q-card-section>
-              <q-input v-model="d2rCharacterInfo.name" color="d2r" label-color="grey-8"
-                :label="$t('d2r.storage.character.name')" input-class="text-black text-grey-8"
+              <q-input v-model="d2rCharacterInfo.name" color="d2r" :label="$t('d2r.storage.character.name')"
                 :hint="$t('d2r.storage.character.rule')"
                 :rules="[val => valid(val) || $t('d2r.storage.character.invalidName') ]" maxlength="16"
                 :disable="loading.item" outlined dense :autofocus="$q.screen.gt.sm" no-error-icon />
@@ -736,6 +733,10 @@
     z-index: 7000;
   }
 
+  .body--light .loading {
+    background-color: transparent;
+  }
+
   .grid-wrap.selected::after {
     opacity: 1;
     content: '\e52d';
@@ -771,6 +772,10 @@
     transition: background-color 0.1s;
   }
 
+  .body--light .grid-btn {
+    background: rgba(245, 245, 245, 0.6);
+  }
+
   .grid-btn.add {
     background-color: transparent !important;
     box-shadow: none;
@@ -779,6 +784,10 @@
 
   .separator {
     background-color: rgba(45, 45, 45, 1);
+  }
+
+  .body--light .separator {
+    background-color: rgba(200, 200, 200, 1);
   }
 
   .dialog-card {
@@ -806,5 +815,9 @@
 
   .title {
     padding: 6px;
+  }
+
+  .body--light .q-img__content>div {
+    background-color: rgba(0, 0, 0, .1) !important;
   }
 </style>

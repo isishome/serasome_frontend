@@ -1,11 +1,11 @@
 <template>
   <div class="wrap">
-    <q-list ref="list" dense dark>
+    <q-list ref="list" dense>
       <q-item>
         <q-item-section>
           <div class="row justify-center items-center q-col-gutter-x-sm">
             <div>
-              <q-img :src="require('@/assets/images/d2r/quests/secret1/hellbovine.gif')" width="125px" />
+              <q-img :src="require('@/assets/images/d2r/quests/secret1/hellbovine.gif')" width="93px" />
             </div>
             <div class="text-center">
               <q-btn push glossy icon="headset" color="grey-6" text-color="black" :size="$q.screen.lt.sm ? 'sm' : 'md'"
@@ -28,8 +28,8 @@
             <q-item-label>
               <template v-if="contents.image">
                 <img class="quest-image" :src="contents.image" @load="onload($event.target)" />
-                <p class="word-keep text-grey-4" v-for="(d, index) in contents.desc"
-                  :class="index === 0 ? 'p-margin' : ''" :key="index">{{d}}</p>
+                <p class="word-keep" v-for="(d, index) in contents.desc" :class="index === 0 ? 'p-margin' : ''"
+                  :key="index">{{d}}</p>
               </template>
             </q-item-label>
           </q-item-section>
@@ -37,8 +37,8 @@
       </template>
     </q-list>
     <div class="full-width quest-source">
-      <p class="text-right text-grey-6">{{$t('d2r.knowledge.source')}} : <a style="text-decoration: none;"
-          class="text-title" target="_blank"
+      <p class="text-right">{{$t('d2r.knowledge.source')}} : <a style="text-decoration: none;" class="text-title"
+          target="_blank"
           href="http://classic.battle.net/diablo2exp/quests/cow.shtml">{{$t('d2r.knowledge.arreatSummit')}}</a> & <a
           style="text-decoration: none;" class=" text-green-4" target="_blank"
           href="https://namu.wiki/w/%EC%B9%B4%EC%9A%B0%20%EB%A0%88%EB%B2%A8">{{$t('d2r.knowledge.namuWiki')}}</a>
@@ -165,7 +165,6 @@
   .quest-info p {
     text-indent: 0.8em;
     line-height: 1.6em !important;
-    color: rgba(180, 180, 180, 1) !important;
   }
 
   .quest-info p.p-margin {

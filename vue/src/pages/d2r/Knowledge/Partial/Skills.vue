@@ -10,7 +10,7 @@
         </q-tab>
       </template>
       <template #panels>
-        <q-tab-panel v-for="cls in d2rClass" :key="cls.clsid" dark :name="upperCase(cls.clsid)"
+        <q-tab-panel v-for="cls in d2rClass" :key="cls.clsid" :name="upperCase(cls.clsid)"
           class="no-scroll word-wrap non-selectable" :class="$q.screen.lt.sm ? 'q-px-sm' : 'q-px-lg'">
           <div class="q-mb-xl font-kodia text-weight-bold text-title text-center"
             :class="$q.screen.lt.sm ? 'text-h5' : 'text-h4'">

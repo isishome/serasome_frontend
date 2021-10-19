@@ -18,26 +18,6 @@
   }
 
   /** app place **********************************************************************************************************************/
-  .body--light,
-  .q-light {
-    color: #17213b !important;
-    background: #FAFAFA !important;
-  }
-
-  .body--dark,
-  .q-dark {
-    color: #DDDDDD !important;
-    background: #17213b !important;
-  }
-
-  .body--light .q-separator {
-    background: rgba(200, 200, 200, 0.4);
-  }
-
-  .body--dark .q-separator {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
   .ss-header img {
     width: 40px !important;
     height: 40px !important;
@@ -124,97 +104,14 @@
     line-height: 1.6 !important;
   }
 
-  /** number place **********************************************************************************************************************/
-  @keyframes ball-move-u {
-    0% {
-      transform: translateX(-50%) translateY(-50%) scaleX(1);
-      opacity: 1;
-    }
-
-    50% {
-      transform: translateX(-50%) translateY(-250%) scaleY(0.25);
-      opacity: 0;
-    }
-
-    51% {
-      transform: translateX(-50%) translateY(150%) scaleY(0.25);
-    }
-  }
-
-  @keyframes ball-move-r {
-    0% {
-      transform: translateX(-50%) translateY(-50%) scaleX(1);
-      opacity: 1;
-    }
-
-    50% {
-      transform: translateX(150%) translateY(-50%) scaleX(0.25);
-      opacity: 0;
-    }
-
-    51% {
-      transform: translateX(-250%) translateY(-50%) scaleX(0.25);
-    }
-  }
-
-  @keyframes ball-move-d {
-    0% {
-      transform: translateX(-50%) translateY(-50%) scaleX(1);
-      opacity: 1;
-    }
-
-    50% {
-      transform: translateX(-50%) translateY(150%) scaleY(0.25);
-      opacity: 0;
-    }
-
-    51% {
-      transform: translateX(-50%) translateY(-250%) scaleY(0.25);
-    }
-  }
-
-  @keyframes ball-move-l {
-    0% {
-      transform: translateX(-50%) translateY(-50%) scaleX(1);
-      opacity: 1;
-    }
-
-    50% {
-      transform: translateX(-250%) translateY(-50%) scaleX(0.25);
-      opacity: 0;
-    }
-
-    51% {
-      transform: translateX(150%) translateY(-50%) scaleX(0.25);
-    }
-  }
-
   .ad-box {
+    position: fixed;
     width: 160px;
     height: 600px;
   }
 
-  .ad-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-left: -168px;
-    transition:top .1s;
-  }
-
-  .ad-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-right: -168px;
-    transition:top .1s;
-  }
-
-  .input-tip{
-    background-color: rgba(200,90,100,1) !important;
-    max-width:75%;
-  }
-
-  .grecaptcha-badge {
-    visibility: hidden;
+  .q-body--prevent-scroll.platform-ios {
+    overflow: hidden;
+    height: 1px;
+    position: relative !important;
   }

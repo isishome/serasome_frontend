@@ -1,10 +1,9 @@
 <template>
   <div :class="tableClass">
     <q-table class="no-padding" :columns="columns" :data="data" row-key="index"
-      card-container-class="bg-transparent non-selectable text-grey-5"
-      card-class="bg-transparent non-selectable text-grey-5 table-card" table-class="no-scroll" :grid="grid"
-      :pagination="pagination" :loading="loading" no-data-label @request="onRequest" separator="none" square
-      hide-pagination flat :hide-header="!columns || columns.length === 0">
+      card-container-class="bg-transparent non-selectable" card-class="bg-transparent non-selectable table-card"
+      table-class="no-scroll" :grid="grid" :pagination="pagination" :loading="loading" no-data-label
+      @request="onRequest" separator="none" square hide-pagination flat :hide-header="!columns || columns.length === 0">
       <template v-if="this.$scopedSlots.top" #top="props">
         <slot name="top" :props="props"></slot>
       </template>
@@ -140,5 +139,14 @@
   .table-card {
     padding: 12px;
     overflow-x: hidden !important;
+    color: red;
+  }
+
+  .body--light .table-card {
+    color: rgba(50, 50, 50, 1) !important;
+  }
+
+  .body--dark .table-card {
+    color: #DDDDDD !important;
   }
 </style>

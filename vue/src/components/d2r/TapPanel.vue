@@ -3,7 +3,7 @@
     <div class="overflow-hidden">
       <div :class="['tabs', show ? 'show' : 'hide']" :style="`margin-top:${marginTop}px;`">
         <q-tabs ref="tabs" dense vertical switch-indicator :value="part" @input="change" indicator-color="transparent"
-          class="font-kodia text-title full-width"
+          class="font-kodia full-width"
           :style="`max-height:100%;max-width:121px;${$q.screen.lt.sm ? 'font-size:0.7em' : 'font-size:1em'}`"
           active-color="transparent active">
           <slot name="tabs"></slot>
@@ -17,7 +17,7 @@
     </div>
     <q-separator v-if="noWide === false" vertical class="lt-sm separator" :class="[show ? 'show' : 'hide']" />
     <div class="col">
-      <q-tab-panels ref="panels" dark class="bg-transparent q-mt-md" :value="part" @input="change"
+      <q-tab-panels ref="panels" class="bg-transparent q-mt-md" :value="part" @input="change"
         :transition-prev="$q.screen.lt.sm ? 'none' : 'jump-down'"
         :transition-next="$q.screen.lt.sm ? 'none' : 'jump-up'" @transition="injectImg" animated vertical>
         <slot name="panels"></slot>
@@ -105,8 +105,13 @@
         this.$refs.observer.trigger(true)
       },
       injectImg() {
-        if (this.$refs.panels.$children[0])
-          this.setImages(this.$refs.panels.$children[0].$children.filter(c => c.image).map(i => { return { 'element': i.$el, 'src': i.src } }))
+        try {
+          if (this.$refs.panels.$children[0])
+            this.setImages(this.$refs.panels.$children[0].$children.filter(c => c.image).map(i => { return { 'element': i.$el, 'src': i.src } }))
+        }
+        catch {
+          // zoom image error
+        }
       }
     }
   }
@@ -127,8 +132,12 @@
   }
 
   .tabs .q-tab .q-img {
-    opacity: 0.4;
+    opacity: .3;
     filter: grayscale(100%);
+  }
+
+  .body--light .tabs .q-tab {
+    box-shadow: inset 0 0 1px 1px rgba(5, 5, 5, .8);
   }
 
   .tabs .q-tab.active .q-img {

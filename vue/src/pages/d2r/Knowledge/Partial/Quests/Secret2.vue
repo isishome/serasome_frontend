@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <q-list ref="list" dense dark>
+    <q-list ref="list" dense>
       <q-item>
         <q-item-section>
           <div class="row justify-center items-center q-col-gutter-x-sm">
@@ -24,8 +24,8 @@
             <q-item-label>
               <template v-if="contents.image">
                 <img class="quest-image" :src="contents.image" @load="onload($event.target)" />
-                <p class="word-keep text-grey-4" v-for="(d, index) in contents.desc"
-                  :class="index === 0 ? 'p-margin' : ''" :key="index">{{d}}</p>
+                <p class="word-keep" v-for="(d, index) in contents.desc" :class="index === 0 ? 'p-margin' : ''"
+                  :key="index">{{d}}</p>
               </template>
             </q-item-label>
           </q-item-section>
@@ -33,8 +33,8 @@
       </template>
     </q-list>
     <div class="full-width quest-source">
-      <p class="text-right text-grey-6">{{$t('d2r.knowledge.source')}} : <a style="text-decoration: none;"
-          class="text-title" target="_blank"
+      <p class="text-right">{{$t('d2r.knowledge.source')}} : <a style="text-decoration: none;" class="text-title"
+          target="_blank"
           href="https://diablo-archive.fandom.com/wiki/Uber_Diablo_(Diablo_II)">{{$t('d2r.knowledge.diabloWiki')}}</a>
         & <a style="text-decoration: none;" class=" text-green-4" target="_blank"
           href="https://namu.wiki/w/%EC%9A%B0%EB%B2%84%20%EB%94%94%EC%95%84%EB%B8%94%EB%A1%9C">{{$t('d2r.knowledge.namuWiki')}}</a>
@@ -127,7 +127,6 @@
   .quest-info p {
     text-indent: 0.8em;
     line-height: 1.6em !important;
-    color: rgba(180, 180, 180, 1) !important;
   }
 
   .quest-info p.p-margin {
