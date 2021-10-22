@@ -234,10 +234,10 @@
         </div>
       </div>
       <q-separator inset spaced />
-      <q-infinite-scroll ref="some" @load="onLoad" :offset="250" scroll-target="body" class="q-mt-md relative-position">
+      <q-infinite-scroll ref="some" @load="onLoad" class="q-mt-md relative-position">
         <ss-post-list v-if="some" :list="items" :pid="pid" :loading="loading" @view="view"></ss-post-list>
         <template v-slot:loading>
-          <div class="row justify-center q-my-md">
+          <div class="row justify-center items-center q-my-md">
             <q-spinner-dots :color="$q.dark.isActive ? 'grey-4' : 'teal-4'" size="40px" />
           </div>
         </template>
@@ -384,6 +384,7 @@
     beforeDestroy() {
       this.editor.destroy()
       clearTimeout(this.timer)
+      clearTimeout(this.timer1)
     },
     watch: {
       '$route': function (to, from) {
@@ -583,6 +584,7 @@
         const ajaxBar = this.$refs.bar
         const requestSname = this.sname
         this.loading = true
+        let tempList = []
 
         ajaxBar.start()
 
@@ -602,17 +604,23 @@
                 stop = true
               else {
                 self.skip = self.skip + response.data.length
-                self.concatItem(response.data)
+                tempList = response.data
               }
             } else
               stop = true
+
           })
           .catch(function () {
             stop = true
           })
           .then(function () {
             ajaxBar.stop()
-            done(stop)
+
+            self.timer1 = setTimeout(() => {
+              done(stop)
+              self.concatItem(tempList)
+            }, 1000)
+
             self.$nextTick(() => {
               if (requestSname !== self.$route.params.sname) {
                 self.someInfo()

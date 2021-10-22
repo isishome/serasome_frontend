@@ -2,7 +2,7 @@
   <div class="wrap">
     <div v-if="loading.global" class="fullscreen non-selectable">
       <q-inner-loading showing size="xs">
-        <q-spinner-ball size="lg" color="d2r" />
+        <q-spinner-ball size="xl" color="red" />
       </q-inner-loading>
     </div>
     <div class="lt-md">
@@ -15,7 +15,7 @@
     <div class="relative-position q-pb-lg">
       <div v-if="loading.account" class="loading">
         <q-inner-loading showing size="xs">
-          <q-spinner-ball size="lg" color="d2r" />
+          <q-spinner-ball size="xl" color="red" />
         </q-inner-loading>
       </div>
       <div class="q-pa-md text-h6 text-weight-bold row justify-start items-center q-col-gutter-x-md">
@@ -36,7 +36,7 @@
         <div class="col-6 col-xl-2 col-lg-3 col-sm-4">
           <q-card class="bg-transparent grid-btn add cursor-pointer non-selectable" v-ripple
             @click="d2rDialogShow('account')">
-            <q-img basic :ratio="20/13" :src="require('@/assets/images/d2r/null.png')" />
+            <q-img :ratio="20/13" :src="require('@/assets/images/d2r/null.png')" />
             <q-card-actions>
               <span class="text-transparent">add</span>
             </q-card-actions>
@@ -52,7 +52,7 @@
         <div class="col-6 col-xl-2 col-lg-3 col-sm-4 relative-position grid-wrap" v-for="a in d2rAccounts" :key="a.aid"
           :class="[a.aid === aid ? 'selected' : '']">
           <q-card class="grid-btn non-selectable">
-            <q-img basic :ratio="20/13" :src="require('@/assets/images/d2r/account.png')" :img-style="accountStyle"
+            <q-img :ratio="20/13" :src="require('@/assets/images/d2r/account.png')" :img-style="accountStyle"
               @click="selectCard('account', a.aid)" class="cursor-pointer" v-ripple>
               <div class="text-body ellipsis absolute-bottom text-center title">{{a.name}}</div>
             </q-img>
@@ -70,7 +70,7 @@
     <div v-if="aid !== null" class="relative-position q-pb-lg">
       <div v-if="loading.character" class="loading">
         <q-inner-loading showing size="xs">
-          <q-spinner-ball size="lg" color="d2r" />
+          <q-spinner-ball size="xl" color="red" />
         </q-inner-loading>
       </div>
       <div>
@@ -95,7 +95,7 @@
         <div class="col-6 col-xl-2 col-lg-3 col-sm-4">
           <q-card flat class="bg-transparent grid-btn add cursor-pointer non-selectable" v-ripple
             @click="d2rDialogShow('character')">
-            <q-img basic :ratio="20/13" :src="require('@/assets/images/d2r/null.png')" />
+            <q-img :ratio="20/13" :src="require('@/assets/images/d2r/null.png')" />
             <q-card-actions>
               <span class="text-transparent">add</span>
             </q-card-actions>
@@ -111,7 +111,7 @@
         <div class="col-6 col-xl-2 col-lg-3 col-sm-4 relative-position grid-wrap" v-for="c in d2rCharacters"
           :key="c.cid" :class="c.cid === cid ? 'selected' : ''">
           <q-card class="grid-btn non-selectable">
-            <q-img basic :ratio="20/13" :src="d2rClass.find(dc => dc.clsid === c.clsid).src"
+            <q-img :ratio="20/13" :src="d2rClass.find(dc => dc.clsid === c.clsid).src"
               @click="selectCard('character', c.cid)" class="cursor-pointer" v-ripple>
               <div class="text-body ellipsis absolute-bottom text-center title">{{c.name}}</div>
             </q-img>
@@ -128,7 +128,7 @@
     <div v-if="cid !== null" class="relative-position">
       <div v-if="loading.item" class="loading">
         <q-inner-loading showing size="xs">
-          <q-spinner-ball size="lg" color="d2r" />
+          <q-spinner-ball size="xl" color="red" />
         </q-inner-loading>
       </div>
       <div class="q-pt-lg">
@@ -154,7 +154,7 @@
         <div class="col-6 col-xl-2 col-lg-3 col-sm-4">
           <q-card flat class="bg-transparent grid-btn add cursor-pointer non-selectable" v-ripple
             @click="d2rDialogShow('item')">
-            <q-img basic :ratio="20/13" :src="require('@/assets/images/d2r/null.png')" />
+            <q-img :ratio="20/13" :src="require('@/assets/images/d2r/null.png')" />
             <q-card-actions>
               <span class="text-transparent">add</span>
             </q-card-actions>
@@ -236,7 +236,7 @@
                   <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
                     <q-item-section avatar>
                       <q-avatar size="60px" rounded>
-                        <q-img basic :ratio="1" :src="scope.opt.src" />
+                        <q-img :ratio="1" :src="scope.opt.src" />
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
@@ -400,32 +400,37 @@
       getClass() {
         const vm = this
         this.loading.global = true
+        let tempGlobal = []
         this.axios
           .get('/d2r/info/class')
           .then(function (response) {
-            vm.setD2RClass(response.data)
+            tempGlobal = response.data
           })
           .catch(function () { })
           .then(function () {
+            vm.setD2RClass(tempGlobal)
             vm.loading.global = false
           })
       },
       getAccounts() {
         const vm = this
         this.loading.account = true
+        let tempAccounts = []
         this.axios
           .get('/d2r/storage/accounts')
           .then(function (response) {
-            vm.d2rAccounts = response.data
+            tempAccounts = response.data
           })
           .catch(function () { })
           .then(function () {
+            vm.d2rAccounts = tempAccounts
             vm.loading.account = false
           })
       },
       getCharacters() {
         const vm = this
         this.loading.character = true
+        let tempCharacters = []
         this.axios
           .get('/d2r/storage/characters', {
             params: {
@@ -433,16 +438,18 @@
             }
           })
           .then(function (response) {
-            vm.d2rCharacters = response.data
+            tempCharacters = response.data
           })
           .catch(function () { })
           .then(function () {
+            vm.d2rCharacters = tempCharacters
             vm.loading.character = false
           })
       },
       getItems() {
         const vm = this
         this.loading.item = true
+        let tempItems = []
         this.axios
           .get('/d2r/storage/items', {
             params: {
@@ -455,12 +462,13 @@
             if (vm.page !== 1 && response.data.items.length === 0)
               vm.go(1)
 
-            vm.d2rItems = []
-            vm.d2rItems = response.data.items
-            vm.pagination.rowsNumber = response.data.rowsNumber
+            tempItems = response.data
           })
           .catch(function () { })
           .then(function () {
+            vm.d2rItems = []
+            vm.d2rItems = tempItems.items
+            vm.pagination.rowsNumber = tempItems.rowsNumber
             vm.loading.item = false
           })
       },
@@ -773,7 +781,7 @@
   }
 
   .body--light .grid-btn {
-    background: rgba(245, 245, 245, 0.6);
+    background: rgba(245, 245, 245, 1);
   }
 
   .grid-btn.add {

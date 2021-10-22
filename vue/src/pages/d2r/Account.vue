@@ -18,7 +18,7 @@
       </q-card-section>
       <q-card-section class="row justify-start items-center q-gutter-x-sm">
         <q-avatar rounded color="d2r" text-color="grey-4" class="q-mr-xs" size="40px">
-          <q-img basic v-if="basicInfo.avatar" :src="basicInfo.avatar" :ratio="1">
+          <q-img v-if="basicInfo.avatar" :src="basicInfo.avatar" :ratio="1">
             <template #error>
               <div class="bg-d2r absolute-center">
                 {{basicInfo.nickname.toUpperCase().substring(0,1)}}

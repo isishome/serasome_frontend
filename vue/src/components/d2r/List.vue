@@ -30,8 +30,8 @@
           </div>
           <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
             <q-input :disable="loading" v-model="filter.filter" :label="$t('d2r.bbs.filter')" color="amber-8" standout
-              :rules="[ val => /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\s]{2,20}$/.test(val)|| $t('search.message.invalidWord') ]" dense
-              no-error-icon clearable>
+              :rules="[ val => /^(\s*|[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\s]{2,20})$/.test(val)|| $t('search.message.invalidWord') ]"
+              dense no-error-icon clearable>
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
@@ -58,10 +58,9 @@
             </q-chip>
           </q-td>
           <q-td>
-            <q-img basic :ratio="20/13" style="width:80px" :src="parsThumbnail(props.row.thumbnail)"
-              spinner-color="d2r">
+            <q-img :ratio="20/13" style="width:80px" :src="parsThumbnail(props.row.thumbnail)" spinner-color="d2r">
               <template #error>
-                <q-img no-default-spinner basic :ratio="2/1" :src="require('@/assets/images/d2r/blank.png')"
+                <q-img no-default-spinner :ratio="2/1" :src="require('@/assets/images/d2r/blank.png')"
                   class="absolute-center" />
               </template>
             </q-img>
@@ -75,8 +74,8 @@
           </q-td>
           <q-td class="text-title">
             <div class="row items-center q-gutter-x-xs">
-              <q-avatar rounded color="transparent" text-color="white" class="q-mr-xs" size="30px">
-                <q-img basic v-if="props.row.avatar" :src="props.row.avatar" :ratio="1">
+              <q-avatar rounded color="title" text-color="white" class="q-mr-xs" size="30px">
+                <q-img v-if="props.row.avatar" :src="props.row.avatar" :ratio="1">
                   <template #error>
                     <div class="bg-d2r absolute-center">
                       {{props.row.writer.toUpperCase().substring(0,1)}}
@@ -121,10 +120,10 @@
               <q-chip square icon="far fa-eye" size="xs" style="padding:10px 6px" color="title" text-color="black"
                 class="row justify-center items-center shadow-1 text-weight-bold" :label="isView(props.row.seq)" />
             </q-card-section>
-            <q-img :src="parsThumbnail(props.row.thumbnail)" basic ratio="1"
+            <q-img :src="parsThumbnail(props.row.thumbnail)" ratio="1"
               :style="$q.screen.lt.sm ? 'height:80px' : 'height:100px'">
               <template #error>
-                <q-img no-default-spinner basic :ratio="2/1" :src="require('@/assets/images/d2r/blank.png')"
+                <q-img no-default-spinner :ratio="2/1" :src="require('@/assets/images/d2r/blank.png')"
                   class="absolute-center" />
               </template>
             </q-img>
@@ -139,8 +138,8 @@
             </q-card-section>
             <q-card-section :class="$q.screen.lt.sm ? 'q-py-xs q-px-sm' : 'q-pa-sm'">
               <div class="text-caption row justify-end no-wrap items-center text-title">
-                <q-avatar rounded color="transparent" text-color="white" class="q-mr-xs" size="16px">
-                  <q-img basic v-if="props.row.avatar" :src="props.row.avatar" width="100%" :ratio="1">
+                <q-avatar rounded color="title" text-color="white" class="q-mr-xs" size="16px">
+                  <q-img v-if="props.row.avatar" :src="props.row.avatar" width="100%" :ratio="1">
                     <template #error>
                       <div class="bg-d2r absolute-center">
                         {{props.row.writer.toUpperCase().substring(0,1)}}
@@ -160,6 +159,10 @@
             </q-card-section>
           </q-card>
         </div>
+      </template>
+      <template #pagination>
+        <q-pagination :disable="loading" v-model="pagination.page" color="title" :max="pagination.rowsNumber"
+          :max-pages="5" :ellipses="false" :boundary-numbers="false" direction-links boundary-links />
       </template>
     </d2r-table>
     <q-page-sticky v-if="mode !== 'search' && authority(sec, 'write')" position="bottom-right" :offset="[0, 0]"
@@ -193,8 +196,9 @@
       return {
         loading: false,
         pagination: {
-          page: 1,
-          rowsPerPage: 20
+          page: Number(this.$route.query.page) || 1,
+          rowsPerPage: 20,
+          rowsNumber: 0
         },
         columns: {
           'default':
@@ -211,6 +215,10 @@
         data: [],
         filterText: this.filter.filter
       }
+    },
+    beforeCreate() {
+      if (!this.$route.query.page)
+        this.$router.replace({ name: 'd2r-bbs', query: { page: 1 } }).catch(() => { })
     },
     computed: {
       ...mapGetters({
@@ -237,7 +245,14 @@
         this.filter.mine = false
         this.filter.filterBy = 'titleWithContents'
         this.filter.filter = null
-        this.reload()
+        this.go()
+      },
+      '$route.query.page': function (val, old) {
+        if (!((!old && val === '1') || (!val && old === '1')))
+          this.go(Number(val))
+      },
+      'pagination.page': function (val) {
+        this.$router.push({ name: 'd2r-bbs', params: { sec: this.sec }, query: { page: val } }).catch(() => { })
       }
     },
     methods: {
@@ -254,27 +269,26 @@
         return decodeURIComponent(thumbnail) === 'null' ? require('@/assets/images/d2r/blank.png') : decodeURIComponent(thumbnail)
       },
       search() {
-        if (this.$route.query.page && this.$route.query.page === '1')
-          this.$router.push({ path: this.$route.path }).catch(() => { })
-        else
-          this.$router.push({ path: this.$route.path, query: { page: 1 } }).catch(() => { })
+        this.go(1)
       },
-      reload() {
+      go(page) {
+        this.pagination.page = page || 1
         this.$refs.table.onRequest({
-          page: 0
+          pagination: this.pagination
         })
       },
-      request({ page, done }) {
+      request({ pagination, done }) {
         const vm = this
         this.loading = true
         this.filterText = this.filter.filter
         const requestSec = this.sec
+        let tempData = []
         this.axios
           .get('/d2r/board/list', {
             params: {
               mode: this.mode,
               sec: this.sec,
-              page: page,
+              page: pagination.page,
               limit: this.pagination.rowsPerPage,
               finish: this.filter.finish,
               mine: this.filter.mine,
@@ -284,15 +298,17 @@
             }
           }).then(function (response) {
             if (requestSec === vm.sec) {
-              vm.data = response.data.list
+              window.scrollTo(0, 0)
+              tempData = response.data.list
               vm.pagination.rowsNumber = response.data.rowsNumber
             }
           })
           .catch(function () { })
           .then(function () {
+            vm.data = tempData
             done()
             vm.loading = false
-            vm.pagination.page = page
+            vm.pagination.page = pagination.page
           })
       },
       rowClick(pid) {
@@ -359,8 +375,8 @@
   }
 
   .body--light tbody td {
-    border-top-color: rgba(200, 200, 200, .2);
-    border-right-color: rgba(200, 200, 200, .2);
+    border-top-color: rgba(200, 200, 200, .3);
+    border-right-color: rgba(200, 200, 200, .3);
   }
 
   tbody td:first-child {
@@ -368,7 +384,7 @@
   }
 
   .body--light td:first-child {
-    border-left-color: rgba(200, 200, 200, .2);
+    border-left-color: rgba(200, 200, 200, .3);
   }
 
   tbody tr:last-child td {
@@ -376,7 +392,7 @@
   }
 
   .body--light tr:last-child td {
-    border-bottom-color: rgba(200, 200, 200, .2);
+    border-bottom-color: rgba(200, 200, 200, .3);
   }
 
   thead th {

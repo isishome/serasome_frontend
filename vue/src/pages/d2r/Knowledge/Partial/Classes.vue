@@ -4,7 +4,7 @@
       <template #tabs>
         <q-tab :ripple="false" content-class="no-padding" v-for="cls in d2rClass" :key="cls.clsid"
           :name="upperCase(cls.clsid)" @click="swapPart(upperCase(cls.clsid))">
-          <q-img basic :width="$q.screen.lt.sm ? '80px' : '110px'" :ratio="1" :src="cls.src" />
+          <q-img :width="$q.screen.lt.sm ? '80px' : '110px'" :ratio="1" :src="cls.src" />
           <div class="text-body ellipsis absolute-bottom title font-kodia">{{cls.label}}
           </div>
         </q-tab>

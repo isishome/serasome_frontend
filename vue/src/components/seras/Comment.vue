@@ -28,7 +28,7 @@
         </q-item-section>
       </q-item>
     </q-list>
-    <q-infinite-scroll ref="infinite" @load="onLoad" :offset="250" class="comment-back">
+    <q-infinite-scroll ref="infinite" @load="onLoad" class="comment-back">
       <q-list v-for="item in value" :key="item.cid" separator highlight>
         <q-separator class="gt-sm" />
         <q-item :ref="`comment-${item.cid}`" class="gt-sm q-pa-md full-width">
@@ -148,7 +148,7 @@
         </q-slide-item>
       </q-list>
       <template v-slot:loading>
-        <div class="row justify-center q-my-md">
+        <div class="row justify-center items-center q-my-md">
           <q-spinner-dots color="primary" size="40px" />
         </div>
       </template>

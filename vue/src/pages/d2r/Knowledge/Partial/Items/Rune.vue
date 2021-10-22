@@ -44,7 +44,7 @@
                   <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
                     <q-item-section avatar>
                       <q-avatar v-if="scope.opt.src" size="60px" rounded>
-                        <q-img basic :ratio="1" :src="scope.opt.src" />
+                        <q-img :ratio="1" :src="scope.opt.src" />
                       </q-avatar>
                       <q-avatar v-else-if="scope.opt.icon" rounded size="60px" :icon="scope.opt.icon">
                       </q-avatar>
@@ -242,6 +242,13 @@
         meterialOptions: this.$t('d2r.knowledge.items.materials').map(m => { return { 'label': m.name, 'value': m.no } }),
         sortOptions: [{ 'label': this.$t('d2r.knowledge.items.hot'), 'value': 'hot' }, { 'label': this.$t('d2r.knowledge.items.runewordName'), 'value': 'name' }, { 'label': this.$t('d2r.knowledge.items.level'), 'value': 'level' }]
       }
+    },
+    watch: {
+      'pagination.page': function (val, old) {
+        if (val !== old)
+          window.scrollTo(0, 0)
+      }
+
     },
     computed: {
       ...mapGetters({

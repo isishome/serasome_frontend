@@ -2,7 +2,7 @@
   <div :class="tableClass">
     <q-table class="no-padding" :columns="columns" :data="data" row-key="index"
       card-container-class="bg-transparent non-selectable" card-class="bg-transparent non-selectable table-card"
-      table-class="no-scroll" :grid="grid" :pagination="pagination" :loading="loading" no-data-label
+      table-class="no-scroll" :grid="grid" :pagination.sync="paginationClone" :loading="loading" no-data-label
       @request="onRequest" separator="none" square hide-pagination flat :hide-header="!columns || columns.length === 0">
       <template v-if="this.$scopedSlots.top" #top="props">
         <slot name="top" :props="props"></slot>
@@ -29,8 +29,8 @@
       </template>
       <template #loading>
         <div class="non-selectable">
-          <q-inner-loading showing size="xs" dark>
-            <q-spinner-ball size="lg" color="d2r" />
+          <q-inner-loading showing size="xs">
+            <q-spinner-ball size="xl" color="red" />
           </q-inner-loading>
         </div>
       </template>
@@ -42,8 +42,7 @@
       <div class="row justify-between full-width">
         <div class="row justify-start"></div>
         <div class="row justify-center">
-          <q-pagination :disable="loading" v-model="page" color="title" :max="pagination.rowsNumber || 1" :max-pages="5"
-            :ellipses="false" :boundary-numbers="false" direction-links boundary-links @input="go" />
+          <slot name="pagination"></slot>
         </div>
         <div class="row justify-end">
         </div>
@@ -92,19 +91,10 @@
     data() {
       return {
         loading: false,
-        page: Number(this.$route.query.page) || 1
+        paginationClone: { ...this.pagination }
       }
     },
     watch: {
-      '$route.query.page': function (val) {
-        const page = Number(val) || 1
-        if (page) {
-          this.page = page
-          this.onRequest({
-            page: page
-          })
-        }
-      },
       loading: function (val) {
         document.body.style.overflow = val === true ? 'hidden' : ''
       }
@@ -114,20 +104,15 @@
         return this.$t('table.noData')
       }
     },
-    created() {
+    mounted() {
       this.onRequest({
-        page: this.pagination.page
+        pagination: this.paginationClone
       })
     },
     methods: {
-      go(page) {
-        window.scrollTo(0, 0)
-        this.$router.push({ path: this.$route.path, query: { page: page || this.page } }).catch(() => { })
-      },
       onRequest(props) {
         this.loading = true
-        props.page = Number(this.$route.query.page) || 1
-        this.$emit('request', { page: props.page, done: this.done })
+        this.$emit('request', { pagination: props.pagination, done: this.done })
       },
       done() {
         this.loading = false

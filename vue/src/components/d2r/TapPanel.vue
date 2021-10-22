@@ -16,7 +16,7 @@
         text-color="black" @click="show = !show" style="position:fixed;" />
     </div>
     <q-separator v-if="noWide === false" vertical class="lt-sm separator" :class="[show ? 'show' : 'hide']" />
-    <div class="col">
+    <div class="col tab-contents">
       <q-tab-panels ref="panels" class="bg-transparent q-mt-md" :value="part" @input="change"
         :transition-prev="$q.screen.lt.sm ? 'none' : 'jump-down'"
         :transition-next="$q.screen.lt.sm ? 'none' : 'jump-up'" @transition="injectImg" animated vertical>
@@ -125,6 +125,11 @@
     font-size: 1em;
     letter-spacing: -1px;
     padding: 2px;
+    background: rgba(10, 10, 10, 1);
+  }
+
+  .body--light .tabs .q-tab {
+    background: #ffffff;
   }
 
   .tabs .q-tab>div {
@@ -153,6 +158,17 @@
   }
 </style>
 <style scoped>
+  .tab-contents {
+    background-color: rgba(5, 5, 5, 1);
+    box-shadow: inset 1px 0 0 0 rgba(163, 106, 0, .4);
+    border-radius: 0 0 10px 10px;
+  }
+
+  .body--light .tab-contents {
+    background-color: rgba(245, 245, 245, 1);
+    box-shadow: inset 1px 0 0 0 rgba(5, 5, 5, .2);
+  }
+
   .separator {
     background-color: rgba(163, 106, 0, .4);
   }

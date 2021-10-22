@@ -12,6 +12,7 @@ import Adsense from 'vue-google-adsense/dist/Adsense.min.js'
 //import InArticleAdsense from 'vue-google-adsense/dist/InArticleAdsense.min.js'
 //import InFeedAdsense from 'vue-google-adsense/dist/InFeedAdsense.min.js'
 
+//const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
 const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
 const d2rTable = () => import(/* webpackPrefetch: true */ '@/components/d2r/Table')
 const d2rTh = () => import(/* webpackPrefetch: true */ '@/components/d2r/Th')
@@ -173,6 +174,7 @@ Vue.prototype.thumbStyle = {
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.prototype.axios = axiosObject
+//Vue.component('adsense', Adsense)
 Vue.component('ss-prompt', Prompt)
 Vue.component('d2r-table', d2rTable)
 Vue.component('d2r-th', d2rTh)

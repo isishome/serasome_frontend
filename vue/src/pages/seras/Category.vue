@@ -10,10 +10,10 @@
           <div class="font-title text-h6 text-teal-7 q-ml-sm">{{category.name}}</div>
         </div>
         <q-separator inset spaced />
-        <q-infinite-scroll ref="some" @load="onLoad" :offset="250" class="q-mt-md" scroll-target="body">
+        <q-infinite-scroll ref="some" @load="onLoad" class="q-mt-md">
           <ss-post-list :list="items" :loading="loading" :pid="pid" @view="view"></ss-post-list>
           <template v-slot:loading>
-            <div class="row justify-center q-my-md">
+            <div class="row justify-center items-center q-my-md">
               <q-spinner-dots color="primary" size="40px" />
             </div>
           </template>
@@ -38,7 +38,6 @@
         cid: null,
         items: [],
         point: null,
-        order: -1,
         skip: 0,
         limit: 15
       }
@@ -77,6 +76,7 @@
         let stop = false
         const ajaxBar = this.$refs.bar
         const requestCid = this.cid
+        let tempItems = []
 
         ajaxBar.start()
 
@@ -85,26 +85,18 @@
             params: {
               'cid': this.cid,
               'point': this.point,
-              'order': this.order,
               'skip': this.skip,
               'limit': this.limit
             }
           })
           .then(function (response) {
             if (requestCid === parseInt(self.$route.params.cid, 10) || 0) {
-              if (response.data.length !== 0) {
-                for (let d of response.data) {
-                  const sname = d.name
-                  if (d.list.length > 0) {
-                    d.list[0].sname = sname
-                    self.items.push(d.list[0])
-                  }
-                }
-
-                self.skip = self.skip + response.data.length
-              }
-              else
+              if (response.data.length === 0)
                 stop = true
+              else {
+                self.skip = self.skip + response.data.length
+                tempItems = response.data
+              }
             }
             else
               stop = true
@@ -114,7 +106,10 @@
           })
           .then(function () {
             ajaxBar.stop()
-            done(stop)
+            self.timer1 = setTimeout(() => {
+              done(stop)
+              self.items = self.items.concat(tempItems)
+            }, 1000)
             self.$nextTick(() => {
               if (requestCid !== parseInt(self.$route.params.cid, 10) || 0) {
                 self.items = []
@@ -135,6 +130,9 @@
       done() {
         this.loading = false
       }
+    },
+    beforeDestroy() {
+      clearTimeout(this.timer1)
     }
   }
 </script>

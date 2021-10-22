@@ -72,11 +72,13 @@
                 <q-video :ratio="16/9" :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
               </div>
               <p class="word-wrap contents" v-html="viewContents"></p>
-              <div class="row justify-center" v-if="contLoaded && isProduction">
-                <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" data-ad-format="auto"
-                  ins-style="display:inline-block;min-width:320px;max-width:780px;height:250px;" :key="`t_${key}`">
-                </Adsense>
-              </div>
+              <!-- <div class="row justify-center" v-if="contLoaded && isProduction">
+                <div class="ad-box-contents">
+                  <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" data-ad-format="auto"
+                    ins-style="display:inline-block;width:300px;height:50px;" :key="`t_${key}`">
+                  </Adsense>
+                </div>
+              </div> -->
             </div>
             <div v-if="postInfo.files && postInfo.files.length > 0">
               <q-separator />
@@ -568,6 +570,7 @@
         const self = this
         let stop = false
         const requestPid = this.value
+        let tempComment = []
 
         if (!requestPid)
           return
@@ -587,14 +590,19 @@
               stop = true
             else {
               self.skip = self.skip + response.data.length
-              self.commentList = self.commentList.concat(response.data)
+              tempComment = response.data
+
             }
           })
           .catch(function () {
             stop = true
           })
           .then(function () {
-            done(stop)
+            self.timer1 = setTimeout(() => {
+              done(stop)
+              self.commentList = self.commentList.concat(tempComment)
+            }, 1000)
+
           })
       },
       addComment() {
@@ -718,6 +726,9 @@
 
         return findItem
       }
+    },
+    beforeDestroy() {
+      clearTimeout(this.timer1)
     }
   }
 </script>

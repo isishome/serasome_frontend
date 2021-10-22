@@ -218,7 +218,7 @@
           <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding-right:6px;">
             <div v-if="!noAD && pageLoad && $q.screen.gt.sm && isProduction" class="ad-box">
               <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" data-ad-format="auto"
-                ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
+                ins-style="display:inline-block;width:160px;height:600px" :key="`lt_${key}`">
               </Adsense>
             </div>
           </div>
@@ -229,7 +229,7 @@
             class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding-left:6px;">
             <div class="ad-box">
               <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" data-ad-format="auto"
-                ins-style="display:inline-block;width:164px;height:600px" :key="`rt_${key}`">
+                ins-style="display:inline-block;width:160px;height:600px" :key="`rt_${key}`">
               </Adsense>
             </div>
           </div>
@@ -252,7 +252,7 @@
           <q-avatar size="md">
             <img src="@/assets/images/logo.svg" />
           </q-avatar>
-          <div>SeraSome @2020</div>
+          <div>SeraSome @2021</div>
         </div>
         <div class="col gt-sm row justify-end q-ma-sm">
         </div>

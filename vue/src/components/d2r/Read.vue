@@ -18,8 +18,8 @@
       </q-card-section>
       <q-card-section class="q-pt-none">
         <div class="text-subtitle2 text-title">
-          <q-avatar rounded color="transparent" text-color="white" class="q-mr-xs" size="30px">
-            <q-img basic v-if="data.avatar" :src="data.avatar" :ratio="1">
+          <q-avatar rounded color="title" text-color="white" class="q-mr-xs" size="30px">
+            <q-img v-if="data.avatar" :src="data.avatar" :ratio="1">
               <template #error>
                 <div class="bg-d2r absolute-center">
                   {{data.writer.substr(0,1)}}
@@ -46,11 +46,13 @@
         </div>
         <p v-if="data" ref="contents" class="word-wrap contents" v-html="viewContents">
         </p>
-        <div class="row justify-center items-center" v-if="contLoaded && isProduction">
-          <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9230987257" data-ad-format="auto"
-            ins-style="display:inline-block;min-width:320px;max-width:780px;height:250px;" :key="`t_${key}`">
-          </Adsense>
-        </div>
+        <!-- <div class="row justify-center items-center" v-if="contLoaded && isProduction">
+          <div class="ad-box-contents">
+            <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9230987257" data-ad-format="auto"
+              ins-style="display:inline-block;width:300px;height:50px;" :key="`t_${key}`">
+            </Adsense>
+          </div>
+        </div> -->
       </q-card-section>
       <q-separator inset />
       <q-card-actions class="row justify-between">

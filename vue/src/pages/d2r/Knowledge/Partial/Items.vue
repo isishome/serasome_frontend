@@ -3,7 +3,7 @@
     <d2r-tap-panel v-if="$route.params.part" :part="$route.params.part">
       <template #tabs>
         <q-tab :ripple="false" content-class="no-padding" v-for="s in sub" :key="s" :name="s" @click="swapPart(s)">
-          <q-img basic :width="$q.screen.lt.sm ? '80px' : '110px'" :ratio="1"
+          <q-img :width="$q.screen.lt.sm ? '80px' : '110px'" :ratio="1"
             :src="require(`@/assets/images/d2r/items/${s.toLowerCase()}.png`)" />
           <div class="absolute-center font-kodia word-keep" style="white-space: normal;">
             {{$t(`d2r.knowledge.items.${s.toLowerCase()}`)}}

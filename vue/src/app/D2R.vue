@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="wrapClass">
+  <div id="app">
     <q-layout view="hHh lpR lfr" v-if="!independent">
       <q-header class="q-dark q-py-xs text-grey-5 text-weight-bold font-kodia" elevated>
         <q-toolbar class="row justify-start q-col-gutter-x-sm">
@@ -19,7 +19,7 @@
           </div>
           <!-- toolbar 2 -->
           <q-tabs class="gt-md title-size" switch-indicator active-color="title" align="left">
-            <q-route-tab v-for="sec in section" :to="`/d2r/bbs/${sec.value}`" :key="sec.name">
+            <q-route-tab v-for="sec in section" :to="`/d2r/bbs/${sec.value}?page=1`" :key="sec.name">
               <q-icon :name="sec.icon" class="q-ma-sm" size="20px" />
               <div class="text-h7">{{sec.label}}</div>
             </q-route-tab>
@@ -49,27 +49,27 @@
               <q-avatar size="sm" rounded>
                 <img :src="require('@/assets/images/d2r/items/cube.png')">
               </q-avatar>
-              <span class="gt-lg">{{$t('d2r.cube')}}</span>
+              <span class="gt-lg q-ml-xs">{{$t('d2r.cube')}}</span>
             </q-btn>
             <q-btn dense flat padding="0" to="/d2r/knowledge/Items/Rune">
               <q-avatar size="sm" rounded>
                 <img :src="require('@/assets/images/d2r/items/rune.png')">
               </q-avatar>
-              <span class="gt-lg">{{$t('d2r.rune')}}</span>
+              <span class="gt-lg q-ml-xs">{{$t('d2r.rune')}}</span>
             </q-btn>
             <q-btn dense flat class="gt-md" @click="goSeras">
               <q-avatar class="ss-logo" size="30px">
                 <img src="@/assets/images/logo.svg" />
               </q-avatar>
-              <span class="gt-lg">SS</span>
+              <span class="gt-lg q-ml-xs">SS</span>
             </q-btn>
             <q-btn v-if="signStatus" dense flat class="gt-md" to="/d2r/account">
               <q-icon name="settings" size="xs" />
-              <span class="gt-lg">{{$t('d2r.account.title')}}</span>
+              <span class="gt-lg q-ml-xs">{{$t('d2r.account.title')}}</span>
             </q-btn>
             <q-btn dense flat :disable="processSignOut" class="gt-md" @click="sign">
               <q-icon :name="signStatus ? 'fas fa-sign-out-alt' : 'fas fa-user-circle'" size="20px" />
-              <span class="gt-lg">{{ signStatus ? $t('signOut.title') : $t('signIn.title') }}</span>
+              <span class="gt-lg q-ml-xs">{{ signStatus ? $t('signOut.title') : $t('signIn.title') }}</span>
             </q-btn>
             <q-btn-dropdown class="gt-md" dense dropdown-icon="language" no-icon-animation size="md"
               content-style="background-color:rgba(20,20,20,1) !important;box-shadow: 0 0 4px 0 rgba(200,200,200,0.6)">
@@ -198,9 +198,11 @@
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding-right:6px;">
+            <!-- <adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-adtest="on" :key="key">
+            </adsense> -->
             <div v-if="pageLoad && $q.screen.gt.sm && !isKnowledge && isProduction" class="ad-box">
               <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
-                ins-style="display:inline-block;width:164px;height:600px" :key="`lt_${key}`">
+                ins-style="display:inline-block;width:160px;height:600px" :key="`lt_${key}`">
               </Adsense>
             </div>
           </div>
@@ -293,13 +295,13 @@
           <div v-if="pageLoad && $q.screen.gt.sm && isProduction"
             class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding-left:6px;">
             <div class="ad-box">
-              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
-                ins-style="display:inline-block;width:164px;height:600px" :key="`lte_${key}`">
+              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" data-ad-format="auto"
+                ins-style="display:inline-block;width:160px;height:600px" :key="`rt_${key}`">
               </Adsense>
             </div>
             <div v-if="isKnowledge" class="ad-box" style="margin-top: 618px;">
-              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" data-ad-format="auto"
-                ins-style="display:inline-block;width:164px;height:600px" :key="`rt_${key}`">
+              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
+                ins-style="display:inline-block;width:160px;height:600px" :key="`lte_${key}`">
               </Adsense>
             </div>
           </div>
@@ -350,7 +352,6 @@
         pageLoad: false,
         progress: 0,
         loading: false,
-        wrapClass: ['body-wrap'],
         drawer: false,
         basicInfo: {
           nickname: null,
@@ -370,17 +371,18 @@
       }
     },
     created() {
+      this.loadD2RInfo()
       this.checkSignStatus()
       this.initD2R(true)
+      //window.addEventListener("load", this.onWindowLoad)
     },
-    beforeMount() {
+    mounted() {
       this.pageLoad = true
     },
     watch: {
       '$route': function (to, old) {
-        this.checkSignStatus()
         this.initD2R()
-        if (to !== old) {
+        if (to !== old && old.name !== null) {
           this.isKnowledge = this.$route.matched.some(route => route.name.indexOf('d2r-knowledge') !== -1)
           this.key = uid()
         }
@@ -410,6 +412,9 @@
       }
     },
     methods: {
+      // onWindowLoad() {
+      //   (window.adsbygoogle || []).push({})
+      // },
       ...mapActions({
         setSignStatus: 'setSignStatus',
         setBeginner: 'setBeginner',
@@ -441,32 +446,20 @@
             })
         }
       },
-      initD2R(enter) {
+      async loadD2RInfo() {
+        if (this.d2rInfo === null) {
+          const d2rInfo = await this.axios.get("/d2r/account/info")
+          this.setD2RInfo(d2rInfo.data)
+        }
+      },
+      initD2R() {
         if (!this.$q.cookies.has(process.env.VUE_APP_D2R_DARK_NAME))
           this.$q.dark.set(true)
 
-        if (enter)
+        if (document.body.classList.contains('show') === false) {
           this.timer = setTimeout(() => {
-            if (this.wrapClass.indexOf('show') === -1)
-              this.wrapClass.push('show')
+            document.body.classList.add('show')
           }, 500)
-        else {
-          if (this.wrapClass.indexOf('show') === -1)
-            this.wrapClass.push('show')
-        }
-
-        const vm = this
-        this.loading = true
-        if (this.d2rInfo === null) {
-          this.axios
-            .get('/d2r/account/info')
-            .then(function (response) {
-              vm.setD2RInfo(response.data)
-            })
-            .catch(function () { })
-            .then(function () {
-              vm.loading = false
-            })
         }
       },
       home() {
@@ -631,29 +624,6 @@
   }
 </script>
 <style scoped>
-  .body-wrap::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    opacity: 0;
-    transition: opacity 1s ease;
-  }
-
-  .body--light .body-wrap::before {
-    background: linear-gradient(to bottom, rgba(240, 240, 240, 1) 40%, rgba(240, 240, 240, 0.93) 80%, rgba(240, 240, 240, 1)), url('/static/images/d2r_back.jpg') repeat !important;
-  }
-
-  .body--dark .body-wrap::before {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 40%, rgba(5, 5, 5, 0.93) 80%, rgba(10, 10, 10, 1)), url('/static/images/d2r_back.jpg') repeat !important;
-  }
-
-  .body-wrap.show::before {
-    opacity: 1 !important;
-  }
-
   .d2r-flame {
     font-size: 27px;
     font-weight: bolder !important;

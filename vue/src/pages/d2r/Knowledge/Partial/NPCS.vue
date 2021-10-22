@@ -4,7 +4,7 @@
       <template #tabs>
         <q-tab :ripple="false" content-class="no-padding" v-for="(act, index) in acts" :key="act" :name="act"
           @click="swapPart(act)">
-          <q-img basic :width="$q.screen.lt.sm ? '80px' : '110px'" :ratio="1"
+          <q-img :width="$q.screen.lt.sm ? '80px' : '110px'" :ratio="1"
             :src="require(`@/assets/images/d2r/maps/${act.toLowerCase()}/thumbnail.jpg`)" />
           <div class="ellipsis absolute-center title font-kodia">{{`${$t('d2r.knowledge.maps.act')}
             ${char[index]}`}}

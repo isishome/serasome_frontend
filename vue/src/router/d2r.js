@@ -1,3 +1,4 @@
+const pnf = () => import(/* webpackChunkName: "group-default" */ '@/pages/seras/PNF')
 const d2rMain = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Main')
 const d2rCarousel = () => import(/* webpackChunkName: "group-d2r" */ '@/components/d2r/Carousel')
 const d2rBbs = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Bbs')
@@ -7,6 +8,14 @@ const d2rStorage = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r
 const d2rSearch = () => import(/* webpackChunkName: "group-d2r" */ '@/pages/d2r/Search')
 
 const routes = [
+  {
+    name: 'pnf',
+    path: '*',
+    component: pnf,
+    meta: {
+      independent: true
+    }
+  },
   {
     name: 'd2r-main',
     path: '/d2r',
@@ -31,7 +40,8 @@ const routes = [
         props: true,
         meta: {
           checkGrade: 'read',
-          progress: true
+          progress: true,
+          topScroll: true
         }
       },
       {

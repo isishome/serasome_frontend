@@ -1,8 +1,37 @@
   /** app place **********************************************************************************************************************/
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  body::before {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 40%, rgba(5, 5, 5, 0.93) 80%, rgba(10, 10, 10, 1)), url('/static/images/d2r_back.jpg') repeat !important;
+  }
+
+  body.body--light::before {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 25%, rgba(20, 20, 20, 0.9) 35%, rgba(240, 240, 240, 1)), url('/static/images/d2r_back.jpg') repeat !important;
+  }
+
+  @media screen and (max-width:599px) {
+    body.body--light::before {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 35%, rgba(20, 20, 20, 0.9) 45%, rgba(240, 240, 240, 1)), url('/static/images/d2r_back.jpg') repeat !important;
+    }
+  }
+  
+  body.show::before {
+    opacity: 1 !important;
+  }
+  
   .body--light,
   .q-light {
     color:rgba(50, 50, 50, 1) !important;
-    background: #DDDDDD!important;
+    background: rgba(10, 10, 10, 1) !important;
   }
 
   .body--dark,
@@ -86,4 +115,15 @@
 
   .body--light .table-back {
     background-color: rgba(100, 100, 100, .2) !important;
+  }
+
+  .q-inner-loading {
+    background: rgba(100, 100, 100, 0.2) !important;
+    backdrop-filter: saturate(200%) blur(4px);
+    -webkit-backdrop-filter: saturate(200%) blur(4px);
+    border-radius: 4px !important;
+  }
+
+  .body--light .q-inner-loading {
+    background: rgba(0, 0, 0, 0.2) !important;
   }

@@ -1,14 +1,12 @@
 <template>
-  <q-list class="row summary-wrap relative-position">
-    <q-item v-if="loading" class="lastest-wrap full-width" style="min-height: 100px;">
-      <div class="non-selectable">
-        <q-inner-loading showing size="xs" class="bg-transparent">
-          <q-spinner-ball size="lg" color="d2r" />
-        </q-inner-loading>
-      </div>
-    </q-item>
-    <q-item v-for="sec in data" :key="sec.value" class="no-padding col-xs-12 col-sm-6 col-md-4 summary">
-      <div class="lastest-wrap full-width">
+  <div class="row q-pa-xs justify-start q-col-gutter-md">
+    <div v-if="loading" class="non-selectable">
+      <q-inner-loading showing size="xs" class="bg-transparent">
+        <q-spinner-ball size="xl" color="red" />
+      </q-inner-loading>
+    </div>
+    <div v-for="sec in data" :key="sec.value" class="col-12 col-md-4">
+      <div class="summary">
         <q-toolbar class="row justify-between sub">
           <div class="lt-sm col-4"></div>
           <div class="col-4 text-weight-bold font-kodia" :class="$q.screen.lt.sm ? 'text-center' : ''">{{sec.title}}
@@ -28,8 +26,7 @@
             <q-btn flat unelevated no-caps class="text-body fit" @click="itemClick(summary)">
               <q-item-section top avatar>
                 <q-avatar rounded class="outlined">
-                  <q-img basic :ratio="1" style="width:40px" :src="parsThumbnail(summary.thumbnail)"
-                    spinner-color="d2r">
+                  <q-img :ratio="1" style="width:40px" :src="parsThumbnail(summary.thumbnail)" spinner-color="d2r">
                     <template v-if="blank !== null" #error>
                       <q-img no-default-spinner basic :ratio="2/1" :src="require(`@/assets/images/d2r/${blank}`)"
                         class="absolute-center bg-transparent" />
@@ -38,8 +35,8 @@
                 </q-avatar>
               </q-item-section>
               <q-item-section>
-                <q-item-label class="ellipsis text-left">{{summary.title}}</q-item-label>
-                <q-item-label class="ellipsis text-left">
+                <q-item-label class="q-py-xs text-body2 ellipsis text-left">{{summary.title}}</q-item-label>
+                <q-item-label class="q-py-xs text-caption ellipsis text-left">
                   {{summary.contents}}
                 </q-item-label>
               </q-item-section>
@@ -47,8 +44,8 @@
           </q-item>
         </q-list>
       </div>
-    </q-item>
-  </q-list>
+    </div>
+  </div>
 </template>
 <script>
   export default {
@@ -96,41 +93,28 @@
   }
 </script>
 <style scoped>
-  .body--light .summary-wrap {
-    box-shadow: inset 1px -1px 0 0 rgba(45, 45, 45, .4);
+  .summary {
+    box-shadow: 0 0 1px 0 rgba(145, 145, 145, 1);
+    background-color: rgba(10, 10, 10, 1);
+    border-radius: 10px;
+    height: 100%;
   }
 
-  .body--dark .summary-wrap {
-    box-shadow: inset 1px -1px 0 0 rgba(45, 45, 45, .8);
+  .body--light .summary {
+    box-shadow: 0 0 1px 0 rgba(45, 45, 45, .4);
+    background-color: rgba(240, 240, 240, 1);
   }
 
   .sub {
     font-size: 1em;
+    color: rgba(184, 156, 91, 1);
+    background-color: rgba(24, 30, 30, 1) !important;
+    border-radius: 10px 10px 0 0;
   }
 
   .body--light .sub {
     color: rgb(100, 100, 100);
     background-color: rgba(24, 30, 30, .2) !important;
-    box-shadow: 0 8px 4px 0 rgba(0, 0, 0, .2) inset;
-  }
-
-  .body--dark .sub {
-    color: rgba(184, 156, 91, 1);
-    background-color: rgba(24, 30, 30, 1) !important;
-    box-shadow: 0 8px 4px 0 rgba(0, 0, 0, .3) inset;
-  }
-
-  .lastest-wrap {
-    border-radius: 4px;
-    padding-bottom: 60px;
-  }
-
-  .body--light .lastest-wrap {
-    box-shadow: -1px -1px 1px 0 rgba(45, 45, 45, .4) inset;
-  }
-
-  .body--dark .lastest-wrap {
-    box-shadow: -1px -1px 1px 0 rgba(45, 45, 45, .8) inset;
   }
 
   .outlined {

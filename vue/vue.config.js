@@ -8,7 +8,7 @@ module.exports = {
     d2r: {
       entry: 'src/main/d2r.js',
       template: 'public/d2r.html',
-      filename: 'd2rIndex.html'
+      filename: 'd2r.html'
     }
   },
   chainWebpack: (config) => {

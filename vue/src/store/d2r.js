@@ -33,7 +33,7 @@ export default new Vuex.Store({
         authority: {}
       }
 
-      if (Array.isArray(state.d2rInfo.section)) {
+      if (state.d2rInfo && state.d2rInfo.section && Array.isArray(state.d2rInfo.section)) {
         const findSec = state.d2rInfo.section.find(s => s.value === sec)
         if (findSec)
           result = findSec
@@ -48,9 +48,9 @@ export default new Vuex.Store({
     getD2RInfo: state => {
       return state.d2rInfo
     },
-    getAuthority: state => (sec, action) => {
-      const findSection = state.d2rInfo.section.find(s => s.value === sec)
-      if (findSection)
+    getAuthority: (state, getters) => (sec, action) => {
+      const findSection = getters.getSecInfo(sec)
+      if (findSection.name !== null)
         return findSection.authority[action] <= state.d2rInfo.grade
       else
         return false

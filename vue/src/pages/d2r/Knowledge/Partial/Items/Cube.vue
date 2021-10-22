@@ -74,9 +74,8 @@
       </template>
     </q-table>
     <div v-if="pagesNumber !== 0" class="mobile-only row justify-center full-width q-mt-md">
-      <q-pagination color="title text-black" v-model="pagination.page" :max="pagesNumber"
-        :max-pages="$q.screen.gt.sm ? 5 : 3" :ellipses="false" direction-links :boundary-numbers="false"
-        :boundary-links="$q.screen.gt.sm" />
+      <q-pagination color="title" v-model="pagination.page" :max="pagesNumber" :max-pages="$q.screen.gt.sm ? 5 : 3"
+        :ellipses="false" direction-links :boundary-numbers="false" :boundary-links="$q.screen.gt.sm" />
     </div>
     <p class="q-mt-xl text-right text-grey-6" :class="$q.screen.lt.md ? 'text-caption' : ''">
       {{$t('d2r.knowledge.source')}} :
@@ -102,6 +101,12 @@
           { name: 'recipe', align: 'center', style: 'width:25%' }
         ],
         data: this.$t('d2r.knowledge.items.cubeData')
+      }
+    },
+    watch: {
+      'pagination.page': function (val, old) {
+        if (val !== old)
+          window.scrollTo(0, 0)
       }
     },
     computed: {

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <q-carousel class="full-width" :height="$q.screen.gt.xs ? '400px' : '200px'" animated :autoplay="10000" infinite
-      v-model="slide">
+    <q-carousel class="full-width bg-transparent" :height="$q.screen.gt.xs ? '250px' : '150px'" animated
+      :autoplay="10000" infinite v-model="slide">
       <q-carousel-slide v-for="(no, index) in $t('d2r.main.carousel')" :key="index" :name="no.name"
         :img-src="require(`@/assets/images/d2r/${ltmd}${no.img}.jpg`)">
         <div class="full-width bg-transparent custom-caption"
-          :class="$q.screen.lt.sm ? 'absolute-center no-padding q-mt-lg' : 'absolute-center'">
+          :class="$q.screen.lt.sm ? 'absolute-center no-padding' : 'absolute-center'">
           <div class="d2r-top-title q-mb-sm word-keep" :style="textFlame">{{no.title}}</div>
           <div class="row justify-center">
             <div class="d2r-top-desc col-6 col-xs-10 word-keep" :style="textSub">{{no.sub}}</div>

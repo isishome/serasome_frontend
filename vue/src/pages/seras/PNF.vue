@@ -15,10 +15,10 @@
           </q-avatar>
         </q-item-section>
         <q-item-section>
-          <q-item-label class="text-h6 text-weight-bold">{{$t('pnf.desc1')}}</q-item-label>
-          <q-item-label class="text-body q-pt-sm">{{$t('pnf.desc2')}}
+          <q-item-label class="text-h6 text-weight-bold text-black">{{$t('pnf.desc1')}}</q-item-label>
+          <q-item-label class="text-body q-pt-sm text-black">{{$t('pnf.desc2')}}
           </q-item-label>
-          <q-item-label class="text-body">{{$t('pnf.desc3')}}
+          <q-item-label class="text-body text-black">{{$t('pnf.desc3')}}
           </q-item-label>
         </q-item-section>
       </q-item>
