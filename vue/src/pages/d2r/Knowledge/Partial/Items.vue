@@ -55,7 +55,7 @@
       },
       load() {
         this.loading = true
-        this.partComponent = () => import(/* webpackChunkName: "group-d2r-knowledge" */ `./Items/${this.$route.params.part}`)
+        this.partComponent = () => import(/* webpackChunkName: "d2r-knowledge-items" */ `./Items/${this.$route.params.part}`)
       },
       swapPart(val) {
         this.$router.push({ name: 'd2r-knowledge-part', params: { section: 'Items', part: val } }).catch(() => { })

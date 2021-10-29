@@ -2,7 +2,7 @@
   <div id="app">
     <q-layout view="hHh lpR lfr" v-if="!independent">
       <q-header class="q-dark q-py-xs text-grey-5 text-weight-bold font-kodia" elevated>
-        <q-toolbar class="row justify-start q-col-gutter-x-sm">
+        <q-toolbar class="row justify-start items-center q-col-gutter-x-sm">
           <!-- toolbar 1 -->
           <div class="row justify-start">
             <q-btn dense flat class="lt-lg" @click="drawer = !drawer">
@@ -39,12 +39,12 @@
                 <span class="d2r-flame">DIA II-R</span>
               </div>
               <div class="q-ml-sm q-pt-xs lt-sm">
-                <span class="d2r-flame">DIIR</span>
+                <span class="d2r-flame">D2R</span>
               </div>
             </q-btn>
           </div>
           <!-- toolbar 3 -->
-          <div class="absolute-right col-xl-5 col-lg-4 col-md-3 row justify-end items-center q-gutter-x-xs">
+          <div class="absolute-right col-xl-5 col-lg-4 col-md-3 row justify-end items-center q-gutter-x-sm">
             <q-btn dense flat padding="0" to="/d2r/knowledge/Items/Cube">
               <q-avatar size="sm" rounded>
                 <img :src="require('@/assets/images/d2r/items/cube.png')">
@@ -58,7 +58,7 @@
               <span class="gt-lg q-ml-xs">{{$t('d2r.rune')}}</span>
             </q-btn>
             <q-btn dense flat class="gt-md" @click="goSeras">
-              <q-avatar class="ss-logo" size="30px">
+              <q-avatar size="30px">
                 <img src="@/assets/images/logo.svg" />
               </q-avatar>
               <span class="gt-lg q-ml-xs">SS</span>
@@ -93,7 +93,7 @@
               </template>
             </q-input>
             <div>
-              <q-toggle class="q-px-xs" dense v-model="$q.dark.mode" @input="toggleDark" color="grey-7" size="xs"
+              <q-toggle dense v-model="$q.dark.mode" @input="toggleDark" color="grey-7" size="sm"
                 icon-color="blue-grey-10" icon="fas fa-adjust" />
             </div>
           </div>
@@ -192,9 +192,88 @@
       </q-drawer>
       <q-page-container>
         <q-scroll-observer debounce="100" @scroll="onScroll" />
-        <q-page-sticky v-if="$route.meta.progress" style="z-index: 1;" expand position="top" class="desktop-only">
-          <q-linear-progress :value="progress" color="d2r" size="xs" />
-        </q-page-sticky>
+        <q-dialog v-if="d2rInfo" v-model="d2rInfo.beginner" transition-show="rotate" transition-hide="rotate"
+          persistent>
+          <q-card class="full-width non-selectable" bordered>
+            <q-card-section class="no-padding">
+              <q-toolbar class="glossy text-h7 text-weight-bold bg-title">
+                <div>{{$t('d2r.beginner.title')}}</div>
+              </q-toolbar>
+            </q-card-section>
+            <q-card-section class="no-padding" style="padding:10px !important;">
+              <q-carousel keep-alive animated transition-prev="scale" transition-next="scale" v-model="step"
+                ref="carousel" :height="carouselHeight" class="bg-transparent">
+                <q-carousel-slide :name="1" class="no-scroll no-padding text-center">
+                  <p>{{$t('d2r.beginner.welcome')}}</p>
+                  <p>{{$t('d2r.beginner.notice')}}</p>
+                </q-carousel-slide>
+                <q-carousel-slide :name="2" class="no-scroll no-padding row justify-center">
+                  <div class="col-12 col-sm-8">
+                    <q-input ref="nickname" autofocus color="title" outlined v-model="basicInfo.nickname"
+                      :label="$t('d2r.beginner.nickname')" :hint="$t('d2r.beginner.hint')" :error="basicInfo.error"
+                      @input="enter()" :error-message="basicInfo.message" no-error-icon>
+                      <template v-slot:append>
+                        <q-icon v-if="!basicInfo.duplicate" name="check" color="green-6" />
+                      </template>
+                    </q-input>
+                  </div>
+                </q-carousel-slide>
+                <q-carousel-slide :name="3" class="no-padding">
+                  <q-uploader color="grey-6" class="full-width" ref="uploader" :disable="loading" accept="image/*"
+                    :factory="postWithAvatar" :label="$t('d2r.account.avatar')" @added="added" @removed="removed"
+                    @uploaded="complete" @failed="failed" @start="start" @finish="finish" hide-upload-btn bordered>
+                    <template v-slot:list="scope">
+                      <q-list separator>
+                        <q-item v-for="file in scope.files" :key="file.name">
+                          <q-item-section>
+                            <q-item-label class="full-width ellipsis">
+                              {{ file.name }}
+                            </q-item-label>
+                            <q-item-label caption>
+                              Status: {{ file.__status }}
+                            </q-item-label>
+                            <q-item-label caption>
+                              {{ file.__sizeLabel }} / {{ file.__progressLabel }}
+                            </q-item-label>
+                          </q-item-section>
+                          <q-item-section v-if="file.__img" thumbnail>
+                            <img :src="file.__img.src">
+                          </q-item-section>
+                          <q-item-section top side>
+                            <q-btn size="12px" flat dense round icon="delete" @click="scope.removeFile(file)" />
+                          </q-item-section>
+                        </q-item>
+                      </q-list>
+                    </template>
+                  </q-uploader>
+                </q-carousel-slide>
+                <template v-slot:control>
+                  <q-carousel-control position="bottom-right" :offset="[18, 4]"
+                    class="q-gutter-xs row q-px-xs justify-between items-center full-width corousel-control">
+                    <div>
+                      <q-btn v-if="step !== 1" dense glossy padding="0 10px" color="grey-1" text-color="black"
+                        :label="$t('d2r.beginner.prev')" @click="$refs.carousel.previous()" />
+                    </div>
+                    <div class="row justify-end q-gutter-x-sm">
+                      <div v-if="step === 2">
+                        <q-btn v-if="checkValidate && basicInfo.duplicate" dense glossy padding="0 10px" :ripple="false"
+                          color="green-8" :label="$t('d2r.beginner.check')" @click="checkDuplicate()" />
+                      </div>
+                      <div v-if="step !== 3">
+                        <q-btn dense glossy padding="0 10px" :ripple="false" color="grey-8"
+                          :label="$t('d2r.beginner.next')" @click="next()" />
+                      </div>
+                      <div v-else>
+                        <q-btn dense glossy padding="0 10px" color="green-6" text-color="white" icon="done"
+                          :label="$t('d2r.beginner.submit')" @click="onSubmit()" />
+                      </div>
+                    </div>
+                  </q-carousel-control>
+                </template>
+              </q-carousel>
+            </q-card-section>
+          </q-card>
+        </q-dialog>
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding-right:6px;">
@@ -206,92 +285,16 @@
               </Adsense>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-8 col-12">
+          <q-page class="col-xl-6 col-lg-8 col-12">
             <router-view />
-            <q-dialog v-if="d2rInfo" v-model="d2rInfo.beginner" transition-show="rotate" transition-hide="rotate"
-              persistent>
-              <q-card class="full-width non-selectable bg-grey-3">
-                <q-card-section class="no-padding">
-                  <q-toolbar class="glossy text-h7 text-weight-bold bg-grey-5">
-                    <div>{{$t('d2r.beginner.title')}}</div>
-                  </q-toolbar>
-                </q-card-section>
-                <q-card-section class="no-padding" style="padding:10px !important;">
-                  <q-carousel keep-alive animated transition-prev="scale" transition-next="scale" v-model="step"
-                    ref="carousel" :height="carouselHeight" class="bg-transparent">
-                    <q-carousel-slide :name="1" class="no-scroll no-padding text-center">
-                      <p>{{$t('d2r.beginner.welcome')}}</p>
-                      <p>{{$t('d2r.beginner.notice')}}</p>
-                    </q-carousel-slide>
-                    <q-carousel-slide :name="2" class="no-scroll no-padding row justify-center">
-                      <div class="col-12 col-sm-8">
-                        <q-input ref="nickname" autofocus bg-color="white" outlined v-model="basicInfo.nickname"
-                          :label="$t('d2r.beginner.nickname')" :hint="$t('d2r.beginner.hint')" :error="basicInfo.error"
-                          @input="enter()" :error-message="basicInfo.message" no-error-icon>
-                          <template v-slot:append>
-                            <q-icon v-if="!basicInfo.duplicate" name="check" color="green-6" />
-                          </template>
-                        </q-input>
-                      </div>
-                    </q-carousel-slide>
-                    <q-carousel-slide :name="3" class="no-padding">
-                      <q-uploader class="full-width" ref="uploader" :disable="loading" accept="image/*"
-                        :factory="postWithAvatar" :label="$t('d2r.account.avatar')" @added="added" @removed="removed"
-                        @uploaded="complete" @failed="failed" @start="start" @finish="finish" hide-upload-btn>
-                        <template v-slot:list="scope">
-                          <q-list separator>
-                            <q-item v-for="file in scope.files" :key="file.name">
-                              <q-item-section>
-                                <q-item-label class="full-width ellipsis">
-                                  {{ file.name }}
-                                </q-item-label>
-                                <q-item-label caption>
-                                  Status: {{ file.__status }}
-                                </q-item-label>
-                                <q-item-label caption>
-                                  {{ file.__sizeLabel }} / {{ file.__progressLabel }}
-                                </q-item-label>
-                              </q-item-section>
-                              <q-item-section v-if="file.__img" thumbnail>
-                                <img :src="file.__img.src">
-                              </q-item-section>
-                              <q-item-section top side>
-                                <q-btn size="12px" flat dense round icon="delete" @click="scope.removeFile(file)" />
-                              </q-item-section>
-                            </q-item>
-                          </q-list>
-                        </template>
-                      </q-uploader>
-                    </q-carousel-slide>
-                    <template v-slot:control>
-                      <q-carousel-control position="bottom-right" :offset="[18, 4]"
-                        class="q-gutter-xs row q-px-xs justify-between items-center full-width corousel-control">
-                        <div>
-                          <q-btn v-if="step !== 1" dense glossy padding="0 10px" color="grey-1" text-color="black"
-                            :label="$t('d2r.beginner.prev')" @click="$refs.carousel.previous()" />
-                        </div>
-                        <div class="row justify-end q-gutter-x-sm">
-                          <div v-if="step === 2">
-                            <q-btn v-if="checkValidate && basicInfo.duplicate" dense glossy padding="0 10px"
-                              :ripple="false" color="green-8" :label="$t('d2r.beginner.check')"
-                              @click="checkDuplicate()" />
-                          </div>
-                          <div v-if="step !== 3">
-                            <q-btn dense glossy padding="0 10px" :ripple="false" color="light-blue-8"
-                              :label="$t('d2r.beginner.next')" @click="next()" />
-                          </div>
-                          <div v-else>
-                            <q-btn dense glossy padding="0 10px" color="green-6" text-color="white" icon="done"
-                              :label="$t('d2r.beginner.submit')" @click="onSubmit()" />
-                          </div>
-                        </div>
-                      </q-carousel-control>
-                    </template>
-                  </q-carousel>
-                </q-card-section>
-              </q-card>
-            </q-dialog>
-          </div>
+            <div v-if="pageLoad && $q.screen.lt.md && isProduction" class="row justify-center">
+              <div class="ad-box-contents">
+                <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9230987257" data-ad-format="auto"
+                  ins-style="display:inline-block;width:300px;height:50px;" :key="`b_${key}`">
+                </Adsense>
+              </div>
+            </div>
+          </q-page>
           <div v-if="pageLoad && $q.screen.gt.sm && isProduction"
             class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding-left:6px;">
             <div class="ad-box">
@@ -307,9 +310,12 @@
           </div>
         </div>
         <div class="platform-ios-only" style="padding-bottom: 12vh;"></div>
+        <q-page-sticky v-if="$route.meta.progress" style="z-index: 1;" expand position="top" class="desktop-only">
+          <q-linear-progress :value="progress" color="d2r" size="xs" />
+        </q-page-sticky>
         <q-page-scroller position="bottom-left" :scroll-offset="150" :offset="[0, 0]"
           style="position: absolute;z-index: 2;">
-          <q-btn push :style="$q.screen.lt.md ? 'left:10px;bottom:30px' : 'left:20vw;bottom:20px'" round size="md"
+          <q-btn push :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : 'left:20vw;bottom:20px'" round size="md"
             icon="keyboard_arrow_up" color="d2r" />
         </q-page-scroller>
       </q-page-container>
@@ -317,7 +323,7 @@
         <div class="col-4 gt-sm"></div>
         <div class="col q-ma-none col-md-4 row justify-center items-center q-gutter-x-xs text-caption">
           <q-avatar size="md">
-            <img src="@/assets/images/logo.svg" />
+            <img src="@/assets/images/logo2.svg" />
           </q-avatar>
           <div class="row justify-start items-center q-gutter-x-xs">
             <div class="lt-sm font-kodia">D2R</div>
@@ -346,10 +352,9 @@
     data() {
       return {
         isProduction: process.env.NODE_ENV === 'production',
-        isKnowledge: this.$route.matched.some(route => route.name.indexOf('d2r-knowledge') !== -1),
-        scrollTop: 0,
-        key: uid(),
         pageLoad: false,
+        key: uid(),
+        scrollTop: 0,
         progress: 0,
         loading: false,
         drawer: false,
@@ -383,7 +388,6 @@
       '$route': function (to, old) {
         this.initD2R()
         if (to !== old && old.name !== null) {
-          this.isKnowledge = this.$route.matched.some(route => route.name.indexOf('d2r-knowledge') !== -1)
           this.key = uid()
         }
       },
@@ -409,6 +413,9 @@
       carouselHeight() {
         const sm = this.$q.screen.lt.md
         return sm ? [0, '130px', '130px', '170px', '200px'][this.step] : [0, '90px', '140px', '190px'][this.step]
+      },
+      isKnowledge() {
+        return this.$route.matched.some(route => route.name.indexOf('d2r-knowledge') !== -1)
       }
     },
     methods: {
@@ -484,6 +491,7 @@
             .catch(function () { })
             .then(function () {
               vm.processSignOut = false
+              vm.setD2RInfo(null)
               vm.$router.go()
             })
         } else
@@ -643,17 +651,7 @@
     font-size: 1em;
   }
 
-  .ss-logo img {
-    width: 30px !important;
-    height: 30px !important;
-    filter: brightness(80%) grayscale(100%);
-  }
-
   .corousel-control a {
     text-decoration: none;
-  }
-
-  .ss-footer img {
-    filter: brightness(70%) hue-rotate(210deg) !important;
   }
 </style>

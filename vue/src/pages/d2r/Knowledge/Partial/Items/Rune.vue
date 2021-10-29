@@ -7,8 +7,10 @@
     <div class="row justify-start text-center q-col-gutter-sm rune-wrap full-width non-selectable">
       <div v-for="rune in runes" :key="rune.no" class="rune">
         <q-btn no-caps dense flat class="row fit" :class="rune.selected ? 'selected' : ''" @click="selectedRune(rune)">
-          <div class="col-12 full-width"><img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)"
-              style="width: 100%;" /></div>
+          <div class="col-12 full-width">
+            <img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)"
+              style="width: 100%;max-width:50px;max-height:50px;" />
+          </div>
           <div class="col-1 full-height full-width word-keep rune-name text-body1">{{rune.name}}</div>
         </q-btn>
       </div>

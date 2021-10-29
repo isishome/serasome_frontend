@@ -185,6 +185,7 @@ export default {
     forum: "Forum",
     account: {
       title: "Account",
+      point: "Point",
       avatar: "Avatar Image 40x40 (1m)",
       basic: "Basic Information",
       message: {
@@ -342,22 +343,22 @@ export default {
           },
           {
             title: 'Low Level Runes',
-            notice: ['<span class="text-weight-bold text-grey-7">Thul</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-yellow">Topaz</span> → <span class="text-weight-bold text-grey-7">Amn</span>', '<span class="text-weight-bold text-grey-7">Amn</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-purple-5">Amethyst</span> → <span class="text-weight-bold text-grey-7">Sol</span>', '<span class="text-weight-bold text-grey-7">Sol</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-blue">Sapphire</span> → <span class="text-weight-bold text-grey-7">Shael</span>', '<span class="text-weight-bold text-grey-7">Shael</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-red">Ruby</span> → <span class="text-weight-bold text-grey-7">Dol</span>', '<span class="text-weight-bold text-grey-7">Dol</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-light-green">Emerald</span> → <span class="text-weight-bold text-grey-7">Hel</span>', '<span class="text-weight-bold text-grey-7">Hel</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-white">Diamond</span> → <span class="text-weight-bold text-grey-7">Io</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Thul</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Topaz</span> → <span class="text-weight-bold text-grey-7">Amn</span>', '<span class="text-weight-bold text-grey-7">Amn</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-purple-5">Amethyst</span> → <span class="text-weight-bold text-grey-7">Sol</span>', '<span class="text-weight-bold text-grey-7">Sol</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-blue">Sapphire</span> → <span class="text-weight-bold text-grey-7">Shael</span>', '<span class="text-weight-bold text-grey-7">Shael</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-red">Ruby</span> → <span class="text-weight-bold text-grey-7">Dol</span>', '<span class="text-weight-bold text-grey-7">Dol</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-light-green">Emerald</span> → <span class="text-weight-bold text-grey-7">Hel</span>', '<span class="text-weight-bold text-grey-7">Hel</span> x 3 + <span class="text-underline">Chipped</span> <span class="text-white" style="text-shadow:0 0 3px rgba(0,0,0,1)">Diamond</span> → <span class="text-weight-bold text-grey-7">Io</span>'],
             recipe: ['runes/thul.png', 'runes/amn.png', 'runes/sol.png', 'runes/shael.png', 'runes/dol.png', 'runes/hel.png', 'runes/io.png']
           },
           {
             title: 'Normal Level Runes',
-            notice: ['<span class="text-weight-bold text-grey-7">Io</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-yellow">Topaz</span> → <span class="text-weight-bold text-grey-7">Lum</span>', '<span class="text-weight-bold text-grey-7">Lum</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-purple-5">Amethyst</span> → <span class="text-weight-bold text-grey-7">Ko</span>', '<span class="text-weight-bold text-grey-7">Ko</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-blue">Sapphire</span> → <span class="text-weight-bold text-grey-7">Fal</span>', '<span class="text-weight-bold text-grey-7">Fal</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-red">Ruby</span> → <span class="text-weight-bold text-grey-7">Lem</span>', '<span class="text-weight-bold text-grey-7">Lem</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-light-green">Emerald</span> → <span class="text-weight-bold text-grey-7">Pul</span>', '<span class="text-weight-bold text-grey-7">Pul</span> x 2 + <span class="text-underline">Flawed</span> <span class="text-white">Diamond</span> → <span class="text-weight-bold text-grey-7">Um</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Io</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Topaz</span> → <span class="text-weight-bold text-grey-7">Lum</span>', '<span class="text-weight-bold text-grey-7">Lum</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-purple-5">Amethyst</span> → <span class="text-weight-bold text-grey-7">Ko</span>', '<span class="text-weight-bold text-grey-7">Ko</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-blue">Sapphire</span> → <span class="text-weight-bold text-grey-7">Fal</span>', '<span class="text-weight-bold text-grey-7">Fal</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-red">Ruby</span> → <span class="text-weight-bold text-grey-7">Lem</span>', '<span class="text-weight-bold text-grey-7">Lem</span> x 3 + <span class="text-underline">Flawed</span> <span class="text-light-green">Emerald</span> → <span class="text-weight-bold text-grey-7">Pul</span>', '<span class="text-weight-bold text-grey-7">Pul</span> x 2 + <span class="text-underline">Flawed</span> <span class="text-white" style="text-shadow:0 0 3px rgba(0,0,0,1)">Diamond</span> → <span class="text-weight-bold text-grey-7">Um</span>'],
             recipe: ['runes/io.png', 'runes/lum.png', 'runes/ko.png', 'runes/fal.png', 'runes/lem.png', 'runes/pul.png', 'runes/um.png']
           },
           {
             title: 'High Level Runes',
-            notice: ['<span class="text-weight-bold text-grey-7">Um</span> x 2 + <span class="text-yellow">Topaz</span> → <span class="text-weight-bold text-grey-7">Mal</span>', '<span class="text-weight-bold text-grey-7">Mal</span> x 2 + <span class="text-purple-5">Amethyst</span> → <span class="text-weight-bold text-grey-7">Ist</span>', '<span class="text-weight-bold text-grey-7">Ist</span> x 2 + <span class="text-blue">Sapphire</span> → <span class="text-weight-bold text-grey-7">Gul</span>', '<span class="text-weight-bold text-grey-7">Gul</span> x 2 + <span class="text-red">Ruby</span> → <span class="text-weight-bold text-grey-7">Vex</span>', '<span class="text-weight-bold text-grey-7">Vex</span> x 2 + <span class="text-light-green">Emerald</span> → <span class="text-weight-bold text-grey-7">Ohm</span>', '<span class="text-weight-bold text-grey-7">Ohm</span> x 2 + <span class="text-white">Diamond</span> → <span class="text-weight-bold text-grey-7">Lo</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Um</span> x 2 + <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Topaz</span> → <span class="text-weight-bold text-grey-7">Mal</span>', '<span class="text-weight-bold text-grey-7">Mal</span> x 2 + <span class="text-purple-5">Amethyst</span> → <span class="text-weight-bold text-grey-7">Ist</span>', '<span class="text-weight-bold text-grey-7">Ist</span> x 2 + <span class="text-blue">Sapphire</span> → <span class="text-weight-bold text-grey-7">Gul</span>', '<span class="text-weight-bold text-grey-7">Gul</span> x 2 + <span class="text-red">Ruby</span> → <span class="text-weight-bold text-grey-7">Vex</span>', '<span class="text-weight-bold text-grey-7">Vex</span> x 2 + <span class="text-light-green">Emerald</span> → <span class="text-weight-bold text-grey-7">Ohm</span>', '<span class="text-weight-bold text-grey-7">Ohm</span> x 2 + <span class="text-white" style="text-shadow:0 0 3px rgba(0,0,0,1)">Diamond</span> → <span class="text-weight-bold text-grey-7">Lo</span>'],
             recipe: ['runes/um.png', 'runes/mal.png', 'runes/ist.png', 'runes/gul.png', 'runes/vex.png', 'runes/ohm.png', 'runes/lo.png']
           },
           {
             title: 'Highest Level Runes',
-            notice: ['<span class="text-weight-bold text-grey-7">Lo</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-yellow">Topaz</span> → <span class="text-weight-bold text-grey-7">Sur</span>', '<span class="text-weight-bold text-grey-7">Sur</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-purple-5">Amethyst</span> → <span class="text-weight-bold text-grey-7">Ber</span>', '<span class="text-weight-bold text-grey-7">Ber</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-blue">Sapphire</span> → <span class="text-weight-bold text-grey-7">Jah</span>', '<span class="text-weight-bold text-grey-7">Jah</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-red">Ruby</span> → <span class="text-weight-bold text-grey-7">Cham</span>', '<span class="text-weight-bold text-grey-7">Cham</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-light-green">Emerald</span> → <span class="text-weight-bold text-grey-7">Zod</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Lo</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Topaz</span> → <span class="text-weight-bold text-grey-7">Sur</span>', '<span class="text-weight-bold text-grey-7">Sur</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-purple-5">Amethyst</span> → <span class="text-weight-bold text-grey-7">Ber</span>', '<span class="text-weight-bold text-grey-7">Ber</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-blue">Sapphire</span> → <span class="text-weight-bold text-grey-7">Jah</span>', '<span class="text-weight-bold text-grey-7">Jah</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-red">Ruby</span> → <span class="text-weight-bold text-grey-7">Cham</span>', '<span class="text-weight-bold text-grey-7">Cham</span> x 2 + <span class="text-underline">Flawless</span> <span class="text-light-green">Emerald</span> → <span class="text-weight-bold text-grey-7">Zod</span>'],
             recipe: ['runes/lo.png', 'runes/sur.png', 'runes/ber.png', 'runes/jah.png', 'runes/cham.png', 'runes/zod.png']
           },
           {
@@ -391,13 +392,13 @@ export default {
           },
           {
             title: 'Socketed Body Armor Of Same Type',
-            notice: ['<span class="text-weight-bold text-grey-7">Tal</span> + <span class="text-weight-bold text-grey-7">Thul</span> +  <span class="text-underline">Perfect</span> <span class="text-yellow">Topaz</span> + Normal Body Armor', 'Add 1 ~ 4 sockets to the body armor'],
+            notice: ['<span class="text-weight-bold text-grey-7">Tal</span> + <span class="text-weight-bold text-grey-7">Thul</span> +  <span class="text-underline">Perfect</span> <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Topaz</span> + Normal Body Armor', 'Add 1 ~ 4 sockets to the body armor'],
             recipe: ['etc/sockets.png'],
             width: '100%'
           },
           {
             title: 'Rare Item Socket Creation',
-            notice: ['<span class="text-underline">Perfect</span> <span class="text-grey-7">Skull</span> x 3 + <span class="text-weight-bold text-title">Stone of Jordan</span> + <span class="text-weight-bold text-yellow">Rare Weapon</span>', '1 Socket Creation', 'Does not work on items that can not have sockets'],
+            notice: ['<span class="text-underline">Perfect</span> <span class="text-grey-7">Skull</span> x 3 + <span class="text-weight-bold text-title">Stone of Jordan</span> + <span class="text-weight-bold text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Rare Weapon</span>', '1 Socket Creation', 'Does not work on items that can not have sockets'],
             recipe: ['etc/sockets.png'],
             width: '100%'
           },
@@ -439,7 +440,7 @@ export default {
           },
           {
             title: 'Normal Unique Armor Upgrades',
-            notice: ['<span class="text-weight-bold text-grey-7">Tal</span> + <span class="text-weight-bold text-grey-7">Shael</span> + <span class="text-underline">Perfect</span> <span class="text-white">Diamond</span> + <span class="text-title">Normal Unique Armor</span> → <span class="text-title">Exceptional Unique Armor</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Tal</span> + <span class="text-weight-bold text-grey-7">Shael</span> + <span class="text-underline">Perfect</span> <span class="text-white" style="text-shadow:0 0 3px rgba(0,0,0,1)">Diamond</span> + <span class="text-title">Normal Unique Armor</span> → <span class="text-title">Exceptional Unique Armor</span>'],
             recipe: ['armor/light_plate.png'],
             width: '30%'
           },
@@ -451,43 +452,43 @@ export default {
           },
           {
             title: 'Exceptional Unique Armor Upgrades',
-            notice: ['<span class="text-weight-bold text-grey-7">Ko</span> + <span class="text-weight-bold text-grey-7">Lem</span> + <span class="text-underline">Perfect</span> <span class="text-white">Diamond</span> + <span class="text-title">Exceptional Unique Armor</span> → <span class="text-title">Elite Unique Armor</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Ko</span> + <span class="text-weight-bold text-grey-7">Lem</span> + <span class="text-underline">Perfect</span> <span class="text-white" style="text-shadow:0 0 3px rgba(0,0,0,1)">Diamond</span> + <span class="text-title">Exceptional Unique Armor</span> → <span class="text-title">Elite Unique Armor</span>'],
             recipe: ['armor/light_plate.png'],
             width: '30%'
           },
           {
             title: 'Normal Rare Weapon Upgrades',
-            notice: ['<span class="text-weight-bold text-grey-7">Ort</span> + <span class="text-weight-bold text-grey-7">Amn</span> + <span class="text-underline">Perfect</span> <span class="text-light-green">Emerald</span> + <span class="text-yellow">Normal Rare Weapon</span> → <span class="text-yellow">Exceptional Rare Weapon</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Ort</span> + <span class="text-weight-bold text-grey-7">Amn</span> + <span class="text-underline">Perfect</span> <span class="text-light-green">Emerald</span> + <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Normal Rare Weapon</span> → <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Exceptional Rare Weapon</span>'],
             recipe: ['weapons/crystal_sword.png'],
             width: '30%'
           },
           {
             title: 'Normal Rare Armor Upgrades',
-            notice: ['<span class="text-weight-bold text-grey-7">Ral</span> + <span class="text-weight-bold text-grey-7">Thul</span> + <span class="text-underline">Perfect</span> <span class="text-white">Diamond</span> + <span class="text-yellow">Normal Rare Armor</span> → <span class="text-yellow">Exceptional Rare Armor</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Ral</span> + <span class="text-weight-bold text-grey-7">Thul</span> + <span class="text-underline">Perfect</span> <span class="text-white" style="text-shadow:0 0 3px rgba(0,0,0,1)">Diamond</span> + <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Normal Rare Armor</span> → <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Exceptional Rare Armor</span>'],
             recipe: ['armor/light_plate.png'],
             width: '30%'
           },
           {
             title: 'Exceptional Rare Weapon Upgrades',
-            notice: ['<span class="text-weight-bold text-grey-7">Fal</span> + <span class="text-weight-bold text-grey-7">Um</span> + <span class="text-underline">Perfect</span> <span class="text-light-green">Emerald</span> + <span class="text-yellow">Exceptional Rare Weapon</span> → <span class="text-yellow">Elite Rare Weapon</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Fal</span> + <span class="text-weight-bold text-grey-7">Um</span> + <span class="text-underline">Perfect</span> <span class="text-light-green">Emerald</span> + <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Exceptional Rare Weapon</span> → <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Elite Rare Weapon</span>'],
             recipe: ['weapons/crystal_sword.png'],
             width: '30%'
           },
           {
             title: 'Exceptional Rare Armor Upgrades',
-            notice: ['<span class="text-weight-bold text-grey-7">Ko</span> + <span class="text-weight-bold text-grey-7">Pul</span> + <span class="text-underline">Perfect</span> <span class="text-white">Diamond</span> + <span class="text-yellow">Exceptional Rare Armor</span> → <span class="text-yellow">Elite Rare Armor</span>'],
+            notice: ['<span class="text-weight-bold text-grey-7">Ko</span> + <span class="text-weight-bold text-grey-7">Pul</span> + <span class="text-underline">Perfect</span> <span class="text-white" style="text-shadow:0 0 3px rgba(0,0,0,1)">Diamond</span> + <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Exceptional Rare Armor</span> → <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Elite Rare Armor</span>'],
             recipe: ['armor/light_plate.png'],
             width: '30%'
           },
           {
             title: 'Rare Item Creation',
-            notice: ['<span class="text-underline">Perfect</span> <span class="text-grey-7">Skull</span> + <span class="text-title">Stone of Jordan</span> + <span class="text-yellow">Rare Item</span> → <span class="text-yellow">Rare Item</span>', '<span class="text-weight-bold">Result Level = clvl * 0.66 + ilvl * 0.66</span>', 'clvl : Character Level', 'ilvl : Item Level'],
+            notice: ['<span class="text-underline">Perfect</span> <span class="text-grey-7">Skull</span> + <span class="text-title">Stone of Jordan</span> + <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Rare Item</span> → <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Rare Item</span>', '<span class="text-weight-bold">Result Level = clvl * 0.66 + ilvl * 0.66</span>', 'clvl : Character Level', 'ilvl : Item Level'],
             recipe: ['quests/horadricmalus.png'],
             width: '30%'
           },
           {
             title: 'Rare Item Creation',
-            notice: ['<span class="text-underline">Perfect</span> <span class="text-grey-7">Skull</span> x 6 + <span class="text-yellow">Rare Item</span> → <span class="text-yellow">Rare Item</span>', '<span class="text-weight-bold">Result Level = clvl * 0.40 + ilvl * 0.40</span>', 'clvl : Character Level', 'ilvl : Item Level'],
+            notice: ['<span class="text-underline">Perfect</span> <span class="text-grey-7">Skull</span> x 6 + <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Rare Item</span> → <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Rare Item</span>', '<span class="text-weight-bold">Result Level = clvl * 0.40 + ilvl * 0.40</span>', 'clvl : Character Level', 'ilvl : Item Level'],
             recipe: ['quests/horadricmalus.png'],
             width: '30%'
           },
@@ -529,7 +530,7 @@ export default {
           },
           {
             title: 'Magic Ring Creation',
-            notice: ['<span class="text-underline">Perfect</span> <span class="text-yellow">Topaz</span> + <span class="text-purple">Rejuvenation Potions</span> + <span class="text-indigo-5">Magic Ring</span> → <span class="text-indigo-5">Magic Ring</span>', 'Prefix : Coral', '21-30% lightning resistance', '<span class="text-weight-bold">Result Level = 30</span>'],
+            notice: ['<span class="text-underline">Perfect</span> <span class="text-yellow" style="text-shadow:0 0 3px rgba(0,0,0,1)">Topaz</span> + <span class="text-purple">Rejuvenation Potions</span> + <span class="text-indigo-5">Magic Ring</span> → <span class="text-indigo-5">Magic Ring</span>', 'Prefix : Coral', '21-30% lightning resistance', '<span class="text-weight-bold">Result Level = 30</span>'],
             recipe: ['rings/ring4.png'],
             width: '30%'
           },
@@ -553,7 +554,7 @@ export default {
           },
           {
             title: 'Magic Polearm Creation',
-            notice: ['<span class="text-underline">All Quality Of</span> <span class="text-white">Diamond</span> + <span class="text-underline">All Kind Of</span> <span class="text-lime">Staff</span> + <span class="text-underline">All Kind Of</span> <span class="text-grey-6">Kris</span> + <span class="text-underline">All Kind Of</span> <span class="text-brown">Belt</span> → <span class="text-indigo-5">Magic Polearm</span>', 'Prefix : Savage', '66-80% Enhanced Damage', '<span class="text-weight-bold">Result Level = 50</span>'],
+            notice: ['<span class="text-underline">All Quality Of</span> <span class="text-white" style="text-shadow:0 0 3px rgba(0,0,0,1)">Diamond</span> + <span class="text-underline">All Kind Of</span> <span class="text-lime">Staff</span> + <span class="text-underline">All Kind Of</span> <span class="text-grey-6">Kris</span> + <span class="text-underline">All Kind Of</span> <span class="text-brown">Belt</span> → <span class="text-indigo-5">Magic Polearm</span>', 'Prefix : Savage', '66-80% Enhanced Damage', '<span class="text-weight-bold">Result Level = 50</span>'],
             recipe: ['weapons/giant_thresher.png'],
             width: '30%'
           },

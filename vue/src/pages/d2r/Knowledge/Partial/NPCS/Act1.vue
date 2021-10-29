@@ -4,8 +4,8 @@
       @request="request" :grid="$q.screen.lt.lg">
       <template #body="{props}">
         <q-tr class="text-center npc-top">
-          <q-td class="bg-transparent" style="width:200px" rowspan="3">
-            <q-img :src='props.row.image' width="100px" />
+          <q-td rowspan="3">
+            <q-img :src='props.row.image' width="75px" />
           </q-td>
           <q-td class="font-kodia text-left text-title text-weight-bold" style="font-size: 1.8em;">
             {{props.row.name[locale]}}
@@ -31,7 +31,7 @@
       <template #item="{props}">
         <div class="q-pa-sm col-xs-12 col-sm-6">
           <q-card flat bordered class="bg-transparent table-card">
-            <q-card-section class="bg-black text-center">
+            <q-card-section class="text-center">
               <q-img :src='props.row.image' width="75px" />
               <div class="text-h6 font-kodia text-title text-weight-bold absolute-bottom">
                 <span> {{props.row.name[locale]}}</span>

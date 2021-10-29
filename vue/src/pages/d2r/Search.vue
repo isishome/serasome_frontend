@@ -17,7 +17,11 @@
         </q-input>
       </div>
       <q-separator inset spaced />
-      <d2r-list v-for="sec in section" ref="list" :key="sec.sid" :sec="sec.value" :filter="filter" mode="search" />
+      <div class="q-gutter-md">
+        <div v-for="sec in section" :key="sec.sid">
+          <d2r-list ref="list" :sec="sec.value" :filter="filter" mode="search" />
+        </div>
+      </div>
     </div>
   </div>
 </template>

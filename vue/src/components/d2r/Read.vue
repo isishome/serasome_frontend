@@ -46,13 +46,7 @@
         </div>
         <p v-if="data" ref="contents" class="word-wrap contents" v-html="viewContents">
         </p>
-        <!-- <div class="row justify-center items-center" v-if="contLoaded && isProduction">
-          <div class="ad-box-contents">
-            <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9230987257" data-ad-format="auto"
-              ins-style="display:inline-block;width:300px;height:50px;" :key="`t_${key}`">
-            </Adsense>
-          </div>
-        </div> -->
+       
       </q-card-section>
       <q-separator inset />
       <q-card-actions class="row justify-between">

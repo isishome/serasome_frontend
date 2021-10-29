@@ -106,10 +106,8 @@
           })
           .then(function () {
             ajaxBar.stop()
-            self.timer1 = setTimeout(() => {
-              done(stop)
-              self.items = self.items.concat(tempItems)
-            }, 1000)
+            done(stop)
+            self.items = self.items.concat(tempItems)
             self.$nextTick(() => {
               if (requestCid !== parseInt(self.$route.params.cid, 10) || 0) {
                 self.items = []
@@ -130,9 +128,6 @@
       done() {
         this.loading = false
       }
-    },
-    beforeDestroy() {
-      clearTimeout(this.timer1)
     }
   }
 </script>

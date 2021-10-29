@@ -3,11 +3,11 @@
     <div class="row justify-between items-center q-gutter-x-xs q-mb-md">
       <div class="row items-center">
         <q-icon name="settings" class="q-ma-sm" size="20px" color="d2r" />
-        <div class="font-title q-ml-xs text-uppercase">{{$t('d2r.account.basic')}}</div>
+        <div class="font-title text-title q-ml-xs text-uppercase">{{$t('d2r.account.basic')}}</div>
       </div>
     </div>
     <q-card class="account-wrap" flat bordered>
-      <q-card-section>
+      <q-card-section dense>
         <q-input outlined borderless no-error-icon hide-bottom-space ref="nickname" color="grey-5"
           v-model="basicInfo.nickname" :label="$t('d2r.beginner.nickname')" :error="basicInfo.error" @input="enter()"
           :error-message="basicInfo.message" readonly>
@@ -16,24 +16,34 @@
           </template>
         </q-input>
       </q-card-section>
+      <q-card-section>
+        <q-input outlined borderless no-error-icon hide-bottom-space ref="nickname" color="grey-5"
+          input-class="text-title text-h6" v-model="basicInfo.point" :label="$t('d2r.account.point')"
+          :error="basicInfo.error" @input="enter()" :error-message="basicInfo.message" readonly>
+          <template v-slot:append>
+            <q-icon v-if="!basicInfo.duplicate" name="check" color="green-6" />
+          </template>
+        </q-input>
+      </q-card-section>
       <q-card-section class="row justify-start items-center q-gutter-x-sm">
-        <q-avatar rounded color="d2r" text-color="grey-4" class="q-mr-xs" size="40px">
-          <q-img v-if="basicInfo.avatar" :src="basicInfo.avatar" :ratio="1">
+        <q-avatar rounded color="title" text-color="white" class="q-mr-xs" size="40px">
+          <q-img v-if="basicInfo.avatar" :src="basicInfo.avatar" width="100%" :ratio="1">
             <template #error>
               <div class="bg-d2r absolute-center">
                 {{basicInfo.nickname.toUpperCase().substring(0,1)}}
               </div>
             </template>
           </q-img>
+          <template v-else>{{basicInfo.nickname.toUpperCase().substring(0,1)}}</template>
         </q-avatar>
-        <q-uploader bordered class="col bg-transparent" color="grey-7" ref="uploader" :disable="loading"
+        <q-uploader bordered class="col bg-transparent" color="grey-8" ref="uploader" :disable="loading"
           accept="image/*" :factory="postWithAvatar" :label="$t('d2r.account.avatar')" @added="added" @removed="removed"
           @uploaded="complete" @failed="failed" @start="start" @finish="finish" hide-upload-btn>
           <template v-slot:list="scope">
             <q-list separator>
               <q-item v-for="file in scope.files" :key="file.name">
                 <q-item-section>
-                  <q-item-label class="full-width ellipsis">
+                  <q-item-label class="full-width ellipsis text-grey-10 q-py-xs">
                     {{ file.name }}
                   </q-item-label>
                   <q-item-label caption>
@@ -109,6 +119,7 @@
           .get('/d2r/account/detail')
           .then(function (response) {
             vm.basicInfo.nickname = response.data.nickname
+            vm.basicInfo.point = response.data.point || 0
             vm.basicInfo.avatar = response.data.avatar
           })
           .catch(function () { })
@@ -202,12 +213,12 @@
 </script>
 <style scoped>
   .account-wrap {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(68, 34, 34, 1);
     color: #CCCCCC;
   }
 
   .body--light .account-wrap {
-    background-color: rgba(230, 230, 230, 0.4);
+    background-color: rgba(230, 230, 230, 1);
   }
 
   .account-wrap .q-card__section {

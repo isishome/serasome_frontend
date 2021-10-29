@@ -102,10 +102,8 @@
           .then(function () {
             ajaxBar.stop()
 
-            self.timer1 = setTimeout(() => {
-              done(stop)
-              self.items = self.items.concat(tempList)
-            }, 1000)
+            done(stop)
+            self.items = self.items.concat(tempList)
 
             self.$nextTick(() => {
               if (requestText !== self.text) {
@@ -127,9 +125,6 @@
       done() {
         this.loading = false
       }
-    },
-    beforeDestroy() {
-      clearTimeout(this.timer1)
     }
   }
 </script>

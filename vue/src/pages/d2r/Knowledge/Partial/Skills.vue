@@ -16,14 +16,14 @@
             :class="$q.screen.lt.sm ? 'text-h5' : 'text-h4'">
             {{cls.label}}</div>
           <div class="row justify-center relative-position">
-            <div style="height:231px">
+            <div class="gradient-back">
               <transition name="fade">
                 <img v-if="show" class="absolute-center" :src="require(`@/assets/images/d2r/classes/${cls.clsid}.gif`)"
-                  style="height:100%;" />
+                  style="height:100%;padding:60px;" />
               </transition>
               <transition name="fade">
                 <img v-if="show2" class="absolute-center"
-                  :src="require(`@/assets/images/d2r/classes/${cls.clsid}-r.png`)" style="height: 100%;" />
+                  :src="require(`@/assets/images/d2r/classes/${cls.clsid}-r.png`)" style="height: 100%;padding:60px;" />
               </transition>
             </div>
           </div>

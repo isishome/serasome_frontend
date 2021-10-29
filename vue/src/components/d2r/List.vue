@@ -104,8 +104,8 @@
         <div class="q-pa-sm col-xs-6 col-sm-4">
           <q-card @click="rowClick(props.row.pid)" :class="props.row.status === 'FIN' ? 'finish' : ''">
             <q-card-section class="no-padding absolute-top-left" style="z-index:1;left:-10px;opacity: 0.9;">
-              <q-chip square size="xs" style="padding:10px 6px" color="grey-4" text-color="black"
-                :class="['row justify-center items-center shadow-1 text-weight-bold', props.row.classify]">
+              <q-chip square size="xs" style="padding:10px 6px"
+                :class="['row justify-center items-center text-caption shadow-1 text-weight-bold classify-chip', props.row.classify]">
                 <div class="lt-sm">
                   {{classifyName(sec, props.row.classify).substring(0,4)}}
                 </div>
@@ -118,7 +118,8 @@
             </q-card-section>
             <q-card-section class="no-padding absolute-top-right" style="z-index:1;right:-10px;opacity: 0.9;">
               <q-chip square icon="far fa-eye" size="xs" style="padding:10px 6px" color="title" text-color="black"
-                class="row justify-center items-center shadow-1 text-weight-bold" :label="isView(props.row.seq)" />
+                class="row justify-center items-center text-caption shadow-1 text-weight-bold"
+                :label="isView(props.row.seq)" />
             </q-card-section>
             <q-img :src="parsThumbnail(props.row.thumbnail)" ratio="1"
               :style="$q.screen.lt.sm ? 'height:80px' : 'height:100px'">
@@ -167,7 +168,7 @@
     </d2r-table>
     <q-page-sticky v-if="mode !== 'search' && authority(sec, 'write')" position="bottom-right" :offset="[0, 0]"
       style="z-index: 2;">
-      <q-btn push :style="$q.screen.lt.sm ? 'right:10px;bottom:30px' : 'right:20vw;bottom:20px'" round size="md"
+      <q-btn push :style="$q.screen.lt.lg ? 'right:10px;bottom:30px' : 'right:20vw;bottom:20px'" round size="md"
         icon="add" color="grey-4" text-color="d2r" :to="`${sec}/write`" :disable="loading" />
     </q-page-sticky>
   </div>
@@ -216,9 +217,9 @@
         filterText: this.filter.filter
       }
     },
-    beforeCreate() {
-      if (!this.$route.query.page)
-        this.$router.replace({ name: 'd2r-bbs', query: { page: 1 } }).catch(() => { })
+    created() {
+      if (!this.$route.query.page && this.mode !== 'search')
+        this.$router.replace({ name: this.$route.name, query: { page: 1 } }).catch(() => { })
     },
     computed: {
       ...mapGetters({
@@ -273,9 +274,8 @@
       },
       go(page) {
         this.pagination.page = page || 1
-        this.$refs.table.onRequest({
-          pagination: this.pagination
-        })
+        if (this.$refs.table)
+          this.$refs.table.onRequest({ pagination: this.pagination })
       },
       request({ pagination, done }) {
         const vm = this
@@ -415,26 +415,20 @@
   }
 
   .sell {
-    color: rgb(51, 130, 233) !important;
+    color: rgb(2, 90, 206) !important;
   }
 
   .buy {
-    color: rgb(35, 170, 98) !important;
+    color: rgb(0, 134, 63) !important;
+  }
+
+  .give {
+    color: rgb(255, 94, 0) !important;
   }
 
   @media screen and (max-width:599px) {
-    .sell {
-      color: rgb(51, 130, 233) !important;
-      background-color: #000000 !important;
-      box-shadow: inset 0 0 0 1px rgb(51, 130, 233);
-      border-radius: 1px;
-    }
-
-    .buy {
-      color: rgb(35, 170, 98) !important;
-      background-color: #000000 !important;
-      box-shadow: inset 0 0 0 1px rgb(35, 170, 98);
-      border-radius: 1px;
+    .body--dark .classify-chip {
+      box-shadow: inset 0 0 4px 1px rgba(100, 100, 100, 1);
     }
   }
 

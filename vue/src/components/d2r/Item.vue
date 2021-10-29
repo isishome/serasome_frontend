@@ -38,13 +38,13 @@
             </div>
           </template>
           <template #list="scope">
-            <q-list separator :style="$q.screen.lt.sm ? 'height:40px' : ''" class="scroll">
-              <q-item dense v-for="file in scope.files" :key="file.name">
+            <q-list :dark="false" separator :style="$q.screen.lt.sm ? 'height:40px' : ''" class="scroll">
+              <q-item :dark="false" dense v-for="file in scope.files" :key="file.name">
                 <q-item-section v-if="file.__img" thumbnail>
                   <q-img :src="file.__img.src" style="width:30px" />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label class="ellipsis">
+                  <q-item-label class="ellipsis text-grey-10 q-py-xs">
                     {{ file.name }}
                   </q-item-label>
                   <q-item-label caption>

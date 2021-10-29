@@ -16,14 +16,14 @@
             :class="$q.screen.lt.sm ? 'text-h5' : 'text-h4'">
             {{cls.label}}</div>
           <div class="row justify-center relative-position">
-            <div style="height:231px">
+            <div class="gradient-back">
               <transition name="fade">
                 <img ref="img1" v-if="show" class="absolute-center"
-                  :src="require(`@/assets/images/d2r/classes/${cls.clsid}.gif`)" style="height:100%;" />
+                  :src="require(`@/assets/images/d2r/classes/${cls.clsid}.gif`)" style="height:100%;padding:30px" />
               </transition>
               <transition name="fade">
                 <img ref="img2" v-if="show2" class="absolute-center"
-                  :src="require(`@/assets/images/d2r/classes/${cls.clsid}-r.png`)" style="height: 100%;" />
+                  :src="require(`@/assets/images/d2r/classes/${cls.clsid}-r.png`)" style="height: 100%;padding:30px" />
               </transition>
             </div>
           </div>
@@ -85,7 +85,7 @@
         }, 2000)
 
         this.loading = true
-        this.partComponent = () => import(/* webpackChunkName: "group-d2r-knowledge" */ `./Classes/${this.$route.params.part}`)
+        this.partComponent = () => import(/* webpackChunkName: "d2r-knowledge-classes" */ `./Classes/${this.$route.params.part}`)
       },
       swapPart(val) {
         this.$router.push({ name: 'd2r-knowledge-part', params: { section: 'Classes', part: val } }).catch(() => { })

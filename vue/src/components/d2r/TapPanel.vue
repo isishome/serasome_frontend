@@ -16,7 +16,7 @@
         text-color="black" @click="show = !show" style="position:fixed;" />
     </div>
     <q-separator v-if="noWide === false" vertical class="lt-sm separator" :class="[show ? 'show' : 'hide']" />
-    <div class="col tab-contents">
+    <div ref="tabContents" class="col tab-contents">
       <q-tab-panels ref="panels" class="bg-transparent q-mt-md" :value="part" @input="change"
         :transition-prev="$q.screen.lt.sm ? 'none' : 'jump-down'"
         :transition-next="$q.screen.lt.sm ? 'none' : 'jump-up'" @transition="injectImg" animated vertical>
@@ -56,13 +56,25 @@
           transform: 'scaleY(0.96)',
           opacity: 0.8,
           zIndex: 30
-        }
+        },
+        contentsHeight: 0
       }
+    },
+    watch: {
+      '$q.screen.width': function () {
+        this.onWindowLoad()
+      }
+    },
+    created() {
+      window.addEventListener("load", this.onWindowLoad)
     },
     mounted() {
       this.injectImg()
     },
     methods: {
+      onWindowLoad() {
+        this.contentsHeight = this.$refs.tabContents.clientHeight
+      },
       ...mapActions({
         setImages: 'setD2RImages'
       }),
@@ -71,33 +83,34 @@
         const clientRect = target.getBoundingClientRect()
         const relativeTop = clientRect.top
         const scrolledTopLength = window.pageYOffset
+        const contentHeight = this.contentsHeight - this.tabHeight < 0 ? 0 : this.contentsHeight - this.tabHeight
+        const newPosition = info.position > contentHeight ? contentHeight : info.position
         this.tabScrollTop = scrolledTopLength + relativeTop
         this.tabsWrapHeight = this.$refs.tabsWrap ? this.$refs.tabsWrap.clientHeight : 0
         this.tabHeight = this.$refs.tabs ? this.$refs.tabs.$el.clientHeight : 0
 
         if (this.tabHeight + this.tabScrollTop > window.innerHeight) {
-          let min = info.position - (this.tabScrollTop + this.tabHeight - window.innerHeight)
+          let min = newPosition - (this.tabScrollTop + this.tabHeight - window.innerHeight)
           let max = this.tabsWrapHeight - this.tabHeight
 
           min = min > 0 ? min : 0
           max = max > 0 ? max : 0
 
-          if (info.position >= min && info.position < max) {
+          if (newPosition >= min && newPosition < max) {
             if (info.direction === 'down')
               this.marginTop = min
             else {
-              if (info.position < this.tabScrollTop)
+              if (newPosition < this.tabScrollTop)
                 this.marginTop = 0
               else
-                this.marginTop = info.position - this.tabScrollTop + 54
+                this.marginTop = newPosition - this.tabScrollTop + 54
             }
-
           }
           else
             this.marginTop = max
         }
         else
-          this.marginTop = info.position - 54 < 0 ? 0 : info.position - 54
+          this.marginTop = newPosition
       },
       change() {
         this.tabsWrapHeight = 0

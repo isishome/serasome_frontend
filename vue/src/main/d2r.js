@@ -14,17 +14,17 @@ import Adsense from 'vue-google-adsense/dist/Adsense.min.js'
 
 //const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
 const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
-const d2rTable = () => import(/* webpackPrefetch: true */ '@/components/d2r/Table')
-const d2rTh = () => import(/* webpackPrefetch: true */ '@/components/d2r/Th')
-const d2rList = () => import(/* webpackPrefetch: true */ '@/components/d2r/List')
-const d2rRead = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Read')
-const d2rWrite = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Write')
-const d2rConfirm = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Confirm')
-const d2rItem = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Item')
-const d2rComments = () => import(/* webpackPrefetch: true */ '@/components/d2r/Comments')
-const d2rSummary = () => import(/* webpackPrefetch: true */ '@/components/d2r/Summary')
-const d2rTapPanel = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/TapPanel')
-const d2rZoom = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Zoom')
+const d2rTable = () => import(/* webpackChunkName: "d2r-table-component" */ '@/components/d2r/Table')
+const d2rTh = () => import(/* webpackChunkName: "d2r-th-component" */'@/components/d2r/Th')
+const d2rList = () => import(/* webpackChunkName: "d2r-list-component" */ '@/components/d2r/List')
+const d2rRead = () => import(/* webpackChunkName: "d2r-read-component" */ '@/components/d2r/Read')
+const d2rWrite = () => import(/* webpackChunkName: "d2r-write-component" */ '@/components/d2r/Write')
+const d2rConfirm = () => import(/* webpackChunkName: "d2r-confirm-component" */ '@/components/d2r/Confirm')
+const d2rItem = () => import(/* webpackChunkName: "d2r-item-component" */ '@/components/d2r/Item')
+const d2rComments = () => import(/* webpackChunkName: "d2r-comments-component" */ '@/components/d2r/Comments')
+const d2rSummary = () => import(/* webpackChunkName: "d2r-summary-component" */ '@/components/d2r/Summary')
+const d2rTapPanel = () => import(/* webpackChunkName: "d2r-tappanel-component" */ '@/components/d2r/TapPanel')
+const d2rZoom = () => import(/* webpackChunkName: "d2r-zoom-component" */ '@/components/d2r/Zoom')
 import { Quasar, Notify, Cookies, Loading, Dark } from 'quasar'
 
 // Vue Router --------------------------------------------------------------------------------------------------------------------------------------------

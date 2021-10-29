@@ -160,8 +160,6 @@
     mapGetters
   } from 'vuex'
 
-  const CommentDate = () => import(/* webpackPrefetch: true */ '@/components/seras/CommentDate')
-
   import {
     scroll
   } from 'quasar'
@@ -177,9 +175,6 @@
   }
 
   export default {
-    components: {
-      'ss-comment-date': CommentDate
-    },
     name: 'ss-comment',
     props: {
       value: {

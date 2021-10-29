@@ -12,11 +12,13 @@ import Adsense from 'vue-google-adsense/dist/Adsense.min.js'
 //import InArticleAdsense from 'vue-google-adsense/dist/InArticleAdsense.min.js'
 //import InFeedAdsense from 'vue-google-adsense/dist/InFeedAdsense.min.js'
 
-const Logo = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Logo')
-const PostList = () => import(/* webpackPrefetch: true */ '@/components/seras/PostList')
-const PostRead = () => import(/* webpackPrefetch: true */ '@/components/seras/PostRead')
-const Confirm = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Confirm')
-const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
+const Logo = () => import(/* webpackChunkName: "seras-logo-component" */ '@/components/seras/Logo')
+const PostList = () => import(/* webpackChunkName: "seras-postlist-component" */ '@/components/seras/PostList')
+const PostRead = () => import(/* webpackChunkName: "seras-read-component" */ '@/components/seras/PostRead')
+const Confirm = () => import(/* webpackChunkName: "seras-confirm-component" */ '@/components/seras/Confirm')
+const Prompt = () => import(/* webpackChunkName: "seras-prompt-component" */ '@/components/seras/Prompt')
+const Comment = () => import(/* webpackChunkName: "seras-comment-component" */ '@/components/seras/Comment')
+const CommentDate = () => import(/* webpackChunkName: "seras-commentdate-component" */ '@/components/seras/CommentDate')
 import { Quasar, Notify, Cookies, Dark, Loading } from 'quasar'
 //import VFacebookLogin from 'vue-facebook-login-component'
 import GAuth from 'vue-google-oauth2'
@@ -177,6 +179,8 @@ Vue.component('ss-post-list', PostList)
 Vue.component('ss-post-read', PostRead)
 Vue.component('ss-confirm', Confirm)
 Vue.component('ss-prompt', Prompt)
+Vue.component('ss-comment', Comment)
+Vue.component('ss-comment-date', CommentDate)
 //Vue.component('v-facebook-login', VFacebookLogin)
 
 Vue.use(require('vue-script2'))

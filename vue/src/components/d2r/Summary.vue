@@ -7,7 +7,7 @@
     </div>
     <div v-for="sec in data" :key="sec.value" class="col-12 col-md-4">
       <div class="summary">
-        <q-toolbar class="row justify-between sub">
+        <q-toolbar dense flat class="row justify-between sub">
           <div class="lt-sm col-4"></div>
           <div class="col-4 text-weight-bold font-kodia" :class="$q.screen.lt.sm ? 'text-center' : ''">{{sec.title}}
           </div>
@@ -36,7 +36,7 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label class="q-py-xs text-body2 ellipsis text-left">{{summary.title}}</q-item-label>
-                <q-item-label class="q-py-xs text-caption ellipsis text-left">
+                <q-item-label class="q-py-xs text-caption ellipsis text-left" style="opacity: .5;">
                   {{summary.contents}}
                 </q-item-label>
               </q-item-section>
@@ -94,18 +94,17 @@
 </script>
 <style scoped>
   .summary {
-    box-shadow: 0 0 1px 0 rgba(145, 145, 145, 1);
     background-color: rgba(10, 10, 10, 1);
     border-radius: 10px;
     height: 100%;
   }
 
   .body--light .summary {
-    box-shadow: 0 0 1px 0 rgba(45, 45, 45, .4);
     background-color: rgba(240, 240, 240, 1);
   }
 
   .sub {
+    min-height: 36px;
     font-size: 1em;
     color: rgba(184, 156, 91, 1);
     background-color: rgba(24, 30, 30, 1) !important;

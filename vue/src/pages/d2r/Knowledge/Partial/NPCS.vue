@@ -56,7 +56,7 @@
       },
       load() {
         this.loading = true
-        this.partComponent = () => import(/* webpackChunkName: "group-d2r-knowledge" */ `./NPCS/${this.$route.params.part}`)
+        this.partComponent = () => import(/* webpackChunkName: "d2r-knowledge-npcs" */ `./NPCS/${this.$route.params.part}`)
       },
       swapPart(val) {
         this.$router.push({ name: 'd2r-knowledge-part', params: { section: 'NPCS', part: val } }).catch(() => { })

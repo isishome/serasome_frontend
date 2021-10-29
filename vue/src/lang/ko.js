@@ -184,6 +184,7 @@ export default {
       comingSoon: "준비중입니다",
       account: {
         title: "계정",
+        point: "포인트",
         avatar: "아바타 이미지 40x40 (1m)",
         basic: "기본정보",
         message: {

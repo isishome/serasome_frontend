@@ -8,7 +8,7 @@
     <div class="lt-md">
       <div class="row items-center">
         <q-icon name="inventory_2" class="q-ma-sm" size="20px" color="title" />
-        <div class="font-title q-ml-xs text-uppercase font-kodia">{{$t('d2r.storage.title')}}</div>
+        <div class="font-title q-ml-xs text-uppercase font-kodia q-dark">{{$t('d2r.storage.title')}}</div>
       </div>
       <q-separator class="q-mb-sm" />
     </div>
@@ -20,9 +20,10 @@
       </div>
       <div class="q-pa-md text-h6 text-weight-bold row justify-start items-center q-col-gutter-x-md">
         <div class="row items-center">
-          <q-checkbox color="grey-7" size="lg" v-model="selected.account" dense :disable="d2rAccounts.length === 0" />
+          <q-checkbox keep-color color="title" size="lg" v-model="selected.account" dense
+            :disable="d2rAccounts.length === 0" />
         </div>
-        <div class="font-kodia">
+        <div class="font-kodia text-title">
           {{$t('d2r.storage.account.title')}}
         </div>
         <div class="gt-sm q-px-lg"></div>
@@ -40,7 +41,7 @@
             <q-card-actions>
               <span class="text-transparent">add</span>
             </q-card-actions>
-            <q-icon name="add" size="md" class="absolute-center" />
+            <q-icon name="add" size="md" class="absolute-center text-title" />
             <div>
               <q-badge v-if="d2rAccounts.length === 0" class="blinking" color="yellow"
                 style="padding:10px;margin:-10px -100px" text-color="black" multi-line floating>
@@ -58,7 +59,7 @@
             </q-img>
             <q-separator />
             <q-card-actions align="right">
-              <q-checkbox size="sm" color="grey-10" v-model="a.selected" dense />
+              <q-checkbox size="sm" keep-color color="title" v-model="a.selected" dense />
               <q-space />
               <q-btn flat dense round size="sm" color="grey-7" icon="delete" @click="deleteShow('account', a.aid)" />
               <q-btn flat dense round size="sm" color="title" icon="edit" @click="d2rDialogShow('account', a)" />
@@ -78,10 +79,10 @@
       </div>
       <div class="q-pa-md text-h6 text-weight-bold row justify-start items-center q-col-gutter-x-md">
         <div class="row items-center">
-          <q-checkbox color="grey-7" size="lg" v-model="selected.character" dense
+          <q-checkbox keep-color color="title" size="lg" v-model="selected.character" dense
             :disable="d2rCharacters.length === 0" />
         </div>
-        <div class="font-kodia">
+        <div class="font-kodia text-title">
           {{$t('d2r.storage.character.title')}}
         </div>
         <div class="gt-sm q-px-lg"></div>
@@ -99,7 +100,7 @@
             <q-card-actions>
               <span class="text-transparent">add</span>
             </q-card-actions>
-            <q-icon name="add" size="md" class="absolute-center" />
+            <q-icon name="add" size="md" class="absolute-center text-title" />
             <div>
               <q-badge v-if="d2rCharacters.length === 0" class="blinking" color="yellow"
                 style="padding:10px;margin:-10px -100px" text-color="black" multi-line floating>
@@ -116,7 +117,7 @@
               <div class="text-body ellipsis absolute-bottom text-center title">{{c.name}}</div>
             </q-img>
             <q-card-actions align="right">
-              <q-checkbox color="grey-10" size="sm" v-model="c.selected" dense />
+              <q-checkbox keep-color color="title" size="sm" v-model="c.selected" dense />
               <q-space />
               <q-btn flat dense round size="sm" color="grey-7" icon="delete" @click="deleteShow('character', c.cid)" />
               <q-btn flat dense round size="sm" color="title" icon="edit" @click="d2rDialogShow('character', c)" />
@@ -136,9 +137,10 @@
       </div>
       <div class="q-pa-md text-h6 text-weight-bold row justify-start items-center q-col-gutter-x-md">
         <div class="row items-center">
-          <q-checkbox color="grey-7" size="lg" v-model="selected.item" dense :disable="d2rItems.length === 0" />
+          <q-checkbox keep-color color="title" size="lg" v-model="selected.item" dense
+            :disable="d2rItems.length === 0" />
         </div>
-        <div class="font-kodia">
+        <div class="font-kodia text-title">
           {{$t('d2r.storage.item.title')}}
         </div>
         <q-space class="lt-md" />
@@ -158,7 +160,7 @@
             <q-card-actions>
               <span class="text-transparent">add</span>
             </q-card-actions>
-            <q-icon name="add" size="md" class="absolute-center" />
+            <q-icon name="add" size="md" class="absolute-center text-title" />
             <div>
               <q-badge v-if="d2rItems.length === 0" class="blinking" color="yellow"
                 style="padding:10px;margin:-10px -100px" text-color="black" multi-line floating>
@@ -178,7 +180,7 @@
               <div class="text-body ellipsis absolute-bottom text-center title">{{i.name}}</div>
             </q-img>
             <q-card-actions align="right">
-              <q-checkbox color="grey-10" size="sm" v-model="i.selected" dense />
+              <q-checkbox keep-color color="title" size="sm" v-model="i.selected" dense />
               <q-space />
               <q-btn flat dense round size="sm" color="grey-7" icon="delete" @click="deleteShow('item', i.iid)" />
               <q-btn v-if="i.trading === 0" flat dense round size="sm" color="brown-5" icon="app_registration"
@@ -208,7 +210,7 @@
       @hide="d2rDialogHide" :maximized=" d2rDialogType === 'item' && $q.screen.lt.sm">
       <d2r-item v-if="d2rDialogType === 'item'" :cid="cid" :iid="d2rItemInfo.iid" @cancel="d2rDialog = false"
         @process="d2rDialogProcess" @error="d2rDialogError" @persistent="d2rDialogPersistent" />
-      <q-card v-else class="bg-grey-4" :class="$q.screen.gt.sm ? 'dialog-card' : ''">
+      <q-card v-else :class="$q.screen.gt.sm ? 'dialog-card' : ''" bordered>
         <q-form @submit="d2rDialogProcess" class="column">
           <template v-if="d2rDialogType === 'account'">
             <q-card-section class="col">
@@ -787,16 +789,13 @@
   .grid-btn.add {
     background-color: transparent !important;
     box-shadow: none;
-    border: dashed 1px #AAAAAA;
+    border: dashed 1px rgba(184, 156, 91, 1);
   }
 
   .separator {
-    background-color: rgba(45, 45, 45, 1);
+    background-color: rgba(184, 156, 91, 1);
   }
 
-  .body--light .separator {
-    background-color: rgba(200, 200, 200, 1);
-  }
 
   .dialog-card {
     width: 300px;

@@ -96,7 +96,7 @@
       },
       load() {
         this.leftTabs = true
-        this.sectionComponent = () => import(/* webpackChunkName: "group-d2r-knowledge" */ `./Partial/${this.section}`)
+        this.sectionComponent = () => import(/* webpackChunkName: "d2r-knowledge-main" */ `./Partial/${this.section}`)
       },
       swapSection(val) {
         this.$router.push({ name: 'd2r-knowledge-section', params: { section: val } }).catch(() => { })

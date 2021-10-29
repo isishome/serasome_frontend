@@ -384,7 +384,6 @@
     beforeDestroy() {
       this.editor.destroy()
       clearTimeout(this.timer)
-      clearTimeout(this.timer1)
     },
     watch: {
       '$route': function (to, from) {
@@ -616,10 +615,8 @@
           .then(function () {
             ajaxBar.stop()
 
-            self.timer1 = setTimeout(() => {
-              done(stop)
-              self.concatItem(tempList)
-            }, 1000)
+            done(stop)
+            self.concatItem(tempList)
 
             self.$nextTick(() => {
               if (requestSname !== self.$route.params.sname) {

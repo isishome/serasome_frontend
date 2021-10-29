@@ -215,18 +215,18 @@
       <q-page-container>
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
-          <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding-right:6px;">
+          <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding:60px 6px 0 0;">
             <div v-if="!noAD && pageLoad && $q.screen.gt.sm && isProduction" class="ad-box">
               <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" data-ad-format="auto"
                 ins-style="display:inline-block;width:160px;height:600px" :key="`lt_${key}`">
               </Adsense>
             </div>
           </div>
-          <div class="col-xl-6 col-lg-8 col-12">
+          <q-page class="col-xl-6 col-lg-8 col-12">
             <router-view />
-          </div>
+          </q-page>
           <div v-if="!noAD && pageLoad && $q.screen.gt.sm && isProduction"
-            class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding-left:6px;">
+            class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding:60px 0 0 6px;">
             <div class="ad-box">
               <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" data-ad-format="auto"
                 ins-style="display:inline-block;width:160px;height:600px" :key="`rt_${key}`">
@@ -235,15 +235,15 @@
           </div>
         </div>
         <div class="platform-ios-only q-py-md"></div>
-        <q-page-scroller v-show="pageScroller" position="bottom-left" :scroll-offset="150" :offset="[0, 0]">
-          <q-btn push :style="$q.screen.lt.md ? 'left:10px;bottom:30px' : 'left:20vw;bottom:20px'" round size="md"
-            icon="keyboard_arrow_up" color="teal-4" />
-        </q-page-scroller>
         <q-page-sticky v-show="pageScroller" v-if="$route.name === 'some' && signStatus" position="bottom-right"
           :offset="[0, 0]">
           <q-btn push :style="$q.screen.lt.md ? 'right:10px;bottom:30px' : 'right:20vw;bottom:20px'" round size="md"
             icon="edit" color="orange" :to="`/@${$route.params.sname}/a`" />
         </q-page-sticky>
+        <q-page-scroller v-show="pageScroller" position="bottom-left" :scroll-offset="150" :offset="[0, 0]">
+          <q-btn push :style="$q.screen.lt.md ? 'left:10px;bottom:30px' : 'left:20vw;bottom:20px'" round size="md"
+            icon="keyboard_arrow_up" color="teal-4" />
+        </q-page-scroller>
       </q-page-container>
       <q-footer :class="['gt-sm', $q.dark.isActive ? 'q-dark' : 'bg-grey-2 text-grey-7']"
         class="ss-footer row justify-between items-center" height-hint="56">
@@ -275,6 +275,9 @@
     name: 'app',
     data() {
       return {
+        isProduction: process.env.NODE_ENV === 'production',
+        pageLoad: false,
+        key: uid(),
         slide: 'first',
         language: this.$te('language', navigator.language || 'ko'),
         routeName: '',
@@ -286,10 +289,7 @@
         options: [
           { label: '한국어', value: 'ko' },
           { label: 'ENGLISH', value: 'en' }
-        ],
-        key: uid(),
-        isProduction: process.env.NODE_ENV === 'production',
-        pageLoad: false
+        ]
       }
     },
     beforeMount() {
@@ -331,7 +331,8 @@
         setSignStatus: 'setSignStatus',
         setSomeList: 'setSomeList',
         setCategory: 'setCategory',
-        setCurrentSome: 'setCurrentSome'
+        setCurrentSome: 'setCurrentSome',
+        setD2RInfo: 'setD2RInfo'
       }),
       toggleDark() {
         this.$q.cookies.set(process.env.VUE_APP_DARK_NAME, !this.$q.dark.isActive, { path: '/', expires: '7300d' })
@@ -393,6 +394,7 @@
             .catch(function () { })
             .then(function () {
               vm.processSignOut = false
+              vm.setD2RInfo(null)
               vm.$router.go()
             })
         } else

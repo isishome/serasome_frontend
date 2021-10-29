@@ -72,13 +72,6 @@
                 <q-video :ratio="16/9" :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
               </div>
               <p class="word-wrap contents" v-html="viewContents"></p>
-              <!-- <div class="row justify-center" v-if="contLoaded && isProduction">
-                <div class="ad-box-contents">
-                  <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" data-ad-format="auto"
-                    ins-style="display:inline-block;width:300px;height:50px;" :key="`t_${key}`">
-                  </Adsense>
-                </div>
-              </div> -->
             </div>
             <div v-if="postInfo.files && postInfo.files.length > 0">
               <q-separator />
@@ -228,8 +221,6 @@
 
   import hljs from 'highlight.js'
 
-  const Comment = () => import(/* webpackPrefetch: true */ '@/components/seras/Comment')
-
   const {
     getScrollTarget,
     setScrollPosition
@@ -244,9 +235,6 @@
   }
 
   export default {
-    components: {
-      'ss-comment': Comment
-    },
     name: 'ss-post-read',
     props: {
       sname: {
@@ -598,11 +586,8 @@
             stop = true
           })
           .then(function () {
-            self.timer1 = setTimeout(() => {
-              done(stop)
-              self.commentList = self.commentList.concat(tempComment)
-            }, 1000)
-
+            done(stop)
+            self.commentList = self.commentList.concat(tempComment)
           })
       },
       addComment() {
@@ -726,9 +711,6 @@
 
         return findItem
       }
-    },
-    beforeDestroy() {
-      clearTimeout(this.timer1)
     }
   }
 </script>

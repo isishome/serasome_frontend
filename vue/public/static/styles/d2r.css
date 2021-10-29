@@ -7,20 +7,18 @@
     left: 0;
     right: 0;
     opacity: 0;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 40%, rgba(5, 5, 5, 0.93) 80%, rgba(10, 10, 10, 1)), url('/static/images/d2r_back.jpg') !important;
+    background-repeat: repeat !important;
     transition: opacity 1s ease;
   }
 
-  body::before {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 40%, rgba(5, 5, 5, 0.93) 80%, rgba(10, 10, 10, 1)), url('/static/images/d2r_back.jpg') repeat !important;
-  }
-
   body.body--light::before {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 25%, rgba(20, 20, 20, 0.9) 35%, rgba(240, 240, 240, 1)), url('/static/images/d2r_back.jpg') repeat !important;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 25%, rgba(20, 20, 20, 0.9) 35%, rgba(240, 240, 240, 1)), url('/static/images/d2r_back.jpg') !important;
   }
 
   @media screen and (max-width:599px) {
     body.body--light::before {
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 35%, rgba(20, 20, 20, 0.9) 45%, rgba(240, 240, 240, 1)), url('/static/images/d2r_back.jpg') repeat !important;
+      background-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 35%, rgba(20, 20, 20, 0.9) 45%, rgba(240, 240, 240, 1)), url('/static/images/d2r_back.jpg') !important;
     }
   }
   
@@ -126,4 +124,22 @@
 
   .body--light .q-inner-loading {
     background: rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .gradient-back {
+    width: 100%;
+    height: 300px;
+  }
+
+  .gradient-back::before {
+    content: '';
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    opacity: .9;
+    background:  url('/static/images/paint.png') no-repeat center center !important;
+    background-size: contain !important;
+    filter: invert(47%) sepia(61%) saturate(2249%) hue-rotate(24deg) brightness(74%) contrast(80%);
   }

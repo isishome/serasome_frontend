@@ -4,10 +4,10 @@
       @request="request" :grid="$q.screen.lt.lg">
       <template #body="{props}">
         <q-tr class="text-center npc-top">
-          <q-td style="width:400px" rowspan="3">
-            <q-img v-if="'izual' === props.row.voice" :src='props.row.image' width="250px" />
-            <q-img v-else-if="'tyrael' === props.row.voice" :src='props.row.image' width="400px" />
-            <q-img v-else :src='props.row.image' width="100px" />
+          <q-td class="gradient-back2" rowspan="3">
+            <q-img v-if="'izual' === props.row.voice" :src='props.row.image' width="120px" />
+            <q-img v-else-if="'tyrael' === props.row.voice" :src='props.row.image' width="130px" />
+            <q-img v-else :src='props.row.image' width="75px" />
           </q-td>
           <q-td class="font-kodia text-left text-title text-weight-bold bg-other" style="font-size: 1.8em;">
             {{props.row.name[locale]}}
@@ -33,7 +33,7 @@
       <template #item="{props}">
         <div class="q-pa-sm col-xs-12 col-sm-6">
           <q-card flat bordered class="bg-transparent table-card">
-            <q-card-section class="bg-black text-center">
+            <q-card-section class="text-center">
               <q-img v-if="'izual' === props.row.voice" :src='props.row.image' width="100%" />
               <q-img v-else-if="'tyrael' === props.row.voice" :src='props.row.image' width="100%" />
               <q-img v-else :src='props.row.image' width="100px" />

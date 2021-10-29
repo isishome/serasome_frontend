@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,minimum-scale=1,user-scalable=no">
+  <meta name="description" content="<%= VUE_APP_DESC %>">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="<%= BASE_URL %>static/icon/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
@@ -15,6 +16,9 @@
   <meta property="og:image" content="<%= VUE_APP_URL %>/static/images/og.jpg" />
   <meta property="og:image:width" content="800" />
   <meta property="og:image:height" content="400" />
+  <title>
+    <%= VUE_APP_TITLE %>
+  </title>
   <link rel="apple-touch-icon" sizes="57x57" href="<%= BASE_URL %>static/icon/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="<%= BASE_URL %>static/icon/apple-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="<%= BASE_URL %>static/icon/apple-icon-72x72.png">
@@ -41,6 +45,15 @@
   <link rel="stylesheet" href="<%= BASE_URL %>static/library/highlight/styles/vs2015.min.css">
   <script src="<%= BASE_URL %>static/library/highlight/highlight.min.js"></script>
   <% if(process.env.NODE_ENV==='production' ) { %>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CYSQREKHK7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', 'G-CYSQREKHK7');
+    </script>
     <script data-ad-client="ca-pub-5110777286519562" async
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" crossorigin="anonymous"></script>
     <% } %>
