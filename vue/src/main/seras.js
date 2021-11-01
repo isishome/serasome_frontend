@@ -8,10 +8,8 @@ import routes from '@/router/seras'
 import store from '@/store/seras'
 import axios from 'axios'
 import vuePlugin from "@/plugin/highlight"
-import Adsense from 'vue-google-adsense/dist/Adsense.min.js'
-//import InArticleAdsense from 'vue-google-adsense/dist/InArticleAdsense.min.js'
-//import InFeedAdsense from 'vue-google-adsense/dist/InFeedAdsense.min.js'
 
+const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
 const Logo = () => import(/* webpackChunkName: "seras-logo-component" */ '@/components/seras/Logo')
 const PostList = () => import(/* webpackChunkName: "seras-postlist-component" */ '@/components/seras/PostList')
 const PostRead = () => import(/* webpackChunkName: "seras-read-component" */ '@/components/seras/PostRead')
@@ -174,6 +172,7 @@ Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(GAuth, { clientId: process.env.VUE_APP_GOOGLE_CLIENTID, scope: 'profile email' })
 Vue.prototype.axios = axiosObject
+Vue.component('adsense', Adsense)
 Vue.component('ss-logo', Logo)
 Vue.component('ss-post-list', PostList)
 Vue.component('ss-post-read', PostRead)
@@ -182,11 +181,6 @@ Vue.component('ss-prompt', Prompt)
 Vue.component('ss-comment', Comment)
 Vue.component('ss-comment-date', CommentDate)
 //Vue.component('v-facebook-login', VFacebookLogin)
-
-Vue.use(require('vue-script2'))
-Vue.use(Adsense)
-//Vue.use(InArticleAdsense)
-//Vue.use(InFeedAdsense)
 
 Vue.mixin(mixin)
 Vue.use(vuePlugin)

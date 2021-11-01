@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-mb-md">
     <div class="row justify-between items-center q-gutter-x-xs q-mb-md">
       <div class="row items-center">
         <q-icon name="settings" class="q-ma-sm" size="20px" color="d2r" />

@@ -216,22 +216,17 @@
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding:60px 6px 0 0;">
-            <div v-if="!noAD && pageLoad && $q.screen.gt.sm && isProduction" class="ad-box">
-              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" data-ad-format="auto"
-                ins-style="display:inline-block;width:160px;height:600px" :key="`lt_${key}`">
-              </Adsense>
-            </div>
+            <adsense :visible="!noAD && $q.screen.gt.sm && isProduction" data-ad-client="ca-pub-5110777286519562"
+              data-ad-slot="5160898238" random>
+            </adsense>
           </div>
           <q-page class="col-xl-6 col-lg-8 col-12">
             <router-view />
           </q-page>
-          <div v-if="!noAD && pageLoad && $q.screen.gt.sm && isProduction"
-            class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding:60px 0 0 6px;">
-            <div class="ad-box">
-              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" data-ad-format="auto"
-                ins-style="display:inline-block;width:160px;height:600px" :key="`rt_${key}`">
-              </Adsense>
-            </div>
+          <div class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding:60px 0 0 6px;">
+            <adsense :visible="!noAD && $q.screen.gt.sm && isProduction" data-ad-client="ca-pub-5110777286519562"
+              data-ad-slot="7962315221" fixed random>
+            </adsense>
           </div>
         </div>
         <div class="platform-ios-only q-py-md"></div>
@@ -263,10 +258,6 @@
 </template>
 <script>
   import {
-    uid
-  } from 'quasar'
-
-  import {
     mapGetters,
     mapActions
   } from 'vuex'
@@ -276,8 +267,6 @@
     data() {
       return {
         isProduction: process.env.NODE_ENV === 'production',
-        pageLoad: false,
-        key: uid(),
         slide: 'first',
         language: this.$te('language', navigator.language || 'ko'),
         routeName: '',
@@ -292,9 +281,6 @@
         ]
       }
     },
-    beforeMount() {
-      this.pageLoad = true
-    },
     watch: {
       '$route': function (to) {
         this.checkSignStatus()
@@ -307,8 +293,6 @@
       },
       lang: function (val, old) {
         if (val !== old) {
-          this.key = uid()
-
           this.$i18n.loadLanguageAsync(val).then(() => {
             this.$router.go()
           })

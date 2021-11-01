@@ -28,7 +28,7 @@
   export default {
     data() {
       return {
-        sub: ['Cube', 'Rune'],
+        sub: ['Cube', 'Rune', 'Craft'],
         loading: false,
         partComponent: null
       }

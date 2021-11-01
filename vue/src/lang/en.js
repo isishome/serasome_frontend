@@ -301,7 +301,8 @@ export default {
       ],
       items: {
         cube: "Horadric Cube Recipes",
-        rune: "Runewords",
+        rune: "Runewords Items",
+        craft: "Crafted Items",
         all: "All",
         beginner: "Beginner",
         runewordName: "Name",
@@ -599,7 +600,13 @@ export default {
           { no: 12, name: 'Scepters' },
           { no: 13, name: 'Hammers' },
           { no: 14, name: 'Wands' },
-          { no: 15, name: 'Katars' }
+          { no: 15, name: 'Katars' },
+          { no: 16, name: 'Boots' },
+          { no: 17, name: 'Gloves' },
+          { no: 18, name: 'Belt' },
+          { no: 19, name: 'Amulet' },
+          { no: 20, name: 'Ring' },
+          { no: 21, name: 'Weapon' }
         ],
         allWeapon: 'All Weapons',
         meleeWeapon: 'Melee Weapons',
@@ -717,6 +724,99 @@ export default {
           { name: 'Wind', level: 61, materials: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15], runeword: [29, 1], stats: ['10% Chance To Cast Level 9 Tornado On Striking', '+20% Faster Run/Walk', '+40% Increased Attack Speed', '+15% Faster Hit Recovery', '+120-160% Enhanced Damage (varies)', '-50% Target Defense', '+50 To Attack Rating', 'Hit Blinds Target', '+1 To Light Radius', 'Level 13 Twister (127 Charges)'], recc: [] },
           { name: 'Wrath', level: 63, materials: [2], runeword: [21, 17, 30, 23], stats: ['30% Chance To Cast Level 1 Decrepify On Striking', '5% Chance To Cast Level 10 Life Tap On Striking', '+375% Damage To Demons', '+100 To Attack Rating Against Demons', '+250-300% Damage To Undead (varies)', 'Adds 85-120 Magic Damage', 'Adds 41-240 Lightning Damage', '20% Chance of Crushing Blow', 'Prevent Monster Heal', '+10 To Energy', 'Cannot Be Frozen'], recc: [] },
           { name: 'Zephyr', level: 21, materials: [2], runeword: [9, 5], stats: ['7% Chance to Cast Level 1 Twister When Struck', '+25% Faster Run/Walk', '+25% Increased Attack Speed', '+33% Enhanced Damage', '-25% Target Defense', '+66 to Attack Rating', 'Adds 1-50 lightning damage', '+25 Defense'], recc: ['beginner'] }
+        ],
+        thCraft: 'Crafted',
+        thRecipe: 'Recipe',
+        thFixedStats: 'Fixed Stats',
+        craftNotice: [{
+          desc: 'A Crafted Item can have from 1-4 standard Rare and Magic Prefix and Suffixes.These are generated pretty much the same way as a Rare item.',
+          detail: [
+            'At ilvls 1-30, there’s a 40% chance of 1 affix and a 20% chance each of 2, 3 or 4 affixes.',
+            'At ilvls 31-50, there’s a 60% chance of 2 affixes and a 20% chance each of 3 or 4 affixes.',
+            'At ilvls 51-70, there’s an 80% chance of 3 affixes and a 20% chance of 4 affixes.',
+            'At ilvls 71+, there’s a 100% chance of 4 affixes.']
+        },
+        {
+          desc: 'You can create items with a Clvl higher than your current level, so making them with a very high level character might make things your other characters won’t be able to equip.',
+          detail: [
+            'All crafting recipes will generate with the preset mods, and from one to four random prefixes and suffixes.',
+            'Jewel may be magical or rare.',
+            'Magical: All items must be magical. (Not rare, unique, set, crafted, etc.)',
+            'All crafting recipes work with the normal, exceptional, or elite version of the item type. Use the excep or elite if you want higher defense or damage.']
+        }],
+        crafted: [
+          {
+            id: 'hit-power',
+            name: 'Hit Power',
+            icon: 'far fa-hand-rock',
+            color: 'blue-9',
+            common: { recipe: [{ name: 'Perfect<br>Sapphire', img: 'gems/perfect_saphire.png' }, { name: 'Jewel', img: 'jewels/jewel.png' }], effects: ['5% Chance To Cast Level 4 Frost Nova When Struck', 'Attacker Takes Damage of (3-7)'] },
+            list: [
+              { material: 5, recipe: { equipment: { type: 'Magic', name: 'Full Helm<br>Basinet<br>Giant Conch', img: 'helms/full_helm.png' }, rune: 6 }, effects: ['(25-50) Defense vs. Missiles'] },
+              { material: 16, recipe: { equipment: { type: 'Magic', name: 'Chain<br>Mesh<br>Boneweave Boots', img: 'boots/chain_boots.png' }, rune: 8 }, effects: ['(25-50) Defense vs. Melee'] },
+              { material: 17, recipe: { equipment: { type: 'Magic', name: 'Chain Gloves<br>Heavy Bracers<br>Vambraces', img: 'gloves/chain_gloves.png' }, rune: 9 }, effects: ['Knockback'], hot: true },
+              { material: 18, recipe: { equipment: { type: 'Magic', name: 'Heavy Belt<br>Battle Belt<br>Troll Belt', img: 'belts/heavy_belt.png' }, rune: 7 }, effects: ['(5-10) % Damage Goes to Mana'] },
+              { material: 4, recipe: { equipment: { type: 'Magic', name: 'Gothic Shield<br>Ancient Shield<br>Ward', img: 'shields/gothic_shield.png' }, rune: 5 }, effects: ['(5-10%) Increased Chance of Blocking'] },
+              { material: 3, recipe: { equipment: { type: 'Magic', name: 'Field Plate<br>Sharktooth Armor<br>Kraken Shell', img: 'armor/field_plate.png' }, rune: 4 }, effects: ['10-20% Faster Hit Recovery'] },
+              { material: 19, recipe: { equipment: { type: 'Magic', name: 'Amulet', img: 'amulets/amulet3.png' }, rune: 10 }, effects: ['Hit Causes Monster To Flee (3-11)%'] },
+              { material: 20, recipe: { equipment: { type: 'Magic', name: 'Ring', img: 'rings/ring3.png' }, rune: 11 }, effects: ['+ (1-5) To Dexterity'] },
+              { material: 21, recipe: { equipment: { type: 'Magic', name: 'Blunt Weapon', img: 'weapons/mace.png' }, rune: 3 }, effects: ['+ (35-60%) Enhanced Damage'] }
+            ]
+          },
+          {
+            id: 'blood',
+            name: 'Blood',
+            icon: 'water_drop',
+            color: 'red-9',
+            common: { recipe: [{ name: 'Perfect<br>Ruby', img: 'gems/perfect_ruby.png' }, { name: 'Jewel', img: 'jewels/jewel1.png' }], effects: ['(1-3)% Life Stolen Per Hit', '+(10-20) To Life'] },
+            list: [
+              { material: 5, recipe: { equipment: { type: 'Magic', name: 'Helm<br>Casque<br>Armet', img: 'helms/helm.png' }, rune: 8 }, effects: ['5-10% Deadly Strike'] },
+              { material: 16, recipe: { equipment: { type: 'Magic', name: 'Light Plated Boots<br>Battle Boots<br>Mirrored Boots', img: 'boots/light_plate_boots.png' }, rune: 5 }, effects: ['Replenish Life + (5-10)'] },
+              { material: 17, recipe: { equipment: { type: 'Magic', name: 'Heavy Gloves<br>Sharkskin Gloves<br>Vampirebone Gloves', img: 'gloves/heavy_gloves.png' }, rune: 4 }, effects: ['Crushing Blow (5-10)%'], hot: true },
+              { material: 18, recipe: { equipment: { type: 'Magic', name: 'Belt<br>Mesh Belt<br>Mithril Coil', img: 'belts/belt.png' }, rune: 7 }, effects: ['Open Wounds (5-10)%'] },
+              { material: 4, recipe: { equipment: { type: 'Magic', name: 'Spiked Shield<br>Barbed Shield<br>Blade Barrier', img: 'shields/spiked_shield.png' }, rune: 6 }, effects: ['Attacker Takes Damage of (4-7)'] },
+              { material: 3, recipe: { equipment: { type: 'Magic', name: 'Plate Mail<br>Templar Coat<br>Hellforge Plate', img: 'armor/plate_mail.png' }, rune: 10 }, effects: ['+ (1-3) Life Per Demon Kill'] },
+              { material: 19, recipe: { equipment: { type: 'Magic', name: 'Amulet', img: 'amulets/amulet2.png' }, rune: 11 }, effects: ['5-10% Faster Run/Walk'], hot: true },
+              { material: 20, recipe: { equipment: { type: 'Magic', name: 'Ring', img: 'rings/ring2.png' }, rune: 12 }, effects: ['+ (1-5) To Strength'], hot: true },
+              { material: 21, recipe: { equipment: { type: 'Magic', name: 'Axe', img: 'weapons/axe.png' }, rune: 9 }, effects: ['+ (35-60%) Enhanced Damage'] }
+            ]
+          },
+          {
+            id: 'caster',
+            name: 'Caster',
+            icon: 'auto_fix_high',
+            color: 'purple-9',
+            common: { recipe: [{ name: 'Perfect<br>Amethyst', img: 'gems/perfect_amethyst.png' }, { name: 'Jewel', img: 'jewels/jewel2.png' }], effects: ['Regenerate Mana (4-10)%', '+ (10-20) To Mana'] },
+            list: [
+              { material: 5, recipe: { equipment: { type: 'Magic', name: 'Mask<br>Death Mask<br>Demonhead Mask', img: 'helms/mask.png' }, rune: 4 }, effects: ['(1-4)% Mana Stolen Per Hit'] },
+              { material: 16, recipe: { equipment: { type: 'Magic', name: 'Boots<br>Demonhide Boots<br>Wyrmhide Boots', img: 'boots/boots.png' }, rune: 10 }, effects: ['Increase Maximum Mana (2-5)%'] },
+              { material: 17, recipe: { equipment: { type: 'Magic', name: 'Leather Gloves<br>Demonhide Gloves<br>Bramble Mitts', img: 'gloves/leather_gloves.png' }, rune: 9 }, effects: ['+ (1-3) Mana Per Kill'] },
+              { material: 18, recipe: { equipment: { type: 'Magic', name: 'Light Belt<br>Sharkskin Belt<br>Vampirefang Belt', img: 'belts/light_belt.png' }, rune: 6 }, effects: ['5-10% Faster Cast Rate'], hot: true },
+              { material: 4, recipe: { equipment: { type: 'Magic', name: 'Small Shield<br>Round Shield<br>Luna', img: 'shields/small_shield.png' }, rune: 5 }, effects: ['+ (5-10)% Increased Chance Of Blocking'] },
+              { material: 3, recipe: { equipment: { type: 'Magic', name: 'Light Plate<br>Mage Plate<br>Archon Plate', img: 'armor/light_plate.png' }, rune: 7 }, effects: ['+ (1-3) Mana Per Kill'] },
+              { material: 19, recipe: { equipment: { type: 'Magic', name: 'Amulet', img: 'amulets/amulet1.png' }, rune: 8 }, effects: ['(5-10)% Faster Cast Rate'], hot: true },
+              { material: 20, recipe: { equipment: { type: 'Magic', name: 'Ring', img: 'rings/ring1.png' }, rune: 11 }, effects: ['+ (1-5) To Energy'], hot: true },
+              { material: 21, recipe: { equipment: { type: 'Magic', name: 'Rod', img: 'weapons/grim_wand.png' }, rune: 3 }, effects: ['Increase Maximum Mana (1-5)%'] }
+            ]
+          },
+          {
+            id: 'safety',
+            name: 'Safety',
+            icon: 'health_and_safety',
+            color: 'green-9',
+            common: { recipe: [{ name: 'Perfect<br>Emerald', img: 'gems/perfect_emerald.png' }, { name: 'Jewel', img: 'jewels/jewel4.png' }], effects: ['Magic Damage Reduced By (1-2)', 'Damage Reduced By (1-4)'] },
+            list: [
+              { material: 5, recipe: { equipment: { type: 'Magic', name: 'Crown<br>Grand Crown<br>Corona', img: 'helms/crown.png' }, rune: 6 }, effects: ['+ (10-30)% Enhanced Defense', 'Lightning Resist + (5-10)%'] },
+              { material: 16, recipe: { equipment: { type: 'Magic', name: 'Greaves<br>War Boots<br>Myrmidon Boots', img: 'boots/greaves.png' }, rune: 9 }, effects: ['+ (10-30)% Enhanced Defense', 'Fire Resist + (5-10)%'] },
+              { material: 17, recipe: { equipment: { type: 'Magic', name: 'Gauntlets<br>War Gauntlets<br>Ogre Gauntlets', img: 'gloves/gauntlets.png' }, rune: 8 }, effects: ['+ (10-30)% Enhanced Defense', 'Cold Resist + (5-10)%'] },
+              { material: 18, recipe: { equipment: { type: 'Magic', name: 'Sash<br>Demonhide Sash<br>Spiderweb Sash', img: 'belts/sash.png' }, rune: 7 }, effects: ['+ (10-30)% Enhanced Defense', 'Poison Resist +(5-10)%'] },
+              { material: 4, recipe: { equipment: { type: 'Magic', name: 'Kite Shield<br>Dragon Shield<br>Monarch', img: 'shields/kite_shield.png' }, rune: 4 }, effects: ['+ (10-30)% Enhanced Defense', 'Magic Resistance +(5-10)%'] },
+              { material: 3, recipe: { equipment: { type: 'Magic', name: 'Breast Plate<br>Cuirass<br>Great Hauberk', img: 'armor/breast_plate.png' }, rune: 5 }, effects: ['+ (10-30)% Enhanced Defense', 'Half Freeze Duration'] },
+              { material: 19, recipe: { equipment: { type: 'Magic', name: 'Amulet', img: 'amulets/amulet3.png' }, rune: 10 }, effects: ['+ (1-10)% Increased Chance Of Blocking'] },
+              { material: 20, recipe: { equipment: { type: 'Magic', name: 'Ring', img: 'rings/ring4.png' }, rune: 11 }, effects: ['+ (1-5) To Vitality'] },
+              { material: 21, recipe: { equipment: { type: 'Magic', name: 'Spear or Javelin', img: 'weapons/razortine.png' }, rune: 12 }, effects: ['+ (5-10%) Enhanced Defense'] }
+            ]
+          }
         ]
       },
       maps: {

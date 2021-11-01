@@ -1,13 +1,11 @@
 <template>
-  <div :style="`position:fixed;width:${width};height:${height}`">
-    <ins class="adsbygoogle" style="display:block" :data-ad-client="dataAdClient" :data-ad-slot="dataAdSlot"
-      :data-adtest="dataAdtest" :data-ad-format="dataAdFormat"
-      :data-full-width-responsive="dataFullWidthResponsive"></ins>
+  <div v-if="visible" :style="`position:${fixed ? 'fixed' : 'static'};width:${tempWidth};height:${tempHeight}`">
+    <ins ref="adbox" class="adsbygoogle" style="display:block" :data-ad-client="dataAdClient" :data-ad-slot="dataAdSlot"
+      :data-adtest="dataAdtest" :data-ad-format="dataAdFormat" :data-full-width-responsive="dataFullWidthResponsive"
+      :key="key"></ins>
   </div>
 </template>
 <script>
-  import { uid } from 'quasar'
-
   export default {
     name: 'etc-adsense',
     props: {
@@ -28,8 +26,8 @@
         default: 'auto'
       },
       dataFullWidthResponsive: {
-        type: Boolean,
-        default: true
+        type: String,
+        default: 'true'
       },
       width: {
         type: String,
@@ -38,17 +36,73 @@
       height: {
         type: String,
         default: '600px'
+      },
+      fixed: {
+        type: Boolean,
+        default: false
+      },
+      visible: {
+        type: Boolean,
+        default: true
+      },
+      debounce: {
+        type: Number,
+        default: 300
+      },
+      random: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
       return {
-        key: uid()
+        tempWidth: '',
+        tempHeight: '',
+        randomSize: [
+          { width: '160px', height: '600px' },
+          { width: '250px', height: '250px' },
+          { width: '200px', height: '200px' }
+        ],
+        key: 0,
+        initDate: Date.now()
       }
     },
     watch: {
       '$route': function (to, old) {
-        if (to !== old & old.name !== null) {
-          this.key = uid();
+        if (to !== old && old.name !== null) {
+          if ((Date.now() - this.initDate) / 1000 > this.debounce) {
+            this.setSize()
+            this.key++
+          }
+
+          this.initDate = Date.now()
+
+          this.$nextTick(() => {
+            this.onWindowLoad()
+          })
+
+        }
+      }
+    },
+    created() {
+      this.setSize()
+      window.addEventListener("load", this.onWindowLoad)
+    },
+    methods: {
+      onWindowLoad() {
+        if (this.$refs.adbox && !this.$refs.adbox.hasChildNodes())
+          (window.adsbygoogle || []).push({})
+
+      },
+      setSize() {
+        if (this.random === true) {
+          const selectedRandomSize = this.randomSize[Math.floor(Math.random() * this.randomSize.length)]
+          this.tempWidth = selectedRandomSize.width
+          this.tempHeight = selectedRandomSize.height
+        }
+        else {
+          this.tempWidth = this.width
+          this.tempHeight = this.height
         }
       }
     }

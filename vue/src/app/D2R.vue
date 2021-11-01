@@ -161,7 +161,7 @@
                   D2R
                 </q-item-section>
               </template>
-              <q-item v-for="sec in section" :key="sec.name" :inset-level="0.5" :to="`/d2r/bbs/${sec.value}`"
+              <q-item v-for="sec in section" :key="sec.name" :inset-level="0.5" :to="`/d2r/bbs/${sec.value}?page=1`"
                 active-class="active">
                 <q-item-section avatar>
                   <q-icon size="20px" :name="sec.icon" />
@@ -277,35 +277,24 @@
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding-right:6px;">
-            <!-- <adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-adtest="on" :key="key">
-            </adsense> -->
-            <div v-if="pageLoad && $q.screen.gt.sm && !isKnowledge && isProduction" class="ad-box">
-              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
-                ins-style="display:inline-block;width:160px;height:600px" :key="`lt_${key}`">
-              </Adsense>
-            </div>
+            <adsense :visible="$q.screen.gt.sm && isProduction && !isKnowledge" data-ad-client="ca-pub-5110777286519562"
+              data-ad-slot="4948790020" random>
+            </adsense>
           </div>
           <q-page class="col-xl-6 col-lg-8 col-12">
             <router-view />
-            <div v-if="pageLoad && $q.screen.lt.md && isProduction" class="row justify-center">
-              <div class="ad-box-contents">
-                <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9230987257" data-ad-format="auto"
-                  ins-style="display:inline-block;width:300px;height:50px;" :key="`b_${key}`">
-                </Adsense>
-              </div>
+            <div v-if="$q.screen.lt.md && isProduction" class="row justify-center">
+              <adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9230987257" width="300px" height="50px">
+              </adsense>
             </div>
           </q-page>
-          <div v-if="pageLoad && $q.screen.gt.sm && isProduction"
-            class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding-left:6px;">
-            <div class="ad-box">
-              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" data-ad-format="auto"
-                ins-style="display:inline-block;width:160px;height:600px" :key="`rt_${key}`">
-              </Adsense>
-            </div>
-            <div v-if="isKnowledge" class="ad-box" style="margin-top: 618px;">
-              <Adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="auto"
-                ins-style="display:inline-block;width:160px;height:600px" :key="`lte_${key}`">
-              </Adsense>
+          <div class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding-left:6px;">
+            <div v-if="$q.screen.gt.sm && isProduction" style="position: fixed;">
+              <adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" random>
+              </adsense>
+              <adsense :visible="isKnowledge" data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020"
+                style="margin-top: 10px;" random>
+              </adsense>
             </div>
           </div>
         </div>
@@ -345,15 +334,11 @@
     mapActions
   } from 'vuex'
 
-  import { uid } from 'quasar'
-
   export default {
     name: 'app',
     data() {
       return {
         isProduction: process.env.NODE_ENV === 'production',
-        pageLoad: false,
-        key: uid(),
         scrollTop: 0,
         progress: 0,
         loading: false,
@@ -379,17 +364,10 @@
       this.loadD2RInfo()
       this.checkSignStatus()
       this.initD2R(true)
-      //window.addEventListener("load", this.onWindowLoad)
-    },
-    mounted() {
-      this.pageLoad = true
     },
     watch: {
-      '$route': function (to, old) {
+      '$route': function () {
         this.initD2R()
-        if (to !== old && old.name !== null) {
-          this.key = uid()
-        }
       },
       lang: function (val, old) {
         if (val !== old) {
@@ -419,9 +397,6 @@
       }
     },
     methods: {
-      // onWindowLoad() {
-      //   (window.adsbygoogle || []).push({})
-      // },
       ...mapActions({
         setSignStatus: 'setSignStatus',
         setBeginner: 'setBeginner',

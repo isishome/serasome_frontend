@@ -8,11 +8,8 @@ import routes from '@/router/d2r'
 import store from '@/store/d2r'
 import axios from 'axios'
 import vuePlugin from "@/plugin/highlight"
-import Adsense from 'vue-google-adsense/dist/Adsense.min.js'
-//import InArticleAdsense from 'vue-google-adsense/dist/InArticleAdsense.min.js'
-//import InFeedAdsense from 'vue-google-adsense/dist/InFeedAdsense.min.js'
 
-//const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
+const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
 const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
 const d2rTable = () => import(/* webpackChunkName: "d2r-table-component" */ '@/components/d2r/Table')
 const d2rTh = () => import(/* webpackChunkName: "d2r-th-component" */'@/components/d2r/Th')
@@ -174,7 +171,7 @@ Vue.prototype.thumbStyle = {
 Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.prototype.axios = axiosObject
-//Vue.component('adsense', Adsense)
+Vue.component('adsense', Adsense)
 Vue.component('ss-prompt', Prompt)
 Vue.component('d2r-table', d2rTable)
 Vue.component('d2r-th', d2rTh)
@@ -187,10 +184,6 @@ Vue.component('d2r-comments', d2rComments)
 Vue.component('d2r-summary', d2rSummary)
 Vue.component('d2r-tap-panel', d2rTapPanel)
 Vue.component('d2r-zoom', d2rZoom)
-Vue.use(require('vue-script2'))
-Vue.use(Adsense)
-//Vue.use(InArticleAdsense)
-//Vue.use(InFeedAdsense)
 
 Vue.mixin(mixin)
 Vue.use(vuePlugin)

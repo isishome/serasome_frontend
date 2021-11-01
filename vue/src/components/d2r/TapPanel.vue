@@ -23,7 +23,7 @@
         <slot name="panels"></slot>
       </q-tab-panels>
     </div>
-    <q-scroll-observer debounce="300" ref="observer" @scroll="onScroll" scroll-target="body" />
+    <q-scroll-observer debounce="200" ref="observer" @scroll="onScroll" scroll-target="body" />
   </div>
 </template>
 <script>
@@ -56,34 +56,23 @@
           transform: 'scaleY(0.96)',
           opacity: 0.8,
           zIndex: 30
-        },
-        contentsHeight: 0
+        }
       }
-    },
-    watch: {
-      '$q.screen.width': function () {
-        this.onWindowLoad()
-      }
-    },
-    created() {
-      window.addEventListener("load", this.onWindowLoad)
     },
     mounted() {
       this.injectImg()
     },
     methods: {
-      onWindowLoad() {
-        this.contentsHeight = this.$refs.tabContents.clientHeight
-      },
       ...mapActions({
         setImages: 'setD2RImages'
       }),
       onScroll(info) {
+        const contentsHeight = this.$refs.tabContents.clientHeight
         const target = this.$refs.tabsWrap
         const clientRect = target.getBoundingClientRect()
         const relativeTop = clientRect.top
         const scrolledTopLength = window.pageYOffset
-        const contentHeight = this.contentsHeight - this.tabHeight < 0 ? 0 : this.contentsHeight - this.tabHeight
+        const contentHeight = contentsHeight - this.tabHeight < 0 ? 0 : contentsHeight - this.tabHeight
         const newPosition = info.position > contentHeight ? contentHeight : info.position
         this.tabScrollTop = scrolledTopLength + relativeTop
         this.tabsWrapHeight = this.$refs.tabsWrap ? this.$refs.tabsWrap.clientHeight : 0
@@ -189,19 +178,19 @@
   .show {
     position: -webkit-sticky;
     position: sticky;
-    transition: all 0.4s;
+    transition: all .2s;
     max-width: 50vw;
   }
 
   @media screen and (max-width:599px) {
     .hide {
-      transition: all 0.4s;
+      transition: all .2s;
       max-width: 0;
     }
   }
 
   .wide {
-    transition: all 0.4s;
+    transition: all .2s;
     position: -webkit-sticky;
     position: sticky;
     z-index: 1;
@@ -209,7 +198,7 @@
   }
 
   .btn-wide {
-    transition: all 0.4s;
+    transition: all .2s;
     padding: 0;
     margin-left: -10px;
   }
