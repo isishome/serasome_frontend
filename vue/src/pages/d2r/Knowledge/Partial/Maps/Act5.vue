@@ -1,5 +1,5 @@
 <template>
-  <div class="knowledge">
+  <div class="word-keep">
     <template v-if="$i18n.locale === 'ko'">
       <q-timeline dense :layout="layout">
         <q-timeline-entry color="brown-5" side="left" icon="foundation">
@@ -412,8 +412,6 @@
           액트 V - 파트 III 완료
         </q-timeline-entry>
       </q-timeline>
-      <p class="text-right text-grey-6">Source : <a style="text-decoration: none;" target="_blank"
-          href="http://classic.battle.net/diablo2exp/maps/act5.shtml">Arreat Summit</a></p>
     </template>
     <template v-if="$i18n.locale === 'en'">
       <q-timeline dense :layout="layout">
@@ -827,9 +825,12 @@
           Act V - Part III Completed
         </q-timeline-entry>
       </q-timeline>
-      <p class="text-right text-grey-6">Source : <a style="text-decoration: none;" target="_blank"
-          href="http://classic.battle.net/diablo2exp/maps/act5.shtml">Arreat Summit</a></p>
     </template>
+    <p class="q-mt-xl text-right text-grey-6" :class="$q.screen.lt.md ? 'text-caption' : ''">
+      {{$t('d2r.knowledge.source')}} :
+      <a style="text-decoration: none;" class="text-title" target="_blank"
+        href="http://classic.battle.net/diablo2exp/maps/act5.shtml">{{$t('d2r.knowledge.arreatSummit')}}</a>
+    </p>
   </div>
 </template>
 <script>

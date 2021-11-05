@@ -1,8 +1,9 @@
 <template>
-  <div v-if="visible" :style="`position:${fixed ? 'fixed' : 'static'};width:${tempWidth};height:${tempHeight}`">
-    <ins ref="adbox" class="adsbygoogle" style="display:block" :data-ad-client="dataAdClient" :data-ad-slot="dataAdSlot"
+  <div v-if="visible"
+    :style="`position:${fixed ? 'fixed' : ''};text-align:${horizontal};width:${tempWidth};height:${tempHeight}`">
+    <ins ref="adbox" class="adsbygoogle" :data-ad-client="dataAdClient" :data-ad-slot="dataAdSlot"
       :data-adtest="dataAdtest" :data-ad-format="dataAdFormat" :data-full-width-responsive="dataFullWidthResponsive"
-      :key="key"></ins>
+      :style="`display:inline-block;text-align:${horizontal};width:${tempWidth};height:${tempHeight}`" :key="key"></ins>
   </div>
 </template>
 <script>
@@ -27,7 +28,7 @@
       },
       dataFullWidthResponsive: {
         type: String,
-        default: 'true'
+        default: 'false'
       },
       width: {
         type: String,
@@ -52,6 +53,10 @@
       random: {
         type: Boolean,
         default: false
+      },
+      horizontal: {
+        type: String,
+        default: "center"
       }
     },
     data() {
@@ -59,9 +64,11 @@
         tempWidth: '',
         tempHeight: '',
         randomSize: [
-          { width: '160px', height: '600px' },
+          { width: '300px', height: '250px' },
+          { width: '336px', height: '280px' },
           { width: '250px', height: '250px' },
-          { width: '200px', height: '200px' }
+          { width: '300px', height: '600px' },
+          { width: '160px', height: '600px' }
         ],
         key: 0,
         initDate: Date.now()

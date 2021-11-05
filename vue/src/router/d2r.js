@@ -22,6 +22,9 @@ const routes = [
     components: {
       carousel: d2rCarousel,
       default: d2rMain
+    },
+    meta: {
+      noAD: true
     }
   },
   {

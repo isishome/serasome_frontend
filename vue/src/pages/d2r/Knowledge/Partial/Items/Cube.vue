@@ -45,7 +45,7 @@
       </template>
       <template #item="props">
         <div class="col-md-6 col-12">
-          <q-card class="card" bordered>
+          <q-card class="card-cube" bordered>
             <q-card-section class="font-kodia text-h6 word-keep">{{props.row.title}}</q-card-section>
             <q-separator />
             <q-card-section class="no-padding">
@@ -100,7 +100,7 @@
           { name: 'desc', align: 'left' },
           { name: 'recipe', align: 'center', style: 'width:25%' }
         ],
-        data: this.$t('d2r.knowledge.items.cubeData')
+        data: []
       }
     },
     watch: {
@@ -122,6 +122,11 @@
 
         return result
       }
+    },
+    created() {
+      this.$i18n.mergeLanguageAsync('cube').then(() => {
+        this.data = this.$t('cubeData')
+      })
     }
   }
 </script>
@@ -130,17 +135,17 @@
     white-space: normal !important;
   }
 
-  .card {
+  .card-cube {
     background-color: rgba(5, 5, 5, 1) !important;
     border-color: rgba(184, 156, 91, .5) !important;
     border-radius: 4px;
   }
 
-  .body--light .card {
+  .body--light .card-cube {
     background-color: rgba(245, 245, 245, 1) !important;
   }
 
-  .card hr {
+  .card-cube hr {
     background-color: rgba(184, 156, 91, .5) !important;
   }
 

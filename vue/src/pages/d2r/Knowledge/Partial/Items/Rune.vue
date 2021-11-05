@@ -144,7 +144,7 @@
       </template>
       <template #item="props">
         <div class="col-md-6 col-12">
-          <q-card class="card text-center" bordered>
+          <q-card class="card-rune text-center" bordered>
             <q-card-section class="text-grey-6 text-h6 word-keep q-pa-xs">
               <div class="text-h6 word-keep text-amber-6 column">
                 <div class="col">{{props.row.name}}<span class="text-body1 text-brown" v-if="props.row.oldName">
@@ -240,7 +240,7 @@
           max: 6
         },
         materials: this.$t('d2r.knowledge.items.materials'),
-        runeWords: this.$t('d2r.knowledge.items.runeWords'),
+        runeWords: [],
         meterialOptions: this.$t('d2r.knowledge.items.materials').map(m => { return { 'label': m.name, 'value': m.no } }),
         sortOptions: [{ 'label': this.$t('d2r.knowledge.items.hot'), 'value': 'hot' }, { 'label': this.$t('d2r.knowledge.items.runewordName'), 'value': 'name' }, { 'label': this.$t('d2r.knowledge.items.level'), 'value': 'level' }]
       }
@@ -251,6 +251,11 @@
           window.scrollTo(0, 0)
       }
 
+    },
+    created() {
+      this.$i18n.mergeLanguageAsync('rune').then(() => {
+        this.runeWords = this.$t('runeWords')
+      })
     },
     computed: {
       ...mapGetters({
@@ -352,22 +357,22 @@
     white-space: normal !important;
   }
 
-  .card {
+  .card-rune {
     background-color: rgba(20, 20, 20, 1) !important;
     border-color: rgba(184, 156, 91, .5) !important;
     border-radius: 4px;
   }
 
-  .body--light .card {
+  .body--light .card-rune {
     background-color: rgba(245, 245, 245, 1) !important;
     border-color: rgba(200, 200, 200, .5) !important;
   }
 
-  .card hr {
+  .card-rune hr {
     background-color: rgba(184, 156, 91, .5) !important;
   }
 
-  .body--light .card hr {
+  .body--light .card-rune hr {
     background-color: rgba(200, 200, 200, .5) !important;
   }
 

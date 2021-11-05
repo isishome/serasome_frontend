@@ -35,9 +35,9 @@
           <div class="row justify-center full-width text-body2">{{$t('d2r.knowledge.items.noData')}}</div>
         </template>
         <template v-slot:top>
-          <div class="row justify-start full-width">
+          <div class="row full-width" :class="$q.screen.lt.md ? 'justify-center' : 'justify-start'">
             <div class="font-kodia">
-              <q-chip size="16px" :icon="c.icon" :color="c.color" text-color="white">
+              <q-chip size="18px" :icon="c.icon" :color="c.color" text-color="white">
                 {{c.name}}</q-chip>
             </div>
           </div>
@@ -46,7 +46,7 @@
           <q-tr :props="props">
             <q-td key="material">
               <div class="row justify-center items-center">
-                <div class="col-12 font-kodia text-title text-h6 text-center word-keep">
+                <div class="col-12 font-kodia text-title text-h6 text-center text-weight-bold word-keep">
                   {{materials.find(m => m.no === props.row.material).name}}
                 </div>
                 <q-badge color="red" v-if="props.row.hot === true">
@@ -55,46 +55,57 @@
               </div>
             </q-td>
             <q-td key="recipe">
-              <div class="row no-wrap justify-between items-center q-gutter-x-sm full-width text-body2">
+              <div
+                class="row no-wrap justify-between items-stretch q-gutter-x-sm full-width text-body2 text-center word-keep q-py-md">
+                <div class="col-4 column items-center full-height">
+                  <div class="col-6 q-pa-md">
+                    <img :src="require(`@/assets/images/d2r/items/${props.row.recipe.equipment.img}`)"
+                      style="max-width:80px;max-height: 80px;" />
+                  </div>
+                  <div class="col-6 column items-center full-height">
+                    <div class="col">
+                      <q-chip size="12px" class="text-caption" color="indigo-7" text-color="white">
+                        {{props.row.recipe.equipment.type}}
+                      </q-chip>
+                    </div>
+                    <div class="col" v-for="(n, idx) in props.row.recipe.equipment.name" :key="idx">
+                      {{n}}</div>
+                  </div>
+                </div>
+                <div class="row items-center">
+                  <q-icon size="sm" color="grey-8" name="add" />
+                </div>
                 <template v-for="(cr, idx) in c.common.recipe">
-                  <div v-if="idx !== 0" :key="`sp_${idx}`">+</div>
-                  <div class="column items-center q-gutter-sm" :key="`ct_${idx}`">
-                    <div>
+                  <div v-if="idx !== 0" :key="`sp_${idx}`" class="row items-center">
+                    <q-icon size="sm" color="grey-8" name="add" />
+                  </div>
+                  <div class="col column items-center q-gutter-sm" :key="`ct_${idx}`">
+                    <div class="col-6 row items-center">
                       <q-img :src="require(`@/assets/images/d2r/items/${cr.img}`)" width="50px" />
                     </div>
-                    <div class="text-center word-keep" v-html="cr.name"></div>
+                    <div class="col" v-html="cr.name"></div>
                   </div>
                 </template>
-                <div>+</div>
-                <div class="col-3 column items-center q-gutter-sm">
-                  <div class="text-center">
-                    <q-img :src="require(`@/assets/images/d2r/items/${props.row.recipe.equipment.img}`)" width="60px" />
-                  </div>
-                  <div>
-                    <q-chip size="12px" class="text-caption" color="indigo-7" text-color="white">
-                      {{props.row.recipe.equipment.type}}
-                    </q-chip>
-                  </div>
-                  <div class="text-center word-keep" v-html="props.row.recipe.equipment.name"></div>
+                <div class="row items-center">
+                  <q-icon size="sm" color="grey-8" name="add" />
                 </div>
-                <div>+</div>
-                <div class="column items-center q-gutter-sm">
-                  <div>
+                <div class="col column items-center q-gutter-sm">
+                  <div class="col-6 row items-center">
                     <q-img
                       :src="require(`@/assets/images/d2r/items/runes/${runes.find(r => r.no === props.row.recipe.rune).file}.png`)"
                       width="50px" />
                   </div>
-                  <div class="word-keep">{{runes.find(r => r.no === props.row.recipe.rune).name}}
+                  <div class="col">{{runes.find(r => r.no === props.row.recipe.rune).name}}
                   </div>
                 </div>
               </div>
             </q-td>
             <q-td key="effects">
-              <ul class="text-subtitle2" style="color:rgba(100, 100, 250, 1)">
-                <li class="word-keep" v-for="(ce, idx) in c.common.effects" :key="`ce_${idx}`">
+              <ul class="text-subtitle2 word-keep" style="color:rgba(100, 100, 250, 1)">
+                <li v-for="(ce, idx) in c.common.effects" :key="`ce_${idx}`">
                   {{ce}}
                 </li>
-                <li class="word-keep text-body1 text-orange-8" v-for="(ef, idx) in props.row.effects" :key="`e_${idx}`">
+                <li class="text-body1 text-orange-8" v-for="(ef, idx) in props.row.effects" :key="`e_${idx}`">
                   {{ef}}
                 </li>
               </ul>
@@ -103,10 +114,11 @@
         </template>
         <template #item="props">
           <div class="col-md-6 col-12">
-            <q-card class="card" :class="$q.screen.lt.sm ? 'text-caption' : 'text-body2'" bordered>
-              <q-card-section>
+            <q-card class="card-craft text-center word-keep" :class="$q.screen.lt.sm ? 'text-caption' : 'text-body2'"
+              bordered>
+              <q-card-section class="q-pa-xs bg-yellow-9 text-black">
                 <div class="row justify-center items-center q-gutter-x-sm">
-                  <div class="font-kodia text-title text-subtitle1 text-center word-keep">
+                  <div class="font-kodia text-subtitle1 text-weight-bold">
                     {{materials.find(m => m.no === props.row.material).name}}
                   </div>
                   <q-badge color="red" v-if="props.row.hot === true">
@@ -115,47 +127,64 @@
                 </div>
               </q-card-section>
               <q-separator />
-              <template v-for="(cr, idx) in c.common.recipe">
-                <q-card-section class="q-pa-sm" :key="idx">
-                  <div class="row justify-start items-center q-gutter-sm">
-                    <div class="col-2 text-center">
-                      <q-img :src="require(`@/assets/images/d2r/items/${cr.img}`)" width="30px" />
+              <q-card-section class="q-pa-xs">
+                <div class="column items-center full-width">
+                  <div class="col-6 q-pa-md">
+                    <img :src="require(`@/assets/images/d2r/items/${props.row.recipe.equipment.img}`)"
+                      style="max-width:100px;max-height: 100px;" />
+                  </div>
+                  <div class="col row no-wrap justify-center items-start q-gutter-x-sm">
+                    <div v-for="(n, idx) in props.row.recipe.equipment.name" :key="idx" class="col column items-center">
+                      <div>
+                        <q-chip size="sm" color="indigo-7" text-color="white">
+                          {{props.row.recipe.equipment.type}}
+                        </q-chip>
+                      </div>
+                      <div :class="$q.screen.lt.sm ? 'text-small' : ''">{{n}}</div>
                     </div>
-                    <div class="col word-keep" v-html="cr.name"></div>
-                  </div>
-                </q-card-section>
-              </template>
-              <q-card-section class="q-pa-sm">
-                <div class="row justify-start items-center q-gutter-xs">
-                  <div class="col-2 text-center">
-                    <q-img :src="require(`@/assets/images/d2r/items/${props.row.recipe.equipment.img}`)" width="30px" />
-                  </div>
-                  <div class="col row justify-start items-center q-gutter-xs">
-                    <q-chip dense size="sm" color="indigo-7" text-color="white">
-                      {{props.row.recipe.equipment.type}}
-                    </q-chip>
-                    <div class="word-keep" v-html="props.row.recipe.equipment.name"></div>
                   </div>
                 </div>
               </q-card-section>
+              <q-card-section class="q-pa-xs row justify-center">
+                <div>
+                  <q-icon dense size="12px" color="grey-8" name="add" />
+                </div>
+              </q-card-section>
               <q-card-section class="q-pa-sm">
-                <div class="row justify-start items-center q-gutter-sm">
-                  <div class="col-2 text-center">
-                    <q-img
-                      :src="require(`@/assets/images/d2r/items/runes/${runes.find(r => r.no === props.row.recipe.rune).file}.png`)"
-                      width="30px" />
+                <div class="row justify-center items-stretch q-gutter-x-xs full-width">
+                  <template v-for="(cr, idx) in c.common.recipe">
+                    <div class="row items-center" v-if="idx !== 0" :key="`sp_${idx}`">
+                      <q-icon dense size="12px" color="grey-8" name="add" />
+                    </div>
+                    <div :key="`cr_${idx}`" class="col column items-center q-gutter-y-sm">
+                      <div class="row items-center">
+                        <q-img :src="require(`@/assets/images/d2r/items/${cr.img}`)" width="30px" />
+                      </div>
+                      <div :class="$q.screen.lt.sm ? 'text-small' : ''" v-html="cr.name"></div>
+                    </div>
+                  </template>
+                  <div class="row items-center">
+                    <q-icon dense size="12px" color="grey-8" name="add" />
                   </div>
-                  <div class="col word-keep">{{runes.find(r => r.no === props.row.recipe.rune).name}}
+                  <div class="col column items-center q-gutter-y-sm">
+                    <div class="row items-center">
+                      <q-img
+                        :src="require(`@/assets/images/d2r/items/runes/${runes.find(r => r.no === props.row.recipe.rune).file}.png`)"
+                        width="30px" />
+                    </div>
+                    <div :class="$q.screen.lt.sm ? 'text-small' : ''">{{runes.find(r => r.no ===
+                      props.row.recipe.rune).name}}
+                    </div>
                   </div>
                 </div>
               </q-card-section>
               <q-separator />
               <q-card-section class="q-pa-sm row justify-center text-caption">
-                <ul style="color:rgba(100, 100, 250, 1)">
-                  <li class="word-keep" v-for="(ce, idx) in c.common.effects" :key="`ce_${idx}`">
+                <ul class="text-left" style="color:rgba(100, 100, 250, 1)">
+                  <li v-for="(ce, idx) in c.common.effects" :key="`ce_${idx}`">
                     {{ce}}
                   </li>
-                  <li class="word-keep text-orange-8" v-for="(ef, idx) in props.row.effects" :key="`e_${idx}`">
+                  <li class="text-orange-8" v-for="(ef, idx) in props.row.effects" :key="`e_${idx}`">
                     {{ef}}
                   </li>
                 </ul>
@@ -193,10 +222,13 @@
         materials: this.$t('d2r.knowledge.items.materials'),
         runes: this.$t('d2r.knowledge.items.runeData'),
         notice: this.$t('d2r.knowledge.items.craftNotice'),
-        data: this.$t('d2r.knowledge.items.crafted').map(c => ({ ...c, selected: true }))
+        data: []
       }
     },
     created() {
+      this.$i18n.mergeLanguageAsync('craft').then(() => {
+        this.data = this.$t('crafted').map(c => ({ ...c, selected: true }))
+      })
     },
     computed: {
       pagesNumber() {
@@ -230,5 +262,19 @@
 
   .table-style-craft td {
     white-space: normal !important;
+  }
+
+  .card-craft {
+    background-color: rgba(5, 5, 5, 1) !important;
+    border-color: rgba(184, 156, 91, .5) !important;
+    border-radius: 10px !important;
+  }
+
+  .body--light .card-craft {
+    background-color: rgba(245, 245, 245, 1) !important;
+  }
+
+  .card-craft hr {
+    background-color: rgba(184, 156, 91, .5) !important;
   }
 </style>

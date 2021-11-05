@@ -11,18 +11,20 @@ import vuePlugin from "@/plugin/highlight"
 
 const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
 const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
-const d2rTable = () => import(/* webpackChunkName: "d2r-table-component" */ '@/components/d2r/Table')
-const d2rTh = () => import(/* webpackChunkName: "d2r-th-component" */'@/components/d2r/Th')
-const d2rList = () => import(/* webpackChunkName: "d2r-list-component" */ '@/components/d2r/List')
-const d2rRead = () => import(/* webpackChunkName: "d2r-read-component" */ '@/components/d2r/Read')
-const d2rWrite = () => import(/* webpackChunkName: "d2r-write-component" */ '@/components/d2r/Write')
-const d2rConfirm = () => import(/* webpackChunkName: "d2r-confirm-component" */ '@/components/d2r/Confirm')
-const d2rItem = () => import(/* webpackChunkName: "d2r-item-component" */ '@/components/d2r/Item')
-const d2rComments = () => import(/* webpackChunkName: "d2r-comments-component" */ '@/components/d2r/Comments')
-const d2rSummary = () => import(/* webpackChunkName: "d2r-summary-component" */ '@/components/d2r/Summary')
-const d2rTapPanel = () => import(/* webpackChunkName: "d2r-tappanel-component" */ '@/components/d2r/TapPanel')
-const d2rZoom = () => import(/* webpackChunkName: "d2r-zoom-component" */ '@/components/d2r/Zoom')
+const d2rTable = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Table')
+const d2rTh = () => import(/* webpackChunkName: "d2r-component" */'@/components/d2r/Th')
+const d2rList = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/List')
+const d2rRead = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Read')
+const d2rWrite = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Write')
+const d2rConfirm = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Confirm')
+const d2rItem = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Item')
+const d2rComments = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Comments')
+const d2rSummary = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Summary')
+const d2rTapPanel = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/TapPanel')
+const d2rZoom = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Zoom')
 import { Quasar, Notify, Cookies, Loading, Dark } from 'quasar'
+
+const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
 
 // Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
 const router = new VueRouter({
@@ -48,11 +50,7 @@ router.onError((error) => {
 
 router.beforeEach((to, from, next) => {
   Loading.hide()
-  const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
-  if (lang !== i18n.locale)
-    i18n.loadLanguageAsync(lang).then(() => { }).catch(() => { }).then(() => { next() })
-  else
-    next()
+  i18n.loadLanguageAsync(lang).then(() => next())
 })
 
 router.beforeEach((to, from, next) => {
@@ -71,6 +69,9 @@ router.beforeEach((to, from, next) => {
 
   const preventScroll = to.matched.some(route => route.meta.preventScroll)
   document.body.style.overflow = preventScroll ? 'hidden' : ''
+
+  const findNoAD = to.matched.find(route => route.meta.noAD)
+  store.dispatch('setNoAD', findNoAD !== undefined)
 
   const cookieDark = Cookies.has(process.env.VUE_APP_D2R_DARK_NAME) && Cookies.get(process.env.VUE_APP_D2R_DARK_NAME) === true
   if (cookieDark !== Dark.isActive)
@@ -100,7 +101,6 @@ let axiosObject = axios.create({
 })
 
 axiosObject.interceptors.request.use((config) => {
-  const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
   config.headers.common['Accept-Language'] = lang
   return config
 })

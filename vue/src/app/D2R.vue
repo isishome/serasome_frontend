@@ -277,23 +277,24 @@
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding-right:6px;">
-            <adsense :visible="$q.screen.gt.sm && isProduction && !isKnowledge" data-ad-client="ca-pub-5110777286519562"
-              data-ad-slot="4948790020" random>
+            <adsense :visible="!noAD && $q.screen.gt.sm && isProduction && !isKnowledge"
+              data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="vertical"
+              horizontal="right" random>
             </adsense>
           </div>
           <q-page class="col-xl-6 col-lg-8 col-12">
             <router-view />
-            <div v-if="$q.screen.lt.md && isProduction" class="row justify-center">
-              <adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9230987257" width="300px" height="50px">
-              </adsense>
-            </div>
+            <adsense :visible="!noAD && $q.screen.lt.md && isProduction" data-ad-client="ca-pub-5110777286519562"
+              data-ad-slot="9230987257" width="300px" height="50px">
+            </adsense>
           </q-page>
           <div class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding-left:6px;">
             <div v-if="$q.screen.gt.sm && isProduction" style="position: fixed;">
-              <adsense data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794" random>
+              <adsense :visible="!noAD" data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794"
+                data-ad-format="vertical" horizontal="left" random>
               </adsense>
-              <adsense :visible="isKnowledge" data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020"
-                style="margin-top: 10px;" random>
+              <adsense :visible="!noAD && isKnowledge" data-ad-client="ca-pub-5110777286519562"
+                data-ad-slot="4948790020" style="margin-top: 10px;" data-ad-format="vertical" horizontal="left" random>
               </adsense>
             </div>
           </div>
@@ -371,9 +372,8 @@
       },
       lang: function (val, old) {
         if (val !== old) {
-          this.$i18n.loadLanguageAsync(val).then(() => {
-            this.$router.go()
-          })
+          this.$q.cookies.set(process.env.VUE_APP_LANGUAGE_NAME, val, { path: '/', expires: '7300d' })
+          this.$router.go()
         }
       }
     },
@@ -383,7 +383,8 @@
         section: 'getSection',
         d2rInfo: 'getD2RInfo',
         images: 'getD2RImages',
-        independent: 'getIndependent'
+        independent: 'getIndependent',
+        noAD: 'getNoAD'
       }),
       checkValidate() {
         return /^[0-9a-zA-Z]{1,32}$/mi.test(this.basicInfo.nickname || '')
@@ -438,11 +439,11 @@
         if (!this.$q.cookies.has(process.env.VUE_APP_D2R_DARK_NAME))
           this.$q.dark.set(true)
 
-        if (document.body.classList.contains('show') === false) {
-          this.timer = setTimeout(() => {
-            document.body.classList.add('show')
-          }, 500)
-        }
+        // if (document.body.classList.contains('show') === false) {
+        //   this.timer = setTimeout(() => {
+        //     document.body.classList.add('show')
+        //   }, 500)
+        // }
       },
       home() {
         if (this.$router.currentRoute.name === 'd2r-main')

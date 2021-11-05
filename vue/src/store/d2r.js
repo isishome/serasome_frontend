@@ -10,7 +10,8 @@ export default new Vuex.Store({
     independent: false,
     d2rInfo: null,
     d2rClass: [],
-    d2rImages: []
+    d2rImages: [],
+    noAD: false
   },
   getters: {
     getSignStatus: state => {
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     },
     getD2RImages: state => {
       return state.d2rImages
+    },
+    getNoAD: state => {
+      return state.noAD
     }
   },
   mutations: {
@@ -87,6 +91,9 @@ export default new Vuex.Store({
     },
     setD2RImages(state, payload) {
       state.d2rImages = payload
+    },
+    setNoAD(state, payload) {
+      state.noAD = payload
     }
   },
   actions: {
@@ -110,6 +117,9 @@ export default new Vuex.Store({
     },
     setD2RImages(context, payload) {
       context.commit('setD2RImages', payload)
+    },
+    setNoAD(context, payload) {
+      context.commit('setNoAD', payload)
     }
   }
 })

@@ -10,16 +10,18 @@ import axios from 'axios'
 import vuePlugin from "@/plugin/highlight"
 
 const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
-const Logo = () => import(/* webpackChunkName: "seras-logo-component" */ '@/components/seras/Logo')
-const PostList = () => import(/* webpackChunkName: "seras-postlist-component" */ '@/components/seras/PostList')
-const PostRead = () => import(/* webpackChunkName: "seras-read-component" */ '@/components/seras/PostRead')
-const Confirm = () => import(/* webpackChunkName: "seras-confirm-component" */ '@/components/seras/Confirm')
-const Prompt = () => import(/* webpackChunkName: "seras-prompt-component" */ '@/components/seras/Prompt')
-const Comment = () => import(/* webpackChunkName: "seras-comment-component" */ '@/components/seras/Comment')
-const CommentDate = () => import(/* webpackChunkName: "seras-commentdate-component" */ '@/components/seras/CommentDate')
-import { Quasar, Notify, Cookies, Dark, Loading } from 'quasar'
+const Logo = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Logo')
+const PostList = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/PostList')
+const PostRead = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/PostRead')
+const Confirm = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Confirm')
+const Prompt = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Prompt')
+const Comment = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Comment')
+const CommentDate = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/CommentDate')
+import { Quasar, Notify, Cookies, Dark } from 'quasar'
 //import VFacebookLogin from 'vue-facebook-login-component'
 import GAuth from 'vue-google-oauth2'
+
+const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
 
 // Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
 const router = new VueRouter({
@@ -44,12 +46,7 @@ router.onError((error) => {
 })
 
 router.beforeEach((to, from, next) => {
-  Loading.hide()
-  const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
-  if (lang !== i18n.locale)
-    i18n.loadLanguageAsync(lang).then(() => { }).catch(() => { }).then(() => { next() })
-  else
-    next()
+  i18n.loadLanguageAsync(lang).then(() => next())
 })
 
 router.beforeEach((to, from, next) => {
@@ -103,7 +100,6 @@ let axiosObject = axios.create({
 })
 
 axiosObject.interceptors.request.use((config) => {
-  const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
   config.headers.common['Accept-Language'] = lang
   return config
 })

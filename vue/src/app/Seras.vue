@@ -217,15 +217,18 @@
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding:60px 6px 0 0;">
             <adsense :visible="!noAD && $q.screen.gt.sm && isProduction" data-ad-client="ca-pub-5110777286519562"
-              data-ad-slot="5160898238" random>
+              data-ad-slot="7331759838" horizontal="right" random>
             </adsense>
           </div>
           <q-page class="col-xl-6 col-lg-8 col-12">
             <router-view />
+            <!-- <adsense :visible="!noAD && $q.screen.lt.md && isProduction" data-ad-client="ca-pub-5110777286519562"
+              data-ad-slot="5160898238" width="300px" height="50px">
+            </adsense> -->
           </q-page>
           <div class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding:60px 0 0 6px;">
             <adsense :visible="!noAD && $q.screen.gt.sm && isProduction" data-ad-client="ca-pub-5110777286519562"
-              data-ad-slot="7962315221" fixed random>
+              data-ad-slot="7962315221" fixed horizontal="left" random>
             </adsense>
           </div>
         </div>
@@ -293,9 +296,8 @@
       },
       lang: function (val, old) {
         if (val !== old) {
-          this.$i18n.loadLanguageAsync(val).then(() => {
-            this.$router.go()
-          })
+          this.$q.cookies.set(process.env.VUE_APP_LANGUAGE_NAME, val, { path: '/', expires: '7300d' })
+          this.$router.go()
         }
       }
     },

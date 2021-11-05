@@ -3,7 +3,7 @@
     <div class="lt-md">
       <div class="row items-center">
         <q-icon name="fas fa-book" class="q-ma-sm" size="20px" color="title" />
-        <div class="font-title q-ml-xs text-uppercase font-kodia">{{$t('d2r.knowledge.title')}}</div>
+        <div class="font-title text-amber-8 q-ml-xs text-uppercase font-kodia">{{$t('d2r.knowledge.title')}}</div>
       </div>
       <q-separator class="q-mb-sm" />
     </div>
@@ -41,7 +41,6 @@
     },
     data() {
       return {
-        pageLoad: false,
         list: this.$t('d2r.knowledge.list'),
         loading: false,
         sectionComponent: null,
@@ -62,9 +61,6 @@
         if (val !== old)
           this.loading = false
       }
-    },
-    beforeMount() {
-      this.pageLoad = true
     },
     mounted() {
       if (this.d2rClass.length === 0)

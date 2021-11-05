@@ -31,6 +31,9 @@
             <div class="col-12 col-sm-4" v-for="(i, index) in 3" :key="`${cls.clsid}_${i}`">
               <q-img :src="require(`@/assets/images/d2r/skills/${cls.clsid}/${index}.jpg`)" :ratio="321/432" />
             </div>
+            <d2r-tree v-if="false">
+              <d2r-skill top="11.9%" left="14.8%" />
+            </d2r-tree>
           </div>
         </q-tab-panel>
       </template>
@@ -42,7 +45,14 @@
     mapGetters
   } from 'vuex'
 
+  const d2rTree = () => import(/* webpackChunkName: "d2r-tree-component" */ '@/components/d2r/Tree')
+  const d2rSkill = () => import(/* webpackChunkName: "d2r-skill-component" */ '@/components/d2r/Skill')
+
   export default {
+    components: {
+      'd2r-tree': d2rTree,
+      'd2r-skill': d2rSkill
+    },
     data() {
       return {
         loading: false,

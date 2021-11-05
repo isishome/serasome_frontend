@@ -32,6 +32,9 @@ const routes = [
     components: {
       carousel: carousel,
       default: main
+    },
+    meta: {
+      noAD: true
     }
   },
   {

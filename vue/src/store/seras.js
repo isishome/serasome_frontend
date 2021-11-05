@@ -103,8 +103,7 @@ export default new Vuex.Store({
     },
     setIndependent(state, payload) {
       state.independent = payload
-    }
-    ,
+    },
     setNoAD(state, payload) {
       state.noAD = payload
     }
