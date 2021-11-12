@@ -99,7 +99,6 @@
       onWindowLoad() {
         if (this.$refs.adbox && !this.$refs.adbox.hasChildNodes())
           (window.adsbygoogle || []).push({})
-
       },
       setSize() {
         if (this.random === true) {

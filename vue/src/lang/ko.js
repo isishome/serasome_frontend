@@ -298,6 +298,14 @@ export default {
             "icon": "map"
           }
         ],
+        skills: {
+          btn: {
+            share: '공유'
+          },
+          message: {
+            successClipboard: "스킬트리 공유주소가 클립보드에 복사되었습니다"
+          }
+        },
         items: {
           cube: "호라드릭 큐브조합법",
           rune: "룬워드 아이템",

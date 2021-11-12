@@ -1,39 +1,4 @@
   /** app place **********************************************************************************************************************/
-  .stars, .twinkling, .clouds {
-    position:fixed;
-    top:0; bottom:0;
-    left:0; right:0;
-    width:100%; height:100%;
-    z-index: -1 !important;
-  }
-  
-  .stars {
-    z-index: 0;
-    background: #000 url('/static/images/stars.png') repeat top center;
-  }
-  
-  .twinkling{
-    z-index: 1;
-    background:transparent url('/static/images/twinkling.png') repeat top center;
-    animation: move-twink-back 200s linear infinite;
-  }
-  
-  .clouds{
-    z-index: 2;
-      background:transparent url('/static/images/clouds.png') repeat top center;
-    animation: move-clouds-back 200s linear infinite;
-  }
-  
-  @keyframes move-twink-back {
-    from {background-position:0 0;}
-    to {background-position:-10000px 5000px;}
-  }
-  
-  @keyframes move-clouds-back {
-    from {background-position:0 0;}
-    to {background-position:10000px 0;}
-  }
-
   /* body::before {
     content: '';
     position: fixed;
@@ -41,20 +6,15 @@
     bottom: 0;
     left: 0;
     right: 0;
-    opacity: 0;
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 40%, rgba(5, 5, 5, 0.93) 80%, rgba(10, 10, 10, 1)), url('/static/images/d2r_back.jpg') !important;
     background-repeat: repeat !important;
     transition: opacity 1s ease;
-  }
-  
-  body.show::before {
-    opacity: 1 !important;
   } */
   
   .body--light,
   .q-light {
     color:rgba(50, 50, 50, 1) !important;
-    background: rgba(10, 10, 10, 1) !important;
+    background: rgba(250, 250, 250, 1) !important;
   }
 
   .body--dark,

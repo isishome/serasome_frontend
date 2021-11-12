@@ -160,17 +160,6 @@
   }
 </style>
 <style scoped>
-  .tab-contents {
-    background-color: rgba(5, 5, 5, 1);
-    box-shadow: inset 1px 0 0 0 rgba(163, 106, 0, .4);
-    border-radius: 0 0 10px 10px;
-  }
-
-  .body--light .tab-contents {
-    background-color: rgba(245, 245, 245, 1);
-    box-shadow: inset 1px 0 0 0 rgba(5, 5, 5, .2);
-  }
-
   .separator {
     background-color: rgba(163, 106, 0, .4);
   }

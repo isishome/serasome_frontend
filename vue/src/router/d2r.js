@@ -28,6 +28,22 @@ const routes = [
     }
   },
   {
+    path: '/d2r/cube',
+    redirect: '/d2r/knowledge/Items/Cube',
+  },
+  {
+    path: '/d2r/rune',
+    redirect: '/d2r/knowledge/Items/Rune',
+  },
+  {
+    path: '/d2r/craft',
+    redirect: '/d2r/knowledge/Items/Craft',
+  },
+  {
+    path: '/d2r/skills',
+    redirect: '/d2r/knowledge/Skills',
+  },
+  {
     name: 'd2r-bbs',
     path: '/d2r/bbs/:sec',
     component: d2rBbs,
@@ -95,6 +111,13 @@ const routes = [
             name: 'd2r-knowledge-part',
             path: ':part',
             component: d2rKnowledge,
+            children: [
+              {
+                name: 'd2r-knowledge-data',
+                path: ':sid',
+                component: d2rKnowledge,
+              }
+            ]
           }
         ]
       }

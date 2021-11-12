@@ -11,7 +11,11 @@ export default new Vuex.Store({
     d2rInfo: null,
     d2rClass: [],
     d2rImages: [],
-    noAD: false
+    noAD: false,
+    skills: {
+      data: null,
+      points: 110
+    }
   },
   getters: {
     getSignStatus: state => {
@@ -64,6 +68,33 @@ export default new Vuex.Store({
     },
     getNoAD: state => {
       return state.noAD
+    },
+    getSkillsData: state => {
+      return state.skills.data
+    },
+    getSkillsTree: state => (clsId, treeId) => {
+      const findTree = state.skills.data[clsId].find(t => t.id === treeId)
+
+      return findTree || null
+    },
+    getSkillsSkill: state => (clsId, skillId) => {
+      let findSkill = null
+
+      for (let tree of state.skills.data[clsId]) {
+        for (let skill of tree.skills) {
+          if (skill.id === skillId) {
+            findSkill = skill
+            break
+          }
+        }
+        if (findSkill !== null)
+          break
+      }
+
+      return findSkill
+    },
+    getSkillsPoints: state => {
+      return state.skills.points
     }
   },
   mutations: {
@@ -94,6 +125,12 @@ export default new Vuex.Store({
     },
     setNoAD(state, payload) {
       state.noAD = payload
+    },
+    setSkillsData(state, payload) {
+      state.skills.data = payload
+    },
+    setSkillsPoints(state, payload) {
+      state.skills.points = state.skills.points + payload
     }
   },
   actions: {
@@ -120,6 +157,12 @@ export default new Vuex.Store({
     },
     setNoAD(context, payload) {
       context.commit('setNoAD', payload)
+    },
+    setSkillsData(context, payload) {
+      context.commit('setSkillsData', payload)
+    },
+    setSkillsPoints(context, payload) {
+      context.commit('setSkillsPoints', payload)
     }
   }
 })

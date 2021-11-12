@@ -300,6 +300,14 @@ export default {
             "icon": "map"
           }
         ],
+        skills: {
+          btn: {
+            share: 'Share'
+          },
+          message: {
+            successClipboard: "The skill tree share address has been copied to the clipboard"
+          }
+        },
         items: {
           cube: "Horadric Cube Recipes",
           rune: "Runewords Items",
