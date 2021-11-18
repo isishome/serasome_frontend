@@ -15,76 +15,79 @@
           <div class="name d2r-green first-letter">
             {{info.name}}
           </div>
-          <div class="q-mt-none desc column items-center">
+          <div class="q-mt-none column items-center">
             <div v-for="(d, idx) in info.desc" :key="idx">{{d}}</div>
             <div v-if="points !== 20" class="first-letter">{{lang.required}} {{Number(info.level) + points}}
             </div>
             <div v-else class="first-letter">{{lang.reached}}</div>
           </div>
-          <div v-if="influence.length > 0" class="influence column items-center">
-            <div class="first-letter" v-for="(s, idx) in influence" :key="idx">{{s}}</div>
+          <div v-if="adds.length > 0" class="column items-center">
+            <div class="first-letter" v-for="(a, idx) in adds" :key="idx" :calcs="calcs">{{a}}
+            </div>
           </div>
-          <div v-if="info.fixed && info.fixed.length > 0" class="influence column items-center">
-            <div class="first-letter" v-for="(f, idx) in info.fixed" :key="idx">{{f}}</div>
-          </div>
-          <div v-if="points > 0" class="stat column items-center">
+          <div v-if="points > 0" class="column items-center">
             <div class="first-letter">{{lang.current}} : {{points}}
             </div>
-            <div class="first-letter" v-for="(s, idx) in info.stat" :key="idx">{{statPars(s, points)}}</div>
+            <div class="first-letter" v-for="(s, idx) in stats" :key="idx" :calcs="calcs">{{s}}
+            </div>
           </div>
-          <div v-if="points !== 20" class="stat column items-center">
+          <div v-if="points !== 20" class="column items-center">
             <div class="first-letter">{{points > 0 ? lang.next : lang.first}} {{lang.level}}
             </div>
-            <div class="first-letter" v-for="(s, idx) in info.stat" :key="idx">{{statPars(s, points + 1)}}</div>
+            <div class="first-letter" v-for="(n, idx) in nexts" :key="idx" :calcs="calcs">{{n}}
+            </div>
           </div>
-          <div v-if="info.bonus && info.bonus.length > 0" class="bonus column items-center">
+          <div v-if="bonuses.length > 0" class="column items-center">
             <div class="d2r-green row items-center q-gutter-sm">
               <div class="first-letter">{{info.name}}</div>
               <div class="first-letter" v-for="(l, idx) in lang.bonus.split(' ')" :key="idx">{{l}}</div>
               <div class="q-ml-none">:</div>
             </div>
             <div class="column items-center">
-              <div class="first-letter" v-for="(b, idx) in info.bonus" :key="idx">{{b}}</div>
+              <div class="first-letter" v-for="(b, idx) in bonuses" :key="idx">{{b}}</div>
             </div>
           </div>
         </div>
       </q-tooltip>
-      <q-dialog v-else v-model="dialog" content-class="font-kodia">
-        <div class="bg-black full-width no-scroll column items-center word-keep tooltip-contents"
-          :class="[disable ? 'text-red-5' : 'text-grey-4' , $q.screen.lt.sm ? 'q-gutter-xs' : 'q-gutter-md']">
+      <q-dialog v-else full-width v-model="dialog" content-class="font-kodia">
+        <div class="bg-black full-width no-scroll column items-center word-keep tooltip-contents q-px-none q-py-md"
+          :class="[disable ? 'text-red-5' : 'text-grey-4', 'q-gutter-y-md']">
           <div v-if="points === 0" class="title d2r-green first-letter">
             {{lang.notLearned}}
           </div>
           <div class="name d2r-green first-letter">
             {{info.name}}
           </div>
-          <div class="q-mt-none desc column items-center">
+          <div class="q-mt-none column items-center">
             <div v-for="(d, idx) in info.desc" :key="idx">{{d}}</div>
             <div v-if="points !== 20" class="first-letter">{{lang.required}} {{Number(info.level) + points}}
             </div>
             <div v-else class="first-letter">{{lang.reached}}</div>
           </div>
-          <div v-if="influence.length > 0" class="influence column items-center">
-            <div class="first-letter" v-for="(s, idx) in influence" :key="idx">{{s}}</div>
+          <div v-if="adds.length > 0" class="column items-center">
+            <div class="first-letter" v-for="(a, idx) in adds" :key="idx">{{a}}
+            </div>
           </div>
-          <div v-if="points > 0" class="stat column items-center">
+          <div v-if="points > 0" class="column items-center">
             <div class="first-letter">{{lang.current}} : {{points}}
             </div>
-            <div class="first-letter" v-for="(s, idx) in info.stat" :key="idx">{{statPars(s, points)}}</div>
+            <div class="first-letter" v-for="(s, idx) in stats" :key="idx">{{s}}
+            </div>
           </div>
-          <div v-if="points !== 20" class="stat column items-center">
+          <div v-if="points !== 20" class="column items-center">
             <div class="first-letter">{{points > 0 ? lang.next : lang.first}} {{lang.level}}
             </div>
-            <div class="first-letter" v-for="(s, idx) in info.stat" :key="idx">{{statPars(s, points + 1)}}</div>
+            <div class="first-letter" v-for="(n, idx) in nexts" :key="idx">{{n}}
+            </div>
           </div>
-          <div v-if="info.bonus && info.bonus.length > 0" class="bonus column items-center">
+          <div v-if="bonuses.length > 0" class="column items-center">
             <div class="d2r-green row items-center q-gutter-xs">
               <div class="first-letter">{{info.name}}</div>
               <div class="first-letter" v-for="(l, idx) in lang.bonus.split(' ')" :key="idx">{{l}}</div>
               <div class="q-ml-none">:</div>
             </div>
             <div class="column items-center">
-              <div class="first-letter" v-for="(b, idx) in info.bonus" :key="idx">{{b}}</div>
+              <div class="first-letter" v-for="(b, idx) in bonuses" :key="idx">{{b}}</div>
             </div>
           </div>
         </div>
@@ -135,7 +138,11 @@
       return {
         dialog: false,
         points: 0,
-        influence: []
+        bonuses: [],
+        adds: [],
+        stats: [],
+        nexts: [],
+        calcs: {}
       }
     },
     computed: {
@@ -154,14 +161,120 @@
       }
     },
     created() {
-      if (this.info.influence) {
-        this.influence = this.info.influence.map(s => s.text.replace(/\{[a-z]\}/gi, this.skill(this.clsId, s.id).name).replace(/\{\d\}/gi, this.data[this.treeId] && this.data[this.treeId][s.id] ? s.value[Number(this.data[this.treeId][s.id])] : 0))
-      }
+      this.setInfo()
     },
     mounted() {
       this.$parent.loaded++
     },
     methods: {
+      setInfo() {
+        if (this.info.bonus) {
+          this.calcs = {}
+          this.info.bonus.some(b => {
+            const findSkill = this.skill(this.clsId, b.skillId)
+            const findSkillLevel = this.data[b.treeId] && this.data[b.treeId][b.skillId] ? Number(this.data[b.treeId][b.skillId]) : 0
+
+            if (findSkill) {
+              b.name = findSkill.name
+
+              if (b.addIdx) {
+                for (const i in b.addIdx) {
+                  this.info.add[i].text = this.info.add[i].text.replace(/\{n\}/, findSkill.name)
+                  const calc = { value: b.value[i], type: b.type[i], points: findSkillLevel }
+
+                  if (this.calcs[`add_${b.addIdx[i]}`])
+                    this.calcs[`add_${b.addIdx[i]}`] = [...this.calcs[`add_${b.addIdx[i]}`], calc]
+                  else
+                    this.calcs[`add_${b.addIdx[i]}`] = [calc]
+                }
+              }
+              else if (b.statIdx) {
+                for (const i in b.statIdx) {
+                  const calc = { value: b.value[i], type: b.type[i], points: findSkillLevel }
+                  if (this.calcs[`stat_${b.statIdx[i]}`])
+                    this.calcs[`stat_${b.statIdx[i]}`] = [...this.calcs[`stat_${b.statIdx[i]}`], calc]
+                  else
+                    this.calcs[`stat_${b.statIdx[i]}`] = [calc]
+                }
+              }
+
+              let bonus = null
+              if (this.info.bonus.length === this.bonuses.length)
+                return false
+              else if (b.text && b.value)
+                bonus = b.text.replace(/\{n\}/gi, findSkill.name).format(b.value[0])
+              else
+                bonus = findSkill.name
+
+              if (this.bonuses.includes(bonus) === false)
+                this.bonuses.push(bonus)
+            }
+          })
+        }
+
+        for (const i in this.info.add) {
+          if (this.info.add[i].value)
+            this.adds[i] = this.format('add', i, this.info.add[i].text, this.info.add[i].value[this.points])
+          else
+            this.adds[i] = this.info.add[i].text
+        }
+
+        for (const i in this.info.stat) {
+          if (this.info.stat[i].value) {
+            this.stats[i] = this.format('stat', i, this.info.stat[i].text, this.info.stat[i].value[this.points])
+            this.nexts[i] = this.format('stat', i, this.info.stat[i].text, this.info.stat[i].value[this.points + 1])
+          }
+          else {
+            this.stats[i] = this.info.stat[i].text
+            this.nexts[i] = this.info.stat[i].text
+          }
+        }
+      },
+      format(type, idx, text, val) {
+        const calc = this.calcs[`${type}_${idx}`]
+        let formatted = type === 'stat' ? this.info.stat[idx].text : type === 'add' ? this.info.add[idx].text : ''
+        if (Array.isArray(val)) {
+          for (const v in val) {
+            const result = [val[v]]
+            const rates = []
+            if (calc) {
+              calc.forEach(c => {
+                if (c.type === 'rate')
+                  rates.push(c.value * c.points / 100)
+                else if (c.type === 'sum')
+                  result.push(c.value * c.points)
+                else if (c.type === 'array')
+                  result.push(c.value[c.points])
+              })
+            }
+
+            if (rates.length > 0)
+              result.push(rates.reduce((sum, x) => sum + x) * val[v])
+
+            formatted = formatted.replace('{' + v + '}', Math.floor(result.reduce((sum, x) => sum + x) * 10) / 10)
+          }
+        }
+        else {
+          const result = [val]
+          const rates = []
+          if (calc) {
+            calc.forEach(c => {
+              if (c.type === 'rate')
+                rates.push(c.value * c.points / 100)
+              else if (c.type === 'sum')
+                result.push(c.value * c.points)
+              else if (c.type === 'array')
+                result.push(c.value[c.points])
+            })
+          }
+
+          if (rates.length > 0)
+            result.push(rates.reduce((sum, x) => sum + x) * val)
+
+          formatted = formatted.replace('{0}', Math.floor(result.reduce((sum, x) => sum + x) * 10) / 10)
+        }
+        return formatted
+      },
       choice(points) {
         if (this.$q.platform.is.mobile) {
           const parentMobileData = this.$parent.mobile
@@ -178,15 +291,9 @@
         }
         this.$emit('choice', { treeId: this.treeId, skillId: this.info.id, points: points })
       },
-      statPars(stat, current) {
-        if (stat.text && stat.value)
-          return stat.text.replace(/\{\d\}/gi, stat.value[current])
-      },
       update() {
-        this.points = this.data[this.treeId][this.info.id] || 0
-        if (this.info.influence) {
-          this.influence = this.info.influence.map(s => s.text.replace(/\{[a-z]\}/gi, this.skill(this.clsId, s.id).name).replace(/\{\d\}/gi, this.data[this.treeId] && this.data[this.treeId][s.id] ? s.value[Number(this.data[this.treeId][s.id])] : 0))
-        }
+        this.points = this.data[this.treeId] && this.data[this.treeId][this.info.id] ? this.data[this.treeId][this.info.id] : 0
+        this.setInfo()
       }
     }
   }
@@ -204,22 +311,16 @@
 <style scoped>
   .tooltip-contents {
     font-weight: bold;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.1em;
+    text-align: center;
+    font-size: 1.5em;
+    line-height: 1.4em;
   }
 
   .tooltip-contents .title,
   .tooltip-contents .name {
     text-align: center;
-    font-size: 1.5em;
-  }
-
-  .tooltip-contents .desc,
-  .tooltip-contents .influence,
-  .tooltip-contents .stat,
-  .tooltip-contents .bonus {
-    text-align: center;
-    font-size: 1.5em;
-    line-height: 1.4em;
+    font-size: 1.1em;
   }
 
   .btn {
@@ -233,6 +334,7 @@
     border: none;
     cursor: pointer;
     outline: none;
+    touch-action: manipulation;
   }
 
   .btn:active {
@@ -267,20 +369,13 @@
   @media screen and (max-width:599px) {
     .tooltip-contents {
       font-weight: bold;
-      letter-spacing: 0.1em;
+      font-size: .7em;
+      line-height: 1.6em;
     }
 
     .tooltip-contents .title,
     .tooltip-contents .name {
       font-size: .8em;
-    }
-
-    .tooltip-contents .desc,
-    .tooltip-contents .influence,
-    .tooltip-contents .stat,
-    .tooltip-contents .bonus {
-      font-size: .7em;
-      line-height: 1.2em;
     }
 
     .point {

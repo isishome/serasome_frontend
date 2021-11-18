@@ -3,13 +3,22 @@
     <q-inner-loading size="xs" :showing="showing" class="loading">
       <q-spinner-ball size="xl" color="red" />
     </q-inner-loading>
-    <div class="tree-name" :style="titleBack">{{info.name}}</div>
+    <div class="tree-name" :style="titleBack">
+      <div class="row justify-between items-center">
+        <div class="col-2"></div>
+        <div class="col">{{info.name}}</div>
+        <div class="col-2 text-right">
+          <q-btn padding="2px" size="12px" push :flat="$q.platform.is.mobile" outlined dense unelevated color="red-10"
+            class="text-weight-bold" :label="$q.screen.lt.md ? 'X' : lang.reset" @click="reset" />
+        </div>
+      </div>
+    </div>
     <div class="tree">
       <img :src="src" class="img no-pointer-events" />
       <slot></slot>
     </div>
     <div class="tree-name tree-bottom" :style="bottomBack">
-      <div v-if="$q.platform.is.mobile" class="row justify-start items-center q-gutter-y-xs q-gutter-x-sm">
+      <div v-if="$q.platform.is.mobile" class="row justify-center items-center q-gutter-y-xs q-gutter-x-sm">
         <div>
           <q-checkbox dark dense size="xs" v-model="mobile.max" color="title" :label="lang.max" />
         </div>
@@ -102,6 +111,15 @@
       }
     },
     methods: {
+      reset() {
+        if (this.$children) {
+          this.$children.forEach(c => {
+            if (c.points && c.points > 0) {
+              c.choice(-1000)
+            }
+          })
+        }
+      }
     }
   }
 </script>

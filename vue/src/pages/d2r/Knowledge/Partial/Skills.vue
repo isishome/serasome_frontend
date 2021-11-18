@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class="q-mt-lg row justify-center items-start q-col-gutter-lg">
-            <template v-if="cls.clsid !== 'paladin'">
+            <template v-if="['paladin', 'necromancer'].includes(cls.clsid) === false">
               <div v-for="index in 3" :key="index" class="col-12 col-md-4">
                 <q-img :src="require(`@/assets/images/d2r/skills/${cls.clsid}/${index-1}.jpg`)" :ratio="321/432" />
               </div>
@@ -36,7 +36,30 @@
             <template v-else-if="skillsData !== null">
               <div class="row justify-start items-center full-width">
                 <ul class="desc font-kodia text-weight-bold">
-                  <li v-for="(d, idx) in skillsData.desc[$q.platform.is.mobile ? 'mobile' : 'desktop']" :key="idx">{{d}}
+                  <li v-for="(d, idx) in skillsData.desc[$q.platform.is.mobile ? 'mobile' : 'desktop']" :key="idx"
+                    class="row items-center text-caption text-weight-bold desc">
+                    <div v-for="(k, idx1) in d.key" :key="`k${idx}_${idx1}`" class="row justify-center items-center">
+                      <div>
+                        <q-chip dense class="glossy" size="12px" color="grey-5" text-color="black">{{k}}</q-chip>
+                      </div>
+                      <div v-if="idx1 !== d.key.length" class="text-grey-6">
+                        <q-icon name="add" color="grey-6" />
+                      </div>
+                    </div>
+                    <div v-for="(i, idx2) in d.img" :key="`$i{idx}_${idx2}`" class="row justify-center items-center">
+                      <div v-if="idx2 !== 0" class="text-grey-6">/</div>
+                      <div>
+                        <img :src="require(`@/assets/images/d2r/skills/${i}`)" />
+                      </div>
+                    </div>
+                    <div class="row items-center q-gutter-x-sm">
+                      <div v-if="!$q.platform.is.mobile">
+                        <q-icon color="grey-6" name="east" />
+                      </div>
+                      <div class="word-keep">
+                        {{d.text}}
+                      </div>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -59,7 +82,7 @@
                   <q-input v-if="shareUrl !== ''" color="title" type="text" v-model="shareUrl"
                     @focus="(input) => input.target.select()" dense standout outlined hide-bottom-space no-error-icon>
                     <template v-slot:prepend>
-                      <q-icon color="title" name="link" />
+                      <q-icon class="glossy" color="title" name="link" />
                     </template>
                   </q-input>
                 </div>
@@ -81,6 +104,15 @@
 
   const d2rTree = () => import(/* webpackChunkName: "d2r-tree-component" */ '@/components/d2r/Tree')
   const d2rSkill = () => import(/* webpackChunkName: "d2r-skill-component" */ '@/components/d2r/Skill')
+
+  String.prototype.format = function () {
+    var formatted = this
+    for (var i = 0; i < arguments.length; i++) {
+      var regexp = new RegExp('\\{' + i + '\\}', 'gi')
+      formatted = formatted.replace(regexp, arguments[i])
+    }
+    return formatted
+  };
 
   export default {
     components: {
@@ -201,6 +233,9 @@
 
         let currentPoint = this.data[treeId][skillId]
 
+        if ((currentPoint === 20 && points > 0) || (currentPoint === 0 && points < 0))
+          return
+
         points = points > 999 ? 20 - currentPoint : points < -999 ? -currentPoint : points
         let remain = this.points - points
         const skillRemain = currentPoint + points
@@ -293,6 +328,12 @@
   }
 </script>
 <style scoped>
+  .body--dark .desc img {
+    filter: invert(100%);
+    width: 24px;
+    height: 24px;
+  }
+
   .no-touch {
     user-select: none !important;
     -moz-user-select: none !important;
@@ -329,6 +370,11 @@
   @media screen and (max-width:599px) {
     .desc {
       font-size: 0.7em !important;
+      line-height: 2em;
+    }
+
+    .desc li {
+      margin-bottom: 8px;
     }
   }
 </style>

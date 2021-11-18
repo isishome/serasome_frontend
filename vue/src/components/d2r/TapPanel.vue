@@ -23,7 +23,7 @@
         <slot name="panels"></slot>
       </q-tab-panels>
     </div>
-    <q-scroll-observer debounce="500" ref="observer" @scroll="onScroll" scroll-target="body" />
+    <q-scroll-observer debounce="600" ref="observer" @scroll="onScroll" scroll-target="body" />
   </div>
 </template>
 <script>
@@ -167,19 +167,19 @@
   .show {
     position: -webkit-sticky;
     position: sticky;
-    transition: all .3s;
+    transition: all .6s;
     max-width: 50vw;
   }
 
   @media screen and (max-width:599px) {
     .hide {
-      transition: all .3s;
+      transition: all .6s;
       max-width: 0;
     }
   }
 
   .wide {
-    transition: all .3s;
+    transition: all .6s;
     position: -webkit-sticky;
     position: sticky;
     z-index: 1;
@@ -187,7 +187,7 @@
   }
 
   .btn-wide {
-    transition: all .3s;
+    transition: all .6s;
     padding: 0;
     margin-left: -10px;
   }
