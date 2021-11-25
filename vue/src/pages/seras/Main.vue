@@ -3,7 +3,7 @@
     <q-ajax-bar ref="bar" position="bottom" color="red" size="4px" skip-hijack />
     <ss-post-read :sname="sname" v-model="pid" @done="done" @reading="loading = true" />
     <q-circular-progress v-if="!popular" indeterminate size="50px" color="teal-4" class="absolute-center" />
-    <div class="q-mb-xl">
+    <div class="q-mb-md ">
       <div class="q-mb-sm q-px-md row no-wrap justify-start items-center">
         <q-icon name="view_list" size="sm" color="amber-7" />
         <div class="font-title text-h6 text-teal-7 q-ml-sm">{{$t('main.category')}}</div>

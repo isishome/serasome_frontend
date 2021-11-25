@@ -276,13 +276,14 @@
         </q-dialog>
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
-          <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding-right:6px;">
+          <div :class="isKnowledge ? '' : 'col-xl-2 offset-xl-1'" class="gt-md col-lg-2 row justify-end"
+            style="padding-right:6px;">
             <adsense :visible="!noAD && $q.screen.gt.sm && isProduction && !isKnowledge"
               data-ad-client="ca-pub-5110777286519562" data-ad-slot="4948790020" data-ad-format="vertical"
               horizontal="right" random>
             </adsense>
           </div>
-          <q-page class="col-xl-6 col-lg-8 col-12">
+          <q-page :class="isKnowledge ? '' : 'col-xl-6'" class="col-lg-8 col-12">
             <router-view />
             <adsense :visible="!noAD && $q.screen.lt.md && isProduction" data-ad-client="ca-pub-5110777286519562"
               data-ad-slot="9230987257" width="300px" height="50px">

@@ -37,21 +37,21 @@
             <div class="first-letter" v-for="(n, idx) in nexts" :key="idx" :calcs="calcs">{{n}}
             </div>
           </div>
-          <div v-if="bonuses.length > 0" class="column items-center">
+          <div v-if="bonuses.length > 0" class="column items-center q-gutter-y-sm">
             <div class="d2r-green row items-center q-gutter-sm">
               <div class="first-letter">{{info.name}}</div>
               <div class="first-letter" v-for="(l, idx) in lang.bonus.split(' ')" :key="idx">{{l}}</div>
               <div class="q-ml-none">:</div>
             </div>
-            <div class="column items-center">
+            <div class="q-mt-none column items-center">
               <div class="first-letter" v-for="(b, idx) in bonuses" :key="idx">{{b}}</div>
             </div>
           </div>
         </div>
       </q-tooltip>
       <q-dialog v-else full-width v-model="dialog" content-class="font-kodia">
-        <div class="bg-black full-width no-scroll column items-center word-keep tooltip-contents q-px-none q-py-md"
-          :class="[disable ? 'text-red-5' : 'text-grey-4', 'q-gutter-y-md']">
+        <div class="bg-black full-width no-scroll column items-center word-keep tooltip-contents q-px-none q-py-sm"
+          :class="[disable ? 'text-red-5' : 'text-grey-4', 'q-gutter-y-sm']">
           <div v-if="points === 0" class="title d2r-green first-letter">
             {{lang.notLearned}}
           </div>
@@ -80,13 +80,13 @@
             <div class="first-letter" v-for="(n, idx) in nexts" :key="idx">{{n}}
             </div>
           </div>
-          <div v-if="bonuses.length > 0" class="column items-center">
-            <div class="d2r-green row items-center q-gutter-xs">
+          <div v-if="bonuses.length > 0" class="column items-center q-gutter-y-xs">
+            <div class="d2r-green row justify-center items-center q-gutter-xs">
               <div class="first-letter">{{info.name}}</div>
               <div class="first-letter" v-for="(l, idx) in lang.bonus.split(' ')" :key="idx">{{l}}</div>
               <div class="q-ml-none">:</div>
             </div>
-            <div class="column items-center">
+            <div class="q-mt-none column items-center">
               <div class="first-letter" v-for="(b, idx) in bonuses" :key="idx">{{b}}</div>
             </div>
           </div>
@@ -180,7 +180,7 @@
               if (b.addIdx) {
                 for (const i in b.addIdx) {
                   this.info.add[i].text = this.info.add[i].text.replace(/\{n\}/, findSkill.name)
-                  const calc = { value: b.value[i], type: b.type[i], points: findSkillLevel }
+                  const calc = { value: b.value[i], type: b.type[i], stat: findSkill.stat, points: findSkillLevel }
 
                   if (this.calcs[`add_${b.addIdx[i]}`])
                     this.calcs[`add_${b.addIdx[i]}`] = [...this.calcs[`add_${b.addIdx[i]}`], calc]
@@ -190,7 +190,7 @@
               }
               else if (b.statIdx) {
                 for (const i in b.statIdx) {
-                  const calc = { value: b.value[i], type: b.type[i], points: findSkillLevel }
+                  const calc = { value: b.value[i], type: b.type[i], stat: findSkill.stat, points: findSkillLevel }
                   if (this.calcs[`stat_${b.statIdx[i]}`])
                     this.calcs[`stat_${b.statIdx[i]}`] = [...this.calcs[`stat_${b.statIdx[i]}`], calc]
                   else
@@ -199,14 +199,14 @@
               }
 
               let bonus = null
-              if (this.info.bonus.length === this.bonuses.length)
+              if (this.info.bonus.length === this.bonuses.length || (b.hide && b.hide === true))
                 return false
               else if (b.text && b.value)
                 bonus = b.text.replace(/\{n\}/gi, findSkill.name).format(b.value[0])
               else
                 bonus = findSkill.name
 
-              if (this.bonuses.includes(bonus) === false)
+              if (this.bonuses.includes(bonus) === false && bonus !== null)
                 this.bonuses.push(bonus)
             }
           })
@@ -245,6 +245,8 @@
                   result.push(c.value * c.points)
                 else if (c.type === 'array')
                   result.push(c.value[c.points])
+                else if (c.type === 'rate_array')
+                  rates.push(c.stat[c.value].value[c.points] / 100)
               })
             }
 
@@ -265,6 +267,8 @@
                 result.push(c.value * c.points)
               else if (c.type === 'array')
                 result.push(c.value[c.points])
+              else if (c.type === 'rate_array')
+                rates.push(c.stat[c.value].value[c.points] / 100)
             })
           }
 
@@ -293,6 +297,7 @@
       },
       update() {
         this.points = this.data[this.treeId] && this.data[this.treeId][this.info.id] ? this.data[this.treeId][this.info.id] : 0
+        this.$parent.treePoints[this.info.id] = this.points
         this.setInfo()
       }
     }
@@ -349,6 +354,10 @@
     color: white;
   }
 
+  .body--light .img {
+    filter: invert(10%);
+  }
+
   .img {
     width: 100%;
     height: 100%;
@@ -369,13 +378,14 @@
   @media screen and (max-width:599px) {
     .tooltip-contents {
       font-weight: bold;
-      font-size: .7em;
-      line-height: 1.6em;
+      font-size: .8em;
+      line-height: 1.2em;
+      letter-spacing: 0;
     }
 
     .tooltip-contents .title,
     .tooltip-contents .name {
-      font-size: .8em;
+      font-size: .9em;
     }
 
     .point {

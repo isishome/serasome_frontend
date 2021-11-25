@@ -1,15 +1,21 @@
 <template>
-  <div class="font-kodia relative-position" @contextmenu.prevent>
+  <div class="font-kodia relative-position tree-wrap" @contextmenu.prevent>
     <q-inner-loading size="xs" :showing="showing" class="loading">
       <q-spinner-ball size="xl" color="red" />
     </q-inner-loading>
     <div class="tree-name" :style="titleBack">
-      <div class="row justify-between items-center">
-        <div class="col-2"></div>
-        <div class="col">{{info.name}}</div>
-        <div class="col-2 text-right">
-          <q-btn padding="2px" size="12px" push :flat="$q.platform.is.mobile" outlined dense unelevated color="red-10"
-            class="text-weight-bold" :label="$q.screen.lt.md ? 'X' : lang.reset" @click="reset" />
+      <div class="row justify-between items-center word-keep">
+        <div class="col-1"></div>
+        <div class="col row justify-center q-gutter-sm">
+          <div v-for="(i,idx) in info.name.split(' ')" :key="idx" class="first-letter">
+            {{i}}</div>
+        </div>
+        <div class="col-1 text-right" :children="$children">
+          <q-btn v-if="Object.values(this.treePoints).reduce((a, b) => a + b, 0) > 0" :tree-points="treePoints"
+            :size="$q.platform.is.mobile ? '7px' : '10px'" padding="2px" push dense unelevated color="red-10"
+            class="text-weight-bold" @click="reset">
+            <q-icon name="close" />
+          </q-btn>
         </div>
       </div>
     </div>
@@ -79,7 +85,8 @@
           max: false,
           remove: false,
           info: false
-        }
+        },
+        treePoints: {}
       }
     },
     computed: {
@@ -112,6 +119,10 @@
     },
     methods: {
       reset() {
+        this.mobile.max = false
+        this.mobile.remove = false
+        this.mobile.info = false
+
         if (this.$children) {
           this.$children.forEach(c => {
             if (c.points && c.points > 0) {
@@ -126,8 +137,8 @@
 <style scoped>
   .tree-name {
     max-width: 589px;
-    font-size: 1.2em;
-    line-height: 1.2em;
+    font-size: 1.3em;
+    line-height: 1.5em;
     color: rgb(230, 230, 230);
     text-align: center;
     padding: 10px;
@@ -139,6 +150,7 @@
     font-weight: bold;
     color: rgb(97, 112, 131);
     box-shadow: inset 0 0 10px 5px rgb(0, 0, 0), 0 0 0 2px rgb(46, 27, 0), 0 0 0 3px rgb(0, 0, 0), 0 0 0 5px rgb(40, 40, 40);
+    text-shadow: none;
   }
 
   .tree-name:lang(en)::first-letter {
@@ -147,7 +159,8 @@
 
   @media screen and (max-width:599px) {
     .tree-name {
-      font-size: 0.7em;
+      font-size: 0.8em;
+      line-height: 2em;
     }
   }
 

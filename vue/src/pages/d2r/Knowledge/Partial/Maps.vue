@@ -14,7 +14,7 @@
       <template #panels>
         <q-tab-panel v-for="(act, index) in acts" :key="act" :name="act" class="no-scroll word-wrap non-selectable"
           :class="$q.screen.lt.sm ? 'q-px-sm' : 'q-px-lg'">
-          <div class="q-mb-xl font-kodia text-weight-bold text-title"
+          <div class="q-mb-md  font-kodia text-weight-bold text-title"
             :class="$q.screen.lt.sm ? 'text-center text-h5' : 'text-left q-ml-md text-h4'">
             {{`${$t('d2r.knowledge.maps.act')} ${char[index]}`}}</div>
           <component :is="partComponent">

@@ -260,6 +260,10 @@
     font-family: 'Kodia';
   }
 
+  .body--light .table-style-craft tr {
+    background-color: rgba(245, 245, 245, 1) !important;
+  }
+
   .table-style-craft td {
     white-space: normal !important;
   }

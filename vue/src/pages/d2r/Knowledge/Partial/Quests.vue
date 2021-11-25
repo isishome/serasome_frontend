@@ -15,7 +15,7 @@
       <template #panels>
         <q-tab-panel v-for="act in acts" :key="act" dark :name="act" class="no-scroll word-wrap non-selectable"
           :class="$q.screen.lt.sm ? 'q-px-sm' : 'q-px-lg'">
-          <div class="q-mb-xl font-kodia text-weight-bold text-title"
+          <div class="q-mb-md  font-kodia text-weight-bold text-title"
             :class="$q.screen.lt.sm ? 'text-center text-h5' : 'text-left q-ml-md text-h4'">
             {{act.indexOf('Secret') !== -1 ? $t(`d2r.knowledge.maps.${act.toLowerCase()}`) :
             `${$t('d2r.knowledge.maps.act')}`}}

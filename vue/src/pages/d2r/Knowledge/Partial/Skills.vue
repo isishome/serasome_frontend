@@ -11,31 +11,22 @@
       </template>
       <template #panels>
         <q-tab-panel v-for="cls in d2rClass" :key="cls.clsid" :name="upperCase(cls.clsid)"
-          class="no-scroll word-wrap non-selectable" :class="$q.screen.lt.sm ? 'q-px-sm' : 'q-px-lg'">
-          <div class="q-mb-xl font-kodia text-weight-bold text-title text-center"
+          class="no-scroll word-wrap non-selectable q-px-md">
+          <div class="q-mb-md font-kodia text-weight-bold text-title text-center"
             :class="$q.screen.lt.sm ? 'text-h5' : 'text-h4'">
             {{cls.label}}</div>
-          <div class="row justify-center relative-position">
-            <div class="gradient-back">
-              <transition name="fade">
-                <img v-if="show" class="absolute-center" :src="require(`@/assets/images/d2r/classes/${cls.clsid}.gif`)"
-                  style="height:100%;padding:60px;" />
-              </transition>
-              <transition name="fade">
-                <img v-if="show2" class="absolute-center"
-                  :src="require(`@/assets/images/d2r/classes/${cls.clsid}-r.png`)" style="height: 100%;padding:60px;" />
-              </transition>
-            </div>
+          <div class="row justify-center items-center full-width">
+            <img :src="require(`@/assets/images/d2r/classes/${cls.clsid}.png`)" style="height:calc(8vw + 100px);" />
           </div>
-          <div class="q-mt-lg row justify-center items-start q-col-gutter-lg">
-            <template v-if="['paladin', 'necromancer'].includes(cls.clsid) === false">
-              <div v-for="index in 3" :key="index" class="col-12 col-md-4">
+          <div class="row justify-center items-start q-col-gutter-lg">
+            <template v-if="skillsData && !skillsData[cls.clsid].length">
+              <div v-for="index in 3" :key="index" class="col-12 col-md-4 q-mt-lg">
                 <q-img :src="require(`@/assets/images/d2r/skills/${cls.clsid}/${index-1}.jpg`)" :ratio="321/432" />
               </div>
             </template>
-            <template v-else-if="skillsData !== null">
-              <div class="row justify-start items-center full-width">
-                <ul class="desc font-kodia text-weight-bold">
+            <template v-else-if="skillsData">
+              <div class="row justify-between items-end full-width relative-position">
+                <ul class="desc font-kodia text-weight-bold col-12 col-md">
                   <li v-for="(d, idx) in skillsData.desc[$q.platform.is.mobile ? 'mobile' : 'desktop']" :key="idx"
                     class="row items-center text-caption text-weight-bold desc">
                     <div v-for="(k, idx1) in d.key" :key="`k${idx}_${idx1}`" class="row justify-center items-center">
@@ -63,8 +54,9 @@
                   </li>
                 </ul>
               </div>
-              <div class="row justify-center q-col-gutter-lg q-pt-sm">
-                <div class="col-12 col-md-6 col-xl-4" v-for="tree in skillsData[cls.clsid]" :key="tree.id">
+              <div class="row justify-center q-col-gutter-md q-pt-sm">
+                <div class="col-12 col-md-6 col-lg-4 row justify-center" v-for="tree in skillsData[cls.clsid]"
+                  :key="tree.id">
                   <d2r-tree :info="tree" :cls-id="cls.clsid" :lang="skillsData.lang" @complete="complete">
                     <d2r-skill :ref="`${tree.id}_${skill.id}`" v-for="skill in tree.skills" :key="skill.id"
                       :cls-id="cls.clsid" :tree-id="tree.id" :info="skill" :data="data" :lang="skillsData.lang"

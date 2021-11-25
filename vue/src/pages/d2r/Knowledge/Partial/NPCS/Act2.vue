@@ -33,11 +33,13 @@
           <q-card flat bordered class="bg-transparent table-card">
             <q-card-section class="text-center">
               <q-img :src='props.row.image' width="75px" />
-              <div class="text-h6 font-kodia text-title text-weight-bold absolute-bottom">
-                <span> {{props.row.name[locale]}}</span>
-              </div>
               <q-btn push glossy class="absolute-top-right" icon="headset" color="grey-6" text-color="black" size="sm"
                 padding="4px" round dense @click="play(props.row.voice, $event)" style="margin: 10px 10px 0 0;" />
+            </q-card-section>
+            <q-card-section class="no-padding">
+              <div class="text-h6 font-kodia text-title row justify-center text-weight-bold">
+                <span> {{props.row.name[locale]}}</span>
+              </div>
             </q-card-section>
             <q-card-section class="q-pa-sm">
               <div class="text-body row justify-start items-center table-row" style="text-indent: 5px;">
@@ -279,7 +281,11 @@
 
   .q-card {
     border: solid 1px #333333;
-    background-color: rgba(100, 100, 100, 0.1) !important;
+    background-color: rgba(245, 245, 245, 1) !important;
+  }
+
+  .body--light tbody tr {
+    background-color: rgba(245, 245, 245, 1) !important;
   }
 
   tbody td {

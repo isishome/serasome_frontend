@@ -266,6 +266,10 @@
     max-width: 100%;
   }
 
+  .body--light .map-card {
+    background-color: rgba(245, 245, 245, 1) !important;
+  }
+
   @media screen and (max-width:599px) {
     .map-card {
       font-size: 0.7em;

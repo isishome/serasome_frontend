@@ -338,11 +338,15 @@
   }
 
   .body--light tbody tr:nth-child(even) {
-    background-color: rgb(255, 255, 255, .4) !important;
+    background-color: rgb(255, 255, 255, .2) !important;
   }
 
   thead tr {
     box-shadow: inset 0 -1px 0 0 rgba(104, 76, 11, .6), 0 1px 0 1px rgba(184, 156, 91, .6);
+  }
+
+  .body--light thead tr {
+    box-shadow: inset 0 -1px 0 0 rgba(200, 200, 200, 1), 0 1px 2px 2px rgba(230, 230, 230, 1);
   }
 
   thead th {

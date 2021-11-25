@@ -22,7 +22,7 @@
             </q-item-label>
           </q-item-section>
         </q-item>
-        <q-item class="quest-info row items-center" :class="$q.screen.lt.sm ? 'q-mb-sm' : 'q-mb-xl'"
+        <q-item class="quest-info row items-center" :class="$q.screen.lt.sm ? 'q-mb-sm' : 'q-mb-md '"
           :key="`desc_${index}`">
           <q-item-section class="no-margin no-wrap">
             <q-item-label>

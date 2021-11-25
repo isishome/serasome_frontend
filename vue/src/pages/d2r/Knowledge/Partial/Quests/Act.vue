@@ -28,7 +28,7 @@
         </q-item>
       </template>
       <template v-slot:body-info="prop">
-        <q-item class="quest-info no-padding row items-center" :class="$q.screen.lt.sm ? 'q-mb-sm' : 'q-mb-xl'">
+        <q-item class="quest-info no-padding row items-center" :class="$q.screen.lt.sm ? 'q-mb-sm' : 'q-mb-md '">
           <q-item-section class="no-margin no-wrap">
             <q-item-label>
               <img v-if="prop.node.image" class="quest-image" :src="prop.node.image" @load="onload($event.target)" />
