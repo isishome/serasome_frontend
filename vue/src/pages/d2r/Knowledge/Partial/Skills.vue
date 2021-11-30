@@ -361,12 +361,12 @@
 
   @media screen and (max-width:599px) {
     .desc {
-      font-size: 0.7em !important;
-      line-height: 2em;
+      font-size: 0.8em !important;
+      line-height: 1.6em;
     }
 
     .desc li {
-      margin-bottom: 8px;
+      margin-bottom: 2px;
     }
   }
 </style>

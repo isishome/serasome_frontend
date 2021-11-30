@@ -1,5 +1,5 @@
 <template>
-  <div class="font-kodia relative-position tree-wrap" @contextmenu.prevent>
+  <div class="font-kodia relative-position" @contextmenu.prevent>
     <q-inner-loading size="xs" :showing="showing" class="loading">
       <q-spinner-ball size="xl" color="red" />
     </q-inner-loading>
@@ -10,7 +10,7 @@
           <div v-for="(i,idx) in info.name.split(' ')" :key="idx" class="first-letter">
             {{i}}</div>
         </div>
-        <div class="col-1 text-right" :children="$children">
+        <div class="col-1 text-right relative-position" style="z-index: 2;">
           <q-btn v-if="Object.values(this.treePoints).reduce((a, b) => a + b, 0) > 0" :tree-points="treePoints"
             :size="$q.platform.is.mobile ? '7px' : '10px'" padding="2px" push dense unelevated color="red-10"
             class="text-weight-bold" @click="reset">
@@ -24,7 +24,8 @@
       <slot></slot>
     </div>
     <div class="tree-name tree-bottom" :style="bottomBack">
-      <div v-if="$q.platform.is.mobile" class="row justify-center items-center q-gutter-y-xs q-gutter-x-sm">
+      <div v-if="$q.platform.is.mobile"
+        class="row justify-center items-center q-gutter-y-xs q-gutter-x-sm relative-position" style="z-index: 2;">
         <div>
           <q-checkbox dark dense size="xs" v-model="mobile.max" color="title" :label="lang.max" />
         </div>
@@ -136,6 +137,7 @@
 </script>
 <style scoped>
   .tree-name {
+    position: relative;
     max-width: 589px;
     font-size: 1.3em;
     line-height: 1.5em;
@@ -159,7 +161,7 @@
 
   @media screen and (max-width:599px) {
     .tree-name {
-      font-size: 0.8em;
+      font-size: 1em;
       line-height: 2em;
     }
   }
@@ -173,6 +175,21 @@
 
   .img {
     width: 100%;
+  }
+
+  .body--light .img {
+    filter: brightness(2);
+  }
+
+  .body--light .tree-name::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, .1) !important;
   }
 
   .first-letter:lang(en)::first-letter {

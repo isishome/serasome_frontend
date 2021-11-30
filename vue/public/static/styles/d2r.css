@@ -115,3 +115,57 @@
     font-size: 0.8em !important;
     line-height: 1.4em !important;
   }
+
+  .d2r-table th {
+    background-color: rgba(184, 156, 91, .2) !important;
+    color: rgba(184, 156, 91, 1) !important;
+    font-size: 1.4em !important;
+    font-family: 'Kodia';
+  }
+
+  .d2r-table td {
+    white-space: normal !important;
+  }
+
+  .d2r-table table {
+    box-shadow: inset 0 0 1px 1px rgba(184, 156, 91, .5) !important;
+    background-color: rgba(10, 10, 10, 1) !important;
+    border-radius: 4px;
+  }
+
+  .d2r-table td {
+    border-color: rgba(184, 156, 91, .5) !important;
+  }
+
+  .body--light .d2r-table table {
+    box-shadow: inset 0 0 1px 1px rgba(200, 200, 200, .5) !important;
+    background-color: rgba(245, 245, 245, 1) !important;
+    border-radius: 4px;
+  }
+
+  .body--light .d2r-table td {
+    border-color: rgba(200, 200, 200, .5) !important;
+  }
+
+  .d2r-card {
+    background-color: rgba(20, 20, 20, 1) !important;
+    border-color: rgba(184, 156, 91, .5) !important;
+    border-radius: 4px;
+  }
+
+  .body--light .d2r-card {
+    background-color: rgba(245, 245, 245, 1) !important;
+    border-color: rgba(200, 200, 200, .5) !important;
+  }
+
+  .d2r-card hr {
+    background-color: rgba(184, 156, 91, .5) !important;
+  }
+
+  .body--light .d2r-card hr {
+    background-color: rgba(200, 200, 200, .5) !important;
+  }
+
+  .text-underline {
+    text-decoration: underline;
+  }

@@ -17,7 +17,8 @@
     </div>
     <div class="row justify-between items-center q-col-gutter-sm">
       <div class="col-12 col-sm-8 col-md-9">
-        <q-checkbox v-for="c in data" :key="c.id" v-model="c.selected" :label="c.name" :color="c.color" />
+        <q-checkbox v-for="c in data" :key="c.id" v-model="c.selected" :label="c.name" :color="c.color"
+          @input="select" />
       </div>
       <div class="col-12 col-sm-4 col-md-3">
         <q-input dense debounce="400" :label="$t('btn.search')" color="title" v-model="filter">
@@ -28,7 +29,7 @@
       </div>
     </div>
     <template v-for="c in filtering">
-      <q-table v-if="c.selected === true" :key="c.id" class="q-mt-lg bg-transparent" table-class="table-style-craft"
+      <q-table v-if="c.selected === true" :key="c.id" class="q-mt-lg bg-transparent" table-class="d2r-table"
         card-container-class="q-col-gutter-md justify-center" :grid="$q.screen.lt.lg" :data="c.filterList"
         :columns="columns" row-key="name" :pagination.sync="pagination" hide-pagination bordered>
         <template v-slot:no-data>
@@ -114,7 +115,7 @@
         </template>
         <template #item="props">
           <div class="col-md-6 col-12">
-            <q-card class="card-craft text-center word-keep" :class="$q.screen.lt.sm ? 'text-caption' : 'text-body2'"
+            <q-card class="d2r-card text-center word-keep" :class="$q.screen.lt.sm ? 'text-caption' : 'text-body2'"
               bordered>
               <q-card-section class="q-pa-xs bg-yellow-9 text-black">
                 <div class="row justify-center items-center q-gutter-x-sm">
@@ -225,9 +226,12 @@
         data: []
       }
     },
+    watch: {
+    },
     created() {
       this.$i18n.mergeLanguageAsync('craft').then(() => {
-        this.data = this.$t('crafted').map(c => ({ ...c, selected: true }))
+        this.data = this.$t('crafted').map(c => ({ ...c, selected: false }))
+        this.data.find(c => c.id === 'caster').selected = true
       })
     },
     computed: {
@@ -249,36 +253,12 @@
 
         return this.data
       }
+    },
+    methods: {
+      select(val) {
+        if (val === false && this.data.filter(d => d.selected === true).length === 0)
+          this.data[0].selected = true
+      }
     }
   }
 </script>
-<style>
-  .table-style-craft th {
-    background-color: rgba(184, 156, 91, .2) !important;
-    color: rgba(184, 156, 91, 1) !important;
-    font-size: 1.4em !important;
-    font-family: 'Kodia';
-  }
-
-  .body--light .table-style-craft tr {
-    background-color: rgba(245, 245, 245, 1) !important;
-  }
-
-  .table-style-craft td {
-    white-space: normal !important;
-  }
-
-  .card-craft {
-    background-color: rgba(5, 5, 5, 1) !important;
-    border-color: rgba(184, 156, 91, .5) !important;
-    border-radius: 10px !important;
-  }
-
-  .body--light .card-craft {
-    background-color: rgba(245, 245, 245, 1) !important;
-  }
-
-  .card-craft hr {
-    background-color: rgba(184, 156, 91, .5) !important;
-  }
-</style>

@@ -139,17 +139,11 @@
   }
 
   .tabs .q-tab .q-img {
-    opacity: .3;
-    filter: grayscale(100%);
-  }
-
-  .body--light .tabs .q-tab {
-    box-shadow: inset 0 0 1px 1px rgba(5, 5, 5, .8);
+    filter: opacity(.6) grayscale(100%);
   }
 
   .tabs .q-tab.active .q-img {
-    opacity: 1;
-    filter: brightness(1.5) grayscale(0);
+    filter: opacity(1) brightness(1.5) grayscale(0);
   }
 
   @media screen and (max-width:599px) {

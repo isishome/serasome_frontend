@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-table class="bg-transparent" table-class="table-style-cube" card-container-class="q-col-gutter-md justify-center"
+    <q-table class="bg-transparent" table-class="d2r-table" card-container-class="q-col-gutter-md justify-center"
       :grid="$q.screen.lt.lg" :data="filtering" :columns="columns" row-key="name" :pagination.sync="pagination"
       hide-header hide-pagination>
       <template v-slot:no-data>
@@ -45,7 +45,7 @@
       </template>
       <template #item="props">
         <div class="col-md-6 col-12">
-          <q-card class="card-cube" bordered>
+          <q-card class="d2r-card" bordered>
             <q-card-section class="font-kodia text-h6 word-keep">{{props.row.title}}</q-card-section>
             <q-separator />
             <q-card-section class="no-padding">
@@ -130,48 +130,7 @@
     }
   }
 </script>
-<style>
-  td {
-    white-space: normal !important;
-  }
-
-  .card-cube {
-    background-color: rgba(5, 5, 5, 1) !important;
-    border-color: rgba(184, 156, 91, .5) !important;
-    border-radius: 4px;
-  }
-
-  .body--light .card-cube {
-    background-color: rgba(245, 245, 245, 1) !important;
-  }
-
-  .card-cube hr {
-    background-color: rgba(184, 156, 91, .5) !important;
-  }
-
-  .table-style-cube table {
-    box-shadow: inset 0 0 1px 1px rgba(184, 156, 91, .5) !important;
-    background-color: rgba(5, 5, 5, 1) !important;
-    border-radius: 4px;
-  }
-
-  .body--light .table-style-cube table {
-    box-shadow: none !important;
-    background-color: rgba(245, 245, 245, 1) !important;
-  }
-
-  .table-style-cube td {
-    border-color: rgba(184, 156, 91, .5) !important;
-  }
-
-  .body--light .table-style-cube td {
-    border-color: none !important;
-  }
-
-  .text-underline {
-    text-decoration: underline;
-  }
-
+<style scoped>
   ul {
     list-style: inside;
     padding: 0;
@@ -180,5 +139,8 @@
 
   li {
     padding: 2px;
+    list-style-position: inside;
+    text-indent: -20px;
+    padding-left: 20px;
   }
 </style>

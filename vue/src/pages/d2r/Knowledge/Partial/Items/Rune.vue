@@ -6,7 +6,8 @@
     </div>
     <div class="row justify-start text-center q-col-gutter-sm rune-wrap full-width non-selectable">
       <div v-for="rune in runes" :key="rune.no" class="rune">
-        <q-btn no-caps dense flat class="row fit" :class="rune.selected ? 'selected' : ''" @click="selectedRune(rune)">
+        <q-btn no-caps dense flat class="row fit" :class="rune.selected ? 'selected' : ''"
+          :ripple="!$q.platform.is.mobile" @click="selectedRune(rune)">
           <div class="col-12 full-width">
             <img :src="require(`@/assets/images/d2r/items/runes/${rune.file}.png`)"
               style="width: 100%;max-width:50px;max-height:50px;" />
@@ -15,9 +16,9 @@
         </q-btn>
       </div>
     </div>
-    <q-table dense class="bg-transparent" table-class="table-style-rune"
-      card-container-class="q-col-gutter-md justify-center" :grid="$q.screen.lt.lg" :data="filtering" :columns="columns"
-      row-key="name" :pagination.sync="pagination" :hide-header="$q.screen.lt.sm" hide-pagination>
+    <q-table dense class="bg-transparent" table-class="d2r-table" card-container-class="q-col-gutter-md justify-center"
+      :grid="$q.screen.lt.lg" :data="filtering" :columns="columns" row-key="name" :pagination.sync="pagination"
+      :hide-header="$q.screen.lt.sm" hide-pagination>
       <template v-slot:no-data>
         <div class="row justify-center full-width" :class="$q.screen.lt.md ? 'text-caption' : 'text-body2'">
           {{$t('d2r.knowledge.items.noData')}}</div>
@@ -144,7 +145,7 @@
       </template>
       <template #item="props">
         <div class="col-md-6 col-12">
-          <q-card class="card-rune text-center" bordered>
+          <q-card class="d2r-card text-center" bordered>
             <q-card-section class="text-grey-6 text-h6 word-keep q-pa-xs">
               <div class="text-h6 word-keep text-amber-6 column">
                 <div class="col">{{props.row.name}}<span class="text-body1 text-brown" v-if="props.row.oldName">
@@ -345,61 +346,7 @@
     }
   }
 </script>
-<style>
-  .table-style-rune th {
-    background-color: rgba(184, 156, 91, .2) !important;
-    color: rgba(184, 156, 91, 1) !important;
-    font-size: 1.4em !important;
-    font-family: 'Kodia';
-  }
-
-  .table-style-rune td {
-    white-space: normal !important;
-  }
-
-  .card-rune {
-    background-color: rgba(20, 20, 20, 1) !important;
-    border-color: rgba(184, 156, 91, .5) !important;
-    border-radius: 4px;
-  }
-
-  .body--light .card-rune {
-    background-color: rgba(245, 245, 245, 1) !important;
-    border-color: rgba(200, 200, 200, .5) !important;
-  }
-
-  .card-rune hr {
-    background-color: rgba(184, 156, 91, .5) !important;
-  }
-
-  .body--light .card-rune hr {
-    background-color: rgba(200, 200, 200, .5) !important;
-  }
-
-  .table-style-rune table {
-    box-shadow: inset 0 0 1px 1px rgba(184, 156, 91, .5) !important;
-    background-color: rgba(10, 10, 10, 1) !important;
-    border-radius: 4px;
-  }
-
-  .table-style-rune td {
-    border-color: rgba(184, 156, 91, .5) !important;
-  }
-
-  .body--light .table-style-rune table {
-    box-shadow: inset 0 0 1px 1px rgba(200, 200, 200, .5) !important;
-    background-color: rgba(245, 245, 245, 1) !important;
-    border-radius: 4px;
-  }
-
-  .body--light .table-style-rune td {
-    border-color: rgba(200, 200, 200, .5) !important;
-  }
-
-  .text-underline {
-    text-decoration: underline;
-  }
-
+<style scoped>
   .stats {
     padding-left: 0;
     list-style: none;

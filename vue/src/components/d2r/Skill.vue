@@ -354,17 +354,21 @@
     color: white;
   }
 
-  .body--light .img {
-    filter: invert(10%);
-  }
-
   .img {
     width: 100%;
     height: 100%;
   }
 
+  .body--light .img {
+    filter: brightness(1.4);
+  }
+
   .img.learned {
     filter: brightness(2.5);
+  }
+
+  .body--light .img.learned {
+    filter: brightness(3);
   }
 
   .d2r-green {
