@@ -273,11 +273,6 @@ export default {
             "icon": "category"
           },
           {
-            "value": "Monsters",
-            "name": "몬스터",
-            "icon": "fas fa-pastafarianism"
-          },
-          {
             "value": "NPCS",
             "name": "NPCS",
             "icon": "emoji_people"

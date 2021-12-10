@@ -166,6 +166,12 @@
     }
   }
 
+  @media screen and (max-width:320px) {
+    .tree-name {
+      font-size: .6em;
+    }
+  }
+
   .tree {
     position: relative;
     max-width: 589px;

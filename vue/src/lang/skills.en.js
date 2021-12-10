@@ -646,7 +646,622 @@ export default {
           ]
         }
       ],
-      assassin: [],
+      assassin: [
+        {
+          id: "ma",
+          name: 'Martial Arts',
+          src: 'back.jpg',
+          skills: [
+            {
+              id: 'fistsoffire',
+              top: '19.7',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'ma', skillId: 'phoenixstrike' }],
+              name: 'Fists Of Fire',
+              desc: ['Charge-up Skill', 'ㅤ', 'Consecutive Hits Add Fire Damage', 'To Finishing Moves', 'Can Only Be Used With Claw Class Weapons', 'Must Use A Dragon Finishing Move Or', 'Normal Attack To Release Charges'],
+              level: '6',
+              add: [
+                { text: 'Mana Cost: {0}', value: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85, 92, 99, 106, 113, 120, 127, 134, 141, 148] },
+                { text: 'Charge 1 - Fire Damage: {0}-{1}', value: [0, [6, 10], [11, 15], [16, 20], [21, 25], [26, 30], [31, 35], [36, 40], [41, 45], [51, 56], [61, 67], [71, 78], [81, 89], [91, 100], [101, 111], [111, 122], [121, 133], [141, 155], [161, 177], [181, 199], [201, 221]] },
+                { text: 'Charge 2 - Fire Damage Radius: {0} Yards', value: [0, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6, 2.6] },
+                { text: 'Charge 3 - Average Fire Damage: {0}-{1} Per Second', value: [0, [9, 15], [17, 23], [25, 31], [32, 39], [40, 46], [48, 54], [56, 62], [64, 70], [79, 85], [95, 101], [110, 117], [126, 132], [142, 148], [157, 164], [173, 179], [189, 195], [214, 221], [239, 248], [264, 275], [289, 301]] }
+              ],
+              bonus: [
+                { treeId: 'ma', skillId: 'phoenixstrike', statIdx: [1, 3], value: [12, 6], type: ['rate', 'rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'clawsofthunder',
+              top: '52.2',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'ma', skillId: 'phoenixstrike' }],
+              required: [{ treeId: 'ma', skillId: 'fistsoffire' }],
+              name: 'Claws Of Thunder',
+              desc: ['Charge-up Skill', 'ㅤ', 'Consecutive Hits Add Lightning Damage', 'To Finishing Moves', 'Can Only Be Used With Claw Class Weapons', 'Must Use A Dragon Finishing Move Or', 'Normal Attack To Release Charges'],
+              level: '18',
+              add: [
+                { text: 'Mana Cost: {0}', value: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85, 92, 99, 106, 113, 120, 127, 134, 141, 148] },
+                { text: 'Charge 1 - Lightning Damage: {0}-{1}', value: [0, [1, 80], [1, 100], [1, 120], [1, 140], [1, 160], [1, 180], [1, 200], [1, 220], [1, 260], [1, 300], [1, 340], [1, 380], [1, 420], [1, 460], [1, 500], [1, 540], [1, 600], [1, 660], [1, 720], [1, 780]] },
+                { text: 'Charge 2 - Nova Damage: {0}-{1}', value: [0, [1, 30], [1, 45], [1, 60], [1, 75], [1, 90], [1, 105], [1, 120], [1, 135], [1, 160], [1, 185], [1, 210], [1, 235], [1, 260], [1, 285], [1, 310], [1, 335], [1, 370], [1, 405], [1, 440], [1, 475]] },
+                { text: 'Charge 3 - Charged Bolt Damage: {0}-{1}', value: [0, [1, 40], [1, 60], [1, 80], [1, 100], [1, 120], [1, 140], [1, 160], [1, 180], [1, 220], [1, 260], [1, 300], [1, 340], [1, 380], [1, 420], [1, 460], [1, 500], [1, 560], [1, 620], [1, 680], [1, 740]] }
+              ],
+              bonus: [
+                { treeId: 'ma', skillId: 'phoenixstrike', statIdx: [1, 2, 3], value: [8, 8, 8], type: ['rate', 'rate', 'rate'], text: '{n}: +{0}% Lightning Damage Per Level' }
+              ]
+            },
+            {
+              id: 'bladesofice',
+              top: '68.4',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'ma', skillId: 'phoenixstrike' }],
+              required: [{ treeId: 'ma', skillId: 'clawsofthunder' }],
+              name: 'Blades Of Ice',
+              desc: ['Charge-up Skill', 'ㅤ', 'Consecutive Hits Add Cold Damage', 'To Finishing Moves', 'Can Only Be Used With Claw Class Weapons', 'Must Use A Dragon Finishing Move Or', 'Normal Attack To Release Charges'],
+              level: '24',
+              add: [
+                { text: 'Mana Cost: {0}', value: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85, 92, 99, 106, 113, 120, 127, 134, 141, 148] },
+                { text: 'Charge 1 - Cold Damage: {0}-{1}', value: [0, [15, 35], [23, 43], [31, 51], [39, 59], [47, 67], [55, 75], [63, 83], [71, 91], [81, 101], [91, 111], [101, 121], [111, 131], [121, 141], [131, 151], [141, 161], [151, 171], [171, 193], [191, 215], [211, 237], [231, 259]] },
+                { text: 'Charge 2 - Cold Damage Radius: {0} Yards', value: [0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
+                { text: 'Charge 3 - Freezes For {0} Seconds', value: [0, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 7.6, 8, 8.4, 8.8, 9.2, 9.6, 10, 10.4, 10.8, 11.2, 11.6] }
+              ],
+              bonus: [
+                { treeId: 'ma', skillId: 'phoenixstrike', statIdx: [1], value: [8], type: ['rate'], text: '{n}: +{0}% Cold Damage Per Level' }
+              ]
+            },
+            {
+              id: 'tigerstrike',
+              top: '3.3',
+              left: '42.9',
+              tooltip: 'middle',
+              name: 'Tiger Strike',
+              desc: ['Charge-up Skill', 'ㅤ', 'Consecutive Hits Add Damage Bonuses', 'To Finishing Moves', 'Must Use A Dragon Finishing Move Or', 'Normal Attack To Release Charges'],
+              level: '1',
+              add: [
+                { text: 'Mana Cost: {0}', value: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85, 92, 99, 106, 113, 120, 127, 134, 141, 148] },
+                { text: 'Charge 1 - Damage: +{0}%', value: [0, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380, 400, 420, 440, 460, 480] },
+                { text: 'Charge 2 - Damage: +{0}%', value: [0, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 640, 680, 720, 760, 800, 840, 880, 920, 960] },
+                { text: 'Charge 3 - Damage: +{0}%', value: [0, 300, 360, 420, 480, 540, 600, 660, 720, 780, 840, 900, 960, 1020, 1080, 1140, 1200, 1260, 1320, 1380, 1440] }
+              ]
+            },
+            {
+              id: 'cobrastrike',
+              top: '35.7',
+              left: '42.9',
+              tooltip: 'middle',
+              required: [{ treeId: 'ma', skillId: 'tigerstrike' }],
+              name: 'Cobra Strike',
+              desc: ['Charge-up Skill', 'ㅤ', 'Consecutive Hits Add Mana Stealing', 'To Finishing Moves', 'Must Use A Dragon Finishing Move Or', 'Normal Attack To Release Charges'],
+              level: '12',
+              add: [
+                { text: 'Mana Cost: {0}', value: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85, 92, 99, 106, 113, 120, 127, 134, 141, 148] },
+                { text: 'Charge 1 - Life Steal: +{0}%', value: [0, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135] },
+                { text: 'Charge 2 - Life And Mana Steal: +{0}%', value: [0, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135] },
+                { text: 'Charge 3 - Life And Mana Steal: +{0}%', value: [0, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240, 250, 260, 270] }
+              ]
+            },
+            {
+              id: 'phoenixstrike',
+              top: '84.4',
+              left: '42.9',
+              tooltip: 'middle',
+              affected: [{ treeId: 'ma', skillId: 'fistsoffire' }, { treeId: 'ma', skillId: 'clawsofthunder' }, { treeId: 'ma', skillId: 'bladesofice' }],
+              required: [{ treeId: 'ma', skillId: 'cobrastrike' }],
+              name: 'Phoenix Strike',
+              desc: ['Charge-up Skill', 'ㅤ', 'Adds Elemental Novas To Finishing Moves', 'Must Use A Dragon Finishing Move Or', 'Normal Attack To Release Charges'],
+              level: '30',
+              add: [
+                { text: 'Mana Cost: {0}', value: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 15, 22, 29, 36, 43, 50, 57, 64, 71, 78, 85, 92, 99, 106, 113, 120, 127, 134, 141, 148] },
+                { text: 'Charge 1 - Meteor Damage: {0}-{1}', value: [0, [20, 40], [30, 50], [40, 60], [50, 70], [60, 80], [70, 90], [80, 100], [90, 110], [109, 131], [128, 143], [147, 173], [166, 194], [185, 215], [204, 236], [223, 257], [242, 278], [271, 311], [300, 344], [329, 377], [358, 410]] },
+                { text: 'Average Fire Damage: {0}-{1} Per Second', value: [0, [14, 22], [24, 34], [35, 47], [49, 57], [60, 68], [71, 82], [84, 93], [95, 104], [119, 128], [142, 150], [166, 175], [188, 199], [213, 221], [236, 246], [259, 267], [284, 292], [320, 332], [358, 371], [396, 411], [434, 451]] },
+                { text: 'Charge 2 - Chain Lightning Damage: {0}-{1}', value: [0, [1, 40], [1, 60], [1, 80], [1, 101], [1, 120], [1, 140], [1, 160], [1, 180], [1, 220], [1, 260], [1, 300], [1, 340], [1, 380], [1, 420], [1, 460], [1, 501], [1, 560], [1, 620], [1, 680], [1, 740]] },
+                { text: 'Charge 3 - Chaos Ice Bolt Damage: {0}-{1}', value: [0, [16, 32], [20, 36], [24, 40], [28, 44], [32, 48], [36, 52], [40, 56], [44, 60], [52, 68], [60, 76], [68, 84], [76, 92], [84, 100], [92, 108], [100, 116], [108, 124], [120, 137], [132, 150], [144, 163], [156, 176]] }
+              ],
+              bonus: [
+                { treeId: 'ma', skillId: 'fistsoffire', statIdx: [1], value: [10], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'ma', skillId: 'fistsoffire', statIdx: [2], value: [6], type: ['rate'], text: '{n}: +{0}% Average Fire Damage Per Second Per Level' },
+                { treeId: 'ma', skillId: 'clawsofthunder', statIdx: [3], value: [13], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
+                { treeId: 'ma', skillId: 'bladesofice', statIdx: [4], value: [10], type: ['rate'], text: '{n}: +{0}% Cold Damage Per Level' }
+              ]
+            },
+            {
+              id: 'dragontalon',
+              top: '3.3',
+              left: '72.3',
+              tooltip: 'right',
+              name: 'Dragon Talon',
+              desc: ['Finishing Move', 'ㅤ', 'Kick Your Enemies Out Of Your Way', 'Adds Charged-up Bonuses To The Kick'],
+              level: '1',
+              add: [
+                { text: 'Mana Cost: {0}', value: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6] }
+              ],
+              stat: [
+                { text: '{0} Kick', value: [0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4] },
+                { text: 'Attack Rating: +{0}%', value: [0, 20, 55, 90, 125, 160, 195, 230, 265, 300, 335, 370, 405, 440, 475, 510, 545, 580, 615, 650, 685] },
+                { text: 'Kick Damage: +{0}%', value: [0, 5, 12, 19, 26, 33, 40, 47, 54, 61, 68, 75, 82, 89, 96, 103, 110, 117, 124, 131, 138] }
+              ]
+            },
+            {
+              id: 'dragonclaw',
+              top: '19.7',
+              left: '72.3',
+              tooltip: 'right',
+              required: [{ treeId: 'ma', skillId: 'dragontalon' }],
+              name: 'Dragon Claw',
+              desc: ['Finishing Move', 'ㅤ', 'Slice And Dice Your Enemies', 'With Your Dual Claw Class Weapons', 'Adds Charged-up Bonuses To Both Claw Attacks'],
+              level: '6',
+              add: [
+                { text: 'Mana Cost: {0}', value: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 40, 65, 90, 115, 140, 165, 190, 215, 240, 265, 290, 315, 340, 365, 390, 415, 440, 465, 490, 515] },
+                { text: 'Damage: +{0}%', value: [0, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145] }
+              ],
+              bonus: [
+                { treeId: 'sd', skillId: 'clawmastery', statIdx: [1], value: [4], type: ['rate'], text: '{n}: +{0}% Damage Per Level' }
+              ]
+            },
+            {
+              id: 'dragontail',
+              top: '52.2',
+              left: '72.3',
+              tooltip: 'right',
+              required: [{ treeId: 'ma', skillId: 'dragonclaw' }],
+              name: 'Dragon Tail',
+              desc: ['Finishing Move', 'ㅤ', 'Knock Back Your Enemies With An Explosive Kick', 'Adds Charged-up Bonuses To The Kick'],
+              level: '18',
+              add: [
+                { text: 'Radius: {0} Yards', value: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] },
+                { text: 'Mana Cost: {0}', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 20, 35, 50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275, 290, 305] },
+                { text: 'Fire Damage: +{0}%', value: [0, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240] }
+              ]
+            },
+            {
+              id: 'dragonflight',
+              top: '68.4',
+              left: '72.3',
+              tooltip: 'right',
+              required: [{ treeId: 'ma', skillId: 'dragontail' }],
+              name: 'Dragon Flight',
+              desc: ['Finishing Move', 'ㅤ', 'Teleport To Your Enemies', 'And Destroy Them With A Kick', 'Adds Charged-up Bonuses To The Kick'],
+              level: '24',
+              add: [
+                { text: 'Mana Cost: {0}', value: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380, 400, 420, 440, 460, 480] },
+                { text: 'Kick Damage: +{0}%', value: [0, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575] }
+              ]
+            }
+          ]
+        },
+        {
+          id: "sd",
+          name: 'Shadow Disciplines',
+          src: 'back.jpg',
+          skills: [
+            {
+              id: 'burstofspeed',
+              top: '19.5',
+              left: '13.2',
+              tooltip: 'left',
+              required: [{ treeId: 'sd', skillId: 'clawmastery' }],
+              name: 'Burst Of Speed',
+              desc: ['Increases Attack And Movement Speed', 'For A Period Of Time'],
+              level: '6',
+              add: [
+                { text: 'Mana Cost: {0}', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] }
+              ],
+              stat: [
+                { text: 'Attack Speed: +{0}%', value: [0, 21, 27, 31, 34, 37, 41, 42, 44, 44, 45, 46, 47, 49, 50, 51, 51, 51, 52, 52, 52] },
+                { text: 'Run/Walk Speed: +{0}%', value: [0, 23, 29, 34, 39, 42, 45, 47, 49, 51, 52, 54, 55, 56, 57, 57, 59, 59, 60, 60, 61] },
+                { text: 'Duration: {0} Seconds', value: [0, 120, 132, 144, 156, 168, 180, 192, 204, 216, 228, 240, 252, 264, 276, 288, 300, 312, 324, 336, 348] }
+              ]
+            },
+            {
+              id: 'fade',
+              top: '52',
+              left: '13.2',
+              tooltip: 'left',
+              required: [{ treeId: 'sd', skillId: 'burstofspeed' }],
+              name: 'Fade',
+              desc: ['Raise All Resistances And Resist Curses', 'For A Period Of Time'],
+              level: '18',
+              add: [
+                { text: 'Mana Cost: {0}', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] }
+              ],
+              stat: [
+                { text: 'Reduces Curse Duration By {0}%', value: [0, 47, 53, 58, 62, 65, 67, 69, 71, 73, 74, 75, 76, 77, 78, 79, 80, 80, 81, 81, 82] },
+                { text: 'Resist All: +{0}%', value: [0, 19, 27, 33, 38, 42, 45, 47, 50, 52, 54, 56, 57, 58, 60, 60, 62, 62, 63, 63, 64] },
+                { text: 'Duration: {0} Seconds', value: [0, 120, 132, 144, 156, 168, 180, 192, 204, 216, 228, 240, 252, 264, 276, 288, 300, 312, 324, 336, 348] }
+              ]
+            },
+            {
+              id: 'venom',
+              top: '84.2',
+              left: '13.2',
+              tooltip: 'left',
+              required: [{ treeId: 'sd', skillId: 'fade' }],
+              name: 'Venom',
+              desc: ['Add Poison Damage To Your Weapons'],
+              level: '30',
+              add: [
+                { text: 'Mana Cost: {0}', value: [12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12] }
+              ],
+              stat: [
+                { text: 'Poison Damage: {0}-{1}', value: [0, [60, 80], [75, 95], [90, 110], [105, 125], [120, 140], [135, 155], [150, 170], [165, 185], [185, 205], [205, 225], [225, 245], [245, 265], [265, 285], [285, 305], [305, 325], [325, 345], [350, 370], [375, 395], [400, 420], [425, 445]] },
+                { text: 'Over {0} Seconds', value: [0, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4] },
+                { text: 'Duration: {0} Seconds', value: [0, 120, 124, 128, 132, 136, 140, 144, 148, 152, 156, 160, 164, 168, 172, 176, 180, 184, 188, 192, 196] }
+              ]
+            },
+            {
+              id: 'clawmastery',
+              top: '3.1',
+              left: '42.8',
+              tooltip: 'middle',
+              affected: [{ treeId: 'ma', skillId: 'dragonclaw' }],
+              name: 'Claw Mastery',
+              desc: ['Passive - Improves Your Skill', 'With Claw Class Weapons'],
+              level: '1',
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220] },
+                { text: 'Damage: +{0}%', value: [0, 35, 39, 43, 47, 51, 55, 59, 63, 67, 71, 75, 79, 83, 87, 91, 95, 99, 103, 107, 111] },
+                { text: '{0}% Chance Of Critical Strike', value: [0, 3, 6, 9, 11, 12, 13, 14, 15, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 21] }
+              ]
+            },
+            {
+              id: 'weaponblock',
+              top: '35.5',
+              left: '42.8',
+              tooltip: 'middle',
+              required: [{ treeId: 'sd', skillId: 'clawmastery' }],
+              name: 'Weapon Block',
+              desc: ['Passive - Chance To Block When', 'You Are Using Dual Claw Class Weapons'],
+              level: '12',
+              stat: [
+                { text: '{0}% Chance', value: [0, 26, 32, 36, 39, 42, 44, 46, 47, 49, 50, 51, 52, 53, 54, 55, 56, 56, 56, 57, 57] }
+              ]
+            },
+            {
+              id: 'shadowwarrior',
+              top: '52',
+              left: '42.8',
+              tooltip: 'middle',
+              required: [{ treeId: 'sd', skillId: 'weaponblock' }, { treeId: 'sd', skillId: 'cloakofshadows' }],
+              name: 'Shadow Warrior',
+              desc: ['Summon A Shadow Of Yourself That Mimics', 'Your Skills And Fights By Your Side'],
+              level: '18',
+              stat: [
+                { text: 'Life: {0}', value: [0, 376, 432, 488, 545, 601, 658, 714, 770, 827, 883, 940, 996, 1052, 1109, 1165, 1222, 1278, 1334, 1391, 1447] },
+                { text: 'Attack Rating: {0}', value: [0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 640, 680, 720, 760, 800] },
+                { text: 'Defense: +{0}%', value: [0, 0, 12, 24, 36, 48, 60, 72, 84, 96, 108, 120, 132, 144, 156, 168, 180, 192, 204, 216, 228] },
+                { text: 'Mana Cost: {0}', value: [0, 27, 27, 28, 28, 29, 29, 30, 30, 31, 31, 32, 32, 33, 33, 34, 34, 35, 35, 36, 36] }
+              ]
+            },
+            {
+              id: 'shadowmaster',
+              top: '84.2',
+              left: '42.8',
+              tooltip: 'middle',
+              required: [{ treeId: 'sd', skillId: 'shadowwarrior' }],
+              name: 'Shadow Master',
+              desc: ['Summon A Powerful Shadow Of Yourself', 'To Fight By Your Side'],
+              level: '30',
+              stat: [
+                { text: 'Life: {0}', value: [0, 376, 432, 488, 545, 601, 658, 714, 770, 827, 883, 940, 996, 1052, 1109, 1165, 1222, 1278, 1334, 1391, 1447] },
+                { text: 'Attack Rating: {0}', value: [0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 640, 680, 720, 760, 800] },
+                { text: 'Resist All: +{0}%', value: [0, 5, 17, 27, 35, 42, 47, 51, 55, 57, 61, 62, 65, 67, 68, 70, 71, 73, 73, 74, 75] },
+                { text: 'Mana Cost: {0}', value: [0, 35, 35, 36, 36, 37, 37, 38, 38, 39, 39, 40, 40, 41, 41, 42, 42, 43, 43, 44, 44] }
+              ]
+            },
+            {
+              id: 'psychichammer',
+              top: '3.1',
+              left: '72.3',
+              tooltip: 'right',
+              name: 'Psychic Hammer',
+              desc: ['Use The Power Of Your Mind', 'To Create A Psychic Blast', 'To Crush And Knock Back Your Enemies'],
+              level: '1',
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [2, 5], [3, 6], [4, 7], [5, 8], [6, 9], [7, 10], [8, 11], [9, 12], [10, 13], [12, 15], [13, 16], [15, 18], [16, 19], [18, 21], [19, 22], [21, 24], [23, 26], [25, 28], [27, 30], [29, 32]] },
+                { text: 'Magic Damage: {0}-{1}', value: [0, [2, 5], [3, 6], [4, 7], [5, 8], [6, 9], [7, 10], [8, 11], [9, 12], [10, 13], [12, 15], [13, 16], [15, 18], [16, 19], [18, 21], [19, 22], [21, 24], [23, 26], [25, 28], [27, 30], [29, 32]] },
+                { text: 'Mana Cost: {0}', value: [0, 4, 4.2, 4.5, 4.7, 5, 5.2, 5.5, 5.7, 6, 6.2, 6.5, 6.7, 7, 7.2, 7.5, 7.7, 8, 8.2, 8.5, 8.7] }
+              ]
+            },
+            {
+              id: 'cloakofshadows',
+              top: '35.5',
+              left: '72.3',
+              tooltip: 'right',
+              required: [{ treeId: 'sd', skillId: 'psychichammer' }],
+              name: 'Cloak Of Shadows',
+              desc: ['Cast A Shadow To Blind Nearby Enemies', 'Lowering Their Defenses For A Period Of Time'],
+              level: '12',
+              add: [
+                { text: 'Range: {0} Yards', value: [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20] },
+                { text: 'Mana Cost: {0}', value: [13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13] }
+              ],
+              stat: [
+                { text: 'Defense: +{0}%', value: [0, 10, 13, 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 52, 55, 58, 61, 64, 67] },
+                { text: 'Enemy Defense: -{0}%', value: [0, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72] },
+                { text: 'Duration: {0} Seconds', value: [0, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27] }
+              ]
+            },
+            {
+              id: 'mindblast',
+              top: '68.2',
+              left: '72.3',
+              tooltip: 'right',
+              required: [{ treeId: 'sd', skillId: 'cloakofshadows' }],
+              name: 'Mind Blast',
+              desc: ['Using The Power Of Your Mind', 'Stun A Group Of Enemies', 'And Convert The Feeble-minded'],
+              level: '24',
+              add: [
+                { text: 'Duration: {0}-{1} Seconds', value: [[6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10], [6, 10]] },
+                { text: 'Mana Cost: {0}', value: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [10, 20], [12, 22], [14, 24], [16, 26], [18, 28], [20, 30], [22, 32], [24, 34], [29, 39], [34, 44], [39, 49], [44, 54], [49, 59], [54, 64], [59, 69], [64, 74], [72, 82], [80, 90], [88, 98], [96, 106]] },
+                { text: 'Stun Length: {0} Seconds', value: [0, 2, 2.2, 2.4, 2.6, 2.8, 3, 3.2, 3.4, 3.6, 3.8, 4, 4.2, 4.4, 4.6, 4.8, 5, 5.2, 5.4, 5.6, 5.8] },
+                { text: 'Chance To Convert: {0}%', value: [0, 18, 21, 24, 26, 27, 28, 29, 30, 31, 32, 32, 33, 33, 34, 34, 35, 35, 35, 35, 36] }
+              ]
+            }
+          ]
+        },
+        {
+          id: "tr",
+          name: 'Traps',
+          src: 'back.jpg',
+          skills: [
+            {
+              id: 'shockweb',
+              top: '19.7',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'tr', skillId: 'chargedboltsentry' }, { treeId: 'tr', skillId: 'lightningsentry' }, { treeId: 'tr', skillId: 'fireblast' }],
+              required: [{ treeId: 'tr', skillId: 'fireblast' }],
+              name: 'Shock Web',
+              desc: ['Throw A Web Of Lightning', 'To Shock Your Enemies'],
+              level: '6',
+              add: [
+                { text: 'Mana Cost: {0}', value: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6] }
+              ],
+              stat: [
+                { text: 'Spike: {0}', value: [0, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 11] },
+                { text: 'Average Lightning Damage: {0}-{1} Per Second', value: [0, [1, 10], [1, 13], [1, 16], [1, 19], [1, 22], [1, 25], [1, 28], [1, 31], [1, 37], [1, 43], [1, 49], [1, 55], [1, 61], [1, 67], [1, 73], [1, 79], [1, 89], [1, 99], [1, 109], [1, 119]] },
+                { text: 'Duration: {0} Seconds', value: [0, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6, 3.6] }
+              ],
+              bonus: [
+                { treeId: 'tr', skillId: 'fireblast', statIdx: [0], value: [[1, 3]], type: ['per_sum'], text: '{n}: +{0} Spike Per 3 Levels' },
+                { treeId: 'tr', skillId: 'chargedboltsentry', statIdx: [1], value: [11], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
+                { treeId: 'tr', skillId: 'lightningsentry', statIdx: [1], value: [11], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
+                { treeId: 'tr', skillId: 'deathsentry', statIdx: [1], value: [11], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' }
+              ]
+            },
+            {
+              id: 'chargedboltsentry',
+              top: '35.7',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'tr', skillId: 'shockweb' }, { treeId: 'tr', skillId: 'lightningsentry' }, { treeId: 'tr', skillId: 'fireblast' }],
+              required: [{ treeId: 'tr', skillId: 'shockweb' }],
+              name: 'Charged Bolt Sentry',
+              desc: ['A Trap That Emits Charged Bolts', 'At Enemies That Pass Near'],
+              level: '12',
+              add: [
+                { text: 'Shoots {0} Times', value: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
+                { text: 'Releases {0} Charged Bolts', value: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
+                { text: 'Mana Cost: {0}', value: [13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13] }
+              ],
+              stat: [
+                { text: 'Lightning Damage: {0}-{1}', value: [0, [1, 7], [1, 10], [1, 13], [1, 16], [1, 19], [1, 22], [1, 25], [1, 28], [1, 32], [1, 36], [1, 40], [1, 44], [1, 48], [1, 52], [1, 56], [1, 60], [1, 66], [1, 72], [1, 78], [1, 84]] }
+              ],
+              bonus: [
+                { treeId: 'tr', skillId: 'shockweb', addIdx: [1], value: [[1, 3]], type: ['per_sum'], text: '{n}: +{0} Bolt Per 3 Levels' },
+                { treeId: 'tr', skillId: 'lightningsentry', addIdx: [0], value: [[1, 4]], type: ['per_sum'], text: '{n}: +{0} Shot Per 4 Levels' },
+                { treeId: 'tr', skillId: 'fireblast', statIdx: [0], value: [6], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
+                { treeId: 'tr', skillId: 'lightningsentry', statIdx: [0], value: [6], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
+                { treeId: 'tr', skillId: 'deathsentry', statIdx: [0], value: [6], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' }
+              ]
+            },
+            {
+              id: 'lightningsentry',
+              top: '68.4',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'tr', skillId: 'shockweb' }, { treeId: 'tr', skillId: 'chargedboltsentry' }, { treeId: 'tr', skillId: 'deathsentry' }, { treeId: 'tr', skillId: 'fireblast' }],
+              required: [{ treeId: 'tr', skillId: 'chargedboltsentry' }],
+              name: 'Lightning Sentry',
+              desc: ['A Trap That Shoots Lightning', 'To Scorch Passing Enemies'],
+              level: '24',
+              add: [
+                { text: 'Shoots {0} Times', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] },
+                { text: 'Mana Cost: {0}', value: [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20] }
+              ],
+              stat: [
+                { text: 'Lightning Damage: {0}-{1}', value: [0, [1, 20], [1, 30], [1, 40], [1, 50], [1, 60], [1, 70], [1, 80], [1, 90], [1, 106], [1, 122], [1, 138], [1, 154], [1, 170], [1, 186], [1, 202], [1, 218], [1, 242], [1, 266], [1, 290], [1, 314]] }
+              ],
+              bonus: [
+                { treeId: 'tr', skillId: 'shockweb', statIdx: [0], value: [12], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
+                { treeId: 'tr', skillId: 'chargedboltsentry', statIdx: [0], value: [12], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
+                { treeId: 'tr', skillId: 'deathsentry', statIdx: [0], value: [12], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' }
+              ]
+            },
+            {
+              id: 'deathsentry',
+              top: '84.4',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'tr', skillId: 'shockweb' }, { treeId: 'tr', skillId: 'chargedboltsentry' }, { treeId: 'tr', skillId: 'lightningsentry' }, { treeId: 'tr', skillId: 'fireblast' }, { treeId: 'tr', skillId: 'wakeofinferno' }],
+              required: [{ treeId: 'tr', skillId: 'lightningsentry' }],
+              name: 'Death Sentry',
+              desc: ['Trap That Shoots Lightning At Your Enemies', 'Or Explodes Nearby Corpses Laying Waste To More Enemies'],
+              level: '30',
+              add: [
+                { text: 'Corpse Explosion Damage: {0}-{1}% Of Corpse Life', value: [[40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80], [40, 80]] },
+                { text: 'Shoots {0} Times', value: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
+                { text: 'Mana Cost: {0}', value: [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20] }
+              ],
+              stat: [
+                { text: 'Lightning Damage: {0}-{1}', value: [0, [1, 50], [1, 58], [1, 66], [1, 74], [1, 82], [1, 90], [1, 98], [1, 106], [1, 120], [1, 134], [1, 148], [1, 162], [1, 176], [1, 190], [1, 204], [1, 218], [1, 240], [1, 262], [1, 284], [1, 306]] },
+                { text: 'Radius: {0} Yards', value: [0, 3.3, 3.6, 4, 4.3, 4.6, 5, 5.3, 5.6, 6, 6.3, 6.6, 7, 7.3, 7.6, 8, 8.3, 8.6, 9, 9.3, 9.6] }
+              ],
+              bonus: [
+                { treeId: 'tr', skillId: 'fireblast', addIdx: [1], value: [[1, 3]], type: ['per_sum'], text: '{n}: +{0} Shot Per 3 Levels' },
+                { treeId: 'tr', skillId: 'lightningsentry', statIdx: [0], value: [12], type: ['rate'], text: '{n}: +{0}% Lightning Damage Per Level' }
+              ]
+            },
+            {
+              id: 'fireblast',
+              top: '3.3',
+              left: '42.8',
+              tooltip: 'middle',
+              affected: [{ treeId: 'tr', skillId: 'shockweb' }, { treeId: 'tr', skillId: 'chargedboltsentry' }, { treeId: 'tr', skillId: 'deathsentry' }, { treeId: 'tr', skillId: 'wakeoffire' }, { treeId: 'tr', skillId: 'wakeofinferno' }],
+              name: 'Fire Blast',
+              desc: ['Throw A Fire Bomb', 'To Blast Your Enemies To Bits'],
+              level: '1',
+              add: [
+                { text: 'Radius: {0} Yards', value: [3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3, 3.3] }
+              ],
+              stat: [
+                { text: 'Fire Damage: {0}-{1}', value: [0, [3, 4], [4, 6], [6, 9], [7, 11], [9, 14], [10, 16], [12, 19], [13, 21], [17, 27], [21, 32], [25, 38], [29, 43], [33, 49], [37, 54], [41, 60], [45, 65], [55, 77], [65, 89], [75, 101], [85, 113]] },
+                { text: 'Mana Cost: {0}', value: [0, 3, 3.1, 3.2, 3.3, 3.5, 3.6, 3.7, 3.8, 4, 4.1, 4.2, 4.3, 4.5, 4.6, 4.7, 4.8, 5, 5.1, 5.2, 5.3] }
+              ],
+              bonus: [
+                { treeId: 'tr', skillId: 'shockweb', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'tr', skillId: 'chargedboltsentry', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'tr', skillId: 'wakeoffire', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'tr', skillId: 'lightningsentry', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'tr', skillId: 'wakeofinferno', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'tr', skillId: 'deathsentry', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'wakeoffire',
+              top: '35.7',
+              left: '42.8',
+              tooltip: 'middle',
+              affected: [{ treeId: 'tr', skillId: 'fireblast' }, { treeId: 'tr', skillId: 'wakeofinferno' }],
+              required: [{ treeId: 'tr', skillId: 'fireblast' }],
+              name: 'Wake Of Fire',
+              desc: ['A Trap That Emits Waves Of Fire'],
+              level: '12',
+              add: [
+                { text: 'Shoots {0} Times', value: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
+                { text: 'Mana Cost: {0}', value: [13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13] }
+              ],
+              stat: [
+                { text: 'Fire Damage: {0}-{1}', value: [0, [5, 10], [7, 12], [9, 14], [11, 16], [13, 18], [15, 20], [17, 22], [19, 24], [22, 27], [25, 30], [28, 33], [31, 36], [34, 39], [37, 42], [40, 45], [43, 48], [48, 54], [53, 60], [58, 66], [63, 72]] }
+              ],
+              bonus: [
+                { treeId: 'tr', skillId: 'fireblast', statIdx: [0], value: [8], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'tr', skillId: 'wakeofinferno', statIdx: [0], value: [8], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+              ]
+            },
+            {
+              id: 'wakeofinferno',
+              top: '68.4',
+              left: '42.8',
+              tooltip: 'middle',
+              affected: [{ treeId: 'tr', skillId: 'fireblast' }, { treeId: 'tr', skillId: 'wakeoffire' }],
+              required: [{ treeId: 'tr', skillId: 'wakeoffire' }],
+              name: 'Wake Of Inferno',
+              desc: ['Trap That Sprays Fire At Passing Enemies'],
+              level: '24',
+              add: [
+                { text: 'Shoots {0} Times', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] },
+                { text: 'Mana Cost: {0}', value: [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20] },
+                { text: 'Range: {0} Yards', value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] }
+              ],
+              stat: [
+                { text: 'Fire Damage: {0}-{1}', value: [0, [11, 26], [19, 36], [28, 46], [37, 56], [46, 65], [54, 76], [64, 85], [72, 95], [83, 107], [95, 119], [106, 131], [116, 143], [127, 155], [138, 167], [149, 179], [160, 191], [173, 206], [187, 220], [200, 235], [214, 249]] }
+              ],
+              bonus: [
+                { treeId: 'tr', skillId: 'wakeoffire', addIdx: [2], value: [0.5], type: ['sum'], text: '{n}: +{0} Yards Per Level' },
+                { treeId: 'tr', skillId: 'fireblast', statIdx: [0], value: [10], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'tr', skillId: 'wakeoffire', statIdx: [0], value: [7], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'tr', skillId: 'deathsentry', statIdx: [0], value: [10], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'bladesentinel',
+              top: '19.7',
+              left: '72.4',
+              tooltip: 'right',
+              name: 'Blade Sentinel',
+              desc: ['Set A Spinning Blade To Patrol', 'Between You And Target Point'],
+              level: '6',
+              add: [
+                { text: '{0}% Weapon Damage', value: [37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5, 37.5] },
+                { text: 'Mana Cost: {0}', value: [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [6, 10], [9, 13], [12, 16], [15, 19], [18, 22], [21, 25], [24, 28], [27, 31], [31, 35], [35, 39], [39, 43], [43, 47], [47, 51], [51, 55], [55, 59], [59, 63], [64, 68], [69, 73], [74, 78], [79, 83]] },
+                { text: 'Duration: {0} Seconds', value: [0, 4, 4.4, 4.9, 5.4, 5.9, 6.4, 6.8, 7.3, 7.8, 8.3, 8.8, 9.2, 9.7, 10.2, 10.7, 11.2, 11.6, 12.1, 12.6, 13.1] }
+              ]
+            },
+            {
+              id: 'bladefury',
+              top: '52.2',
+              left: '72.4',
+              tooltip: 'right',
+              required: [{ treeId: 'tr', skillId: 'wakeoffire' }, { treeId: 'tr', skillId: 'bladesentinel' }],
+              name: 'Blade Fury',
+              desc: ['Throw Spinning Blades', 'To Slice up Your Enemies'],
+              level: '18',
+              add: [
+                { text: '{0}% Weapon Damage', value: [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75] },
+                { text: 'Minimum Mana Required To Cast: {0}', value: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [8, 10], [11, 13], [14, 16], [17, 19], [20, 22], [23, 25], [26, 28], [29, 31], [34, 36], [39, 41], [44, 46], [49, 51], [54, 56], [59, 61], [64, 66], [69, 71], [77, 79], [85, 87], [93, 95], [101, 103]] },
+                { text: 'Mana Cost: {0} Per Blade', value: [0, 1, 1.1, 1.2, 1.3, 1.5, 1.6, 1.7, 1.8, 2, 2.1, 2.2, 2.3, 2.5, 2.6, 2.7, 2.8, 3, 3.1, 3.2, 3.3] }
+              ]
+            },
+            {
+              id: 'bladeshield',
+              top: '84.4',
+              left: '72.4',
+              tooltip: 'right',
+              required: [{ treeId: 'tr', skillId: 'bladefury' }],
+              name: 'Blade Shield',
+              desc: ['Spinning Blades Slice Enemies', 'Who Stray Too Close'],
+              level: '30',
+              add: [
+                { text: '{0}% Weapon Damage', value: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [1, 30], [6, 35], [11, 40], [16, 45], [21, 50], [26, 55], [31, 60], [36, 65], [42, 71], [48, 77], [54, 83], [60, 89], [66, 95], [72, 101], [78, 107], [84, 113], [91, 120], [98, 127], [105, 134], [112, 141]] },
+                { text: 'Duration: {0} Seconds', value: [0, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115] },
+                { text: 'Mana Cost: {0}', value: [0, 27, 29, 31, 33, 35, 37, 39, 41, 43, 45, 47, 49, 51, 53, 55, 57, 59, 61, 63, 65] }
+              ]
+            }
+          ]
+        }
+      ],
       necromancer: [
         {
           id: "sm",
@@ -3216,7 +3831,637 @@ export default {
           ]
         }
       ],
-      druid: [],
+      druid: [
+        {
+          id: "em",
+          name: 'Elemental',
+          src: 'back.jpg',
+          skills: [
+            {
+              id: 'firestorm',
+              top: '3.4',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'em', skillId: 'moltenboulder' }, { treeId: 'em', skillId: 'fissure' }, { treeId: 'em', skillId: 'armageddon' }, { treeId: 'ss', skillId: 'fireclaws' }],
+              name: 'Fire Storm',
+              desc: ['Unleash Fiery Chaos To Burn Your Enemies'],
+              level: '1',
+              add: [
+                { text: 'Mana Cost: {0}', value: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+              ],
+              stat: [
+                { text: 'Average Fire Damage: {0}-{1} Per Second', value: [0, [3, 7], [7, 10], [10, 14], [14, 17], [17, 21], [21, 24], [24, 28], [28, 31], [33, 38], [39, 45], [45, 52], [51, 59], [57, 66], [63, 73], [69, 80], [75, 87], [83, 97], [91, 106], [99, 116], [107, 125]] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'moltenboulder', statIdx: [0], value: [23], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'em', skillId: 'fissure', statIdx: [0], value: [23], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'moltenboulder',
+              top: '19.6',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'em', skillId: 'firestorm' }, { treeId: 'em', skillId: 'volcano' }, { treeId: 'em', skillId: 'armageddon' }, { treeId: 'ss', skillId: 'fireclaws' }],
+              required: [{ treeId: 'em', skillId: 'firestorm' }],
+              name: 'Molten Boulder',
+              desc: ['Launch A Boulder Of Flaming Hot Magma', 'That Knocks Back Your Enemies'],
+              level: '6',
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [6, 12], [10, 17], [14, 22], [18, 27], [22, 32], [26, 37], [30, 42], [34, 47], [41, 55], [48, 63], [55, 71], [62, 79], [69, 87], [76, 95], [83, 103], [90, 111], [100, 122], [110, 133], [120, 144], [130, 155]] },
+                { text: 'Fire Damage: {0}-{1}', value: [0, [6, 12], [10, 17], [14, 22], [18, 27], [22, 32], [26, 37], [30, 42], [34, 47], [41, 55], [48, 63], [55, 71], [62, 79], [69, 87], [76, 95], [83, 103], [90, 111], [100, 122], [110, 133], [120, 144], [130, 155]] },
+                { text: 'Average Fire Damage: {0}-{1} Per Second', value: [0, [12, 16], [19, 24], [25, 30], [33, 38], [40, 45], [47, 51], [54, 59], [61, 65], [69, 74], [77, 82], [86, 90], [94, 99], [102, 107], [110, 115], [118, 123], [126, 131], [136, 140], [145, 150], [155, 160], [164, 169]] },
+                { text: 'Mana Cost: {0}', value: [0, 10, 10.5, 11, 11.5, 12, 12, 13, 13, 14, 14, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'volcano', statIdx: [0], value: [10], type: ['rate'], text: '{n}: +{0}% Damage Per Level' },
+                { treeId: 'em', skillId: 'firestorm', statIdx: [1, 2], value: [8, 8], type: ['rate', 'rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'fissure',
+              top: '35.6',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'em', skillId: 'firestorm' }, { treeId: 'em', skillId: 'volcano' }, { treeId: 'em', skillId: 'armageddon' }, { treeId: 'ss', skillId: 'fireclaws' }],
+              required: [{ treeId: 'em', skillId: 'moltenboulder' }],
+              name: 'Fissure',
+              desc: ['Open Volcanic Vents Below Your Enemies,', 'Burning Them To A Crisp'],
+              level: '12',
+              add: [
+                { text: 'Duration: {0} Seconds', value: [1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6, 1.6] },
+                { text: 'Mana Cost: {0}', value: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] }
+              ],
+              stat: [
+                { text: 'Fire Damage: {0}-{1}', value: [0, [15, 25], [21, 31], [27, 37], [33, 43], [39, 49], [45, 55], [51, 61], [57, 67], [69, 79], [81, 91], [93, 103], [105, 115], [117, 127], [129, 139], [141, 151], [153, 163], [169, 179], [185, 195], [201, 211], [217, 227]] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'firestorm', statIdx: [0], value: [12], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'em', skillId: 'volcano', statIdx: [0], value: [12], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'volcano',
+              top: '68.4',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'em', skillId: 'moltenboulder' }, { treeId: 'em', skillId: 'fissure' }, { treeId: 'em', skillId: 'armageddon' }, { treeId: 'ss', skillId: 'fireclaws' }],
+              required: [{ treeId: 'em', skillId: 'fissure' }],
+              name: 'Volcano',
+              desc: ['Summon Forth A Volcano To Rain Death', 'And Destruction Over Your Enemies'],
+              level: '24',
+              add: [
+                { text: 'Mana Cost: {0}', value: [25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [8, 10], [10, 12], [12, 14], [14, 16], [16, 18], [18, 20], [20, 22], [22, 24], [26, 28], [30, 32], [34, 36], [38, 40], [42, 44], [46, 48], [50, 52], [54, 56], [60, 62], [66, 68], [72, 74], [78, 80]] },
+                { text: 'Fire Damage: {0}-{1}', value: [0, [8, 10], [10, 12], [12, 14], [14, 16], [16, 18], [18, 20], [20, 22], [22, 24], [26, 28], [30, 32], [34, 36], [38, 40], [42, 44], [46, 48], [50, 52], [54, 56], [60, 62], [66, 68], [72, 74], [78, 80]] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'moltenboulder', statIdx: [0], value: [12], type: ['rate'], text: '{n}: +{0}% Damage Per Level' },
+                { treeId: 'em', skillId: 'fissure', statIdx: [1], value: [12], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'em', skillId: 'armageddon', statIdx: [1], value: [12], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'armageddon',
+              top: '84.3',
+              left: '13.2',
+              tooltip: 'left',
+              affected: [{ treeId: 'em', skillId: 'volcano' }],
+              required: [{ treeId: 'em', skillId: 'volcano' }, { treeId: 'em', skillId: 'hurricane' }],
+              name: 'Armageddon',
+              desc: ['Create A Meteor Shower To Rain Fiery', 'Destruction On Nearby Enemies'],
+              level: '30',
+              add: [
+                { text: 'Duration: {0} Seconds', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] },
+                { text: 'Radius: {0} Yards', value: [5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3, 5.3] },
+                { text: 'Mana Cost: {0}', value: [35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35] }
+              ],
+              stat: [
+                { text: 'Fire Damage: {0}-{1}', value: [0, [25, 75], [40, 91], [55, 107], [70, 123], [85, 139], [100, 155], [115, 171], [130, 187], [150, 209], [170, 231], [190, 253], [210, 275], [230, 297], [250, 319], [270, 341], [290, 363], [315, 390], [340, 417], [365, 444], [390, 471]] },
+                { text: 'Average Fire Damage: {0}-{1} Per Second', value: [0, [10, 13], [16, 20], [22, 26], [27, 31], [34, 37], [40, 44], [46, 50], [51, 55], [59, 63], [65, 70], [73, 77], [79, 84], [87, 91], [93, 98], [100, 105], [108, 112], [116, 120], [124, 127], [131, 136], [140, 143]] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'fissure', addIdx: [0], value: [2], type: ['rate'], text: '{n}: +{0} Seconds Per Level' },
+                { treeId: 'em', skillId: 'firestorm', statIdx: [0, 1], value: [14, 14], type: ['rate', 'rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'em', skillId: 'moltenboulder', statIdx: [0, 1], value: [14, 14], type: ['rate', 'rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'em', skillId: 'volcano', statIdx: [0, 1], value: [14, 14], type: ['rate', 'rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'twister',
+              top: '52',
+              left: '42.9',
+              tooltip: 'middle',
+              affected: [{ treeId: 'em', skillId: 'tornado' }, { treeId: 'em', skillId: 'hurricane' }, { treeId: 'em', skillId: 'cyclonearmor' }],
+              required: [{ treeId: 'em', skillId: 'cyclonearmor' }],
+              name: 'Twister',
+              desc: ['Release Several Small Whirlwinds That', 'Cut A Path Through Your Enemies'],
+              level: '18',
+              add: [
+                { text: 'Stun Length: {0} Seconds', value: [0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4] },
+                { text: 'Mana Cost: {0}', value: [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [6, 8], [8, 10], [10, 12], [12, 14], [14, 16], [16, 18], [18, 20], [20, 22], [23, 25], [27, 29], [30, 32], [34, 36], [37, 39], [41, 43], [44, 46], [48, 50], [53, 55], [58, 61], [63, 66], [68, 72]] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'tornado', statIdx: [0], value: [10], type: ['rate'], text: '{n}: +{0}% Damage Per Level' },
+                { treeId: 'em', skillId: 'hurricane', statIdx: [0], value: [10], type: ['rate'], text: '{n}: +{0}% Damage Per Level' }
+              ]
+            },
+            {
+              id: 'tornado',
+              top: '68.4',
+              left: '42.9',
+              tooltip: 'middle',
+              affected: [{ treeId: 'em', skillId: 'twister' }, { treeId: 'em', skillId: 'hurricane' }, { treeId: 'em', skillId: 'cyclonearmor' }],
+              required: [{ treeId: 'em', skillId: 'twister' }],
+              name: 'Tornado',
+              desc: ['Create A Funnel Of Wind And Debris', 'To Blast Your Enemies'],
+              level: '24',
+              add: [
+                { text: 'Mana Cost: {0}', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [25, 35], [33, 43], [41, 51], [49, 59], [57, 67], [65, 75], [73, 83], [81, 91], [95, 106], [109, 121], [123, 136], [137, 151], [151, 166], [165, 181], [179, 196], [193, 211], [213, 232], [233, 253], [253, 274], [273, 295]] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'cyclonearmor', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Damage Per Level' },
+                { treeId: 'em', skillId: 'twister', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Damage Per Level' },
+                { treeId: 'em', skillId: 'hurricane', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Damage Per Level' }
+              ]
+            },
+            {
+              id: 'hurricane',
+              top: '84.3',
+              left: '42.9',
+              tooltip: 'middle',
+              affected: [{ treeId: 'em', skillId: 'twister' }, { treeId: 'em', skillId: 'tornado' }, { treeId: 'em', skillId: 'arcticblast' }, { treeId: 'em', skillId: 'cyclonearmor' }],
+              required: [{ treeId: 'em', skillId: 'tornado' }],
+              name: 'Hurricane',
+              desc: ['Create A Massive Storm Of Wind And', 'Debris To Pound Your Enemies To Bits'],
+              level: '30',
+              add: [
+                { text: 'Duration: {0} Seconds', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] },
+                { text: 'Radius: {0} Yards', value: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6] },
+                { text: 'Mana Cost: {0}', value: [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30] }
+              ],
+              stat: [
+                { text: 'Cold Damage: {0}-{1}', value: [0, [25, 50], [32, 57], [39, 64], [46, 71], [53, 78], [60, 85], [67, 92], [74, 99], [84, 109], [94, 119], [104, 129], [114, 139], [124, 149], [134, 159], [144, 169], [154, 179], [166, 191], [178, 203], [190, 215], [202, 227]] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'cyclonearmor', addIdx: [0], value: [2], type: ['sum'], text: '{n}: +{0} Seconds Per Level' },
+                { treeId: 'em', skillId: 'twister', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Damage Per Level' },
+                { treeId: 'em', skillId: 'tornado', statIdx: [0], value: [9], type: ['rate'], text: '{n}: +{0}% Damage Per Level' }
+              ]
+            },
+            {
+              id: 'arcticblast',
+              top: '19.6',
+              left: '72.4',
+              tooltip: 'right',
+              name: 'Arctic Blast',
+              desc: ['Blast A Continuous Jet Of Ice', 'To Burn Your Enemies With Frost'],
+              level: '6',
+              add: [
+                { text: 'Minimum Mana Required To Cast: {0}', value: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+              ],
+              stat: [
+                { text: 'Average Cold Damage: {0}-{1} Per Second', value: [0, [8, 15], [14, 21], [20, 28], [26, 34], [33, 40], [39, 46], [45, 53], [51, 59], [58, 66], [66, 74], [73, 81], [80, 89], [87, 96], [94, 103], [101, 111], [108, 118], [116, 126], [123, 135], [131, 143], [139, 151]] },
+                { text: 'Cold Length: {0} Seconds', value: [0, 4, 4.6, 5.2, 5.8, 6.4, 7, 7.6, 8.2, 8.8, 9.4, 10, 10.6, 11.2, 11.8, 12.4, 13, 13.6, 14.2, 14.8, 15.4] },
+                { text: 'Range: {0} Yards', value: [0, 5.3, 6, 6, 6.6, 6.6, 7.3, 7.3, 8, 8, 8.6, 8.6, 9.3, 9.3, 10, 10, 10.6, 10.6, 11.3, 11.3, 12] },
+                { text: 'Mana Cost: {0} Per Second', value: [0, 4, 5, 6, 7, 7, 8, 9, 10, 10, 11, 12, 13, 14, 14, 15, 16, 17, 17, 18, 19] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'hurricane', statIdx: [0], value: [15], type: ['rate'], text: '{n}: +{0}% Cold Damage Per Level' },
+                { treeId: 'em', skillId: 'cyclonearmor', statIdx: [0], value: [15], type: ['rate'], text: '{n}: +{0}% Cold Damage Per Level' }
+              ]
+            },
+            {
+              id: 'cyclonearmor',
+              top: '35.6',
+              left: '72.4',
+              tooltip: 'right',
+              affected: [{ treeId: 'em', skillId: 'tornado' }, { treeId: 'em', skillId: 'hurricane' }, { treeId: 'em', skillId: 'arcticblast' }],
+              required: [{ treeId: 'em', skillId: 'arcticblast' }],
+              name: 'Cyclone Armor',
+              desc: ['Shield Yourself From Damage Caused By', 'Fire, Cold, And Lightning'],
+              level: '12',
+              stat: [
+                { text: 'Absorbs {0} Damage', value: [0, 40, 52, 64, 76, 88, 100, 112, 124, 136, 148, 160, 172, 184, 196, 208, 220, 232, 244, 256, 268] },
+                { text: 'Mana Cost: {0}', value: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'twister', statIdx: [0], value: [7], type: ['rate'], text: '{n}: +{0}% Damage Per Level' },
+                { treeId: 'em', skillId: 'tornado', statIdx: [0], value: [7], type: ['rate'], text: '{n}: +{0}% Damage Per Level' },
+                { treeId: 'em', skillId: 'hurricane', statIdx: [0], value: [7], type: ['rate'], text: '{n}: +{0}% Damage Per Level' }
+              ]
+            }
+          ]
+        },
+        {
+          id: "ss",
+          name: 'Shape Shifting',
+          src: 'back.jpg',
+          skills: [
+            {
+              id: 'werewolf',
+              top: '3.4',
+              left: '13.1',
+              tooltip: 'left',
+              name: 'Werewolf',
+              desc: ['Transform Into A Werewolf'],
+              level: '1',
+              add: [
+                { text: 'Mana Cost: {0}', value: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] },
+                { text: 'Max Life: +{0}%', value: [25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25] },
+                { text: 'Max Stamina: +{0}%', value: [25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25] },
+                { text: 'Duration: {0} Seconds', value: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275, 290, 305, 320, 335] },
+                { text: 'Attack Speed: +{0}%', value: [0, 20, 28, 35, 40, 45, 48, 51, 53, 56, 57, 59, 61, 62, 63, 64, 66, 66, 67, 68, 68] }
+              ],
+              bonus: [
+                { treeId: 'ss', skillId: 'lycanthropy' }
+              ]
+            },
+            {
+              id: 'feralrage',
+              top: '35.7',
+              left: '13.1',
+              tooltip: 'left',
+              required: [{ treeId: 'ss', skillId: 'werewolf' }],
+              name: 'Feral Rage',
+              desc: ['When In Werewolf From,', 'Go Into A Frenzied Rage To Steal', 'Increasing Amounts Of Life From Your Enemies'],
+              level: '12',
+              add: [
+                { text: 'Mana Cost: {0}', value: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3] },
+                { text: 'Duration: {0} Seconds', value: [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210] },
+                { text: 'Run/Walk Speed: +{0}-{1}%', value: [0, [19, 31], [19, 36], [19, 36], [19, 40], [19, 40], [19, 43], [19, 43], [19, 45], [19, 45], [19, 47], [19, 47], [19, 49], [19, 49], [19, 50], [19, 50], [19, 52], [19, 52], [19, 53], [19, 53], [19, 55]] },
+                { text: 'Life Steal: +{0}-{1}%', value: [0, [4, 12], [4, 16], [4, 20], [4, 24], [4, 28], [4, 32], [4, 36], [4, 40], [4, 44], [4, 48], [4, 52], [4, 56], [4, 60], [4, 64], [4, 68], [4, 72], [4, 76], [4, 80], [4, 84], [4, 88]] },
+                { text: 'Damage: +{0}%', value: [0, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145] }
+              ]
+            },
+            {
+              id: 'rabies',
+              top: '52.1',
+              left: '13.1',
+              tooltip: 'left',
+              required: [{ treeId: 'ss', skillId: 'feralrage' }],
+              name: 'Rabies',
+              desc: ['When In Werewolf Form,', 'Bite Your Enemies', 'To Inflict Them With Disease', 'That Spreads To Other Monsters'],
+              level: '18',
+              add: [
+                { text: 'Mana Cost: {0}', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 50, 57, 64, 71, 78, 85, 92, 99, 106, 113, 120, 127, 134, 141, 148, 155, 162, 169, 176, 183] },
+                { text: 'Poison Damage: {0}-{1}', value: [0, [18, 43], [34, 61], [52, 82], [73, 105], [96, 131], [121, 159], [150, 190], [180, 223], [219, 264], [261, 308], [306, 356], [354, 406], [405, 460], [460, 517], [517, 577], [578, 640], [658, 723], [742, 810], [831, 901], [924, 996]] },
+                { text: 'Over {0} Seconds', value: [0, 4, 4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 7.6, 8, 8.4, 8.8, 9.2, 9.6, 10, 10.4, 10.8, 11.2, 11.6] }
+              ],
+              bonus: [
+                { treeId: 'sm', skillId: 'poisoncreeper', statIdx: [1], value: [18], type: ['rate'], text: '{n}: +{0}% Poison Damage Per Level' }
+              ]
+            },
+            {
+              id: 'fury',
+              top: '84.4',
+              left: '13.1',
+              tooltip: 'left',
+              required: [{ treeId: 'ss', skillId: 'rabies' }],
+              name: 'Fury',
+              desc: ['When In Werewolf Form, Attack', 'Either Multiple Adjacent Targets', 'Or One Target Multiple Times'],
+              level: '30',
+              add: [
+                { text: 'Mana Cost: {0}', value: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+              ],
+              stat: [
+                { text: '{0} Hits', value: [0, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
+                { text: 'Attack Rating: +{0}%', value: [0, 50, 57, 64, 71, 78, 85, 92, 99, 106, 113, 120, 127, 134, 141, 148, 155, 162, 169, 176, 183] },
+                { text: 'Damage: +{0}%', value: [0, 100, 117, 134, 151, 168, 185, 202, 219, 236, 253, 270, 287, 304, 321, 338, 355, 372, 389, 406, 423] }
+              ]
+            },
+            {
+              id: 'lycanthropy',
+              top: '3.4',
+              left: '42.8',
+              tooltip: 'middle',
+              affected: [{ treeId: 'ss', skillId: 'werewolf' }, { treeId: 'ss', skillId: 'werebear' }],
+              required: [{ treeId: 'ss', skillId: 'werewolf' }],
+              name: 'Lycanthropy',
+              desc: ['Passive - Improves Duration And Life', 'When In Werewolf Or Werebear Form'],
+              level: '1',
+              stat: [
+                { text: 'Max Life: +{0}%', value: [0, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115] },
+                { text: 'Duration: +{0} Seconds', value: [0, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 240, 260, 280, 300, 320, 340, 360, 380, 400, 420] }
+              ]
+            },
+            {
+              id: 'fireclaws',
+              top: '52.1',
+              left: '42.8',
+              tooltip: 'middle',
+              required: [{ treeId: 'ss', skillId: 'feralrage' }, { treeId: 'ss', skillId: 'maul' }],
+              name: 'Fire Claws',
+              desc: ['When In Werewolf Or Werebear', 'Form, Maul Your Enemies', 'With A Fiery Claw Attack'],
+              level: '18',
+              add: [
+                { text: 'Mana Cost: {0}', value: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 50, 65, 80, 95, 110, 125, 140, 155, 170, 185, 200, 215, 230, 245, 260, 275, 290, 305, 320, 335] },
+                { text: 'Fire Damage: {0}-{1}', value: [0, [15, 20], [23, 28], [31, 36], [39, 44], [47, 52], [55, 60], [63, 68], [71, 76], [83, 88], [95, 100], [107, 112], [119, 124], [131, 136], [143, 148], [155, 160], [167, 172], [187, 194], [207, 216], [227, 238], [247, 260]] }
+              ],
+              bonus: [
+                { treeId: 'em', skillId: 'firestorm', statIdx: [1], value: [22], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'em', skillId: 'moltenboulder', statIdx: [1], value: [22], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'em', skillId: 'fissure', statIdx: [1], value: [22], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' },
+                { treeId: 'em', skillId: 'volcano', statIdx: [1], value: [22], type: ['rate'], text: '{n}: +{0}% Fire Damage Per Level' }
+              ]
+            },
+            {
+              id: 'hunger',
+              top: '68.4',
+              left: '42.8',
+              tooltip: 'middle',
+              required: [{ treeId: 'ss', skillId: 'fireclaws' }],
+              name: 'Hunger',
+              desc: ['When In Werewolf Or Werebear', 'Form, Bite your Enemies', 'To Gain Life And Mana'],
+              level: '24',
+              add: [
+                { text: 'Damage: -{0}%', value: [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75] },
+                { text: 'Mana Cost: {0}', value: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240] },
+                { text: 'Life Steal: +{0}%', value: [0, 72, 90, 104, 116, 125, 132, 138, 143, 149, 152, 156, 159, 162, 165, 167, 170, 171, 173, 174, 176] },
+                { text: 'Mana Steal: +{0}%', value: [0, 72, 90, 104, 116, 125, 132, 138, 143, 149, 152, 156, 159, 162, 165, 167, 170, 171, 173, 174, 176] }
+              ]
+            },
+            {
+              id: 'werebear',
+              top: '19.7',
+              left: '72.2',
+              tooltip: 'right',
+              name: 'Werebear',
+              desc: ['Transform Into Werebear'],
+              level: '6',
+              add: [
+                { text: 'Mana Cost: {0}', value: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] },
+                { text: 'Max Life: +{0}%', value: [75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75, 75] },
+                { text: 'Duration: {0} Seconds', value: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40] }
+              ],
+              stat: [
+                { text: 'Damage: +{0}%', value: [0, 55, 63, 71, 79, 87, 95, 103, 111, 119, 127, 135, 143, 151, 159, 167, 175, 183, 191, 199, 207] },
+                { text: 'Defense: +{0}%', value: [0, 25, 31, 37, 43, 49, 55, 61, 67, 73, 79, 85, 91, 97, 103, 109, 115, 121, 127, 133, 139] }
+              ],
+              bonus: [
+                { treeId: 'ss', skillId: 'lycanthropy' }
+              ]
+            },
+            {
+              id: 'maul',
+              top: '35.7',
+              left: '72.2',
+              tooltip: 'right',
+              affected: [{ treeId: 'ss', skillId: 'shockwave' }],
+              required: [{ treeId: 'ss', skillId: 'werebear' }],
+              name: 'Maul',
+              desc: ['When In Werebear Form,', 'Maul Your Enemies', 'For Increasing Extra Damage', 'With Succenssive Hits'],
+              level: '12',
+              add: [
+                { text: 'Mana Cost: {0}', value: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3] },
+                { text: 'Duration: {0} Seconds', value: [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20] }
+              ],
+              stat: [
+                { text: 'Attack Rating: +{0}%', value: [0, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210] },
+                { text: 'Damage: +{0}-{1}%', value: [0, [20, 60], [20, 80], [20, 80], [20, 100], [20, 100], [20, 120], [20, 120], [20, 140], [20, 140], [20, 160], [20, 160], [20, 180], [20, 180], [20, 200], [20, 200], [20, 220], [20, 220], [20, 240], [20, 240], [20, 260]] },
+                { text: 'Stun Length: {0} Seconds', value: [0, 0.9, 1.3, 1.6, 1.9, 2.2, 2.3, 2.5, 2.6, 2.7, 2.8, 2.9, 3, 3, 3.1, 3.2, 3.2, 3.2, 3.3, 3.3, 3.4] }
+              ]
+            },
+            {
+              id: 'shockwave',
+              top: '68.4',
+              left: '72.2',
+              tooltip: 'right',
+              required: [{ treeId: 'ss', skillId: 'maul' }],
+              name: 'Shock Wave',
+              desc: ['When In Werebear Form,', 'Create A Shock Wave', 'That Stuns Nearby Enemies'],
+              level: '24',
+              add: [
+                { text: 'Mana Cost: {0}', value: [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [10, 20], [13, 23], [16, 26], [19, 29], [22, 32], [25, 35], [28, 38], [31, 41], [36, 46], [41, 51], [46, 56], [51, 61], [56, 66], [61, 71], [66, 76], [71, 81], [78, 88], [85, 95], [92, 102], [99, 109]] },
+                { text: 'Stun Length: {0} Seconds', value: [0, 1.6, 2.2, 2.8, 3.4, 4, 4.6, 5.2, 5.8, 6.4, 7, 7.6, 8.2, 8.8, 9.4, 10, 10.6, 11.2, 11.8, 12.4, 13] }
+              ],
+              bonus: [
+                { treeId: 'ss', skillId: 'maul', statIdx: [0], value: [5], type: ['rate'], text: '{n}: +{0}% Damage Per Level' }
+              ]
+            }
+          ]
+        },
+        {
+          id: "sm",
+          name: 'Summoning',
+          src: 'back.jpg',
+          skills: [
+            {
+              id: 'oaksage',
+              top: '19.7',
+              left: '13.2',
+              tooltip: 'left',
+              name: 'Oak Sage',
+              desc: ['Summon A Spirit Pet That Increases', 'Life For You And Your Party'],
+              level: '6',
+              stat: [
+                { text: 'Life: {0}', value: [0, 60, 78, 96, 114, 132, 150, 168, 186, 204, 222, 240, 258, 276, 294, 312, 330, 348, 366, 384, 402] },
+                { text: 'Max Life: +{0}%', value: [0, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125] },
+                { text: 'Radius: {0} Yards', value: [0, 20, 21.3, 22.6, 24, 25.3, 26.6, 28, 29.3, 30.6, 32, 33.3, 34.6, 36, 37.3, 38.6, 40, 41.3, 42.6, 44, 45.3] },
+                { text: 'Mana Cost: {0}', value: [0, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34] }
+              ]
+            },
+            {
+              id: 'heartofwolverine',
+              top: '52.1',
+              left: '13.2',
+              tooltip: 'left',
+              required: [{ treeId: 'sm', skillId: 'oaksage' }],
+              name: 'Heart Of Wolverine',
+              desc: ['Summon A Spirit Pet That Adds', 'To The Damage And Attack Rating', 'Of You And Your Party'],
+              level: '18',
+              stat: [
+                { text: 'Life: {0}', value: [0, 136, 170, 204, 238, 272, 306, 340, 374, 408, 442, 476, 510, 544, 578, 612, 646, 680, 714, 748, 782] },
+                { text: 'Attack Rating: +{0}%', value: [0, 25, 32, 39, 46, 53, 60, 67, 74, 81, 88, 95, 102, 109, 116, 123, 130, 137, 144, 151, 158] },
+                { text: 'Damage: +{0}%', value: [0, 20, 27, 34, 41, 48, 55, 62, 69, 76, 83, 90, 97, 104, 111, 118, 125, 132, 139, 146, 153] },
+                { text: 'Radius: {0} Yards', value: [0, 1.6, 2.2, 2.8, 3.4, 4, 4.6, 5.2, 5.8, 6.4, 7, 7.6, 8.2, 8.8, 9.4, 10, 10.6, 11.2, 11.8, 12.4, 13] },
+                { text: 'Mana Cost: {0}', value: [0, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39] }
+              ]
+            },
+            {
+              id: 'spiritofbarbs',
+              top: '84.4',
+              left: '13.2',
+              tooltip: 'left',
+              required: [{ treeId: 'sm', skillId: 'heartofwolverine' }],
+              name: 'Spirit Of Barbs',
+              desc: ['Summon Spirit Pet That Reflects Damage', 'Taken By Your And Your Party', 'Back At Your Enemies'],
+              level: '30',
+              stat: [
+                { text: 'Life: {0}', value: [0, 213, 266, 319, 372, 426, 479, 532, 585, 639, 692, 745, 798, 852, 905, 958, 1011, 1065, 1118, 1171, 1224] },
+                { text: '{0}% Damage Returned', value: [0, 50, 70, 90, 110, 130, 150, 170, 190, 210, 230, 250, 270, 290, 310, 330, 350, 370, 390, 410, 430] },
+                { text: 'Radius: {0} Yards', value: [0, 20, 21.3, 22.6, 24, 25.3, 26.6, 28, 29.3, 30.6, 32, 33.3, 34.6, 36, 37.3, 38.6, 40, 41.3, 42.6, 44, 45.3] },
+                { text: 'Mana Cost: {0}', value: [0, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44] }
+              ]
+            },
+            {
+              id: 'raven',
+              top: '3.3',
+              left: '42.9',
+              tooltip: 'middle',
+              name: 'Raven',
+              desc: ['Summon Ravens To Peck Out', 'The Eyes Of Your Enemies'],
+              level: '1',
+              add: [
+                { text: 'Mana Cost: {0}', value: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [2, 4], [3, 5], [4, 6], [5, 7], [6, 8], [7, 9], [8, 10], [9, 11], [10, 12], [11, 13], [12, 14], [13, 15], [14, 16], [15, 17], [16, 18], [17, 19], [18, 20], [19, 21], [20, 22], [21, 23]] },
+                { text: '{0} Hits', value: [0, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31] },
+                { text: 'Ravens: {0}', value: [0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] }
+              ]
+            },
+            {
+              id: 'summonspiritwolf',
+              top: '19.7',
+              left: '42.9',
+              tooltip: 'middle',
+              affected: [{ treeId: 'sm', skillId: 'summondirewolf' }, { treeId: 'sm', skillId: 'summongrizzly' }],
+              required: [{ treeId: 'sm', skillId: 'raven' }],
+              name: 'Summon Spirit Wolf',
+              desc: ['Summon A Wolf With Teleporting Ability', 'To Fight By Your Side'],
+              level: '6',
+              add: [
+                { text: 'Mana Cost: {0}', value: [15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15] },
+                { text: 'Life: {0}', value: [71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71, 71] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [2, 6], [3, 7], [4, 8], [6, 9], [7, 10], [8, 12], [9, 13], [10, 14], [13, 16], [15, 19], [18, 21], [20, 24], [22, 26], [25, 28], [27, 31], [30, 33], [34, 38], [39, 43], [44, 48], [49, 52]] },
+                { text: 'Wolves: {0}', value: [0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
+                { text: 'Attack Rating: +{0}%', value: [0, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 550] },
+                { text: 'Defense: +{0}%', value: [0, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 230, 240] }
+              ],
+              bonus: [
+                { treeId: 'sm', skillId: 'summondirewolf' },
+                { treeId: 'sm', skillId: 'summongrizzly' }
+              ]
+            },
+            {
+              id: 'summondirewolf',
+              top: '52.1',
+              left: '42.9',
+              tooltip: 'middle',
+              affected: [{ treeId: 'sm', skillId: 'summonspiritwolf' }, { treeId: 'sm', skillId: 'summongrizzly' }],
+              required: [{ treeId: 'sm', skillId: 'oaksage' }, { treeId: 'sm', skillId: 'summonspiritwolf' }],
+              name: 'Summon Dire Wolf',
+              desc: ['Summon A Wolf That Becomes Enraged,', 'Eating Corpses To Increase Damage', 'It Does To Enemies'],
+              level: '18',
+              add: [
+                { text: 'Mana Cost: {0}', value: [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20] }
+              ],
+              stat: [
+                { text: 'Life: {0}', value: [0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5] },
+                { text: 'Damage: {0}-{1}', value: [0, [8, 13], [10, 16], [12, 18], [14, 20], [17, 23], [19, 25], [21, 27], [24, 29], [27, 33], [31, 36], [34, 40], [37, 43], [41, 47], [44, 50], [48, 54], [51, 57], [58, 64], [65, 71], [72, 78], [79, 85]] },
+                { text: 'Wolves: {0}', value: [0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3] },
+                { text: 'Max Life: +{0}%', value: [0, 50, 75, 100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525] }
+              ],
+              bonus: [
+                { treeId: 'sm', skillId: 'summonspiritwolf' },
+                { treeId: 'sm', skillId: 'summongrizzly' }
+              ]
+            },
+            {
+              id: 'summongrizzly',
+              top: '84.4',
+              left: '42.9',
+              tooltip: 'middle',
+              affected: [{ treeId: 'sm', skillId: 'summonspiritwolf' }, { treeId: 'sm', skillId: 'summondirewolf' }],
+              required: [{ treeId: 'sm', skillId: 'summondirewolf' }],
+              name: 'Summon Grizzly',
+              desc: ['Summon A Ferocious Grizzly Bear'],
+              level: '30',
+              add: [
+                { text: 'Mana Cost: {0}', value: [40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40] },
+                { text: 'Life: {0}', value: [650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650, 650] }
+              ],
+              stat: [
+                { text: 'Damage: {0}-{1}', value: [0, [37, 75], [54, 94], [72, 116], [93, 139], [115, 165], [140, 192], [166, 222], [195, 253], [235, 297], [279, 344], [326, 393], [376, 446], [428, 502], [484, 561], [543, 622], [605, 687], [684, 769], [767, 855], [854, 945], [945, 1039]] },
+                { text: 'Damage: +{0}%', value: [0, 25, 35, 45, 55, 65, 75, 85, 95, 105, 115, 125, 135, 145, 155, 165, 175, 185, 195, 205, 215] }
+              ],
+              bonus: [
+                { treeId: 'sm', skillId: 'summonspiritwolf' },
+                { treeId: 'sm', skillId: 'summondirewolf' }
+              ]
+            },
+            {
+              id: 'poisoncreeper',
+              top: '3.3',
+              left: '72.3',
+              tooltip: 'right',
+              affected: [{ treeId: 'ss', skillId: 'rabies' }],
+              name: 'Poison Creeper',
+              desc: ['Summon A Vine That Spreads', 'Disease To All It Contacts'],
+              level: '1',
+              add: [
+                { text: 'Mana Cost: {0}', value: [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8] }
+              ],
+              stat: [
+                { text: 'Life: {0}', value: [0, 50, 62, 75, 87, 100, 112, 125, 137, 150, 162, 175, 187, 200, 212, 225, 237, 250, 262, 275, 287] },
+                { text: 'Poison Damage: {0}-{1}', value: [0, [4, 6], [7, 8], [10, 11], [12, 14], [15, 17], [18, 19], [21, 22], [23, 25], [28, 30], [33, 34], [37, 39], [42, 44], [47, 48], [51, 53], [56, 58], [61, 62], [67, 68], [73, 74], [78, 80], [84, 86]] },
+                { text: 'Over {0} Seconds', value: [0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4] }
+              ]
+            },
+            {
+              id: 'carrionvine',
+              top: '35.7',
+              left: '72.3',
+              tooltip: 'right',
+              required: [{ treeId: 'sm', skillId: 'poisoncreeper' }],
+              name: 'Carrion Vine',
+              desc: ['Summon A Vine That Eats Corpses', 'And Replenishes Your Life'],
+              level: '12',
+              add: [
+                { text: 'Mana Cost: {0}', value: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10] }
+              ],
+              stat: [
+                { text: 'Life: {0}', value: [0, 95, 118, 142, 166, 190, 213, 237, 261, 285, 308, 332, 356, 380, 403, 427, 451, 475, 498, 522, 546] },
+                { text: 'Heals: +{0}%', value: [0, 4, 5, 6, 6, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10] }
+              ]
+            },
+            {
+              id: 'solarcreeper',
+              top: '68.4',
+              left: '72.3',
+              tooltip: 'right',
+              required: [{ treeId: 'sm', skillId: 'carrionvine' }],
+              name: 'Solar Creeper',
+              desc: ['Summon A Vine That Eats Corpses', 'And Replenishes Your Mana'],
+              level: '24',
+              stat: [
+                { text: 'Life: {0}', value: [0, 165, 198, 231, 264, 297, 330, 363, 396, 429, 462, 495, 528, 561, 594, 627, 660, 693, 726, 759, 792] },
+                { text: 'Mana Recovery Rate: +{0}%', value: [0, 2, 2, 3, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6] },
+                { text: 'Mana Cost: {0}', value: [0, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33] }
+              ]
+            }
+          ]
+        }
+      ],
       lang: {
         notLearned: 'You have not learned this skill yet',
         remain: 'Skill Choices Remaining',

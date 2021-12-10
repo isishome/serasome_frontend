@@ -6,6 +6,7 @@ const d2rAccount = () => import(/* webpackChunkName: "d2r-account" */ '@/pages/d
 const d2rKnowledge = () => import(/* webpackChunkName: "d2r-knowledge" */ '@/pages/d2r/Knowledge/Main')
 const d2rStorage = () => import(/* webpackChunkName: "d2r-storage" */ '@/pages/d2r/Storage')
 const d2rSearch = () => import(/* webpackChunkName: "d2r-search" */ '@/pages/d2r/Search')
+//const d2rCalc = () => import(/* webpackChunkName: "d2r-calc" */ '@/pages/d2r/Calc')
 
 const routes = [
   {
@@ -27,6 +28,15 @@ const routes = [
       noAD: true
     }
   },
+  // {
+  //   name: 'd2r-calc',
+  //   path: '/d2r/calc',
+  //   component: d2rCalc,
+  //   meta: {
+  //     noAD: true,
+  //     independent: true
+  //   }
+  // },
   {
     path: '/d2r/cube',
     redirect: '/d2r/knowledge/Items/Cube',

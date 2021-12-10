@@ -32,7 +32,7 @@
       </template>
       <template #item="{props}">
         <div class="q-pa-sm col-xs-12 col-sm-6">
-          <q-card flat bordered class="bg-transparent table-card">
+          <q-card flat bordered class="bg-transparent d2r-card">
             <q-card-section class="text-center">
               <q-img v-if="'izual' === props.row.voice" :src='props.row.image' width="100%" />
               <q-img v-else-if="'tyrael' === props.row.voice" :src='props.row.image' width="100%" />
@@ -194,11 +194,6 @@
     box-shadow: 0 0 0 1px rgba(200, 200, 200, 1) !important;
   }
 
-  .q-card {
-    border: solid 1px #333333;
-    background-color: rgba(245, 245, 245, 1) !important;
-  }
-
   .body--light tbody tr {
     background-color: rgba(245, 245, 245, 1) !important;
   }
@@ -247,9 +242,5 @@
     text-align: left;
     word-break: keep-all;
     text-overflow: ellipsis;
-  }
-
-  .body--light .table-card {
-    border-color: rgba(200, 200, 200.1);
   }
 </style>
