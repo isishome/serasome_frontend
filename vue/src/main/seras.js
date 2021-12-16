@@ -8,18 +8,14 @@ import routes from '@/router/seras'
 import store from '@/store/seras'
 import axios from 'axios'
 import vuePlugin from "@/plugin/highlight"
+import { Quasar, Notify, Cookies, Dark } from 'quasar'
+//import VFacebookLogin from 'vue-facebook-login-component'
+import GAuth from 'vue-google-oauth2'
 
 const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
 const Logo = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Logo')
 const PostList = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/PostList')
 const PostRead = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/PostRead')
-const Confirm = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Confirm')
-const Prompt = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Prompt')
-const Comment = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Comment')
-const CommentDate = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/CommentDate')
-import { Quasar, Notify, Cookies, Dark } from 'quasar'
-//import VFacebookLogin from 'vue-facebook-login-component'
-import GAuth from 'vue-google-oauth2'
 
 const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
 
@@ -172,10 +168,6 @@ Vue.component('adsense', Adsense)
 Vue.component('ss-logo', Logo)
 Vue.component('ss-post-list', PostList)
 Vue.component('ss-post-read', PostRead)
-Vue.component('ss-confirm', Confirm)
-Vue.component('ss-prompt', Prompt)
-Vue.component('ss-comment', Comment)
-Vue.component('ss-comment-date', CommentDate)
 //Vue.component('v-facebook-login', VFacebookLogin)
 
 Vue.mixin(mixin)

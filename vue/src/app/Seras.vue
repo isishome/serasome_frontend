@@ -10,7 +10,7 @@
             </q-btn>
             <q-btn dense flat padding="xs" size="30px" class="gt-sm" @click="home">
               <q-avatar class="ss-header">
-                <img src="@/assets/images/logo.svg" />
+                <img src="@/assets/images/seras.svg" />
               </q-avatar>
               <span class="col q-ml-sm text-teal-4 gt-sm font-logo">SERA<span class="text-amber-7">SOME</span></span>
             </q-btn>
@@ -32,7 +32,7 @@
           <div class="absolute-center lt-md nunito">
             <q-btn flat dense size="30px" class="row justify-center" @click="home">
               <q-avatar round class="ss-header">
-                <img src="@/assets/images/logo.svg" />
+                <img src="@/assets/images/seras.svg" />
               </q-avatar>
               <span class="q-ml-sm text-h6 text-teal-4 lt-md gt-xs font-logo">SERA<span
                   class="text-amber-7">SOME</span></span>
@@ -235,11 +235,11 @@
         <div class="platform-ios-only q-py-md"></div>
         <q-page-sticky v-show="pageScroller" v-if="$route.name === 'some' && signStatus" position="bottom-right"
           :offset="[0, 0]">
-          <q-btn push :style="$q.screen.lt.md ? 'right:10px;bottom:30px' : 'right:20vw;bottom:20px'" round size="md"
+          <q-btn push :style="$q.screen.lt.lg ? 'right:10px;bottom:30px' : 'right:20vw;bottom:20px'" round size="md"
             icon="edit" color="orange" :to="`/@${$route.params.sname}/a`" />
         </q-page-sticky>
         <q-page-scroller v-show="pageScroller" position="bottom-left" :scroll-offset="150" :offset="[0, 0]">
-          <q-btn push :style="$q.screen.lt.md ? 'left:10px;bottom:30px' : 'left:20vw;bottom:20px'" round size="md"
+          <q-btn push :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : 'left:20vw;bottom:20px'" round size="md"
             icon="keyboard_arrow_up" color="teal-4" />
         </q-page-scroller>
       </q-page-container>
@@ -248,7 +248,7 @@
         <div class="col-4 gt-sm"></div>
         <div class="col q-ma-none col-md-4 row justify-center items-center q-gutter-x-xs text-caption">
           <q-avatar size="md">
-            <img src="@/assets/images/logo.svg" />
+            <img src="@/assets/images/seras.svg" />
           </q-avatar>
           <div>SeraSome @2021</div>
         </div>

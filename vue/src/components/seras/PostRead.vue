@@ -126,8 +126,9 @@
             <ss-comment ref="comment" :value="commentList" :auth="postInfo.auth" @refresh="refresh" @get="onLoad"
               @delete="setDelete" @modify="setModify" @reply="setReply" />
             <transition name="fade">
-              <q-btn class="gt-sm fixed-bottom-left" v-if="showTop" style="left:20vw;bottom:20px" round size="14px"
-                icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
+              <q-btn class="gt-sm fixed-bottom-left" v-if="showTop" style="z-index: 1;"
+                :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : $q.screen.lt.xl ? 'left:10vw;bottom:30px'  : 'left:20vw;bottom:20px'"
+                round size="14px" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
             </transition>
             <ss-confirm v-model="deleteAttachConfirm" icon="delete" color="negative" text-color="white"
               :message="$t('postRead.message.deleteAttachments')" @cancel="deleteAttachConfirm = false"
@@ -212,14 +213,14 @@
     mapGetters,
     mapActions
   } from 'vuex'
-
   import {
     scroll,
     copyToClipboard,
     uid
   } from 'quasar'
-
   import hljs from 'highlight.js'
+  const Confirm = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Confirm')
+  const Comment = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Comment')
 
   const {
     getScrollTarget,
@@ -251,6 +252,10 @@
           return []
         }
       }
+    },
+    components: {
+      'ss-confirm': Confirm,
+      'ss-comment': Comment
     },
     data() {
       return {

@@ -48,7 +48,7 @@
       },
       debounce: {
         type: Number,
-        default: 300
+        default: 1
       },
       random: {
         type: Boolean,

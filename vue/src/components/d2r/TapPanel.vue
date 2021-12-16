@@ -140,10 +140,12 @@
 
   .tabs .q-tab .q-img {
     filter: opacity(.6) grayscale(100%);
+    -webkit-filter: opacity(.6) grayscale(100%);
   }
 
   .tabs .q-tab.active .q-img {
     filter: opacity(1) brightness(1.5) grayscale(0);
+    -webkit-filter: opacity(1) brightness(1.5) grayscale(0);
   }
 
   @media screen and (max-width:599px) {

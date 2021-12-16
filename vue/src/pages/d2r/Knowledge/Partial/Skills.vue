@@ -156,9 +156,12 @@
     methods: {
       ...mapActions({
         setData: 'setSkillsData',
-        setPoints: 'setSkillsPoints'
+        setPoints: 'setSkillsPoints',
+        addPoints: 'addSkillsPoints'
       }),
       init() {
+        this.data = {}
+        this.setPoints(110)
         this.loaded = 0
         this.existsData = false
         this.shareUrl = ''
@@ -248,7 +251,7 @@
         }
 
         if (remain >= 0 && skillRemain >= 0 && skillRemain <= 20) {
-          this.setPoints(-points)
+          this.addPoints(-points)
           this.data[treeId][skillId] += points
         }
 
@@ -315,13 +318,27 @@
           .then(function () {
             vm.loading = false
           })
-      }
+      },
+      // reset() {
+      //   this.mobile.max = false
+      //   this.mobile.remove = false
+      //   this.mobile.info = false
+
+      //   if (this.$children) {
+      //     this.$children.forEach(c => {
+      //       if (c.points && c.points > 0) {
+      //         c.choice(-1000)
+      //       }
+      //     })
+      //   }
+      // }
     }
   }
 </script>
 <style scoped>
   .body--dark .desc img {
     filter: invert(100%);
+    -webkit-filter: invert(100%);
     width: 24px;
     height: 24px;
   }

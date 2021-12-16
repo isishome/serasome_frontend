@@ -1,12 +1,12 @@
 <template>
   <div ref="scrollTarget">
-    <button class="btn" :style="`top:${info.top}%;left:${info.left}%`" @click.exact="choice(1)"
+    <button class="btn relative-position" :style="`top:${info.top}%;left:${info.left}%`" @click.exact="choice(1)"
       @contextmenu.exact.prevent="choice(-1)" @click.shift.exact="choice(1000)"
       @contextmenu.shift.exact.prevent="choice(-1000)">
       <img class="img no-pointer-events" :class="points > 0 ? 'learned' : ''" :src="src" />
-      <q-tooltip v-if="!$q.platform.is.mobile" content-class="skill-tooltip font-kodia"
-        :scroll-target="$refs.scrollTarget" size="xs" :anchor="`bottom ${tooltip}`" :self="`top ${tooltip}`"
-        :offset="[0,0]" transition-show="none" transition-hide="none">
+      <q-tooltip v-if="$q.screen.gt.sm" content-class="skill-tooltip font-kodia" :scroll-target="$refs.scrollTarget"
+        size="xs" :anchor="`bottom ${tooltip}`" :self="`top ${tooltip}`" :offset="[0,0]" transition-show="none"
+        transition-hide="none">
         <div class="full-width column items-center word-keep tooltip-contents"
           :class="[disable ? 'text-red-5' : 'text-grey-4', $q.screen.lt.sm ? 'q-gutter-xs' : 'q-gutter-md']">
           <div v-if="points === 0" class="title d2r-green first-letter">
@@ -49,49 +49,53 @@
           </div>
         </div>
       </q-tooltip>
-      <q-dialog v-else full-width v-model="dialog" content-class="font-kodia">
-        <div class="bg-black full-width no-scroll column items-center word-keep tooltip-contents q-px-none q-py-sm"
-          :class="[disable ? 'text-red-5' : 'text-grey-4', 'q-gutter-y-sm']">
-          <div v-if="points === 0" class="title d2r-green first-letter">
-            {{lang.notLearned}}
-          </div>
-          <div class="name d2r-green first-letter">
-            {{info.name}}
-          </div>
-          <div class="q-mt-none column items-center">
-            <div v-for="(d, idx) in info.desc" :key="idx">{{d}}</div>
-            <div v-if="points !== 20" class="first-letter">{{lang.required}} {{Number(info.level) + points}}
+      <template v-else>
+        <q-btn v-if="!$q.platform.is.mobile" dense flat round unelevated :ripple="false" text-color="green" icon="info"
+          class="absolute-top-right" style="margin-right: -5px;margin-top:-5px;" @click.stop="dialog = true" />
+        <q-dialog full-width v-model="dialog" content-class="font-kodia">
+          <div class="bg-black full-width no-scroll column items-center word-keep tooltip-contents q-px-none q-py-sm"
+            :class="[disable ? 'text-red-5' : 'text-grey-4', 'q-gutter-y-sm']">
+            <div v-if="points === 0" class="title d2r-green first-letter">
+              {{lang.notLearned}}
             </div>
-            <div v-else class="first-letter">{{lang.reached}}</div>
-          </div>
-          <div v-if="adds.length > 0" class="column items-center">
-            <div class="first-letter" v-for="(a, idx) in adds" :key="idx">{{a}}
-            </div>
-          </div>
-          <div v-if="points > 0" class="column items-center">
-            <div class="first-letter">{{lang.current}} : {{points}}
-            </div>
-            <div class="first-letter" v-for="(s, idx) in stats" :key="idx">{{s}}
-            </div>
-          </div>
-          <div v-if="points !== 20" class="column items-center">
-            <div class="first-letter">{{points > 0 ? lang.next : lang.first}} {{lang.level}}
-            </div>
-            <div class="first-letter" v-for="(n, idx) in nexts" :key="idx">{{n}}
-            </div>
-          </div>
-          <div v-if="bonuses.length > 0" class="column items-center q-gutter-y-xs">
-            <div class="d2r-green row justify-center items-center q-gutter-xs">
-              <div class="first-letter">{{info.name}}</div>
-              <div class="first-letter" v-for="(l, idx) in lang.bonus.split(' ')" :key="idx">{{l}}</div>
-              <div class="q-ml-none">:</div>
+            <div class="name d2r-green first-letter">
+              {{info.name}}
             </div>
             <div class="q-mt-none column items-center">
-              <div class="first-letter" v-for="(b, idx) in bonuses" :key="idx">{{b}}</div>
+              <div v-for="(d, idx) in info.desc" :key="idx">{{d}}</div>
+              <div v-if="points !== 20" class="first-letter">{{lang.required}} {{Number(info.level) + points}}
+              </div>
+              <div v-else class="first-letter">{{lang.reached}}</div>
+            </div>
+            <div v-if="adds.length > 0" class="column items-center">
+              <div class="first-letter" v-for="(a, idx) in adds" :key="idx">{{a}}
+              </div>
+            </div>
+            <div v-if="points > 0" class="column items-center">
+              <div class="first-letter">{{lang.current}} : {{points}}
+              </div>
+              <div class="first-letter" v-for="(s, idx) in stats" :key="idx">{{s}}
+              </div>
+            </div>
+            <div v-if="points !== 20" class="column items-center">
+              <div class="first-letter">{{points > 0 ? lang.next : lang.first}} {{lang.level}}
+              </div>
+              <div class="first-letter" v-for="(n, idx) in nexts" :key="idx">{{n}}
+              </div>
+            </div>
+            <div v-if="bonuses.length > 0" class="column items-center q-gutter-y-xs">
+              <div class="d2r-green row justify-center items-center q-gutter-xs">
+                <div class="first-letter">{{info.name}}</div>
+                <div class="first-letter" v-for="(l, idx) in lang.bonus.split(' ')" :key="idx">{{l}}</div>
+                <div class="q-ml-none">:</div>
+              </div>
+              <div class="q-mt-none column items-center">
+                <div class="first-letter" v-for="(b, idx) in bonuses" :key="idx">{{b}}</div>
+              </div>
             </div>
           </div>
-        </div>
-      </q-dialog>
+        </q-dialog>
+      </template>
     </button>
     <div v-if="points > 0" class="point row justify-center items-center"
       :style="`top:${Number(info.top)+7.4}%;left:${Number(info.left)+15.6}%`">
@@ -365,14 +369,17 @@
 
   .body--light .img {
     filter: brightness(1.4);
+    -webkit-filter: brightness(1.4);
   }
 
   .img.learned {
     filter: brightness(2.5);
+    -webkit-filter: brightness(2.5);
   }
 
   .body--light .img.learned {
     filter: brightness(3);
+    -webkit-filter: brightness(3);
   }
 
   .d2r-green {
@@ -383,22 +390,41 @@
     font-size: 1.4em;
   }
 
-  @media screen and (max-width:599px) {
+  @media screen and (max-height:800px) {
     .tooltip-contents {
       font-weight: bold;
-      font-size: .8em;
-      line-height: 1.2em;
+      font-size: 1em;
+      line-height: 1.4em;
       letter-spacing: 0;
     }
 
     .tooltip-contents .title,
     .tooltip-contents .name {
-      font-size: .9em;
+      font-size: 1.1em;
     }
 
     .point {
+      font-size: .9em;
+      line-height: 1.2em;
+    }
+  }
+
+  @media screen and (max-width:599px) {
+    .tooltip-contents {
+      font-weight: bold;
       font-size: .7em;
-      line-height: 1em;
+      line-height: 1.5em;
+      letter-spacing: 0;
+    }
+
+    .tooltip-contents .title,
+    .tooltip-contents .name {
+      font-size: .8em;
+    }
+
+    .point {
+      font-size: .6em;
+      line-height: .9em;
       letter-spacing: -1px;
     }
   }
@@ -406,6 +432,7 @@
   @media (hover: hover) {
     .img:hover {
       filter: brightness(5);
+      -webkit-filter: brightness(5);
     }
   }
 </style>

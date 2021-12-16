@@ -425,7 +425,7 @@
     color: rgb(255, 94, 0) !important;
   }
 
-  @media screen and (max-width:599px) {
+  @media screen and (max-width:1439px) {
     .body--dark .classify-chip {
       box-shadow: inset 0 0 4px 1px rgba(100, 100, 100, 1);
     }

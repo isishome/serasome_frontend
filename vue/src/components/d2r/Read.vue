@@ -46,7 +46,7 @@
         </div>
         <p v-if="data" ref="contents" class="word-wrap contents" v-html="viewContents">
         </p>
-       
+
       </q-card-section>
       <q-separator inset />
       <q-card-actions class="row justify-between">
@@ -78,10 +78,10 @@
 </template>
 <script>
   import { mapGetters, mapActions } from 'vuex'
-
   import { uid } from 'quasar'
-
   import hljs from 'highlight.js'
+  const d2rConfirm = () => import(/* webpackChunkName: "d2r-read" */ '@/components/d2r/Confirm')
+  const d2rComments = () => import(/* webpackChunkName: "d2r-read" */ '@/components/d2r/Comments')
 
   export default {
     name: 'd2r-read',
@@ -94,6 +94,10 @@
         type: String,
         required: true
       }
+    },
+    components: {
+      'd2r-confirm': d2rConfirm,
+      'd2r-comments': d2rComments
     },
     data() {
       return {

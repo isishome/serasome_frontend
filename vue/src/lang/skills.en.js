@@ -2846,7 +2846,7 @@ export default {
               { text: 'Radius: {0} Yards', value: [0, 4, 4.6, 5.3, 6, 6.6, 7.3, 8, 8.6, 9.3, 10, 10.6, 11.3, 12, 12.6, 13.3, 14, 14.6, 15.3, 16, 16.6] }
             ],
             bonus: [
-              { treeId: 'da', skillId: 'resistcold', statIdx: [0, 1], value: [12, 12], type: ['rate', 'rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
+              { treeId: 'da', skillId: 'resistlightning', statIdx: [0, 1], value: [12, 12], type: ['rate', 'rate'], text: '{n}: +{0}% Lightning Damage Per Level' },
               { treeId: 'da', skillId: 'salvation', statIdx: [0, 1], value: [4, 4], type: ['rate', 'rate'], text: '{n}: +{0}% Lightning Damage Per Level' }
             ]
           },

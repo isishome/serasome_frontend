@@ -10,7 +10,7 @@
                 <q-spinner-dots v-if="loading" color="white" size="xl" />
                 <q-icon v-else name="email" color="white" size="xl" />
               </q-badge>
-              <img src="@/assets/images/logo.svg" />
+              <img src="@/assets/images/seras.svg" />
             </q-avatar>
           </q-item-section>
         </q-item>

@@ -20,13 +20,13 @@
   /** app place **********************************************************************************************************************/
   .ss-header img {
     width: 40px !important;
-    height: 40px !important;
+    height: auto !important;
     padding: 2px;
   }
 
   .ss-footer img {
     width: 30px !important;
-    height: 30px !important;
+    height: auto !important;
     filter: grayscale(100%);
     -webkit-filter: grayscale(100%);
   }

@@ -205,6 +205,7 @@
     HardBreak
   } from 'tiptap-extensions'
 
+  const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
   import CustomLink from '@/plugin/tiptap/CustomLink'
   import Alignment from '@/plugin/tiptap/Alignment'
   import CustomImage from '@/plugin/tiptap/CustomImage'
@@ -236,6 +237,7 @@
       }
     },
     components: {
+      'ss-prompt': Prompt,
       EditorContent,
       EditorMenuBar
     },

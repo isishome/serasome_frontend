@@ -32,6 +32,8 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
+  const d2rSummary = () => import(/* webpackChunkName: "d2r-main" */ '@/components/d2r/Summary')
+
   export default {
     name: 'd2r-layout',
     data() {
@@ -46,7 +48,8 @@
         storage: []
       }
     },
-    mounted() {
+    components: {
+      'd2r-summary': d2rSummary
     },
     created() {
       this.getLastest()

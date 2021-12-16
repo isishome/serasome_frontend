@@ -140,7 +140,7 @@
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Valley of Snakes</div>
               </q-card-section>
-              <q-img ref="img8" :src="require('@/assets/images/d2r/maps/act2/ValleyofKings.jpg')" width="100%" />
+              <q-img ref="img8" :src="require('@/assets/images/d2r/maps/act2/ValleyofSnakes.jpg')" width="100%" />
               <q-card-section class="text-left">
                 <div>레벨 : N/A</div>
                 <div>퀘스트 관련 영역 / 몬스터 : Claw Viper Temple</div>
@@ -420,7 +420,7 @@
               <q-card-section class="text-center">
                 <div class="text-title text-weight-bold font-kodia">Valley of Snakes</div>
               </q-card-section>
-              <q-img ref="img8" :src="require('@/assets/images/d2r/maps/act2/ValleyofKings.jpg')" width="100%" />
+              <q-img ref="img8" :src="require('@/assets/images/d2r/maps/act2/ValleyofSnakes.jpg')" width="100%" />
               <q-card-section class="text-left">
                 <div>Levels : N/A</div>
                 <div>Quest Related Areas/Monsters : Claw Viper Temple</div>

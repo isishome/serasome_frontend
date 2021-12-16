@@ -24,8 +24,8 @@
       <slot></slot>
     </div>
     <div class="tree-name tree-bottom" :style="bottomBack">
-      <div v-if="$q.platform.is.mobile"
-        class="row justify-center items-center q-gutter-y-xs q-gutter-x-sm relative-position" style="z-index: 2;">
+      <div v-if="$q.platform.is.mobile" class="row justify-center items-center q-gutter-y-xs relative-position"
+        :class="$q.screen.lt.sm ? 'q-gutter-x-xs' : 'q-gutter-x-md'" style="z-index: 2;">
         <div>
           <q-checkbox dark dense size="xs" v-model="mobile.max" color="title" :label="lang.max" />
         </div>
@@ -145,7 +145,7 @@
     text-align: center;
     padding: 10px;
     box-shadow: inset 0 0 10px 5px rgb(0, 0, 0), 0 0 0 1px rgb(119, 82, 2), 0 0 0 3px rgb(0, 0, 0), 0 0 0 5px rgb(40, 40, 40);
-    background-size: contain !important;
+    background-size: cover !important;
   }
 
   .tree-bottom {
@@ -185,6 +185,7 @@
 
   .body--light .img {
     filter: brightness(2);
+    -webkit-filter: brightness(2);
   }
 
   .body--light .tree-name::after {

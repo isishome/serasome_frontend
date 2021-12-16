@@ -71,9 +71,13 @@
   import {
     mapGetters
   } from 'vuex'
+  const Confirm = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Confirm')
 
   export default {
     name: 'Join',
+    components: {
+      'ss-confirm': Confirm
+    },
     data() {
       return {
         FB: {},

@@ -8,11 +8,15 @@
       <q-separator class="q-mb-sm" />
     </div>
     <div class="know-wrap" :class="!leftTabs ? 'no-left-tabs' : ''">
-      <div class="row justify-start bg-transparent">
-        <q-btn stack :size="$q.screen.lt.md ? 'sm' : 'md'" v-for="tab in list"
-          :class="section === tab.value ? `active` : 'bg-knowledge'" :key="tab.value"
-          class="overflow-hidden col-4 col-sm q-py-md tab-btn font-kodia" :icon="tab.icon" :label="tab.name"
-          @click="swapSection(tab.value)" :disable="loading" />
+      <div class="row justify-start bg-transparent" :class="$q.screen.lt.sm ? 'q-col-gutter-xs' : ''">
+        <div v-for="tab in list" :key="tab.value" class="overflow-hidden col-4 col-sm font-kodia">
+          <q-btn stack :dense="$q.screen.lt.sm" :size="$q.screen.lt.md ? 'sm' : 'md'" class="tab-btn full-width"
+            :class="section === tab.value ? `active` : 'bg-knowledge'" @click="swapSection(tab.value)"
+            :disable="loading">
+            <q-icon class="gt-xs" :name="tab.icon" />
+            <div>{{tab.name}}</div>
+          </q-btn>
+        </div>
       </div>
       <q-tab-panels class="bg-knowledge tab-panels" :class="!leftTabs ? 'no-left-tabs' : ''" v-model="section" animated
         vertical :transition-prev="$q.screen.lt.sm ? 'none' : 'jump-right'"
@@ -151,9 +155,8 @@
   }
 
   .tab-btn {
-    filter: grayscale(30%);
+    opacity: .3;
     padding: 4px 2px;
-    opacity: .5;
     background: linear-gradient(to bottom, rgba(70, 70, 70, .7) 10%, rgba(20, 20, 20, .7) 60%, rgba(0, 0, 0, 1)), url('/static/images/rough.jpg') repeat !important;
     box-shadow: inset 0 -1px 0 0 rgba(214, 139, 0, .7), inset 1px 1px 0 0 rgba(214, 139, 0, .7), inset 0 1px 0 0 rgba(214, 139, 0, .7), inset 0 0 1px 0 rgba(65, 44, 6, .7), inset 0 0 10px 3px rgba(0, 0, 0, 1);
     color: #b89c5b !important;
@@ -163,6 +166,7 @@
   }
 
   .body--light .tab-btn {
+    opacity: .5;
     background: linear-gradient(to bottom, rgba(185, 185, 185, .5) 10%, rgba(235, 235, 235, .5) 60%, rgba(245, 245, 245, 1)), url('/static/images/rough.jpg') repeat !important;
     box-shadow: inset 0 -1px 0 0 rgba(245, 245, 245, .7), inset 1px 1px 0 0 rgba(245, 245, 245, .7), inset 0 1px 0 0 rgba(245, 245, 245, .7), inset 0 0 1px 0 rgba(65, 44, 6, .7), inset 0 0 10px 3px rgba(0, 0, 0, 1);
     color: rgba(5, 5, 5, 1) !important;
@@ -170,7 +174,6 @@
 
   .tab-btn.active {
     box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, .1);
-    filter: grayscale(0);
     opacity: 1;
   }
 
@@ -181,7 +184,12 @@
   @media screen and (max-width:599px) {
     .know-wrap {
       margin-left: 0;
-      box-shadow: 0 1px 0 1px rgba(163, 106, 0, .4);
+      box-shadow: 0 0 0 1px rgba(163, 106, 0, .4);
+    }
+
+    .body--light .know-wrap {
+      box-shadow: none !important;
+      box-shadow: 0 0 0 1px rgba(5, 5, 5, .2) !important;
     }
 
     .tab-panels {
@@ -191,12 +199,15 @@
     .tab-btn {
       z-index: 1;
       padding: 4px !important;
-      font-size: 0.8em !important;
+      font-size: 1em !important;
       background-size: 80vw !important;
-      border-radius: 4px;
+      border-radius: 4px !important;
+      box-shadow: none;
+      background: linear-gradient(to bottom, rgba(40, 40, 40, .7) 10%, rgba(20, 20, 20, .5) 80%, rgba(0, 0, 0, 1)), url('/static/images/rough.jpg') repeat !important;
     }
 
     .body--light .tab-btn {
+      color: inherit !important;
       background: linear-gradient(to bottom, rgba(235, 235, 235, .5) 10%, rgba(150, 150, 150, .5) 80%, rgba(0, 0, 0, 1)), url('/static/images/rough.jpg') repeat !important;
     }
   }

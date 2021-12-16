@@ -269,6 +269,8 @@
     mapGetters,
     mapActions
   } from 'vuex'
+  const d2rConfirm = () => import(/* webpackChunkName: "d2r-storage" */ '@/components/d2r/Confirm')
+  const d2rItem = () => import(/* webpackChunkName: "d2r-storage" */ '@/components/d2r/Item')
 
   function getRandomInt(min, max) {
     min = Math.ceil(min)
@@ -287,6 +289,10 @@
         type: String,
         default: null
       }
+    },
+    components: {
+      'd2r-confirm': d2rConfirm,
+      'd2r-item': d2rItem
     },
     data() {
       return {

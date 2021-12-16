@@ -27,6 +27,7 @@
 </template>
 <script>
   import { mapGetters } from 'vuex'
+  const d2rList = () => import(/* webpackChunkName: "d2r-search" */ '@/components/d2r/List')
 
   export default {
     name: 'd2r-search',
@@ -42,6 +43,9 @@
           }
         }
       }
+    },
+    components: {
+      'd2r-list': d2rList
     },
     data() {
       return {

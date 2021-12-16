@@ -8,21 +8,12 @@ import routes from '@/router/d2r'
 import store from '@/store/d2r'
 import axios from 'axios'
 import vuePlugin from "@/plugin/highlight"
+import { Quasar, Notify, Cookies, Loading, Dark } from 'quasar'
 
 const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
-const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
 const d2rTable = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Table')
 const d2rTh = () => import(/* webpackChunkName: "d2r-component" */'@/components/d2r/Th')
-const d2rList = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/List')
-const d2rRead = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Read')
-const d2rWrite = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Write')
-const d2rConfirm = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Confirm')
-const d2rItem = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Item')
-const d2rComments = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Comments')
-const d2rSummary = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Summary')
 const d2rTapPanel = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/TapPanel')
-const d2rZoom = () => import(/* webpackChunkName: "d2r-component" */ '@/components/d2r/Zoom')
-import { Quasar, Notify, Cookies, Loading, Dark } from 'quasar'
 
 const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
 
@@ -172,18 +163,9 @@ Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.prototype.axios = axiosObject
 Vue.component('adsense', Adsense)
-Vue.component('ss-prompt', Prompt)
 Vue.component('d2r-table', d2rTable)
 Vue.component('d2r-th', d2rTh)
-Vue.component('d2r-list', d2rList)
-Vue.component('d2r-read', d2rRead)
-Vue.component('d2r-write', d2rWrite)
-Vue.component('d2r-confirm', d2rConfirm)
-Vue.component('d2r-item', d2rItem)
-Vue.component('d2r-comments', d2rComments)
-Vue.component('d2r-summary', d2rSummary)
 Vue.component('d2r-tap-panel', d2rTapPanel)
-Vue.component('d2r-zoom', d2rZoom)
 
 Vue.mixin(mixin)
 Vue.use(vuePlugin)

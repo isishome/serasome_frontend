@@ -1,11 +1,12 @@
-const pnf = () => import(/* webpackChunkName: "group-default" */ '@/pages/seras/PNF')
-const d2rMain = () => import(/* webpackChunkName: "d2r-main" */ '@/pages/d2r/Main')
-const d2rCarousel = () => import(/* webpackChunkName: "d2r-carousel" */ '@/components/d2r/Carousel')
-const d2rBbs = () => import(/* webpackChunkName: "d2r-bbs" */ '@/pages/d2r/Bbs')
-const d2rAccount = () => import(/* webpackChunkName: "d2r-account" */ '@/pages/d2r/Account')
-const d2rKnowledge = () => import(/* webpackChunkName: "d2r-knowledge" */ '@/pages/d2r/Knowledge/Main')
-const d2rStorage = () => import(/* webpackChunkName: "d2r-storage" */ '@/pages/d2r/Storage')
-const d2rSearch = () => import(/* webpackChunkName: "d2r-search" */ '@/pages/d2r/Search')
+const pnf = () => import(/* webpackChunkName: "d2r-default" */ '@/pages/seras/PNF')
+const d2rMain = () => import(/* webpackChunkName: "d2r-default" */ '@/pages/d2r/Main')
+const d2rCarousel = () => import(/* webpackChunkName: "d2r-default" */ '@/components/d2r/Carousel')
+
+const d2rBbs = () => import(/* webpackChunkName: "d2r-router" */ '@/pages/d2r/Bbs')
+const d2rAccount = () => import(/* webpackChunkName: "d2r-router" */ '@/pages/d2r/Account')
+const d2rKnowledge = () => import(/* webpackChunkName: "d2r-router" */ '@/pages/d2r/Knowledge/Main')
+const d2rStorage = () => import(/* webpackChunkName: "d2r-router" */ '@/pages/d2r/Storage')
+const d2rSearch = () => import(/* webpackChunkName: "d2r-router" */ '@/pages/d2r/Search')
 //const d2rCalc = () => import(/* webpackChunkName: "d2r-calc" */ '@/pages/d2r/Calc')
 
 const routes = [

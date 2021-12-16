@@ -4,14 +4,14 @@
       <q-item class="lt-md">
         <q-avatar size="60px" round>
           <q-badge floating transparent color="red" label="404" />
-          <img src="@/assets/images/logo.svg" />
+          <img src="@/assets/images/seras.svg" />
         </q-avatar>
       </q-item>
       <q-item>
         <q-item-section class="gt-sm" center avatar>
           <q-avatar size="60px" round>
             <q-badge floating transparent color="red" label="404" />
-            <img src="@/assets/images/logo.svg" />
+            <img src="@/assets/images/seras.svg" />
           </q-avatar>
         </q-item-section>
         <q-item-section>

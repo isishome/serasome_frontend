@@ -55,6 +55,7 @@
     color: #000000 !important;
     text-shadow: 1px 1px 1px rgb(0, 0, 0), 0 0 3px rgb(251, 255, 0), 0 -1px 5px rgb(255, 136, 0), 0 -3px 10px rgb(255, 38, 0);
     filter: invert(90%);
+    -webkit-filter: invert(90%);
   }
 
   @media screen and (max-width:599px) {

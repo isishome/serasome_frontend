@@ -159,12 +159,11 @@
   import {
     mapGetters
   } from 'vuex'
-
   import {
     scroll
   } from 'quasar'
-
   const { getScrollTarget, setScrollPosition } = scroll
+  const CommentDate = () => import(/* webpackChunkName: "seras-comment" */ '@/components/seras/CommentDate')
 
   // takes an element object
   function scrollToElement(el, isMobile) {
@@ -189,6 +188,9 @@
           return {}
         }
       }
+    },
+    components: {
+      'ss-comment-date': CommentDate
     },
     data() {
       return {

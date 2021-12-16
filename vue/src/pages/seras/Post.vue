@@ -24,7 +24,7 @@
                 <q-input dense outlined hide-bottom-space :disable="processPosting" maxlength="64" type="text"
                   v-model="title" :label="$t('post.title')" :rules="[val => !!val && val.trim() !== '' || '']" />
               </div>
-              <div class="column full-width" :class="fullScreen === true ? 'full-screen' : ''">
+              <div class="column full-width relative-position" :class="fullScreen === true ? 'full-screen' : ''">
                 <editor-menu-bar class="editor-menu-bar" :editor="editor"
                   v-slot="{ commands, isActive, getMarkAttrs, getNodeAttrs }">
                   <q-toolbar class="bg-transparent no-padding row justify-between items-start"
@@ -280,7 +280,7 @@
     TableCell,
     TableRow
   } from 'tiptap-extensions'
-
+  const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
   import CustomLink from '@/plugin/tiptap/CustomLink'
   import Alignment from '@/plugin/tiptap/Alignment'
   import CustomCodeBlock from '@/plugin/tiptap/CustomCodeBlock'
@@ -288,6 +288,7 @@
   export default {
     name: 'post',
     components: {
+      'ss-prompt': Prompt,
       EditorContent,
       EditorMenuBar
     },
@@ -972,6 +973,19 @@
 
   .contents-area {
     height: calc(67vh - 130px);
+  }
+
+  .editor-menu-bar {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #fafafa !important;
+    border-radius: 4px;
+  }
+
+  .body--dark .editor-menu-bar {
+    background-color: #151939 !important;
   }
 
   .body--light .editor-menu-bar .is-active {

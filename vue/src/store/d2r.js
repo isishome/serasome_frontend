@@ -130,6 +130,9 @@ export default new Vuex.Store({
       state.skills.data = payload
     },
     setSkillsPoints(state, payload) {
+      state.skills.points = payload
+    },
+    addSkillsPoints(state, payload) {
       state.skills.points = state.skills.points + payload
     }
   },
@@ -163,6 +166,9 @@ export default new Vuex.Store({
     },
     setSkillsPoints(context, payload) {
       context.commit('setSkillsPoints', payload)
+    },
+    addSkillsPoints(context, payload) {
+      context.commit('addSkillsPoints', payload)
     }
   }
 })

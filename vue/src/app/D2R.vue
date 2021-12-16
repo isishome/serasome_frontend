@@ -59,7 +59,7 @@
             </q-btn>
             <q-btn dense flat class="gt-md" @click="goSeras">
               <q-avatar size="30px">
-                <img src="@/assets/images/logo.svg" />
+                <img src="@/assets/images/seras.svg" />
               </q-avatar>
               <span class="gt-lg q-ml-xs">SS</span>
             </q-btn>
@@ -126,7 +126,7 @@
             <q-item active-class="none" @click="goSeras" clickable>
               <q-item-section avatar>
                 <q-avatar size="30px">
-                  <img src="@/assets/images/logo.svg" style="width:30px !important;" />
+                  <img src="@/assets/images/seras.svg" style="width:30px !important;" />
                 </q-avatar>
               </q-item-section>
               <q-item-section>
@@ -313,7 +313,7 @@
         <div class="col-4 gt-sm"></div>
         <div class="col q-ma-none col-md-4 row justify-center items-center q-gutter-x-xs text-caption">
           <q-avatar size="md">
-            <img src="@/assets/images/logo2.svg" />
+            <img src="@/assets/images/d2r.png" />
           </q-avatar>
           <div class="row justify-start items-center q-gutter-x-xs">
             <div class="lt-sm font-kodia">D2R</div>
@@ -334,9 +334,13 @@
     mapGetters,
     mapActions
   } from 'vuex'
+  const d2rZoom = () => import(/* webpackChunkName: "d2r-common" */ '@/components/d2r/Zoom')
 
   export default {
     name: 'app',
+    components: {
+      'd2r-zoom': d2rZoom
+    },
     data() {
       return {
         isProduction: process.env.NODE_ENV === 'production',

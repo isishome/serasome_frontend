@@ -181,6 +181,7 @@
     height: 100%;
     width: 90%;
     filter: blur(5px);
+    -webkit-filter: blur(5px);
     z-index: 2;
   }
 
@@ -203,6 +204,7 @@
     -o-transform: translateX(-80px) translateY(-90px) skewX(-20deg);
     transform: translateX(-32%) translateY(-34%) skewX(-20deg);
     filter: blur(10px);
+    -webkit-filter: blur(10px);
   }
 
   .ball.dark:after {

@@ -21,5 +21,6 @@
 <style scoped>
   .logo-dark {
     filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
   }
 </style>
