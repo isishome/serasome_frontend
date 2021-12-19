@@ -1,5 +1,5 @@
 import { Mark } from 'tiptap'
-import { updateMark, markInputRule } from 'tiptap-commands';
+import { toggleMark, markInputRule } from 'tiptap-commands';
 
 export default class Alignment extends Mark {
 
@@ -34,15 +34,11 @@ export default class Alignment extends Mark {
     };
   }
 
-  commands({
-    type
-  }) {
-    return attrs => updateMark(type, attrs);
+  commands({ type }) {
+    return attrs => toggleMark(type, attrs);
   }
 
-  inputRules({
-    type
-  }) {
+  inputRules({ type }) {
     return [
       markInputRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type),
     ];

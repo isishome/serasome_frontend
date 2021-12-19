@@ -8,7 +8,7 @@ import routes from '@/router/seras'
 import store from '@/store/seras'
 import axios from 'axios'
 import vuePlugin from "@/plugin/highlight"
-import { Quasar, Notify, Cookies, Dark } from 'quasar'
+import { Quasar, Notify, Cookies } from 'quasar'
 //import VFacebookLogin from 'vue-facebook-login-component'
 import GAuth from 'vue-google-oauth2'
 
@@ -64,10 +64,6 @@ router.beforeEach((to, from, next) => {
 
   const findNoAD = to.matched.find(route => route.meta.noAD)
   store.dispatch('setNoAD', findNoAD !== undefined)
-
-  const cookieDark = Cookies.has(process.env.VUE_APP_DARK_NAME) && Cookies.get(process.env.VUE_APP_DARK_NAME) === true
-  if (cookieDark !== Dark.isActive)
-    Dark.set(cookieDark)
 
   const requireAuth = to.matched.some(route => route.meta.requireAuth)
   const signedIn = Cookies.has(process.env.VUE_APP_STATUS_NAME) && Cookies.get(process.env.VUE_APP_STATUS_NAME) === true

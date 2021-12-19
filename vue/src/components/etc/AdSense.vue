@@ -1,9 +1,8 @@
 <template>
-  <div v-if="visible"
-    :style="`position:${fixed ? 'fixed' : ''};text-align:${horizontal};width:${tempWidth};height:${tempHeight}`">
+  <div v-if="visible" class="full-width" :style="`position:${fixed ? 'fixed' : ''};text-align:${horizontal}`">
     <ins ref="adbox" class="adsbygoogle" :data-ad-client="dataAdClient" :data-ad-slot="dataAdSlot"
       :data-adtest="dataAdtest" :data-ad-format="dataAdFormat" :data-full-width-responsive="dataFullWidthResponsive"
-      :style="`display:inline-block;text-align:${horizontal};width:${tempWidth};height:${tempHeight}`" :key="key"></ins>
+      :style="`display:inline-block;width:${tempWidth};height:${tempHeight}`" :key="key"></ins>
   </div>
 </template>
 <script>
@@ -64,10 +63,10 @@
         tempWidth: '',
         tempHeight: '',
         randomSize: [
-          { width: '300px', height: '250px' },
-          { width: '336px', height: '280px' },
+          //{ width: '300px', height: '250px' },
+          //{ width: '336px', height: '280px' },
           { width: '250px', height: '250px' },
-          { width: '300px', height: '600px' },
+          //{ width: '300px', height: '600px' },
           { width: '160px', height: '600px' }
         ],
         key: 0,

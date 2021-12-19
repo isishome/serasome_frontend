@@ -19,7 +19,8 @@ export default {
       finish: "Finish",
       regist: 'Leave',
       leave: "Leave a comments",
-      reply: "Reply"
+      reply: "Reply",
+      close: "Close"
     },
     search: {
       title: "Search",
@@ -220,6 +221,13 @@ export default {
       },
       bbs: {
         classify: "Classify",
+        quiz: "Quiz",
+        question: "Question",
+        answer: "Answer",
+        reward: "Reward",
+        btn: {
+          submit: "Submit"
+        },
         title: "Title",
         writer: "Writer",
         regDate: "Date",
@@ -234,6 +242,8 @@ export default {
           successDelete: "Deleted",
           finishTran: "Do you want to finish the transaction?",
           successFinish: "Processed",
+          right: "That's right.",
+          wrong: "That's a wrong answer."
         }
       },
       classify: {

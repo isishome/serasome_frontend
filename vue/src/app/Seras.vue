@@ -312,6 +312,10 @@
         noAD: 'getNoAD'
       })
     },
+    created() {
+      const cookieIsDark = this.$q.cookies.has(process.env.VUE_APP_DARK_NAME) ? this.$q.cookies.get(process.env.VUE_APP_DARK_NAME) : false
+      this.$q.dark.set(cookieIsDark)
+    },
     methods: {
       ...mapActions({
         setSignStatus: 'setSignStatus',

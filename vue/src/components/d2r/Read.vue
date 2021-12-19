@@ -46,9 +46,28 @@
         </div>
         <p v-if="data" ref="contents" class="word-wrap contents" v-html="viewContents">
         </p>
-
       </q-card-section>
-      <q-separator inset />
+      <template v-if="isQuiz">
+        <q-separator inset />
+        <q-card-section class="q-mb-lg q-gutter-y-sm column items-start">
+          <div class="text-h6">{{$t('d2r.bbs.quiz')}}</div>
+          <q-form @submit="submit" class="full-width">
+            <div class="text-subtitle1 text-right q-mb-xs">{{data.quiz.question}}</div>
+            <div class="row justify-end items-center q-col-gutter-x-sm text-right">
+              <div class="col-9 col-sm-4 col-md-3">
+                <q-input dense borderless hide-bottom-space no-error-icon class="q-px-sm input-place quiz"
+                  color="grey-5" :disable="loading" maxlength="20" type="text" :label="$t('d2r.bbs.answer')"
+                  v-model="answer" :rules="[val => val && val.trim() !== '' || '']" />
+              </div>
+              <div>
+                <q-btn dense padding="0 10px" type="submit" color="title" text-color="black"
+                  :label="$t('d2r.bbs.btn.submit')" />
+              </div>
+            </div>
+          </q-form>
+        </q-card-section>
+      </template>
+      <q-separator />
       <q-card-actions class="row justify-between">
         <div class="row justify-end q-gutter-x-sm">
           <q-btn v-if="authority(sec, 'delete') || data.owner === true" dense push class="bg-grey-5 text-grey-10"
@@ -74,6 +93,25 @@
     </q-card>
     <d2r-confirm v-model="confirm.show" :icon="confirm.icon" :color="confirm.color" :text-color="confirm.textColor"
       :message="confirm.message" @cancel="cancelConfirm" @confirm="processConfirm" />
+    <q-dialog persistent :content-class="$q.screen.lt.md ? 'full-width' : ''" v-model="reward.show">
+      <q-card class="reward">
+        <q-card-section class="bg-title text-h5 text-black">
+          {{$t('d2r.bbs.message.right')}}
+        </q-card-section>
+        <q-card-section class="word-wrap row justify-center items-center text-weight-bold text-h6">
+          {{reward.contents}}
+        </q-card-section>
+        <q-card-section class="no-padding overflow-hidden">
+          <adsense :visible="!noAD && isProduction" data-ad-client="ca-pub-5110777286519562" data-ad-slot="4748983001"
+            width="300px" height="50px">
+          </adsense>
+        </q-card-section>
+        <q-card-actions class="row justify-end q-pa-md">
+          <q-btn dense :disable="loading || current !== 0" text-color="grey-10" color="grey-5" :label="currentText"
+            @click="closeReward" style="min-width:50px" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 <script>
@@ -101,6 +139,7 @@
     },
     data() {
       return {
+        isProduction: process.env.NODE_ENV === 'production',
         loading: false,
         data: null,
         comments: [],
@@ -117,8 +156,14 @@
           textColor: 'white',
           message: null
         },
+        answer: null,
+        reward: {
+          show: false,
+          contents: null
+        },
+        count: 5,
+        current: 0,
         key: uid(),
-        isProduction: process.env.NODE_ENV === 'production',
         contLoaded: false
       }
     },
@@ -127,7 +172,8 @@
         section: 'getSection',
         getSecInfo: 'getSecInfo',
         classifyName: 'getClassifyName',
-        authority: 'getAuthority'
+        authority: 'getAuthority',
+        noAD: 'getNoAD'
       }),
       secInfo() {
         return this.getSecInfo(this.sec)
@@ -139,6 +185,12 @@
           hljs.highlightElement(el)
         })
         return dom.innerHTML.replace(/<p><\/p>/gi, '<p><br><p>')
+      },
+      isQuiz() {
+        return this.data.sec === 'trade' && this.data.classify === 'give' && this.data.quiz && this.data.quiz.enable === true
+      },
+      currentText() {
+        return this.current !== 0 ? this.current : this.$t('btn.close')
       }
     },
     created() {
@@ -296,6 +348,49 @@
           this.pagination.baseRegDate = null
 
         this.getList()
+      },
+      submit() {
+        const vm = this
+        this.loading = true
+
+        this.axios
+          .get('/d2r/board/answer', {
+            params: {
+              sec: this.sec,
+              pid: this.pid,
+              answer: this.answer
+            }
+          }).then(function (response) {
+            if (response && response.data !== '') {
+              vm.reward.contents = response.data
+              vm.reward.show = true
+              vm.current = vm.count
+              vm.rewardCount()
+            } else {
+              vm.$q.notify({
+                type: 'negative',
+                color: 'negative',
+                message: vm.$t('d2r.bbs.message.wrong')
+              })
+            }
+          })
+          .catch(function () { })
+          .then(function () {
+            console.log('end')
+            vm.loading = false
+          })
+      },
+      rewardCount() {
+        const vm = this
+        setTimeout(() => {
+          if (vm.current > 0) {
+            vm.current--
+            vm.rewardCount()
+          }
+        }, 1000)
+      },
+      closeReward() {
+        this.reward.show = false
       }
     }
   }
@@ -326,6 +421,17 @@
 
   .body--light .read-card hr {
     background-color: rgba(100, 100, 100, 0.1);
+  }
+
+  .input-place {
+    background-color: rgba(122, 92, 35, 0.3) !important;
+    border: solid 1px transparent;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .reward {
+    width: 500px;
   }
 
   @media screen and (max-width:599px) {

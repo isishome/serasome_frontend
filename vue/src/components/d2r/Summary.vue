@@ -75,10 +75,6 @@
       return {
       }
     },
-    computed: {
-    },
-    created() {
-    },
     methods: {
       parsThumbnail(thumbnail) {
         return decodeURIComponent(thumbnail) === 'null' ? require(`@/assets/images/d2r/${this.blank}`) : decodeURIComponent(thumbnail)

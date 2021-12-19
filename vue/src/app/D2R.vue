@@ -293,9 +293,9 @@
               <adsense :visible="!noAD" data-ad-client="ca-pub-5110777286519562" data-ad-slot="9654321794"
                 data-ad-format="vertical" horizontal="left" random>
               </adsense>
-              <adsense :visible="!noAD && isKnowledge" data-ad-client="ca-pub-5110777286519562"
+              <!-- <adsense :visible="!noAD && isKnowledge" data-ad-client="ca-pub-5110777286519562"
                 data-ad-slot="4948790020" style="margin-top: 10px;" data-ad-format="vertical" horizontal="left" random>
-              </adsense>
+              </adsense> -->
             </div>
           </div>
         </div>
@@ -366,14 +366,12 @@
       }
     },
     created() {
+      const cookieIsDark = this.$q.cookies.has(process.env.VUE_APP_D2R_DARK_NAME) ? this.$q.cookies.get(process.env.VUE_APP_D2R_DARK_NAME) : true
+      this.$q.dark.set(cookieIsDark)
       this.loadD2RInfo()
       this.checkSignStatus()
-      this.initD2R(true)
     },
     watch: {
-      '$route': function () {
-        this.initD2R()
-      },
       lang: function (val, old) {
         if (val !== old) {
           this.$q.cookies.set(process.env.VUE_APP_LANGUAGE_NAME, val, { path: '/', expires: '7300d' })
@@ -415,7 +413,7 @@
         this.progress = scrollPercentRounded
       },
       toggleDark() {
-        this.$q.cookies.set(process.env.VUE_APP_D2R_DARK_NAME, !this.$q.dark.isActive, { path: '/', expires: '7300d' })
+        this.$q.cookies.set(process.env.VUE_APP_D2R_DARK_NAME, !this.$q.dark.isActive, { path: '/d2r', expires: '7300d' })
         this.$q.dark.set(!this.$q.dark.isActive)
       },
       checkSignStatus() {
@@ -438,16 +436,6 @@
           const d2rInfo = await this.axios.get("/d2r/account/info")
           this.setD2RInfo(d2rInfo.data)
         }
-      },
-      initD2R() {
-        if (!this.$q.cookies.has(process.env.VUE_APP_D2R_DARK_NAME))
-          this.$q.dark.set(true)
-
-        // if (document.body.classList.contains('show') === false) {
-        //   this.timer = setTimeout(() => {
-        //     document.body.classList.add('show')
-        //   }, 500)
-        // }
       },
       home() {
         if (this.$router.currentRoute.name === 'd2r-main')

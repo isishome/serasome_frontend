@@ -274,7 +274,8 @@
       },
       go(page) {
         this.pagination.page = page || 1
-        this.$refs.table.onRequest({ pagination: this.pagination })
+        if (this.$refs.table)
+          this.$refs.table.onRequest({ pagination: this.pagination })
       },
       request({ pagination, done }) {
         const vm = this

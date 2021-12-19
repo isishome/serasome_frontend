@@ -1,11 +1,40 @@
 <template>
   <div class="d2r-write">
     <q-form class="no-wrap column q-gutter-y-sm" @submit="onSubmit">
-      <div class="row justify-start">
-        <q-select borderless dense emit-value no-error-icon hide-bottom-space map-options
-          class="col-12 col-lg-3 input-place q-px-sm" color="grey-5" v-model="writeInfo.classify" :options="classifies"
-          :label="$t('d2r.bbs.classify')" behavior="menu" :rules="[val => val && val !== null || '']" />
+      <div class="row justify-start q-gutter-x-sm">
+        <div class="col col-md-3 col-lg-3">
+          <q-select borderless dense emit-value no-error-icon hide-bottom-space map-options
+            class="col-12 col-lg-3 input-place q-px-sm" color="grey-5" v-model="writeInfo.classify"
+            :options="classifies" :label="$t('d2r.bbs.classify')" behavior="menu"
+            :rules="[val => val && val !== null || '']" />
+        </div>
+        <div v-if="writeInfo.classify === 'give'" class="col col-md-3 col-lg-3">
+          <q-checkbox :label="$t('d2r.bbs.quiz')" v-model="writeInfo.quiz.enable" />
+        </div>
       </div>
+      <q-separator v-if="writeInfo.quiz.enable" />
+      <q-slide-transition>
+        <div v-show="writeInfo.quiz.enable" class="row justify-start q-gutter-x-sm">
+          <div class="col-8 col-sm-9">
+            <q-input dense borderless hide-bottom-space no-error-icon class="q-px-sm input-place quiz" color="grey-5"
+              :disable="processPosting" maxlength="80" type="text" :label="$t('d2r.bbs.question')"
+              v-model="writeInfo.quiz.question" :rules="[val => val && val.trim() !== '' || '']" />
+          </div>
+          <div class="col col-sm">
+            <q-input dense borderless hide-bottom-space no-error-icon class="q-px-sm input-place quiz" color="grey-5"
+              :disable="processPosting" maxlength="20" type="text" :label="$t('d2r.bbs.answer')"
+              v-model="writeInfo.quiz.answer" :rules="[val => val && val.trim() !== '' || '']" />
+          </div>
+        </div>
+      </q-slide-transition>
+      <q-slide-transition>
+        <div v-show="writeInfo.quiz.enable">
+          <q-input dense borderless hide-bottom-space no-error-icon class="q-px-sm input-place quiz" color="grey-5"
+            :disable="processPosting" maxlength="100" type="text" :label="$t('d2r.bbs.reward')"
+            v-model="writeInfo.quiz.reward" :rules="[val => val && val.trim() !== '' || '']" />
+        </div>
+      </q-slide-transition>
+      <q-separator />
       <div>
         <q-input dense borderless hide-bottom-space no-error-icon class="q-px-sm input-place" color="grey-5"
           :disable="processPosting" maxlength="200" type="text" :label="$t('post.title')" v-model="writeInfo.title"
@@ -294,7 +323,13 @@
           fileList: [],
           blobList: [],
           deleteList: [],
-          owner: false
+          owner: false,
+          quiz: {
+            enable: false,
+            question: null,
+            answer: null,
+            reward: null,
+          }
         },
         add: {
           url: null,
@@ -352,6 +387,7 @@
           }).then(function (response) {
             if (response.data) {
               vm.writeInfo.classify = response.data.classify
+              vm.writeInfo.quiz = response.data.quiz
               vm.writeInfo.title = response.data.title
               vm.editor.setContent(response.data.contents, true)
               vm.editor.focus('end')
@@ -547,6 +583,10 @@
               'value': this.writeInfo.pid
             },
             {
+              'name': 'quiz',
+              'value': encodeURIComponent(JSON.stringify(this.writeInfo.quiz))
+            },
+            {
               'name': 'title',
               'value': encodeURIComponent(this.writeInfo.title)
             },
@@ -577,6 +617,7 @@
             sec: this.sec,
             classify: encodeURIComponent(this.writeInfo.classify),
             pid: this.writeInfo.pid,
+            quiz: encodeURIComponent(JSON.stringify(this.writeInfo.quiz)),
             title: encodeURIComponent(this.writeInfo.title),
             contents: encodeURIComponent(this.writeInfo.contents),
             youtube: encodeURIComponent(this.writeInfo.youtube),
@@ -648,10 +689,34 @@
     background-color: rgba(45, 45, 45, 0.3);
     border: solid 1px transparent;
     border-radius: 4px;
+    position: relative;
+  }
+
+  .editor-menu-bar {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 77px;
+    z-index: 1;
+    background-color: #fafafa !important;
+    border-radius: 4px;
+  }
+
+  .body--dark .editor-menu-bar {
+    background-color: #151939 !important;
+  }
+
+  @media screen and (max-width:1439px) {
+    .editor-menu-bar {
+      top: 58px !important;
+    }
   }
 
   .body--light .input-place {
     background-color: rgba(200, 200, 200, 0.3);
+  }
+
+  .quiz {
+    background-color: rgba(122, 92, 35, 0.3) !important;
   }
 
   .editor-menu-bar .is-active {

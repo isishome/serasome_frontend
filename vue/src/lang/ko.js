@@ -19,8 +19,8 @@ export default {
       finish: "완료",
       regist: "등록",
       leave: "댓글남기기",
-      reply: "답글"
-
+      reply: "답글",
+      close: "닫기"
     },
     search: {
       title: "검색",
@@ -218,6 +218,13 @@ export default {
       },
       bbs: {
         classify: "분류",
+        quiz: "퀴즈",
+        question: "문제",
+        answer: "답",
+        reward: "보상",
+        btn: {
+          submit: "제출"
+        },
         title: "제목",
         writer: "작성자",
         regDate: "날짜",
@@ -232,6 +239,8 @@ export default {
           successDelete: "삭제완료",
           finishTran: "거래를 완료 처리하시겠습니까?",
           successFinish: "처리완료",
+          right: "정답입니다",
+          wrong: "오답입니다"
         }
       },
       classify: {
