@@ -102,8 +102,8 @@
           {{reward.contents}}
         </q-card-section>
         <q-card-section class="no-padding overflow-hidden">
-          <adsense :visible="!noAD && isProduction" data-ad-client="ca-pub-5110777286519562" data-ad-slot="4748983001"
-            width="300px" height="50px">
+          <adsense v-model="key" :visible="!noAD && isProduction" data-ad-client="ca-pub-5110777286519562"
+            data-ad-slot="4748983001" width="300px" height="50px">
           </adsense>
         </q-card-section>
         <q-card-actions class="row justify-end q-pa-md">
@@ -204,7 +204,6 @@
             pid: this.pid
           }
         }).then(function (response) {
-          vm.key = uid()
           vm.data = response.data
           document.title = (vm.$route.meta.title || document.title)
           document.title = document.title.concat(' - ', vm.data.title)
@@ -366,6 +365,9 @@
               vm.reward.show = true
               vm.current = vm.count
               vm.rewardCount()
+              vm.$nextTick(() => {
+                vm.key = uid()
+              })
             } else {
               vm.$q.notify({
                 type: 'negative',
@@ -376,7 +378,6 @@
           })
           .catch(function () { })
           .then(function () {
-            console.log('end')
             vm.loading = false
           })
       },

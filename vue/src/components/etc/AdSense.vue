@@ -9,6 +9,10 @@
   export default {
     name: 'etc-adsense',
     props: {
+      value: {
+        type: String,
+        default: ''
+      },
       dataAdClient: {
         type: String,
         required: true
@@ -87,6 +91,20 @@
             this.onWindowLoad()
           })
 
+        }
+      },
+      value: function (to, old) {
+        if (to !== old) {
+          if ((Date.now() - this.initDate) / 1000 > this.debounce) {
+            this.setSize()
+            this.key++
+          }
+
+          this.initDate = Date.now()
+
+          this.$nextTick(() => {
+            this.onWindowLoad()
+          })
         }
       }
     },
