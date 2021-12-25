@@ -182,7 +182,7 @@
                         <q-radio dense v-model="thumb" :val="file.origin" size="xs" />
                       </q-item-section>
                       <q-item-section v-if="file.type === 'image'" thumbnail>
-                        <img :src="parsImg(file.clipboard)">
+                        <img :src="file.clipboard">
                       </q-item-section>
                       <q-item-section class="gt-xs">
                         <q-item-label class="ellipsis">
@@ -191,7 +191,7 @@
                       </q-item-section>
                       <q-item-section top side>
                         <q-btn v-if="file.type === 'image'" flat round dense icon="link"
-                          @click="copyThumbnail(parsImg(file.clipboard))" />
+                          @click="copyThumbnail(file.clipboard)" />
                         <q-btn size="md" flat round dense icon="delete" @click="deleteFile(file)" />
                       </q-item-section>
                     </q-item>
@@ -272,7 +272,6 @@
     ListItem,
     OrderedList,
     BulletList,
-    Image,
     History,
     HardBreak,
     Table,
@@ -283,6 +282,7 @@
   const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
   import CustomLink from '@/plugin/tiptap/CustomLink'
   import Alignment from '@/plugin/tiptap/Alignment'
+  import CustomImage from '@/plugin/tiptap/CustomImage'
   import CustomCodeBlock from '@/plugin/tiptap/CustomCodeBlock'
 
   export default {
@@ -311,7 +311,7 @@
             new BulletList(),
             new CustomLink(),
             new Alignment(),
-            new Image(),
+            new CustomImage(),
             new CustomCodeBlock(),
             new History(),
             new HardBreak(),
@@ -344,7 +344,6 @@
         rules: [],
         routeName: null,
         some: null,
-        action: null,
         fullScreen: false,
         title: null,
         contents: null,
@@ -378,7 +377,7 @@
       this.initItem()
       this.routeName = this.$route.name
       this.sname = this.$route.params.sname
-      this.pid = this.$route.params.pid
+      this.pid = this.$route.params.pid || null
       this.someInfo()
       this.postInit()
     },
@@ -391,7 +390,7 @@
         this.routeName = this.$route.name
         this.fromSname = from.params.sname
         this.sname = to.params.sname
-        this.pid = to.params.pid
+        this.pid = to.params.pid || null
         this.tempPid = to.params.tempPid
 
         if (to.params.sname !== from.params.sname) {
@@ -429,6 +428,9 @@
       },
       removeWithOptions() {
         return [...this.codeBlock.options, { label: 'Remove', value: 'remove' }]
+      },
+      isModify() {
+        return this.routeName === 'post-modify'
       }
     },
     methods: {
@@ -507,9 +509,6 @@
       },
       imgError() {
         this.loadFailed = true
-      },
-      parsImg(file) {
-        return `${window.location.protocol}//${window.location.host}${process.env.VUE_APP_BE_PORT ? ':'.concat(process.env.VUE_APP_BE_PORT) : ''}/${file}`
       },
       validYoutube() {
         if (this.getYoutubeId(this.youtube) !== null && (this.thumb === null || this.getYoutubeId(this.thumb) !== null))
@@ -661,41 +660,55 @@
       },
       factoryFn() {
         return {
-          url: `${this.axios.defaults.baseURL}/seras/post/upload`,
+          url: `${this.axios.defaults.baseURL}/seras/post/write`,
           method: 'POST',
           withCredentials: true,
           formFields: [
             {
               'name': 'sname',
-              'value': this.sname
+              'value': encodeURIComponent(this.sname)
+            },
+            {
+              'name': 'pid',
+              'value': this.pid
             },
             {
               'name': 'title',
-              'value': this.title
+              'value': encodeURIComponent(this.title)
             },
             {
               'name': 'contents',
-              'value': this.contents
+              'value': encodeURIComponent(this.contents)
             },
             {
-              'name': 'action',
-              'value': this.action
-            },
-            {
-              'name': 'blobList',
-              'value': JSON.stringify(this.blobList)
+              'name': 'youtube',
+              'value': encodeURIComponent(this.youtube)
             },
             {
               'name': 'thumb',
               'value': encodeURIComponent(this.thumb)
+            },
+            {
+              'name': 'deleteList',
+              'value': encodeURIComponent(JSON.stringify(this.deleteList))
             }
           ]
         }
       },
       uploaded(info) {
-        const files = info.xhr.response ? JSON.parse(info.xhr.response).files : null
-        const thumbnail = info.xhr.response ? JSON.parse(info.xhr.response).thumbnail : null
-        this.post(files, thumbnail)
+        if (this.isModify)
+          this.modifyItem(JSON.parse(info.xhr.response))
+        else
+          this.addItem(JSON.parse(info.xhr.response))
+
+        this.blobList = []
+        this.postAddModify = false
+        this.processPosting = false
+        this.editor.setOptions({
+          editable: true
+        })
+
+        this.$refs.uploadBar.stop()
       },
       copyThumbnail(thumbnailSrc) {
         copyToClipboard(thumbnailSrc)
@@ -749,27 +762,14 @@
 
         return files
       },
-      getBlob(src) {
-        const blobExp = /(blob:)([^"]*)([^>]*)(\/)([^"]*)/gi
-        let result = src
-
-        for (let blob of blobExp[Symbol.matchAll](src)) {
-          if (blob && blob[5]) {
-            result = blob[5]
-            break
-          }
-        }
-
-        return result
-      },
       uploadAdded(files) {
         files.filter((file) => {
           if (file.__img) {
             const findBlob = this.blobList.find(f => f.blob === file.__img.src)
 
             if (!findBlob) {
-              this.blobList.push({ 'blob': this.getBlob(file.__img.src), 'name': file.name })
-              this.editor.commands.image({ 'src': file.__img.src })
+              this.blobList.push({ 'blob': file.__img.src, 'name': file.name })
+              this.editor.commands.image({ 'src': file.__img.src, 'name': file.name })
               this.editor.commands.hard_break()
 
               if (this.thumb === null)
@@ -781,7 +781,7 @@
       uploadRemoved(files) {
         files.filter((file) => {
           if (file.__img) {
-            const findIndex = this.blobList.findIndex(f => f.blob === this.getBlob(file.__img.src))
+            const findIndex = this.blobList.findIndex(f => f.blob === file.__img.src)
 
             if (findIndex !== -1) {
               const newContents = this.contents.replace(file.__img.src, 'remove_image').replace(new RegExp('<(\\w+)\\s[^>]*src=\\"remove_image\\"[^>]*>', 'igm'), '')
@@ -802,7 +802,7 @@
         const findIndex = this.files.findIndex(f => f.fid === file.fid)
 
         if (findIndex !== -1) {
-          const newContents = this.contents.replace(this.parsImg(file.clipboard), 'remove_image').replace(new RegExp('<(\\w+)\\s[^>]*src=\\"remove_image\\"[^>]*>', 'igm'), '')
+          const newContents = this.contents.replace(file.clipboard, 'remove_image').replace(new RegExp('<(\\w+)\\s[^>]*src=\\"remove_image\\"[^>]*>', 'igm'), '')
           file.deleted = true
           this.deleteList.push(file.fid)
           this.files.splice(findIndex, 1)
@@ -856,23 +856,19 @@
         }
 
       },
-      post(files, thumbnail) {
+      post() {
         let self = this
-        const isModify = this.routeName === 'post-modify'
-
         this.axios
-          .post(`/seras/post/${isModify ? 'edit' : 'add'}`, {
-            sname: this.$route.params.sname,
-            pid: isModify ? this.$route.params.pid : null,
-            title: this.title,
-            contents: this.contents,
-            youtube: this.youtube,
-            deleteList: this.deleteList,
-            files: files || null,
-            thumbnail: thumbnail || null,
-            thumb: this.thumb
+          .post('/seras/post/write', {
+            sname: encodeURIComponent(this.$route.params.sname),
+            pid: this.pid,
+            title: encodeURIComponent(this.title),
+            contents: encodeURIComponent(this.contents),
+            youtube: encodeURIComponent(this.youtube),
+            thumb: encodeURIComponent(this.thumb),
+            deleteList: encodeURIComponent(JSON.stringify(this.deleteList))
           }).then(function (response) {
-            if (isModify)
+            if (self.isModify)
               self.modifyItem(response.data)
             else
               self.addItem(response.data)
@@ -880,7 +876,7 @@
             self.$q.notify({
               type: 'positive',
               color: 'positive',
-              message: isModify ? self.$t('post.message.completeModify') : self.$t('post.message.completePosting')
+              message: self.isModify ? self.$t('post.message.completeModify') : self.$t('post.message.completePosting')
             })
 
             self.blobList = []
@@ -905,7 +901,6 @@
         this.editor.setOptions({
           editable: false
         })
-        this.action = this.routeName === 'post-modify' ? 'edit' : 'add'
         const uploadObj = this.$refs.uploader
 
         if (uploadObj.files.length > 0 && uploadObj.canUpload)

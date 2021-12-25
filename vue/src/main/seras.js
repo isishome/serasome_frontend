@@ -110,7 +110,7 @@ axiosObject.interceptors.response.use((response) => {
       message: i18n.t('system.message.unavailableService')
     })
 
-    router.push({ name: 'd2r' }).catch(() => { })
+    document.location = process.env.VUE_APP_D2R_URL
     return
   }
 

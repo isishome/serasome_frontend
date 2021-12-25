@@ -2,17 +2,13 @@
   <div v-if="visible" class="full-width" :style="`position:${fixed ? 'fixed' : ''};text-align:${horizontal}`">
     <ins ref="adbox" class="adsbygoogle" :data-ad-client="dataAdClient" :data-ad-slot="dataAdSlot"
       :data-adtest="dataAdtest" :data-ad-format="dataAdFormat" :data-full-width-responsive="dataFullWidthResponsive"
-      :style="`display:inline-block;width:${tempWidth};height:${tempHeight}`" :key="key"></ins>
+      :style="`display:inline-block;width:${tempWidth};height:${tempHeight}`"></ins>
   </div>
 </template>
 <script>
   export default {
     name: 'etc-adsense',
     props: {
-      value: {
-        type: String,
-        default: ''
-      },
       dataAdClient: {
         type: String,
         required: true
@@ -49,10 +45,6 @@
         type: Boolean,
         default: true
       },
-      debounce: {
-        type: Number,
-        default: 1
-      },
       random: {
         type: Boolean,
         default: false
@@ -70,47 +62,20 @@
           //{ width: '300px', height: '250px' },
           //{ width: '336px', height: '280px' },
           { width: '250px', height: '250px' },
+          { width: '250px', height: '360px' },
+          { width: '240px', height: '400px' },
           //{ width: '300px', height: '600px' },
-          { width: '160px', height: '600px' }
-        ],
-        key: 0,
-        initDate: Date.now()
+          { width: '160px', height: '600px' },
+          { width: '120px', height: '600px' },
+          { width: '120px', height: '240px' }
+        ]
       }
     },
-    watch: {
-      '$route': function (to, old) {
-        if (to !== old && old.name !== null) {
-          if ((Date.now() - this.initDate) / 1000 > this.debounce) {
-            this.setSize()
-            this.key++
-          }
-
-          this.initDate = Date.now()
-
-          this.$nextTick(() => {
-            this.onWindowLoad()
-          })
-
-        }
-      },
-      value: function (to, old) {
-        if (to !== old) {
-          if ((Date.now() - this.initDate) / 1000 > this.debounce) {
-            this.setSize()
-            this.key++
-          }
-
-          this.initDate = Date.now()
-
-          this.$nextTick(() => {
-            this.onWindowLoad()
-          })
-        }
-      }
-    },
-    created() {
+    mounted() {
       this.setSize()
-      window.addEventListener("load", this.onWindowLoad)
+      this.$nextTick(() => {
+        this.onWindowLoad()
+      })
     },
     methods: {
       onWindowLoad() {

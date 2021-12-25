@@ -99,7 +99,7 @@
           <q-list>
             <q-item>
               <q-item-section>
-                <q-select color="teal-7" dense outlined emit-value map-options behavior="menu" v-model="lang"
+                <q-select color="teal-7" dense outlined emit-value map-options behavior="dialog" v-model="lang"
                   :options="options" :label="$t('language')" />
               </q-item-section>
             </q-item>
@@ -217,30 +217,32 @@
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding:60px 6px 0 0;">
             <adsense :visible="!noAD && $q.screen.gt.sm && isProduction" data-ad-client="ca-pub-5110777286519562"
-              data-ad-slot="7331759838" horizontal="right" random>
+              data-ad-slot="7331759838" horizontal="right" :key="`al-${key}`" random>
             </adsense>
           </div>
           <q-page class="col-xl-6 col-lg-8 col-12">
             <router-view />
             <!-- <adsense :visible="!noAD && $q.screen.lt.md && isProduction" data-ad-client="ca-pub-5110777286519562"
-              data-ad-slot="5160898238" width="300px" height="50px">
+              data-ad-slot="5160898238" width="300px" height="50px" :key="`ac-${key}`">
             </adsense> -->
           </q-page>
           <div class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding:60px 0 0 6px;">
             <adsense :visible="!noAD && $q.screen.gt.sm && isProduction" data-ad-client="ca-pub-5110777286519562"
-              data-ad-slot="7962315221" fixed horizontal="left" random>
+              data-ad-slot="7962315221" fixed horizontal="left" :key="`ar-${key}`" random>
             </adsense>
           </div>
         </div>
         <div class="platform-ios-only q-py-md"></div>
         <q-page-sticky v-show="pageScroller" v-if="$route.name === 'some' && signStatus" position="bottom-right"
           :offset="[0, 0]">
-          <q-btn push :style="$q.screen.lt.lg ? 'right:10px;bottom:30px' : 'right:20vw;bottom:20px'" round size="md"
-            icon="edit" color="orange" :to="`/@${$route.params.sname}/a`" />
+          <q-btn push
+            :style="$q.screen.gt.lg ? 'right:20vw;bottom:20px' : $q.screen.gt.md ? 'right:10vw;bottom:20px' : 'right:10px;bottom:30px'"
+            round size="md" icon="edit" color="orange" :to="`/@${$route.params.sname}/a`" />
         </q-page-sticky>
         <q-page-scroller v-show="pageScroller" position="bottom-left" :scroll-offset="150" :offset="[0, 0]">
-          <q-btn push :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : 'left:20vw;bottom:20px'" round size="md"
-            icon="keyboard_arrow_up" color="teal-4" />
+          <q-btn push
+            :style="$q.screen.gt.lg ? 'left:20vw;bottom:20px' : $q.screen.gt.md ? 'left:10vw;bottom:20px' : 'left:10px;bottom:30px'"
+            round size="md" icon="keyboard_arrow_up" color="teal-4" />
         </q-page-scroller>
       </q-page-container>
       <q-footer :class="['gt-sm', $q.dark.isActive ? 'q-dark' : 'bg-grey-2 text-grey-7']"
@@ -281,11 +283,15 @@
         options: [
           { label: '한국어', value: 'ko' },
           { label: 'ENGLISH', value: 'en' }
-        ]
+        ],
+        key: 0
       }
     },
     watch: {
-      '$route': function (to) {
+      '$route': function (to, old) {
+        if (to !== old && old.name !== null)
+          this.key++
+
         this.checkSignStatus()
         this.routeName = to.name
         this.drawer = false
@@ -321,8 +327,7 @@
         setSignStatus: 'setSignStatus',
         setSomeList: 'setSomeList',
         setCategory: 'setCategory',
-        setCurrentSome: 'setCurrentSome',
-        setD2RInfo: 'setD2RInfo'
+        setCurrentSome: 'setCurrentSome'
       }),
       toggleDark() {
         this.$q.cookies.set(process.env.VUE_APP_DARK_NAME, !this.$q.dark.isActive, { path: '/', expires: '7300d' })
@@ -360,8 +365,7 @@
       },
       getCategory() {
         const vm = this
-        const checkD2R = this.$route.matched.some(route => route.name.indexOf('d2r') !== -1)
-        if (this.categoryInfo !== null || checkD2R)
+        if (this.categoryInfo !== null)
           return
 
         this.axios
@@ -384,14 +388,13 @@
             .catch(function () { })
             .then(function () {
               vm.processSignOut = false
-              vm.setD2RInfo(null)
               vm.$router.go()
             })
         } else
           vm.$router.push({ name: 'sign', params: { redirect: encodeURIComponent(vm.$route.path) } }).catch(() => { })
       },
       goD2R() {
-        document.location.href = '/d2r'
+        document.location.href = process.env.VUE_APP_D2R_URL
       }
     }
   }

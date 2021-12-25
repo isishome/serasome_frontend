@@ -118,8 +118,7 @@
     methods: {
       ...mapActions({
         setSignStatus: 'setSignStatus',
-        setD2RInfo: 'setD2RInfo',
-        setSomeList: 'setSomeList',
+        setSomeList: 'setSomeList'
       }),
       onSubmit() {
         const vm = this
@@ -141,12 +140,11 @@
           }).then(function (response) {
             vm.setSignStatus(true)
             vm.setSomeList(response.data)
-            vm.setD2RInfo(null)
 
             if (vm.redirect)
               vm.$router.push({ path: decodeURIComponent(vm.redirect) }).catch(() => { })
             else if (typeof (vm.$route.query.d2r) !== 'undefined')
-              document.location.href = '/d2r'
+              document.location.href = process.env.VUE_APP_D2R_URL
             else
               vm.$router.replace('/').catch(() => { })
           })
@@ -267,7 +265,6 @@
           }).then(function (response) {
             vm.setSignStatus(true)
             vm.setSomeList(response.data)
-            vm.setD2RInfo(null)
 
             if (vm.redirect)
               vm.$router.push({ path: decodeURIComponent(vm.redirect) }).catch(() => { })

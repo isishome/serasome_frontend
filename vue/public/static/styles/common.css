@@ -109,3 +109,7 @@
     height: 1px;
     position: relative !important;
   }
+
+  .q-list--dark, .q-item--dark {
+    color: #DDDDDD !important;
+  }
