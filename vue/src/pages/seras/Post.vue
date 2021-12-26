@@ -150,8 +150,8 @@
                         <q-item-section side v-if="file.__img">
                           <q-radio dense v-if="file.__img" v-model="thumb" :val="file.name" size="xs" />
                         </q-item-section>
-                        <q-item-section v-if="file.__img" thumbnail>
-                          <img :src="file.__img.src">
+                        <q-item-section v-if="file.__img" style="width:10%" thumbnail>
+                          <q-img :src="file.__img.src" width="100%" :ratio="3/2" />
                         </q-item-section>
                         <q-item-section class="gt-xs">
                           <q-item-label class="ellipsis">
@@ -181,8 +181,8 @@
                       <q-item-section v-if="file.type === 'image'" side>
                         <q-radio dense v-model="thumb" :val="file.origin" size="xs" />
                       </q-item-section>
-                      <q-item-section v-if="file.type === 'image'" thumbnail>
-                        <img :src="file.clipboard">
+                      <q-item-section v-if="file.type === 'image'" style="width:10%" thumbnail>
+                        <q-img :src="file.clipboard" width="100%" :ratio="3/2" />
                       </q-item-section>
                       <q-item-section class="gt-xs">
                         <q-item-label class="ellipsis">

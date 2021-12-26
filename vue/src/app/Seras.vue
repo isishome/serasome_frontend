@@ -99,7 +99,7 @@
           <q-list>
             <q-item>
               <q-item-section>
-                <q-select color="teal-7" dense outlined emit-value map-options behavior="dialog" v-model="lang"
+                <q-select color="teal-7" dense outlined emit-value map-options v-model="lang" behavior="menu"
                   :options="options" :label="$t('language')" />
               </q-item-section>
             </q-item>
