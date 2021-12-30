@@ -215,20 +215,20 @@
       <q-page-container>
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
-          <div class="gt-md col-xl-2 offset-xl-1 col-lg-2 row justify-end" style="padding:60px 6px 0 0;">
+          <div class="gt-md col-xl col-lg-1 row justify-end" style="padding:60px 6px 0 0;">
             <adsense :visible="!noAD && $q.screen.gt.sm && isProduction" data-ad-client="ca-pub-5110777286519562"
-              data-ad-slot="7331759838" horizontal="right" :key="`al-${key}`" random>
+              data-ad-slot="7331759838" horizontal="right" :key="`al-${key}`" width="120px" height="600px">
             </adsense>
           </div>
-          <q-page class="col-xl-6 col-lg-8 col-12">
+          <q-page class="col-xl-7 col-lg-10 col-12">
             <router-view />
             <!-- <adsense :visible="!noAD && $q.screen.lt.md && isProduction" data-ad-client="ca-pub-5110777286519562"
               data-ad-slot="5160898238" width="300px" height="50px" :key="`ac-${key}`">
             </adsense> -->
           </q-page>
-          <div class="gt-md col-xl-2 col-lg-2 column items-start q-gutter-y-sm" style="padding:60px 0 0 6px;">
+          <div class="gt-md col-xl col-lg-1 column items-start q-gutter-y-sm" style="padding:60px 0 0 6px;">
             <adsense :visible="!noAD && $q.screen.gt.sm && isProduction" data-ad-client="ca-pub-5110777286519562"
-              data-ad-slot="7962315221" fixed horizontal="left" :key="`ar-${key}`" random>
+              data-ad-slot="7962315221" fixed horizontal="left" :key="`ar-${key}`" width="120px" height="600px">
             </adsense>
           </div>
         </div>
@@ -236,12 +236,12 @@
         <q-page-sticky v-show="pageScroller" v-if="$route.name === 'some' && signStatus" position="bottom-right"
           :offset="[0, 0]">
           <q-btn push
-            :style="$q.screen.gt.lg ? 'right:20vw;bottom:20px' : $q.screen.gt.md ? 'right:10vw;bottom:20px' : 'right:10px;bottom:30px'"
+            :style="$q.screen.gt.lg ? 'right:18vw;bottom:20px' : $q.screen.gt.md ? 'right:5vw;bottom:20px' : 'right:10px;bottom:30px'"
             round size="md" icon="edit" color="orange" :to="`/@${$route.params.sname}/a`" />
         </q-page-sticky>
         <q-page-scroller v-show="pageScroller" position="bottom-left" :scroll-offset="150" :offset="[0, 0]">
           <q-btn push
-            :style="$q.screen.gt.lg ? 'left:20vw;bottom:20px' : $q.screen.gt.md ? 'left:10vw;bottom:20px' : 'left:10px;bottom:30px'"
+            :style="$q.screen.gt.lg ? 'left:18vw;bottom:20px' : $q.screen.gt.md ? 'left:5vw;bottom:20px' : 'left:10px;bottom:30px'"
             round size="md" icon="keyboard_arrow_up" color="teal-4" />
         </q-page-scroller>
       </q-page-container>

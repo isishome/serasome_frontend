@@ -1,9 +1,9 @@
 <template>
   <div>
     <input ref="postRead" type="hidden" :value="value" @click="readClick" />
-    <q-dialog v-model="postView" :maximized="$q.screen.lt.md" full-height transition-show="show" transition-hide="hide"
-      @before-show="clearPostInfo" @before-hide="back" :seamless="$q.screen.lt.md">
-      <q-card v-if="postInfo" :class="['column no-scroll no-padding font-ss', $q.screen.lt.md ? '' : 'post-width']">
+    <q-dialog v-model="postView" :maximized="$q.screen.lt.lg" full-height transition-show="show" transition-hide="hide"
+      @before-show="clearPostInfo" @before-hide="back" :seamless="$q.screen.lt.lg">
+      <q-card v-if="postInfo" :class="['column no-scroll no-padding font-ss', $q.screen.lt.lg ? '' : 'post-width']">
         <q-card-section class="col-md-1 full-width row justify-between items-start overflow-hidden gt-sm">
           <div class="col font-title q-pa-sm">
             {{postInfo.title}}</div>
@@ -40,6 +40,14 @@
         <q-separator />
         <q-card-section class="col full-width no-padding">
           <q-scroll-area ref="scrollArea" :thumb-style="thumbStyle" class="fit" @scroll="onScroll">
+            <div class="q-py-xs">
+              <adsense v-if="$q.platform.is.mobile" :visible="isProduction" data-ad-client="ca-pub-5110777286519562"
+                data-ad-slot="5160898238" width="300px" height="50px" :key="`ac-${key}`">
+              </adsense>
+              <adsense v-else :visible="isProduction" data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238"
+                width="728px" height="90px" :key="`ac-${key}`">
+              </adsense>
+            </div>
             <div class="q-pa-md font-title lt-md">
               {{postInfo.title}}</div>
             <q-list class="q-py-none q-px-md lt-md">
@@ -127,7 +135,7 @@
               @delete="setDelete" @modify="setModify" @reply="setReply" />
             <transition name="fade">
               <q-btn class="gt-sm fixed-bottom-left" v-if="showTop" style="z-index: 1;"
-                :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : $q.screen.lt.xl ? 'left:10vw;bottom:30px'  : 'left:20vw;bottom:20px'"
+                :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : $q.screen.lt.xl ? 'left:5vw;bottom:30px'  : 'left:18vw;bottom:20px'"
                 round size="14px" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
             </transition>
             <ss-confirm v-model="deleteAttachConfirm" icon="delete" color="negative" text-color="white"
@@ -215,8 +223,7 @@
   } from 'vuex'
   import {
     scroll,
-    copyToClipboard,
-    uid
+    copyToClipboard
   } from 'quasar'
   import hljs from 'highlight.js'
   const Confirm = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Confirm')
@@ -281,14 +288,15 @@
         deleteAttachConfirm: false,
         fileInfo: null,
         postInfo: null,
-        key: uid(),
+        key: 0,
         isProduction: process.env.NODE_ENV === 'production',
         contLoaded: false
       }
     },
     computed: {
       ...mapGetters({
-        signStatus: 'getSignStatus'
+        signStatus: 'getSignStatus',
+        noAD: 'getNoAD'
       }),
       viewContents() {
         let dom = document.createElement('contents')
@@ -471,7 +479,7 @@
           })
           .then(function (response) {
             if (response.data && response.data !== null) {
-              self.key = uid()
+              self.key++
               self.postInfo = response.data
               document.title = (self.$route.meta.title || process.env.VUE_APP_TITLE)
               document.title = document.title.concat(' - ', self.postInfo.title)
@@ -723,7 +731,7 @@
   .post-width {
     width: 50vw !important;
     max-width: none !important;
-    min-width: 1024px;
+    min-width: 1260px;
   }
 
   .body--light .attach-back {

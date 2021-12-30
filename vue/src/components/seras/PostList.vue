@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-sm">
     <div class="row content-start justify-start" :class="$q.screen.gt.sm ? 'q-col-gutter-lg' : 'q-col-gutter-sm'">
-      <div class="col-6 col-xl-3 col-sm-4 col-xs-6 non-selectable" v-for="item in list" :key="item.pid">
+      <div class="col-6 col-md-3 col-sm-4 col-xs-6 non-selectable" v-for="item in list" :key="item.pid">
         <q-btn :disable="loading" no-caps flat dense class="fit" @click="clickPost(item.sname, item.pid)">
           <div class="absolute-top-right nunito" style="z-index:1;top:4px;right:-4px;opacity: 0.9;">
             <q-chip square size="xs" style="padding:12px 6px" :color="$q.dark.isActive ? 'grey-2' : 'teal-10'"
