@@ -32,8 +32,8 @@ export default {
     },
     main: {
       category: "범주",
-      popularWeekOld: "일주일 지난 인기 썸",
-      popularLastWeek: "지난주 인기 썸",
+      popularWeekOld: "일주일 이전 인기 썸",
+      popularLastWeek: "지난 7일 인기 썸",
       popularToday: "오늘의 인기 썸",
       carousel: {
         "1": {

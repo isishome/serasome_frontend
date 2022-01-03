@@ -135,7 +135,7 @@
               @delete="setDelete" @modify="setModify" @reply="setReply" />
             <transition name="fade">
               <q-btn class="gt-sm fixed-bottom-left" v-if="showTop" style="z-index: 1;"
-                :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : $q.screen.lt.xl ? 'left:5vw;bottom:30px'  : 'left:18vw;bottom:20px'"
+                :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : $q.screen.lt.xl ? 'left:14vw;bottom:30px'  : 'left:23vw;bottom:20px'"
                 round size="14px" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
             </transition>
             <ss-confirm v-model="deleteAttachConfirm" icon="delete" color="negative" text-color="white"
