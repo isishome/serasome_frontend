@@ -40,14 +40,6 @@
         <q-separator />
         <q-card-section class="col full-width no-padding">
           <q-scroll-area ref="scrollArea" :thumb-style="thumbStyle" class="fit" @scroll="onScroll">
-            <div class="q-py-xs">
-              <adsense v-if="$q.platform.is.mobile" :visible="isProduction" data-ad-client="ca-pub-5110777286519562"
-                data-ad-slot="5160898238" width="300px" height="50px" :key="`ac-${key}`">
-              </adsense>
-              <adsense v-else :visible="isProduction" data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238"
-                width="728px" height="90px" :key="`ac-${key}`">
-              </adsense>
-            </div>
             <div class="q-pa-md font-title lt-md">
               {{postInfo.title}}</div>
             <q-list class="q-py-none q-px-md lt-md">
@@ -75,11 +67,21 @@
               </q-item>
             </q-list>
             <q-separator class="lt-md" />
+            <div class="q-py-xs">
+              <adsense v-if="$q.platform.is.mobile === true && isProduction === true"
+                data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" width="300px" height="50px"
+                :key="`acm-${key}`">
+              </adsense>
+              <adsense v-if="$q.platform.is.desktop === true && isProduction === true"
+                data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" width="728px" height="90px"
+                :key="`acd-${key}`">
+              </adsense>
+            </div>
             <div style="min-height: 81vh;" class="q-pa-md">
               <div v-if="postInfo.youtube">
                 <q-video :ratio="16/9" :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
               </div>
-              <p class="word-wrap contents" v-html="viewContents"></p>
+              <p ref="contents" class="word-wrap contents" v-html="viewContents"></p>
             </div>
             <div v-if="postInfo.files && postInfo.files.length > 0">
               <q-separator />
@@ -228,6 +230,15 @@
   import hljs from 'highlight.js'
   const Confirm = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Confirm')
   const Comment = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Comment')
+  const io = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.src = entry.target.dataset.src
+        entry.target.classList.remove('io-img')
+        observer.unobserve(entry.target)
+      }
+    })
+  })
 
   const {
     getScrollTarget,
@@ -289,8 +300,7 @@
         fileInfo: null,
         postInfo: null,
         key: 0,
-        isProduction: process.env.NODE_ENV === 'production',
-        contLoaded: false
+        isProduction: process.env.NODE_ENV === 'production'
       }
     },
     computed: {
@@ -479,14 +489,16 @@
           })
           .then(function (response) {
             if (response.data && response.data !== null) {
-              self.key++
+              self.intersactionImage(response.data)
               self.postInfo = response.data
               document.title = (self.$route.meta.title || process.env.VUE_APP_TITLE)
               document.title = document.title.concat(' - ', self.postInfo.title)
               self.postView = true
               self.$nextTick(() => {
+                const images = self.$refs.contents.querySelectorAll('.io-img')
+                images.forEach((el) => io.observe(el))
                 self.$emit('done')
-                self.contLoaded = true
+                self.key++
               })
             } else {
               self.$q.notify({
@@ -498,6 +510,10 @@
             }
           })
           .catch(() => { })
+          .then(() => { })
+      },
+      intersactionImage(info) {
+        info.contents = info.contents.replace(/(<img[^>]+)(src)([^>]+>)/gmi, '$1 class="io-img" data-src$3')
       },
       show() {
         this.postView = true
