@@ -53,16 +53,16 @@
                       </div>
                       <div>
                         <q-btn flat dense size="sm" icon="format_align_left"
-                          :class="{ 'is-active': getMarkAttrs('alignment').align === 'left' }"
+                          :class="{ 'is-active': isActive.alignment({ align: 'left' }) }"
                           @click="commands.alignment({ align: 'left' })" />
                         <q-btn flat dense size="sm" icon="format_align_center"
-                          :class="{ 'is-active': getMarkAttrs('alignment').align === 'center' }"
+                          :class="{ 'is-active': isActive.alignment({ align: 'center' }) }"
                           @click="commands.alignment({ align: 'center' })" />
                         <q-btn flat dense size="sm" icon="format_align_right"
-                          :class="{ 'is-active': getMarkAttrs('alignment').align === 'right' }"
+                          :class="{ 'is-active': isActive.alignment({ align: 'right' }) }"
                           @click="commands.alignment({ align: 'right' })" />
                         <q-btn flat dense size="sm" icon="format_align_justify"
-                          :class="{ 'is-active': getMarkAttrs('alignment').align === 'justify' }"
+                          :class="{ 'is-active': isActive.alignment({ align: 'justify' }) }"
                           @click="commands.alignment({ align: 'justify' })" />
                       </div>
                       <div>
@@ -118,11 +118,10 @@
                   </q-toolbar>
                 </editor-menu-bar>
                 <q-scroll-area class="full-width contents editor-contents q-pa-md"
-                  :class="['contents-area', this.contents === null ? '' : isBlankContents ? 'invalid-contents' : 'valid-contents']"
-                  :thumb-style="thumbStyle" :content-style="{'height':'100%'}">
+                  :class="[!fullScreen ? 'contents-area' : '', contents === null ? '' : isBlankContents ? 'invalid-contents' : 'valid-contents']"
+                  :thumb-style="thumbStyle">
                   <editor-content spellcheck="false" :editor="editor" class="full-height" />
                 </q-scroll-area>
-                <div v-if="fullScreen" class="platform-ios-only" style="padding-bottom: 12vh;"></div>
               </div>
               <q-list separator class="q-pa-sm">
                 <q-item dense>
@@ -994,11 +993,20 @@
   .full-screen {
     top: 0;
     right: 0;
-    bottom: 2px;
+    bottom: 0;
     left: 0;
     position: fixed;
     height: 100vh !important;
     z-index: 9999;
+  }
+
+  .full-screen .editor-menu-bar {
+    position: relative !important;
+    height: 10vh;
+  }
+
+  .full-screen .editor-contents {
+    height: 89vh !important;
   }
 
   .body--light .full-screen {

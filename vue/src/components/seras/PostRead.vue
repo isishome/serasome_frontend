@@ -4,6 +4,11 @@
     <q-dialog v-model="postView" :maximized="$q.screen.lt.lg" full-height transition-show="show" transition-hide="hide"
       @before-show="clearPostInfo" @before-hide="back" :seamless="$q.screen.lt.lg">
       <q-card v-if="postInfo" :class="['column no-scroll no-padding font-ss', $q.screen.lt.lg ? '' : 'post-width']">
+        <transition name="fade">
+          <q-btn class="gt-sm" v-if="showTop" style="z-index: 1;"
+            :style="`position:fixed;bottom:0;margin-bottom:30px;margin-left:${$q.screen.lt.lg ? '10px' : '-50px'};`"
+            round size="14px" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
+        </transition>
         <q-card-section class="col-md-1 full-width row justify-between items-start overflow-hidden gt-sm">
           <div class="col font-title q-pa-sm">
             {{postInfo.title}}</div>
@@ -135,11 +140,7 @@
             </div>
             <ss-comment ref="comment" :value="commentList" :auth="postInfo.auth" @refresh="refresh" @get="onLoad"
               @delete="setDelete" @modify="setModify" @reply="setReply" />
-            <transition name="fade">
-              <q-btn class="gt-sm fixed-bottom-left" v-if="showTop" style="z-index: 1;"
-                :style="$q.screen.lt.lg ? 'left:10px;bottom:30px' : $q.screen.lt.xl ? 'left:14vw;bottom:30px'  : 'left:23vw;bottom:20px'"
-                round size="14px" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
-            </transition>
+
             <ss-confirm v-model="deleteAttachConfirm" icon="delete" color="negative" text-color="white"
               :message="$t('postRead.message.deleteAttachments')" @cancel="deleteAttachConfirm = false"
               @confirm="action('delete')" />

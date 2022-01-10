@@ -1,5 +1,5 @@
 .ProseMirror {
-  min-height: 100%;
+  min-height: calc(67vh - 130px);
 }
 
 .ProseMirror:focus {
@@ -71,9 +71,9 @@
 }
 
 .contents code {
-  background-color: rgba(200,200,200,.2);
+  background-color: rgba(200,200,200,.4);
   border-radius: 4px;
-  padding: .2rem .4rem;
+  padding: .1rem .2rem;
   font-family: 'Noto Sans KR', sans-serif !important;
 }
 
