@@ -152,7 +152,7 @@ const routes = [
     path: '/Lotto',
     component: lotto,
     meta: {
-      title: `Sera's Something - Lotto 6/45`,
+      title: process.env.VUE_APP_TITLE.concat(' - ', 'Lotto 6/45'),
       preventScroll: true
     }
   },
@@ -161,7 +161,7 @@ const routes = [
     path: '/Annuity',
     component: annuity,
     meta: {
-      title: `Sera's Something - Annuity`,
+      title: process.env.VUE_APP_TITLE.concat(' - ', 'Annuity'),
       preventScroll: true
     }
   },

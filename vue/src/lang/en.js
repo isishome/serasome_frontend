@@ -32,9 +32,9 @@ export default {
     },
     main: {
       category: "Category",
-      popularWeekOld: "Top Somethings a week ago",
-      popularLastWeek: "Top Somethings in the last 7 days",
-      popularToday: "Today's Top Somethings",
+      popularWeekOld: "Top things a week ago",
+      popularLastWeek: "Top things in the last 7 days",
+      popularToday: "Today's Top things",
       carousel: {
         "1": {
           title: "Like an echo in the forest",

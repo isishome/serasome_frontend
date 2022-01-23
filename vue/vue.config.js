@@ -22,6 +22,7 @@ module.exports = {
     'vue-google-oauth2',
     'highlight.js',
   ],
+  productionSourceMap: false,
   outputDir: '../dist',
   assetsDir: 'static'
 }
