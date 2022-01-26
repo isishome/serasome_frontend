@@ -232,8 +232,7 @@
           </div>
         </div>
         <div class="platform-ios-only q-py-md"></div>
-        <q-page-sticky v-show="pageScroller" v-if="$route.name === 'some' && signStatus" position="bottom-right"
-          :offset="[0, 0]">
+        <q-page-sticky v-show="pageScroller" v-if="writeCheck" position="bottom-right" :offset="[0, 0]">
           <q-btn push
             :style="$q.screen.gt.lg ? 'right:23vw;bottom:20px' : $q.screen.gt.md ? 'right:14vw;bottom:20px' : 'right:10px;bottom:30px'"
             round size="md" icon="edit" color="orange" :to="`/@${$route.params.sname}/a`" />
@@ -273,7 +272,7 @@
         isProduction: process.env.NODE_ENV === 'production',
         slide: 'first',
         language: this.$te('language', navigator.language || 'ko'),
-        routeName: '',
+        routeName: this.$route.name,
         drawer: false,
         text: '',
         processSignOut: false,
@@ -291,7 +290,6 @@
         if (to !== old && old.name !== null)
           this.key++
 
-        this.checkSignStatus()
         this.routeName = to.name
         this.drawer = false
         this.getCategory()
@@ -315,7 +313,10 @@
         pageScroller: 'getPageScroller',
         independent: 'getIndependent',
         noAD: 'getNoAD'
-      })
+      }),
+      writeCheck() {
+        return this.routeName === 'some' && this.signStatus === true && this.someList.find(s => s.name === this.$route.params.sname)
+      }
     },
     created() {
       const cookieIsDark = this.$q.cookies.has(process.env.VUE_APP_DARK_NAME) ? this.$q.cookies.get(process.env.VUE_APP_DARK_NAME) : false
@@ -323,8 +324,6 @@
     },
     methods: {
       ...mapActions({
-        setSignStatus: 'setSignStatus',
-        setSomeList: 'setSomeList',
         setCategory: 'setCategory',
         setCurrentSome: 'setCurrentSome'
       }),
@@ -346,21 +345,6 @@
       forcedMove() {
         if ((this.signStatus === true && this.routeName === 'sign') || (this.signStatus !== true && (this.routeName === 'info' || this.routeName === 'post-add' || this.routeName === 'post-modify')))
           this.$router.push('/').catch(() => { })
-      },
-      checkSignStatus() {
-        const vm = this
-        if (this.signStatus === null || this.someList === null) {
-          this.axios
-            .get('/seras/account/signstatus')
-            .then(function (response) {
-              vm.setSignStatus(response.data.status)
-              vm.setSomeList(response.data.someList)
-            })
-            .catch(function () { })
-            .then(function () {
-              vm.forcedMove()
-            })
-        }
       },
       getCategory() {
         const vm = this

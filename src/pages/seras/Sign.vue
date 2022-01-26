@@ -211,7 +211,6 @@
           .post('/seras/account/facebookSignin', {
             'fuid': fuid
           }).then(function (response) {
-            self.setSignStatus(true)
             self.setSomeList(response.data)
             self.$router.push('/').catch(() => { })
           })
@@ -263,7 +262,6 @@
           .post('/seras/account/googleSignin', {
             'guid': guid
           }).then(function (response) {
-            vm.setSignStatus(true)
             vm.setSomeList(response.data)
 
             if (vm.redirect)

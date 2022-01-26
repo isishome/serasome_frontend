@@ -19,71 +19,6 @@ const PostRead = () => import(/* webpackChunkName: "seras-component" */ '@/compo
 
 const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
 
-// Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
-const router = new VueRouter({
-  mode: 'history',
-  routes
-  ,
-  scrollBehavior(to, from, savedPosition) {
-    const findTopScroll = to.matched.find(route => route.meta.topScroll)
-    if (findTopScroll)
-      return { x: 0, y: 0 }
-    else if (savedPosition)
-      return savedPosition
-    else
-      return
-  }
-})
-
-router.onError((error) => {
-  if (error.name === 'ChunkLoadError') {
-    window.location.reload()
-  }
-})
-
-router.beforeEach((to, from, next) => {
-  i18n.loadLanguageAsync(lang).then(() => next())
-})
-
-router.beforeEach((to, from, next) => {
-  const findTitle = to.matched.find(route => route.meta.title)
-  document.title = findTitle ? findTitle.meta.title : process.env.VUE_APP_TITLE
-
-  const findIndependent = to.matched.find(route => route.meta.independent)
-  if (findIndependent && !findIndependent.components.independent) {
-    findIndependent.components.independent = findIndependent.components.default
-    delete findIndependent.components.default
-  }
-  store.dispatch('setIndependent', findIndependent !== undefined)
-
-  if (store.getters.getPageScroller !== true)
-    store.dispatch('setPageScroller', true)
-
-  const preventScroll = to.matched.some(route => route.meta.preventScroll)
-  document.body.style.overflow = preventScroll ? 'hidden' : ''
-
-  const findNoAD = to.matched.find(route => route.meta.noAD)
-  store.dispatch('setNoAD', findNoAD !== undefined)
-
-  const requireAuth = to.matched.some(route => route.meta.requireAuth)
-  const signedIn = Cookies.has(process.env.VUE_APP_STATUS_NAME) && Cookies.get(process.env.VUE_APP_STATUS_NAME) === true
-  const checkForgot = to.matched.some(route => route.name.indexOf('forgot') !== -1)
-  if (requireAuth && !signedIn) {
-    Notify.create({
-      type: 'negative',
-      color: 'negative',
-      message: i18n.t('system.message.requireSignIn')
-    })
-
-    router.replace({ name: 'sign', params: { redirect: encodeURIComponent(to.path) } }).catch(() => { })
-  }
-  else if (signedIn && checkForgot)
-    router.replace({ name: 'main' }).catch(() => { })
-
-  next()
-})
-// Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
-
 // Axios -------------------------------------------------------------------------------------------------------------------------------------------------
 let axiosObject = axios.create({
   baseURL: `${process.env.VUE_APP_BE_HOST ? process.env.VUE_APP_BE_HOST : window.location.protocol.concat('//', window.location.hostname, ':', process.env.VUE_APP_BE_PORT)}`,
@@ -98,10 +33,6 @@ axiosObject.interceptors.request.use((config) => {
 
 axiosObject.interceptors.response.use((response) => {
   const statusCode = typeof (response) === 'object' ? response.status : null;
-  const signStatus = Cookies.has(process.env.VUE_APP_STATUS_NAME) && Cookies.get(process.env.VUE_APP_STATUS_NAME) === true
-
-  if (store.getters.getSignStatus !== signStatus)
-    store.dispatch('setSignStatus', signStatus)
 
   if (statusCode === 203) {
     Notify.create({
@@ -131,8 +62,8 @@ axiosObject.interceptors.response.use((response) => {
   })
 
   if (statusCode === 401) {
-    store.dispatch('setSignStatus', false)
     store.dispatch('setSomeList', null)
+    store.dispatch('setSignStatus', false)
     store.dispatch('setCurrentSome', false)
     router.push({ name: statusCode === 401 ? 'sign' : 'join' }).catch(() => { })
   }
@@ -144,6 +75,91 @@ axiosObject.interceptors.response.use((response) => {
   return Promise.reject(error);
 })
 // Axios -------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
+const router = new VueRouter({
+  mode: 'history',
+  routes
+  ,
+  scrollBehavior(to, from, savedPosition) {
+    const findTopScroll = to.matched.find(route => route.meta.topScroll)
+    if (findTopScroll)
+      return { x: 0, y: 0 }
+    else if (savedPosition)
+      return savedPosition
+    else
+      return
+  }
+})
+
+router.onError((error) => {
+  if (error.name === 'ChunkLoadError') {
+    window.location.reload()
+  }
+})
+
+router.beforeEach((to, from, next) => {
+  i18n.loadLanguageAsync(lang).then(() => next())
+})
+
+router.beforeEach((to, from, next) => {
+  const signedIn = store.getters.getSignStatus
+  const someList = store.getters.getSomeList
+
+  if (signedIn === null || !someList || someList.length === 0) {
+    axiosObject
+      .get('/seras/account/signstatus')
+      .then(function (response) {
+        store.dispatch('setSignStatus', response.data.status)
+        store.dispatch('setSomeList', response.data.someList)
+      })
+      .catch(function () { })
+      .then(function () {
+        next()
+      })
+  }
+  else
+    next()
+})
+
+router.beforeEach((to, from, next) => {
+  const findTitle = to.matched.find(route => route.meta.title)
+  document.title = findTitle ? findTitle.meta.title : process.env.VUE_APP_TITLE
+
+  const findIndependent = to.matched.find(route => route.meta.independent)
+  if (findIndependent && !findIndependent.components.independent) {
+    findIndependent.components.independent = findIndependent.components.default
+    delete findIndependent.components.default
+  }
+  store.dispatch('setIndependent', findIndependent !== undefined)
+
+  if (store.getters.getPageScroller !== true)
+    store.dispatch('setPageScroller', true)
+
+  const preventScroll = to.matched.some(route => route.meta.preventScroll)
+  document.body.style.overflow = preventScroll ? 'hidden' : ''
+
+  const findNoAD = to.matched.find(route => route.meta.noAD)
+  store.dispatch('setNoAD', findNoAD !== undefined)
+
+  const requireAuth = to.matched.some(route => route.meta.requireAuth)
+  const signedIn = store.getters.getSignStatus
+  const checkForgot = to.matched.some(route => route.name.indexOf('forgot') !== -1)
+  if (requireAuth && !signedIn) {
+    Notify.create({
+      type: 'negative',
+      color: 'negative',
+      message: i18n.t('system.message.requireSignIn')
+    })
+
+    router.replace({ name: 'sign', params: { redirect: encodeURIComponent(to.path) } }).catch(() => { })
+  }
+  else if (signedIn && checkForgot)
+    router.replace({ name: 'main' }).catch(() => { })
+
+  next()
+})
+// Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
 
 // ThumbStyle --------------------------------------------------------------------------------------------------------------------------------------------
 Vue.prototype.thumbStyle = {

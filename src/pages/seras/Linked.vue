@@ -10,8 +10,7 @@
           </div>
           <q-separator inset spaced />
           <div class="row justify-start q-gutter-x-sm q-pa-md">
-            <q-btn flat dense no-caps v-for="item in linked.data" :key="item.sid"
-              :to="`/@${item.sid ? item.sid : item.lsid}`">
+            <q-btn flat dense no-caps v-for="item in linked.data" :key="item.sid" :to="`/@${item.name}`">
               <q-icon :name="item.icon ? item.icon : item.intertwined || item.lsid ? 'fas fa-cubes' : 'fas fa-question'"
                 class="q-mr-xs" size="16px" :color="item.intertwined === true ? 'amber-7' : 'grey-5'" />
               <div

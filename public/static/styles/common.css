@@ -10,6 +10,7 @@
   .font-title {
     font-weight: 700 !important;
     font-size: 1.4em !important;
+    line-height: 1.4em;
   }
 
   body {
