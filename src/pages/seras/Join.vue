@@ -212,9 +212,10 @@
                 router.push('/').catch(() => { })
               }, 5000)
             }
+            else
+              vm.processJoin = false
           })
-          .catch(function () { })
-          .then(function () {
+          .catch(function () {
             vm.processJoin = false
           })
       },

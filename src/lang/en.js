@@ -20,7 +20,8 @@ export default {
       regist: 'Leave',
       leave: "Leave a comments",
       reply: "Reply",
-      close: "Close"
+      close: "Close",
+      resend: "Resend"
     },
     search: {
       title: "Search",
@@ -77,7 +78,8 @@ export default {
         forgotYourPassword: "Forgot your password?",
         noGetGoogleInfo: "Could not get google account information",
         gotoJoinPage: "Go to the join page",
-        alreadyLoggedIn: "You are already logged in."
+        alreadyLoggedIn: "You are already logged in.",
+        resend: "A verification email has been sent."
       },
       btn: {
         join: "Join"

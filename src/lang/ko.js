@@ -20,7 +20,8 @@ export default {
       regist: "등록",
       leave: "댓글남기기",
       reply: "답글",
-      close: "닫기"
+      close: "닫기",
+      resend: "재발송"
     },
     search: {
       title: "검색",
@@ -77,7 +78,8 @@ export default {
         forgotYourPassword: "비밀번호를 잃어버렸나요?",
         noGetGoogleInfo: "구글 계정정보를 가져올 수 없습니다.",
         gotoJoinPage: "가입 페이지로 이동합니다.",
-        alreadyLoggedIn: "이미 로그인 된 상태입니다."
+        alreadyLoggedIn: "이미 로그인 된 상태입니다.",
+        resend: "인증 메일이 발송되었습니다."
       },
       btn: {
         join: "가입하기"

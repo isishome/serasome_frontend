@@ -86,7 +86,7 @@
               <div v-if="postInfo.youtube">
                 <q-video :ratio="16/9" :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
               </div>
-              <p ref="contents" class="word-wrap contents" v-html="viewContents"></p>
+              <p ref="contents" class="word-wrap contents" v-html="contents"></p>
             </div>
             <div v-if="postInfo.files && postInfo.files.length > 0">
               <q-separator />
@@ -241,6 +241,15 @@
     })
   })
 
+  const co = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        hljs.highlightElement(entry.target)
+        observer.unobserve(entry.target)
+      }
+    })
+  })
+
   const {
     getScrollTarget,
     setScrollPosition
@@ -309,13 +318,8 @@
         signStatus: 'getSignStatus',
         noAD: 'getNoAD'
       }),
-      viewContents() {
-        let dom = document.createElement('contents')
-        dom.innerHTML = this.postInfo.contents
-        dom.querySelectorAll('pre code').forEach((el) => {
-          hljs.highlightElement(el)
-        })
-        return dom.innerHTML.replace(/<p><\/p>/gi, '<p><br><p>')
+      contents() {
+        return this.postInfo.contents ? this.postInfo.contents.replace(/<p><\/p>/gi, '<p><br><p>') : ''
       }
     },
     created() {
@@ -498,6 +502,8 @@
               self.$nextTick(() => {
                 const images = self.$refs.contents.querySelectorAll('.io-img')
                 images.forEach((el) => io.observe(el))
+                const codes = self.$refs.contents.querySelectorAll('pre code')
+                codes.forEach((el) => co.observe(el))
                 self.$emit('done')
                 self.key++
               })

@@ -138,19 +138,56 @@
             pwd: this.joinForm.password.value,
             token: token
           }).then(function (response) {
-            vm.setSignStatus(true)
-            vm.setSomeList(response.data)
+            if (response.status === 200) {
+              vm.setSignStatus(true)
+              vm.setSomeList(response.data)
 
-            if (vm.redirect)
-              vm.$router.push({ path: decodeURIComponent(vm.redirect) }).catch(() => { })
-            else if (typeof (vm.$route.query.d2r) !== 'undefined')
-              document.location.href = process.env.VUE_APP_D2R_URL
-            else
-              vm.$router.replace('/').catch(() => { })
+              if (vm.redirect)
+                vm.$router.push({ path: decodeURIComponent(vm.redirect) }).catch(() => { })
+              else if (typeof (vm.$route.query.d2r) !== 'undefined')
+                document.location.href = process.env.VUE_APP_D2R_URL
+              else
+                vm.$router.replace('/').catch(() => { })
+            }
+            else if (response.status === 202) {
+              vm.$q.notify({
+                type: 'warning',
+                color: 'warning',
+                message: response.data,
+                timeout: 5000,
+                actions: [
+                  {
+                    label: vm.$t('btn.resend'), color: 'black', handler: () => {
+                      window.grecaptcha.ready(function () {
+                        window.grecaptcha.execute(process.env.VUE_APP_GOOGLE_RC_SITEKEY, { action: 'submit' }).then(function (token) {
+                          vm.resend(token)
+                        })
+                      })
+                    }
+                  }
+                ]
+              })
+            }
           })
           .catch(function () { })
           .then(function () {
             vm.processSign = false
+          })
+      },
+      resend(token) {
+        const vm = this
+
+        this.axios
+          .post('/seras/account/resend', {
+            email: this.joinForm.email.value,
+            pwd: this.joinForm.password.value,
+            token: token
+          }).then(function () {
+            vm.$q.notify({
+              type: 'positive',
+              color: 'positive',
+              message: vm.$t('signIn.message.resend')
+            })
           })
       },
       handleSdkInit({ FB, scope }) {
