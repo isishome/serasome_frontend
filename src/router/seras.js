@@ -49,10 +49,7 @@ const routes = [
       {
         name: 'post-add',
         path: 'a',
-        component: post,
-        meta: {
-          requireAuth: true
-        }
+        component: post
       },
       {
         name: 'post',
@@ -62,10 +59,7 @@ const routes = [
           {
             name: 'post-modify',
             path: 'm',
-            component: post,
-            meta: {
-              requireAuth: true
-            }
+            component: post
           }
         ]
       }
@@ -121,8 +115,7 @@ const routes = [
     path: '/info',
     component: info,
     meta: {
-      noAD: true,
-      requireAuth: true
+      noAD: true
     }
   },
   {
@@ -142,10 +135,7 @@ const routes = [
   {
     name: 'linked',
     path: '/linked',
-    component: linked,
-    meta: {
-      requireAuth: true
-    }
+    component: linked
   },
   {
     name: 'lotto',

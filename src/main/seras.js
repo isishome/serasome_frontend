@@ -62,15 +62,13 @@ axiosObject.interceptors.response.use((response) => {
   })
 
   if (statusCode === 401) {
-    store.dispatch('setSomeList', null)
+    store.dispatch('setSomeList', [])
     store.dispatch('setSignStatus', false)
     store.dispatch('setCurrentSome', false)
-    router.push({ name: statusCode === 401 ? 'sign' : 'join' }).catch(() => { })
+    router.push({ name: 'sign' }).catch(() => { })
   }
-  else if (statusCode === 303) {
-    if (router.currentRoute.name !== 'main')
-      router.push({ name: 'main' }).catch(() => { })
-  }
+  else if (['sign', 'join'].includes(router.currentRoute.name) && statusCode === 303)
+    router.push({ name: 'main' }).catch(() => { })
 
   return Promise.reject(error);
 })
@@ -103,26 +101,6 @@ router.beforeEach((to, from, next) => {
 })
 
 router.beforeEach((to, from, next) => {
-  const signedIn = store.getters.getSignStatus
-  const someList = store.getters.getSomeList
-
-  if (signedIn === null || !someList || someList.length === 0) {
-    axiosObject
-      .get('/seras/account/signstatus')
-      .then(function (response) {
-        store.dispatch('setSignStatus', response.data.status)
-        store.dispatch('setSomeList', response.data.someList)
-      })
-      .catch(function () { })
-      .then(function () {
-        next()
-      })
-  }
-  else
-    next()
-})
-
-router.beforeEach((to, from, next) => {
   const findTitle = to.matched.find(route => route.meta.title)
   document.title = findTitle ? findTitle.meta.title : process.env.VUE_APP_TITLE
 
@@ -142,19 +120,8 @@ router.beforeEach((to, from, next) => {
   const findNoAD = to.matched.find(route => route.meta.noAD)
   store.dispatch('setNoAD', findNoAD !== undefined)
 
-  const requireAuth = to.matched.some(route => route.meta.requireAuth)
-  const signedIn = store.getters.getSignStatus
   const checkForgot = to.matched.some(route => route.name.indexOf('forgot') !== -1)
-  if (requireAuth && !signedIn) {
-    Notify.create({
-      type: 'negative',
-      color: 'negative',
-      message: i18n.t('system.message.requireSignIn')
-    })
-
-    router.replace({ name: 'sign', params: { redirect: encodeURIComponent(to.path) } }).catch(() => { })
-  }
-  else if (signedIn && checkForgot)
+  if (checkForgot)
     router.replace({ name: 'main' }).catch(() => { })
 
   next()

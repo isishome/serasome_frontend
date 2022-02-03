@@ -287,8 +287,10 @@
     },
     watch: {
       '$route': function (to, old) {
-        if (to !== old && old.name !== null)
+        if (to !== old && old.name !== null) {
+          this.checkStatus()
           this.key++
+        }
 
         this.routeName = to.name
         this.drawer = false
@@ -319,14 +321,30 @@
       }
     },
     created() {
+      this.checkStatus()
       const cookieIsDark = this.$q.cookies.has(process.env.VUE_APP_DARK_NAME) ? this.$q.cookies.get(process.env.VUE_APP_DARK_NAME) : false
       this.$q.dark.set(cookieIsDark)
     },
     methods: {
       ...mapActions({
         setCategory: 'setCategory',
-        setCurrentSome: 'setCurrentSome'
+        setCurrentSome: 'setCurrentSome',
+        setSignStatus: 'setSignStatus',
+        setSomeList: 'setSomeList'
       }),
+      checkStatus() {
+        const vm = this
+        if (this.signStatus === null || this.someList.length === 0) {
+          this.axios
+            .get('/seras/account/signstatus')
+            .then(function (response) {
+              vm.setSignStatus(response.data.status)
+              vm.setSomeList(response.data.someList)
+            })
+            .catch(function () { })
+            .then(function () { })
+        }
+      },
       toggleDark() {
         this.$q.cookies.set(process.env.VUE_APP_DARK_NAME, !this.$q.dark.isActive, { path: '/', expires: '7300d' })
         this.$q.dark.set(!this.$q.dark.isActive)

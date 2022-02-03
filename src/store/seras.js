@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     signStatus: null,
     categoryInfo: null,
-    someList: null,
+    someList: [],
     currentSome: false,
     items: [],
     pageScroller: true,
