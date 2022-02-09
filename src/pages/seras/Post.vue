@@ -21,7 +21,7 @@
           <q-card-section>
             <q-form ref="form" @submit="onSubmit" class="column full-width q-gutter-y-xs">
               <div class="full-width">
-                <q-input dense outlined hide-bottom-space :disable="processPosting" maxlength="64" type="text"
+                <q-input dense outlined hide-bottom-space :disable="processPosting" maxlength="200" type="text"
                   v-model="title" :label="$t('post.title')" :rules="[val => !!val && val.trim() !== '' || '']" />
               </div>
               <div class="column full-width relative-position" :class="fullScreen === true ? 'full-screen' : ''">

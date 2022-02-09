@@ -203,6 +203,7 @@ export default {
     },
     table: {
       noData: "No data"
-    }
+    },
+    mailto: "Contact US"
   }
 }

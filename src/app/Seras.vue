@@ -250,7 +250,10 @@
           <q-avatar size="md">
             <img src="@/assets/images/seras.svg" />
           </q-avatar>
-          <div>SeraSome @2021</div>
+          <div>SeraSome @2022</div>
+          <div class="absolute-right q-mr-lg row items-center">
+            <a class="mailto" href="mailto:serasomething@gmail.com">{{$t('mailto')}}</a>
+          </div>
         </div>
         <div class="col gt-sm row justify-end q-ma-sm">
         </div>
@@ -336,7 +339,12 @@
         const vm = this
         if (this.signStatus === null || this.someList.length === 0) {
           this.axios
-            .get('/seras/account/signstatus')
+            .get('/seras/account/signstatus',
+              {
+                params: {
+                  t: Date.now()
+                }
+              })
             .then(function (response) {
               vm.setSignStatus(response.data.status)
               vm.setSomeList(response.data.someList)

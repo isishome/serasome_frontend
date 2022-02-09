@@ -203,6 +203,7 @@ export default {
     },
     table: {
       noData: "데이터가 없습니다"
-    }
+    },
+    mailto: "문의하기"
   }
 }

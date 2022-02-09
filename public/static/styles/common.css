@@ -117,5 +117,15 @@
   }
 
   .io-img {
+    width:100px !important;
     min-height: 100vh;
+  }
+
+  .mailto {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .mailto:hover {
+    text-decoration: underline;
   }
