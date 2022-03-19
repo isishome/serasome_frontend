@@ -9,13 +9,9 @@ import store from '@/store/seras'
 import axios from 'axios'
 import vuePlugin from "@/plugin/highlight"
 import { Quasar, Notify, Cookies } from 'quasar'
-//import VFacebookLogin from 'vue-facebook-login-component'
-import GAuth from 'vue-google-oauth2'
 
 const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
 const Logo = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Logo')
-const PostList = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/PostList')
-const PostRead = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/PostRead')
 
 const lang = Cookies.has(process.env.VUE_APP_LANGUAGE_NAME) ? Cookies.get(process.env.VUE_APP_LANGUAGE_NAME) : Quasar.lang.getLocale().substring(0, 2) || 'ko'
 
@@ -120,10 +116,6 @@ router.beforeEach((to, from, next) => {
   const findNoAD = to.matched.find(route => route.meta.noAD)
   store.dispatch('setNoAD', findNoAD !== undefined)
 
-  const checkForgot = to.matched.some(route => route.name.indexOf('forgot') !== -1)
-  if (checkForgot)
-    router.replace({ name: 'main' }).catch(() => { })
-
   next()
 })
 // Vue Router --------------------------------------------------------------------------------------------------------------------------------------------
@@ -141,13 +133,9 @@ Vue.prototype.thumbStyle = {
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-Vue.use(GAuth, { clientId: process.env.VUE_APP_GOOGLE_CLIENTID, scope: 'profile email' })
 Vue.prototype.axios = axiosObject
 Vue.component('adsense', Adsense)
 Vue.component('ss-logo', Logo)
-Vue.component('ss-post-list', PostList)
-Vue.component('ss-post-read', PostRead)
-//Vue.component('v-facebook-login', VFacebookLogin)
 
 Vue.mixin(mixin)
 Vue.use(vuePlugin)

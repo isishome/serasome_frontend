@@ -19,7 +19,6 @@ module.exports = {
   },
   transpileDependencies: [
     'quasar',
-    'vue-google-oauth2',
     'highlight.js',
   ],
   productionSourceMap: false,

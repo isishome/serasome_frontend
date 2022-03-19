@@ -20,7 +20,7 @@
           <q-list class="q-py-none q-px-md">
             <q-item dense class="no-padding row items-center">
               <q-item-section top avatar class="comment-avatar">
-                <q-avatar color="primary" text-color="white">
+                <q-avatar class="text-uppercase" color="primary" text-color="white">
                   {{postInfo.name.substring(0,1)}}
                 </q-avatar>
               </q-item-section>
@@ -50,7 +50,8 @@
             <q-list class="q-py-none q-px-md lt-md">
               <q-item dense class="no-padding row items-center">
                 <q-item-section top avatar class="comment-avatar">
-                  <q-avatar :size="$q.screen.lt.md ? 'md': 'md'" color="primary" text-color="white">
+                  <q-avatar class="text-uppercase" :size="$q.screen.lt.md ? 'md': 'md'" color="primary"
+                    text-color="white">
                     {{postInfo.name.substring(0,1)}}
                   </q-avatar>
                 </q-item-section>
@@ -82,7 +83,7 @@
                 :key="`acd-${key}`">
               </adsense>
             </div>
-            <div style="min-height: 81vh;" class="q-pa-md">
+            <div class="q-pa-md">
               <div v-if="postInfo.youtube">
                 <q-video :ratio="16/9" :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
               </div>
@@ -228,14 +229,31 @@
     scroll,
     copyToClipboard
   } from 'quasar'
-  import hljs from 'highlight.js'
+  import hljs from 'highlight.js/lib/core'
+  import javascript from 'highlight.js/lib/languages/javascript'
+  import html from 'highlight.js/lib/languages/xml'
+  import css from 'highlight.js/lib/languages/css'
+  import dos from 'highlight.js/lib/languages/dos'
+  import bash from 'highlight.js/lib/languages/bash'
+  hljs.registerLanguage('javascript', javascript)
+  hljs.registerLanguage('html', html)
+  hljs.registerLanguage('css', css)
+  hljs.registerLanguage('dos', dos)
+  hljs.registerLanguage('bash', bash)
+  import 'highlight.js/styles/vs2015.css'
+
+  hljs.registerLanguage('javascript', javascript);
   const Confirm = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Confirm')
   const Comment = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Comment')
   const io = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        entry.target.addEventListener('load', () => {
+          entry.target.removeAttribute('width')
+          entry.target.removeAttribute('height')
+          entry.target.classList.remove('io-img')
+        })
         entry.target.src = entry.target.dataset.src
-        entry.target.classList.remove('io-img')
         observer.unobserve(entry.target)
       }
     })
@@ -520,7 +538,7 @@
           .then(() => { })
       },
       intersactionImage(info) {
-        info.contents = info.contents.replace(/(<img[^>]+)(src)([^>]+>)/gmi, '$1 class="io-img" data-src$3')
+        info.contents = info.contents.replace(/(<img[^>]+)(src)([^>]+>)/gmi, `$1 class="io-img" width="300" height="300" src="${require('@/assets/images/seras.svg')}" data-src$3`)
       },
       show() {
         this.postView = true

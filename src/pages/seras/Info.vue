@@ -46,44 +46,39 @@
         </q-form>
       </q-card-section>
       <q-separator />
-      <q-card-section class="no-padding full-width">
+      <!-- <q-card-section class="no-padding full-width">
         <div class="q-py-sm row justify-start q-gutter-x-md">
-          <!-- <div class="col-2">
+          <div class="col-2">
           <v-facebook-login v-show="false" app-id="241621523794564" version="v7.0" v-model="fbInfo"
             @sdk-init="handleSdkInit" @login="facebookLogin" />
           <q-btn round :class="[facebookLinked ? 'disconnect' : '']" color="indigo" icon="fab fa-facebook-f"
             @click="facebook" />
-        </div> -->
+        </div>
           <div>
             <q-btn round :disable="!googleInit" :class="[!googleInit ? 'bg-grey-5' : googleLinked ? 'disconnect' : '']"
               color="red" icon="fab fa-google" @click="google" />
           </div>
         </div>
-      </q-card-section>
+      </q-card-section> -->
     </q-card>
     <!-- <ss-confirm v-model="facebookUnlinkConfirm" icon="fas fa-unlink" color="warning" text-color="white"
-      message="페이스북 연동을 해제할까요?" @cancel="facebookUnlinkConfirm = false" @confirm="facebookUnlink" /> -->
+      message="페이스북 연동을 해제할까요?" @cancel="facebookUnlinkConfirm = false" @confirm="facebookUnlink" />
     <ss-confirm v-model="googleUnlinkConfirm" icon="fas fa-unlink" color="warning" text-color="white"
-      :message="$t('myInfo.message.disconnectGoogle')" @cancel="googleUnlinkConfirm = false" @confirm="googleUnlink" />
+      :message="$t('myInfo.message.disconnectGoogle')" @cancel="googleUnlinkConfirm = false" @confirm="googleUnlink" /> -->
   </div>
 </template>
 <script>
   import {
     mapGetters
   } from 'vuex'
-  const Confirm = () => import(/* webpackChunkName: "seras-component" */ '@/components/seras/Confirm')
 
   export default {
     name: 'Join',
-    components: {
-      'ss-confirm': Confirm
-    },
     data() {
       return {
         FB: {},
         fbInfo: {},
         scope: {},
-        googleInit: false,
         email: null,
         category: { cid: null, name: this.$t('main.category'), icon: 'fas fa-star', color: 'yellow-14' },
         joinForm: {
@@ -123,27 +118,12 @@
             isPwd: true
           }
         },
-        facebookLinked: false,
-        facebookUnlinkConfirm: false,
-        googleLinked: false,
-        googleUnlinkConfirm: false,
         loading: false,
         processModify: false
       }
     },
     created() {
       this.getInfo()
-    },
-    mounted() {
-      let self = this
-      let cnt = 0
-      let googleApi = setInterval(function () {
-        cnt++
-        self.googleInit = self.$gAuth.isInit
-
-        if (cnt === 6 || self.googleInit === true)
-          clearInterval(googleApi)
-      }, 400);
     },
     computed: {
       ...mapGetters({
@@ -160,17 +140,12 @@
           .then(function (response) {
             self.joinForm.email.value = response.data.email
             self.joinForm.name.value = response.data.name
-            self.facebookLinked = response.data.facebookLinked
-            self.googleLinked = response.data.googleLinked
 
             const findCg = self.categoryInfo.find(c => c.cid === response.data.cid)
 
             if (findCg !== null)
               self.category = findCg
 
-          })
-          .catch(() => {
-            self.googleInit = true
           })
       },
       onSubmit() {
@@ -197,119 +172,6 @@
           .catch(function () { })
           .then(function () {
             self.processModify = false
-          })
-      },
-      handleSdkInit({ FB, scope }) {
-        this.FB = FB
-        this.scope = scope
-      },
-      facebook() {
-        if (this.facebookLinked)
-          this.facebookUnlinkConfirm = true
-        else
-          this.facebookStatus()
-      },
-      facebookLogin(fResponse) {
-        if (!fResponse)
-          return
-
-        const status = fResponse.status
-
-        switch (status) {
-          case 'connected':
-            this.facebookLink(fResponse.authResponse.userID)
-            break
-          case 'not_authorized':
-            this.$q.notify({
-              type: 'warning',
-              color: 'warning',
-              message: 'SeraSome 앱에 로그인 해야 이용가능합니다.'
-            })
-            break
-          default:
-            this.$q.notify({
-              type: 'warning',
-              color: 'warning',
-              message: '페이스북에 로그인 해야 이용가능합니다.'
-            })
-            break
-        }
-      },
-      facebookStatus() {
-        const self = this
-
-        if (!this.fbInfo.connected && this.scope.login)
-          this.scope.login()
-        else {
-          this.FB.getLoginStatus(function (fResponse) {
-            self.facebookLink(fResponse.authResponse.userID)
-          })
-        }
-      },
-      facebookLink(fuid) {
-        let self = this
-
-        this.axios
-          .post('/seras/account/facebookLink', {
-            'fuid': fuid
-          }).then(function () {
-            self.facebookLinked = true
-          })
-          .catch(() => { })
-      },
-      facebookUnlink() {
-        let self = this
-
-        this.axios
-          .post('/seras/account/facebookUnlink')
-          .then(function () {
-            self.facebookLinked = false
-          })
-          .catch(function () { })
-          .then(() => {
-            self.facebookUnlinkConfirm = false
-          })
-      },
-      google() {
-        if (this.googleLinked === true)
-          this.googleUnlinkConfirm = true
-        else {
-          const self = this
-          this.$gAuth.signIn()
-            .then(GoogleUser => {
-              if (GoogleUser.isSignedIn() === true) {
-                const guid = GoogleUser.getId()
-                if (guid)
-                  self.googleLink(guid)
-              }
-            })
-            .catch(() => {
-              self.googleInit = true
-            })
-        }
-      },
-      googleLink(guid) {
-        let self = this
-
-        this.axios
-          .post('/seras/account/googleLink', {
-            'guid': guid
-          }).then(function () {
-            self.googleLinked = true
-          })
-          .catch(() => { })
-      },
-      googleUnlink() {
-        let self = this
-
-        this.axios
-          .post('/seras/account/googleUnlink')
-          .then(function () {
-            self.googleLinked = false
-          })
-          .catch(function () { })
-          .then(() => {
-            self.googleUnlinkConfirm = false
           })
       }
     }

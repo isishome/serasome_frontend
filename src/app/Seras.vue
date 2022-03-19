@@ -243,7 +243,7 @@
             round size="md" icon="keyboard_arrow_up" color="teal-4" />
         </q-page-scroller>
       </q-page-container>
-      <q-footer :class="['gt-sm', $q.dark.isActive ? 'q-dark' : 'bg-grey-2 text-grey-7']"
+      <q-footer v-if="$q.screen.gt.sm" :class=" $q.dark.isActive ? 'q-dark' : 'bg-grey-2 text-grey-7'"
         class="ss-footer row justify-between items-center" height-hint="56">
         <div class="col-4 gt-sm"></div>
         <div class="col q-ma-none col-md-4 row justify-center items-center q-gutter-x-xs text-caption">

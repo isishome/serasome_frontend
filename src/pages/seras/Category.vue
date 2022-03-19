@@ -24,12 +24,18 @@
   </div>
 </template>
 <script>
+  const PostRead = () => import(/* webpackChunkName: "seras-post-read" */ '@/components/seras/PostRead')
+  const PostList = () => import(/* webpackChunkName: "seras-post-list" */ '@/components/seras/PostList')
   import {
     mapGetters
   } from 'vuex'
 
   export default {
     name: 'Category',
+    components: {
+      'ss-post-list': PostList,
+      'ss-post-read': PostRead
+    },
     data() {
       return {
         loading: false,

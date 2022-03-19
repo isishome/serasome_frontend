@@ -250,6 +250,8 @@
 </template>
 
 <script>
+  const PostList = () => import(/* webpackChunkName: "seras-post-list" */ '@/components/seras/PostList')
+  const PostRead = () => import(/* webpackChunkName: "seras-post-read" */ '@/components/seras/PostRead')
   import {
     copyToClipboard
   } from 'quasar'
@@ -288,6 +290,8 @@
     name: 'post',
     components: {
       'ss-prompt': Prompt,
+      'ss-post-read': PostRead,
+      'ss-post-list': PostList,
       EditorContent,
       EditorMenuBar
     },
@@ -336,8 +340,7 @@
             { label: 'HTML', value: 'html' },
             { label: 'CSS', value: 'css' },
             { label: 'DOS', value: 'dos' },
-            { label: 'Bash', value: 'bash' },
-            { label: 'Auto', value: 'auto' }
+            { label: 'Bash', value: 'bash' }
           ]
         },
         rules: [],
@@ -598,7 +601,7 @@
           })
           .then(function (response) {
             if (requestSname === self.$route.params.sname) {
-              if (response.data.length === 0)
+              if (response.data.length === 0 || response.data.length < self.limit)
                 stop = true
               else {
                 self.skip = self.skip + response.data.length

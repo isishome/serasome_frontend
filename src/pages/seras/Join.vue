@@ -173,10 +173,6 @@
 
         if (routeName === 'join')
           this.onSubmit(null, null)
-        else if (routeName === 'join-facebook' && this.scope.login)
-          this.scope.login()
-        else if (routeName === 'join-google')
-          this.googleLogin()
       },
       onSubmit(fuid, guid) {
         const vm = this
@@ -217,53 +213,6 @@
           })
           .catch(function () {
             vm.processJoin = false
-          })
-      },
-      handleSdkInit({ FB, scope }) {
-        this.FB = FB
-        this.scope = scope
-      },
-      facebookLogin(fResponse) {
-        if (!fResponse)
-          return
-
-        const status = fResponse.status
-
-        switch (status) {
-          case 'connected':
-            this.onSubmit(fResponse.authResponse.userID, null)
-            break
-          case 'not_authorized':
-            this.$q.notify({
-              type: 'warning',
-              color: 'warning',
-              message: 'SeraSome 앱에 로그인 해야 이용가능합니다.'
-            })
-            break
-          default:
-            this.$q.notify({
-              type: 'warning',
-              color: 'warning',
-              message: '페이스북에 로그인 해야 이용가능합니다.'
-            })
-            break
-        }
-      },
-      googleLogin() {
-        if (this.$gAuth.isInit === false)
-          return
-
-        const self = this
-        this.$gAuth.signIn()
-          .then(GoogleUser => {
-            if (GoogleUser.isSignedIn() === true) {
-              const guid = GoogleUser.getId()
-              if (guid)
-                this.onSubmit(null, guid)
-            }
-          })
-          .catch(() => {
-            self.googleInit = false
           })
       }
     },
