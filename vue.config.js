@@ -9,6 +9,9 @@ module.exports = {
   chainWebpack: (config) => {
     config.plugins.delete('prefetch')
     config.plugins.delete('prefetch-index')
+    // config
+    //   .plugin('webpack-bundle-analyzer')
+    //   .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
   },
   pluginOptions: {
     quasar: {

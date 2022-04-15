@@ -3,55 +3,28 @@
     <input ref="postRead" type="hidden" :value="value" @click="readClick" />
     <q-dialog v-model="postView" :maximized="$q.screen.lt.lg" full-height transition-show="show" transition-hide="hide"
       @before-show="clearPostInfo" @before-hide="back" :seamless="$q.screen.lt.lg">
-      <q-card v-if="postInfo" :class="['column no-scroll no-padding font-ss', $q.screen.lt.lg ? '' : 'post-width']">
-        <transition name="fade">
-          <q-btn class="gt-sm" v-if="showTop" style="z-index: 1;"
-            :style="`position:fixed;bottom:0;margin-bottom:30px;margin-left:${$q.screen.lt.lg ? '10px' : '-50px'};`"
-            round size="14px" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
-        </transition>
-        <q-card-section class="col-md-1 full-width row justify-between items-start overflow-hidden gt-sm">
-          <div class="col font-title q-pa-sm">
-            {{postInfo.title}}</div>
-          <div class="col-1 text-right">
-            <q-btn flat round v-close-popup size="sm" icon="close" />
-          </div>
-        </q-card-section>
-        <q-card-section class="full-width q-py-sm overflow-hidden gt-sm">
-          <q-list class="q-py-none q-px-md">
-            <q-item dense class="no-padding row items-center">
-              <q-item-section top avatar class="comment-avatar">
-                <q-avatar class="text-uppercase" color="primary" text-color="white">
-                  {{postInfo.name.substring(0,1)}}
-                </q-avatar>
-              </q-item-section>
-              <q-item-section top>
-                <q-item-label>
-                  {{postInfo.name}}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item dense class="no-padding absolute-bottom q-mr-md row justify-end items-center q-gutter-x-xs">
-              <q-icon class="q-px-none" size="14px" name="far fa-clock" />
-              <div class="text-caption">{{parsDateTime(postInfo.reg_date)}}</div>
-              <div class="text-grey-5">·</div>
-              <q-icon class="q-px-none" size="14px" name="far fa-eye" />
-              <div class="text-caption">{{postInfo.seq}}</div>
-              <div class="text-grey-5">·</div>
-              <q-icon class="q-px-none" size="14px" name="far fa-comment-dots" />
-              <div class="text-caption">{{postInfo.comment}}</div>
-            </q-item>
-          </q-list>
-        </q-card-section>
-        <q-separator />
-        <q-card-section class="col full-width no-padding">
-          <q-scroll-area ref="scrollArea" :thumb-style="thumbStyle" class="fit" @scroll="onScroll">
-            <div class="q-pa-md font-title lt-md">
+      <q-card :class="['column no-scroll no-padding font-ss', $q.screen.lt.lg ? '' : 'post-width']">
+        <q-inner-loading :showing="!postInfo">
+          <q-spinner-bars size="200px" color="teal-8" />
+        </q-inner-loading>
+        <template v-if="postInfo">
+          <transition name="fade">
+            <q-btn class="gt-sm" v-if="showTop" style="z-index: 1;"
+              :style="`position:fixed;bottom:0;margin-bottom:30px;margin-left:${$q.screen.lt.lg ? '10px' : '-50px'};`"
+              round size="14px" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
+          </transition>
+          <q-card-section class="col-md-1 full-width row justify-between items-start overflow-hidden gt-sm">
+            <div class="col font-title q-pa-sm">
               {{postInfo.title}}</div>
-            <q-list class="q-py-none q-px-md lt-md">
+            <div class="col-1 text-right">
+              <q-btn flat round v-close-popup size="sm" icon="close" />
+            </div>
+          </q-card-section>
+          <q-card-section class="full-width q-py-sm overflow-hidden gt-sm">
+            <q-list class="q-py-none q-px-md">
               <q-item dense class="no-padding row items-center">
                 <q-item-section top avatar class="comment-avatar">
-                  <q-avatar class="text-uppercase" :size="$q.screen.lt.md ? 'md': 'md'" color="primary"
-                    text-color="white">
+                  <q-avatar class="text-uppercase" color="primary" text-color="white">
                     {{postInfo.name.substring(0,1)}}
                   </q-avatar>
                 </q-item-section>
@@ -61,7 +34,7 @@
                   </q-item-label>
                 </q-item-section>
               </q-item>
-              <q-item dense class="q-mr-xs row justify-end items-center q-gutter-x-xs">
+              <q-item dense class="no-padding absolute-bottom q-mr-md row justify-end items-center q-gutter-x-xs">
                 <q-icon class="q-px-none" size="14px" name="far fa-clock" />
                 <div class="text-caption">{{parsDateTime(postInfo.reg_date)}}</div>
                 <div class="text-grey-5">·</div>
@@ -72,130 +45,163 @@
                 <div class="text-caption">{{postInfo.comment}}</div>
               </q-item>
             </q-list>
-            <q-separator class="lt-md" />
-            <div class="q-py-xs">
-              <adsense v-if="$q.platform.is.mobile === true && isProduction === true"
-                data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" width="300px" height="50px"
-                :key="`acm-${key}`">
-              </adsense>
-              <adsense v-if="$q.platform.is.desktop === true && isProduction === true"
-                data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" width="728px" height="90px"
-                :key="`acd-${key}`">
-              </adsense>
-            </div>
-            <div class="q-pa-md">
-              <div v-if="postInfo.youtube">
-                <q-video :ratio="16/9" :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
+          </q-card-section>
+          <q-separator />
+          <q-card-section class="col full-width no-padding">
+            <q-scroll-area ref="scrollArea" :thumb-style="thumbStyle" class="fit" @scroll="onScroll">
+              <div class="q-pa-md font-title lt-md">
+                {{postInfo.title}}</div>
+              <q-list class="q-py-none q-px-md lt-md">
+                <q-item dense class="no-padding row items-center">
+                  <q-item-section top avatar class="comment-avatar">
+                    <q-avatar class="text-uppercase" :size="$q.screen.lt.md ? 'md': 'md'" color="primary"
+                      text-color="white">
+                      {{postInfo.name.substring(0,1)}}
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section top>
+                    <q-item-label>
+                      {{postInfo.name}}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-item dense class="q-mr-xs row justify-end items-center q-gutter-x-xs">
+                  <q-icon class="q-px-none" size="14px" name="far fa-clock" />
+                  <div class="text-caption">{{parsDateTime(postInfo.reg_date)}}</div>
+                  <div class="text-grey-5">·</div>
+                  <q-icon class="q-px-none" size="14px" name="far fa-eye" />
+                  <div class="text-caption">{{postInfo.seq}}</div>
+                  <div class="text-grey-5">·</div>
+                  <q-icon class="q-px-none" size="14px" name="far fa-comment-dots" />
+                  <div class="text-caption">{{postInfo.comment}}</div>
+                </q-item>
+              </q-list>
+              <q-separator class="lt-md" />
+              <div class="q-py-xs">
+                <adsense v-if="$q.platform.is.mobile === true && isProduction === true"
+                  data-ad-client="ca-pub-5110777286519562" data-ad-slot="2114657714" width="300px" height="50px"
+                  :key="`acm-${key}`">
+                </adsense>
+                <adsense v-if="$q.platform.is.desktop === true && isProduction === true"
+                  data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" width="728px" height="90px"
+                  :key="`acd-${key}`">
+                </adsense>
               </div>
-              <p ref="contents" class="word-wrap contents" v-html="contents"></p>
-            </div>
-            <div v-if="postInfo.files && postInfo.files.length > 0">
-              <q-separator />
-              <div ref="attach" class="attach-back row justify-start items-center">
-                <div class="col-4 text-amber-7 text-left q-pl-md"><span
-                    class="lt-md">{{$t('postRead.attachments')}}</span></div>
-                <div class="col text-amber-7 text-center"><span class="gt-sm">{{$t('postRead.attachments')}}</span>
+              <div class="q-pa-md">
+                <div v-if="postInfo.youtube">
+                  <q-video :ratio="16/9"
+                    :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
                 </div>
-                <div class="col-4 text-right q-pr-md">
-                  <q-toggle v-model="showAttach" color="amber-7" icon-color="grey-7" icon="fas fa-paperclip" />
-                </div>
+                <p ref="contents" class="word-wrap contents" v-html="contents"></p>
               </div>
-              <q-separator v-show="showAttach" />
-              <q-slide-transition>
-                <div v-show="showAttach" class="attach row justify-start">
-                  <div class="q-pa-md" v-for="attach in postInfo.files" :key="attach.fid">
-                    <q-btn-dropdown flat dense no-caps auto-close menu-self="bottom right">
-                      <template v-slot:label>
-                        <div class="col column no-padding" :style="$q.screen.lt.md ? 'max-width:10vw' : 'width:4vw'">
-                          <q-icon :name="attach.icon" class="no-padding q-ma-sm col-6" size="20px" />
-                          <div class="text-caption col-6 full-width ellipsis">
-                            {{ attach.origin }}</div>
-                        </div>
-                        <q-tooltip content-class="gt-sm bg-purple" transition-show="scale" transition-hide="scale"
-                          anchor="top middle" self="bottom middle" :offset="[10, 10]">
-                          {{attach.origin}}
-                        </q-tooltip>
-                      </template>
-                      <q-list separator bordered>
-                        <q-item clickable @click="action('link', attach)">
-                          <q-item-section>
-                            <q-item-label>{{$t('postRead.copyLink')}}</q-item-label>
-                          </q-item-section>
-                        </q-item>
-                        <q-item clickable @click="action('download', attach)">
-                          <q-item-section>
-                            <q-item-label>{{$t('postRead.download')}}</q-item-label>
-                          </q-item-section>
-                        </q-item>
-                        <q-item v-if="isPost && signStatus && postInfo.auth.modify" clickable
-                          @click="deleteAttach(attach)">
-                          <q-item-section>
-                            <q-item-label>{{$t('postRead.delete')}}</q-item-label>
-                          </q-item-section>
-                        </q-item>
-                      </q-list>
-                    </q-btn-dropdown>
+              <div v-if="postInfo.files && postInfo.files.length > 0">
+                <q-separator />
+                <div ref="attach" class="attach-back row justify-start items-center">
+                  <div class="col-4 text-amber-7 text-left q-pl-md"><span
+                      class="lt-md">{{$t('postRead.attachments')}}</span></div>
+                  <div class="col text-amber-7 text-center"><span class="gt-sm">{{$t('postRead.attachments')}}</span>
+                  </div>
+                  <div class="col-4 text-right q-pr-md">
+                    <q-toggle v-model="showAttach" color="amber-7" icon-color="grey-7" icon="fas fa-paperclip" />
                   </div>
                 </div>
-              </q-slide-transition>
-            </div>
-            <ss-comment ref="comment" :value="commentList" :auth="postInfo.auth" @refresh="refresh" @get="onLoad"
-              @delete="setDelete" @modify="setModify" @reply="setReply" />
+                <q-separator v-show="showAttach" />
+                <q-slide-transition>
+                  <div v-show="showAttach" class="attach row justify-start">
+                    <div class="q-pa-md" v-for="attach in postInfo.files" :key="attach.fid">
+                      <q-btn-dropdown flat dense no-caps auto-close menu-self="bottom right">
+                        <template v-slot:label>
+                          <div class="col column no-padding" :style="$q.screen.lt.md ? 'max-width:10vw' : 'width:4vw'">
+                            <q-icon :name="attach.icon" class="no-padding q-ma-sm col-6" size="20px" />
+                            <div class="text-caption col-6 full-width ellipsis">
+                              {{ attach.origin }}</div>
+                          </div>
+                          <q-tooltip content-class="gt-sm bg-purple" transition-show="scale" transition-hide="scale"
+                            anchor="top middle" self="bottom middle" :offset="[10, 10]">
+                            {{attach.origin}}
+                          </q-tooltip>
+                        </template>
+                        <q-list separator bordered>
+                          <q-item clickable @click="action('link', attach)">
+                            <q-item-section>
+                              <q-item-label>{{$t('postRead.copyLink')}}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+                          <q-item clickable @click="action('download', attach)">
+                            <q-item-section>
+                              <q-item-label>{{$t('postRead.download')}}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+                          <q-item v-if="isPost && signStatus && postInfo.auth.modify" clickable
+                            @click="deleteAttach(attach)">
+                            <q-item-section>
+                              <q-item-label>{{$t('postRead.delete')}}</q-item-label>
+                            </q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-btn-dropdown>
+                    </div>
+                  </div>
+                </q-slide-transition>
+              </div>
+              <ss-comment ref="comment" :value="commentList" :auth="postInfo.auth" @refresh="refresh" @get="onLoad"
+                @delete="setDelete" @modify="setModify" @reply="setReply" />
 
-            <ss-confirm v-model="deleteAttachConfirm" icon="delete" color="negative" text-color="white"
-              :message="$t('postRead.message.deleteAttachments')" @cancel="deleteAttachConfirm = false"
-              @confirm="action('delete')" />
-            <div class="lt-md" style="height:16vh"></div>
-          </q-scroll-area>
-        </q-card-section>
-        <q-separator class="gt-sm" />
-        <q-card-section class="gt-sm no-padding">
-          <div class="fit q-px-sm row justify-between items-center q-gutter-x-xs">
-            <div class="row no-padding q-gutter-x-md">
-              <q-btn v-if="postInfo.files && postInfo.files.length > 0" size="sm" flat round icon="fas fa-paperclip"
-                @click="goAttach" />
-              <q-btn size="sm" flat round icon="far fa-comment-dots" @click="goComment" />
+              <ss-confirm v-model="deleteAttachConfirm" icon="delete" color="negative" text-color="white"
+                :message="$t('postRead.message.deleteAttachments')" @cancel="deleteAttachConfirm = false"
+                @confirm="action('delete')" />
+              <div class="lt-md" style="height:16vh"></div>
+            </q-scroll-area>
+          </q-card-section>
+          <q-separator class="gt-sm" />
+          <q-card-section class="gt-sm no-padding">
+            <div class="fit q-px-sm row justify-between items-center q-gutter-x-xs">
+              <div class="row no-padding q-gutter-x-md">
+                <q-btn v-if="postInfo.files && postInfo.files.length > 0" size="sm" flat round icon="fas fa-paperclip"
+                  @click="goAttach" />
+                <q-btn size="sm" flat round icon="far fa-comment-dots" @click="goComment" />
+              </div>
+              <div class="row justify-start q-gutter-x-md">
+                <q-btn v-if="isPost && signStatus && postInfo.auth.del" size="sm" round flat icon="delete"
+                  @click="postDeleteConfirm = !postDeleteConfirm" />
+                <q-btn v-if="isPost && signStatus && postInfo.auth.modify" size="sm" round flat icon="edit"
+                  @click="postModify" />
+                <q-btn v-if="!isPost" size="sm" round flat icon="far fa-arrow-alt-circle-right"
+                  @click="goSome(postInfo.sname)" />
+              </div>
             </div>
-            <div class="row justify-start q-gutter-x-md">
-              <q-btn v-if="isPost && signStatus && postInfo.auth.del" size="sm" round flat icon="delete"
-                @click="postDeleteConfirm = !postDeleteConfirm" />
-              <q-btn v-if="isPost && signStatus && postInfo.auth.modify" size="sm" round flat icon="edit"
-                @click="postModify" />
-              <q-btn v-if="!isPost" size="sm" round flat icon="far fa-arrow-alt-circle-right"
-                @click="goSome(postInfo.sname)" />
-            </div>
-          </div>
-        </q-card-section>
-        <q-card-section class="lt-md q-pa-sm fixed-bottom btn-place no-pointer-events">
-          <div class=" q-px-none row justify-between items-center q-col-gutter-x-xs">
-            <div class="row justify-start q-gutter-x-sm">
-              <transition name="fade">
-                <q-btn push round class="all-pointer-events" v-if="showTop" color="teal-4" text-color="black"
-                  @click="scrollTop" icon="keyboard_arrow_up" />
-              </transition>
-              <q-fab class="all-pointer-events" padding="9px" dense color="brown" push icon="keyboard_arrow_right"
-                direction="right" active-icon="keyboard_arrow_left" size="sm">
+          </q-card-section>
+          <q-card-section class="lt-md q-pa-sm fixed-bottom btn-place no-pointer-events">
+            <div class=" q-px-none row justify-between items-center q-col-gutter-x-xs">
+              <div class="row justify-start q-gutter-x-sm">
+                <transition name="fade">
+                  <q-btn push round class="all-pointer-events" v-if="showTop" color="teal-4" text-color="black"
+                    @click="scrollTop" icon="keyboard_arrow_up" />
+                </transition>
+                <q-fab class="all-pointer-events" padding="9px" dense color="brown" push icon="keyboard_arrow_right"
+                  direction="right" active-icon="keyboard_arrow_left" size="sm">
 
-                <q-fab-action glossy push padding="6px" v-if="postInfo.files && postInfo.files.length > 0"
-                  color="amber-7" text-color="black" @click="goAttach" icon="fas fa-paperclip" />
-                <q-fab-action glossy push padding="6px" color="blue-5" text-color="black" @click="goComment"
-                  icon="far fa-comment-dots" />
-                <q-fab-action glossy push padding="6px" v-if="isPost && signStatus && postInfo.auth.del"
-                  color="deep-purple-3" text-color="black" @click="postDeleteConfirm = !postDeleteConfirm"
-                  icon="delete" />
-                <q-fab-action glossy push padding="6px" v-if="isPost && signStatus && postInfo.auth.modify"
-                  color="pink-3" text-color="black" @click="postModify" icon="edit" />
-                <q-fab-action glossy push padding="6px" v-if="!isPost" color="purple-3" text-color="black"
-                  @click="goSome(postInfo.sname)" icon="far fa-arrow-alt-circle-right" />
-              </q-fab>
+                  <q-fab-action glossy push padding="6px" v-if="postInfo.files && postInfo.files.length > 0"
+                    color="amber-7" text-color="black" @click="goAttach" icon="fas fa-paperclip" />
+                  <q-fab-action glossy push padding="6px" color="blue-5" text-color="black" @click="goComment"
+                    icon="far fa-comment-dots" />
+                  <q-fab-action glossy push padding="6px" v-if="isPost && signStatus && postInfo.auth.del"
+                    color="deep-purple-3" text-color="black" @click="postDeleteConfirm = !postDeleteConfirm"
+                    icon="delete" />
+                  <q-fab-action glossy push padding="6px" v-if="isPost && signStatus && postInfo.auth.modify"
+                    color="pink-3" text-color="black" @click="postModify" icon="edit" />
+                  <q-fab-action glossy push padding="6px" v-if="!isPost" color="purple-3" text-color="black"
+                    @click="goSome(postInfo.sname)" icon="far fa-arrow-alt-circle-right" />
+                </q-fab>
+              </div>
+              <div>
+                <q-btn push class="all-pointer-events" v-close-popup round color="red-5" size="md" icon="close" />
+              </div>
+              <div class="col-12 platform-ios-only ios">
+              </div>
             </div>
-            <div>
-              <q-btn push class="all-pointer-events" v-close-popup round color="red-5" size="md" icon="close" />
-            </div>
-            <div class="col-12 platform-ios-only ios">
-            </div>
-          </div>
-        </q-card-section>
+          </q-card-section>
+        </template>
       </q-card>
     </q-dialog>
     <ss-confirm v-model="postDeleteConfirm" icon="delete" color="negative" text-color="white"
@@ -240,21 +246,20 @@
   hljs.registerLanguage('css', css)
   hljs.registerLanguage('dos', dos)
   hljs.registerLanguage('bash', bash)
-  import 'highlight.js/styles/vs2015.css'
+  import '@/assets/styles/vs2015.css'
 
-  hljs.registerLanguage('javascript', javascript);
   const Confirm = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Confirm')
   const Comment = () => import(/* webpackChunkName: "seras-read" */ '@/components/seras/Comment')
+
   const io = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.addEventListener('load', () => {
-          entry.target.removeAttribute('width')
-          entry.target.removeAttribute('height')
-          entry.target.classList.remove('io-img')
-        })
-        entry.target.src = entry.target.dataset.src
         observer.unobserve(entry.target)
+        const img = new Image()
+        img.src = entry.target.dataset.src
+        img.onload = () => {
+          entry.target.replaceWith(img)
+        }
       }
     })
   })
@@ -286,11 +291,11 @@
     props: {
       sname: {
         type: String,
-        defaut: null
+        default: null
       },
       value: {
         type: String,
-        defaut: null
+        default: null
       },
       list: {
         type: Array,
@@ -496,6 +501,8 @@
       postRead() {
         if (!this.value || this.routeName === 'post-modify')
           return
+        else if (this.routeName === 'post')
+          this.postView = true
 
         if (this.$route.params.pid)
           history.replaceState(null, null, `/@${this.sname}`)
@@ -538,10 +545,7 @@
           .then(() => { })
       },
       intersactionImage(info) {
-        info.contents = info.contents.replace(/(<img[^>]+)(src)([^>]+>)/gmi, `$1 class="io-img" width="300" height="300" src="${require('@/assets/images/seras.svg')}" data-src$3`)
-      },
-      show() {
-        this.postView = true
+        info.contents = info.contents.replace(/(<img[^>]+)(src)([^>]+>)/gmi, `$1 class="io-img" src="${require('@/assets/images/seras.svg')}" data-src$3`)
       },
       postModify() {
         this.isModify = true

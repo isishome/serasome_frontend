@@ -40,7 +40,6 @@ const routes = [
   {
     name: 'some',
     path: '/@:sname',
-    //alias: '/%40:sname',
     component: post,
     meta: {
       topScroll: true

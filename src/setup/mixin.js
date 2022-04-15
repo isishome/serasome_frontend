@@ -30,6 +30,17 @@ const mixin = {
       const result = (match && match[7].length === 11) ? match[7] : null
 
       return result
+    },
+    createRecaptcha() {
+      let script = document.createElement('script')
+      script.setAttribute('async', '')
+      script.setAttribute('defer', '')
+      script.id = 'recaptchaScript'
+      script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.VUE_APP_GOOGLE_RC_SITEKEY}`
+      document.getElementsByTagName('head')[0].appendChild(script)
+    },
+    removeRecaptcha() {
+      document.getElementById('recaptchaScript').remove()
     }
   }
 }

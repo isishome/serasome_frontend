@@ -104,6 +104,12 @@
         signStatus: 'getSignStatus'
       })
     },
+    mounted() {
+      this.createRecaptcha()
+    },
+    beforeDestroy() {
+      this.removeRecaptcha()
+    },
     methods: {
       ...mapActions({
         setSignStatus: 'setSignStatus',

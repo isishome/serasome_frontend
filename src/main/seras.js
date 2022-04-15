@@ -7,7 +7,6 @@ import VueRouter from 'vue-router'
 import routes from '@/router/seras'
 import store from '@/store/seras'
 import axios from 'axios'
-import vuePlugin from "@/plugin/highlight"
 import { Quasar, Notify, Cookies } from 'quasar'
 
 const Adsense = () => import(/* webpackChunkName: "etc-component" */ '@/components/etc/AdSense')
@@ -138,7 +137,6 @@ Vue.component('adsense', Adsense)
 Vue.component('ss-logo', Logo)
 
 Vue.mixin(mixin)
-Vue.use(vuePlugin)
 new Vue({
   render: h => h(App),
   router,

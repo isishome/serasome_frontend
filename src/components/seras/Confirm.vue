@@ -20,23 +20,23 @@
     props: {
       value: {
         type: Boolean,
-        defaut: false
+        default: false
       },
       icon: {
         type: String,
-        defaut: null
+        default: null
       },
       color: {
         type: String,
-        defaut: null
+        default: null
       },
       textColor: {
         type: String,
-        defaut: null
+        default: null
       },
       message: {
         type: String,
-        defaut: null
+        default: null
       }
     },
     data() {

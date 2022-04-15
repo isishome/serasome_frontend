@@ -37,6 +37,12 @@
         loading: false
       }
     },
+    mounted() {
+      this.createRecaptcha()
+    },
+    beforeDestroy() {
+      this.removeRecaptcha()
+    },
     methods: {
       onSubmit() {
         const vm = this

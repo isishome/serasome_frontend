@@ -160,6 +160,9 @@
         categoryInfo: 'getCategory'
       })
     },
+    mounted() {
+      this.createRecaptcha()
+    },
     methods: {
       showDialog(val) {
         this.dialogName = val
@@ -218,6 +221,7 @@
     },
     beforeDestroy() {
       clearTimeout(this.timer)
+      this.removeRecaptcha()
     }
   }
 </script>

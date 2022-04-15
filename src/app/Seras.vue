@@ -215,19 +215,19 @@
       <q-page-container>
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
-          <div class="gt-sm col row justify-end" style="padding:60px 6px 0 0;">
+          <div class="gt-sm col row justify-end" style="padding:90px 6px 0 0;">
             <adsense v-if="noAD === false && $q.screen.gt.sm === true && isProduction === true"
-              data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" horizontal="right" :key="`al-${key}`"
-              random>
+              data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" width="160px" height="600px"
+              horizontal="right" :key="`al-${key}`">
             </adsense>
           </div>
           <q-page class="col-xl-6 col-lg-8 col-md-10 col-12">
             <router-view />
           </q-page>
-          <div class="gt-sm col column items-start q-gutter-y-sm" style="padding:60px 0 0 6px;">
+          <div class="gt-sm col column items-start q-gutter-y-sm" style="padding:90px 0 0 6px;">
             <adsense v-if="noAD === false && $q.screen.gt.sm === true && isProduction === true"
-              data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" fixed horizontal="left"
-              :key="`ar-${key}`" random>
+              data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" width="160px" height="600px" fixed
+              horizontal="left" :key="`ar-${key}`">
             </adsense>
           </div>
         </div>
