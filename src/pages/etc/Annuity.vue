@@ -1,38 +1,35 @@
 <template>
-  <div class="no-scroll column items-center q-gutter-sm fixed-top" style="top:10vh;left:0;right:0;bottom:0">
-    <img class="col-2" src="@/assets/images/annuity_logo.png" />
-    <div class="q-pt-xs text-grey-6 row no-wrap justify-center items-top q-gutter-xs" style="font-size:2.3vh;">
-      <div>
-        <q-icon color="red" class="q-mr-xs" name="fas fa-arrows-alt"></q-icon>
+  <div class="no-scroll">
+    <div class="column items-center q-gutter-y-md absolute-center full-width">
+      <img src="@/assets/images/annuity_logo.png" class="gt-sm" style="max-height:10vh;" />
+      <div class="text-subtitle2 text-center">
+        {{$t('lotto.desc')}}
       </div>
-      <div>{{$t('lotto.desc')}}</div>
-    </div>
-    <div>
-      <q-btn-toggle size="1.5vh" color="grey-7" text-color="white" toggle-color="red-10" toggle-text-color="amber-6"
-        push glossy v-model="game" :disable="disableBtn" :options="[
+      <q-btn-toggle :size="$q.screen.gt.xs ? 'lg': 'sm'" color="grey-7" text-color="white" toggle-color="blue-10"
+        toggle-text-color="amber-6" push glossy v-model="game" :disable="disableBtn" :options="[
           {label: '1 Set', value: 1},
           {label: '2 Set', value: 2},
           {label: '3 Set', value: 3},
           {label: '4 Set', value: 4},
           {label: '5 Set', value: 5}
         ]" />
-    </div>
-    <div class="col-5 column justify-center items-center game q-gutter-y-xs">
-      <div v-for="(g, index1) in game" :key="g" class="row justify-center items-center q-gutter-x-sm">
-        <ss-number :ref="`group-${index1}`" :start="1" :end="5" @add="add" @remove="remove" @status="status"
-          color="grey-5" />
-        <div class="text-h5">조</div>
-        <ss-number v-for="(ball, index2) in cnt" :key="ball" :ref="`complete-${index1}-${index2}`"
-          :color="colors[index2]" :start="0" :end="9" @add="add" @remove="remove" @status="status" />
+      <div class="row justify-center full-width">
+        <div class="col-12 col-sm-9 column items-center q-gutter-y-xs">
+          <div v-for="(g, index1) in game" :key="g" class="row justify-center items-center q-gutter-x-sm full-width">
+            <ss-number :ref="`group-${index1}`" size="60%" :start="1" :end="5" @add="add" @remove="remove"
+              @status="status" color="grey-5" />
+            <div class="text-h6 text-weight-bold">조</div>
+            <ss-number v-for="(ball, index2) in cnt" :key="ball" :ref="`complete-${index1}-${index2}`"
+              :color="colors[index2]" size="60%" :start="0" :end="9" @add="add" @remove="remove" @status="status" />
+          </div>
+        </div>
+      </div>
+      <div class="row justify-center q-pt-md">
+        <q-btn size="md" rounded icon="check" color="primary" :label="$t('lotto.draw')" class="text-weight-bolder"
+          :disable="disableBtn" @click="getAll" />
       </div>
     </div>
-    <div class="full-width text-center">
-      <q-btn :size="$q.screen.lt.sm ? 'sm' : 'md'" icon="check" color="primary" :label="$t('lotto.draw')"
-        class="text-weight-bolder" :disable="disableBtn" @click="getAll" />
-    </div>
-    <div class="absolute-bottom-right" style="right:5vw;bottom:10vh">
-      <q-chip v-if="visit" color="transparent" size="1.5vh" icon="far fa-eye" :label="visit" />
-    </div>
+    <q-chip v-if="visit" color="transparent" icon="far fa-eye" :label="visit" class="fixed-bottom-right" />
   </div>
 </template>
 <script>

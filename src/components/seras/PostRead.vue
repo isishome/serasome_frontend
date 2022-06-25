@@ -11,7 +11,7 @@
           <transition name="fade">
             <q-btn class="gt-sm" v-if="showTop" style="z-index: 1;"
               :style="`position:fixed;bottom:0;margin-bottom:30px;margin-left:${$q.screen.lt.lg ? '10px' : '-50px'};`"
-              round size="14px" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
+              round size="md" icon="keyboard_arrow_up" color="teal-4" @click="scrollTop" />
           </transition>
           <q-card-section class="col-md-1 full-width row justify-between items-start overflow-hidden gt-sm">
             <div class="col font-title q-pa-sm">
@@ -77,7 +77,7 @@
                 </q-item>
               </q-list>
               <q-separator class="lt-md" />
-              <div class="q-py-xs">
+              <!-- <div class="q-py-xs">
                 <adsense v-if="$q.platform.is.mobile === true && isProduction === true"
                   data-ad-client="ca-pub-5110777286519562" data-ad-slot="2114657714" width="300px" height="50px"
                   :key="`acm-${key}`">
@@ -86,8 +86,8 @@
                   data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" width="728px" height="90px"
                   :key="`acd-${key}`">
                 </adsense>
-              </div>
-              <div class="q-pa-md">
+              </div> -->
+              <div class="q-pa-md" style="min-height:calc(90vh - 360px)">
                 <div v-if="postInfo.youtube">
                   <q-video :ratio="16/9"
                     :src="`https://www.youtube.com/embed/${getYoutubeId(postInfo.youtube)}?rel=0`" />
@@ -146,11 +146,10 @@
               </div>
               <ss-comment ref="comment" :value="commentList" :auth="postInfo.auth" @refresh="refresh" @get="onLoad"
                 @delete="setDelete" @modify="setModify" @reply="setReply" />
-
               <ss-confirm v-model="deleteAttachConfirm" icon="delete" color="negative" text-color="white"
                 :message="$t('postRead.message.deleteAttachments')" @cancel="deleteAttachConfirm = false"
                 @confirm="action('delete')" />
-              <div class="lt-md" style="height:16vh"></div>
+              <div class="platform-ios-only q-py-md"></div>
             </q-scroll-area>
           </q-card-section>
           <q-separator class="gt-sm" />
@@ -171,35 +170,37 @@
               </div>
             </div>
           </q-card-section>
-          <q-card-section class="lt-md q-pa-sm fixed-bottom btn-place no-pointer-events">
+          <q-card-section class="lt-md q-pa-sm q-py-none fixed-bottom btn-place no-pointer-events">
             <div class=" q-px-none row justify-between items-center q-col-gutter-x-xs">
-              <div class="row justify-start q-gutter-x-sm">
+              <div class="row justify-start items-center q-gutter-x-md">
                 <transition name="fade">
-                  <q-btn push round class="all-pointer-events" v-if="showTop" color="teal-4" text-color="black"
-                    @click="scrollTop" icon="keyboard_arrow_up" />
+                  <div v-show="showTop">
+                    <q-btn push round class="all-pointer-events" color="teal-4" size="sm" text-color="black"
+                      @click="scrollTop" icon="keyboard_arrow_up" />
+                  </div>
                 </transition>
-                <q-fab class="all-pointer-events" padding="9px" dense color="brown" push icon="keyboard_arrow_right"
-                  direction="right" active-icon="keyboard_arrow_left" size="sm">
-
-                  <q-fab-action glossy push padding="6px" v-if="postInfo.files && postInfo.files.length > 0"
-                    color="amber-7" text-color="black" @click="goAttach" icon="fas fa-paperclip" />
-                  <q-fab-action glossy push padding="6px" color="blue-5" text-color="black" @click="goComment"
-                    icon="far fa-comment-dots" />
-                  <q-fab-action glossy push padding="6px" v-if="isPost && signStatus && postInfo.auth.del"
-                    color="deep-purple-3" text-color="black" @click="postDeleteConfirm = !postDeleteConfirm"
-                    icon="delete" />
-                  <q-fab-action glossy push padding="6px" v-if="isPost && signStatus && postInfo.auth.modify"
-                    color="pink-3" text-color="black" @click="postModify" icon="edit" />
-                  <q-fab-action glossy push padding="6px" v-if="!isPost" color="purple-3" text-color="black"
-                    @click="goSome(postInfo.sname)" icon="far fa-arrow-alt-circle-right" />
-                </q-fab>
+                <div>
+                  <q-fab class="all-pointer-events" dense color="brown" push icon="keyboard_arrow_right"
+                    direction="right" active-icon="keyboard_arrow_left" padding="4px">
+                    <q-fab-action glossy push padding="2px" v-if="postInfo.files && postInfo.files.length > 0"
+                      color="amber-7" text-color="black" @click="goAttach" icon="fas fa-paperclip" />
+                    <q-fab-action glossy push padding="2px" color="blue-5" text-color="black" @click="goComment"
+                      icon="far fa-comment-dots" />
+                    <q-fab-action glossy push padding="2px" v-if="isPost && signStatus && postInfo.auth.del"
+                      color="deep-purple-3" text-color="black" @click="postDeleteConfirm = !postDeleteConfirm"
+                      icon="delete" />
+                    <q-fab-action glossy push padding="2px" v-if="isPost && signStatus && postInfo.auth.modify"
+                      color="pink-3" text-color="black" @click="postModify" icon="edit" />
+                    <q-fab-action glossy push padding="2px" v-if="!isPost" color="purple-3" text-color="black"
+                      @click="goSome(postInfo.sname)" icon="far fa-arrow-alt-circle-right" />
+                  </q-fab>
+                </div>
               </div>
               <div>
-                <q-btn push class="all-pointer-events" v-close-popup round color="red-5" size="md" icon="close" />
-              </div>
-              <div class="col-12 platform-ios-only ios">
+                <q-btn push class="all-pointer-events" v-close-popup round color="blue-grey-8" size="sm" icon="close" />
               </div>
             </div>
+            <div class="full-width platform-ios-only q-py-sm"></div>
           </q-card-section>
         </template>
       </q-card>
@@ -787,10 +788,6 @@
     background-color: #161e36 !important;
   }
 
-  .btn-place .ios {
-    padding-bottom: 4vh;
-  }
-
   .fade-enter-active,
   .fade-leave-active {
     transition: opacity .5s;
@@ -799,5 +796,12 @@
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
+  }
+
+  @media screen and (max-width:599px) {
+    .contents {
+      font-size: 1em !important;
+      line-height: 1.4em !important;
+    }
   }
 </style>

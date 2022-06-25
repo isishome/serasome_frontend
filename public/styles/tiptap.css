@@ -70,13 +70,6 @@
   margin: 0;
 }
 
-.contents code {
-  background-color: rgba(200, 200, 200, .4);
-  border-radius: 4px;
-  padding: .1rem .2rem;
-  font-family: 'Noto Sans KR', sans-serif !important;
-}
-
 .contents blockquote {
   border-left: 3px solid rgba(0, 0, 0, .1);
   opacity: 0.8;

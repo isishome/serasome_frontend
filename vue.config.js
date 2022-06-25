@@ -3,10 +3,18 @@ module.exports = {
     index: {
       entry: 'src/main/seras.js',
       template: 'public/seras.html',
-      filename: 'index.html'
+      filename: 'index.html',
+      chunks: 'all'
     }
   },
-  chainWebpack: (config) => {
+  configureWebpack: {
+    optimization: {
+      splitChunks: {
+        maxSize: 200000
+      }
+    }
+  },
+  chainWebpack: config => {
     config.plugins.delete('prefetch')
     config.plugins.delete('prefetch-index')
     // config

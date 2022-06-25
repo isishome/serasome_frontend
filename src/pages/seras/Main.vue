@@ -25,7 +25,7 @@
           <div class="font-title text-h6 text-teal-7 q-ml-sm">{{$t(`main.${section.name}`)}}</div>
         </div>
         <q-separator inset spaced />
-        <ss-post-list :list="section.data" :loading="loading" :pid="pid" @view="view"></ss-post-list>
+        <ss-post-list :list="section.data" :loading="loading" :pid="pid" @view="view" limited></ss-post-list>
         <q-space class="q-my-xl" />
       </template>
     </div>

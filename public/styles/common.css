@@ -14,11 +14,14 @@
 }
 
 body {
-  font-family: 'Noto Sans KR', sans-serif !important;
   word-break: keep-all;
 }
 
 /** app place **********************************************************************************************************************/
+.ss-header {
+  height: auto !important;
+}
+
 .ss-header img {
   width: 40px !important;
   height: auto !important;
@@ -41,7 +44,7 @@ body {
 }
 
 .q-tabs__arrow {
-  display: none !important;
+  top: 20% !important;
 }
 
 .q-toolbar .q-btn {

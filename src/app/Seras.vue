@@ -2,8 +2,8 @@
   <div id="app">
     <q-layout view="hHh lpR lfr" v-if="!independent">
       <q-header height-hint="98" class="q-dark q-py-xs" elevated>
-        <q-toolbar class="row justify-start items-center q-gutter-x-sm">
-          <!-- toolbar 1 -->
+        <q-toolbar>
+          <!-- toolbar left -->
           <div class="row justify-start items-center nunito">
             <q-btn dense flat class="lt-md" @click="drawer = !drawer">
               <q-icon name="fas fa-bars" size="16px" />
@@ -15,22 +15,9 @@
               <span class="col q-ml-sm text-teal-4 gt-sm font-logo">SERA<span class="text-amber-7">SOME</span></span>
             </q-btn>
           </div>
-          <!-- toolbar 2 -->
-          <q-tabs class="nunito text-weight-bold gt-sm" switch-indicator indicator-color="teal-4" active-color="teal-4"
-            align="left">
-            <q-route-tab v-for="someItem in someList" :key="someItem.sid" :to="`/@${someItem.name}`" no-caps>
-              <q-icon :name="someItem.icon ? someItem.icon : someItem.owner === true ? 'fas fa-cube' : 'fas fa-cubes'"
-                class="q-ma-sm" size="20px" color="amber-7" />
-              <div class="ellipsis">{{ someItem.name }}</div>
-            </q-route-tab>
-            <q-route-tab v-if="currentSome" :to="`/@${currentSome.name}`" no-caps>
-              <q-icon :name="currentSome.icon ? currentSome.icon : 'fas fa-question'" class="q-ma-sm" size="20px"
-                color="amber-7" />
-              <span class="ellipsis">{{ currentSome.name }}</span>
-            </q-route-tab>
-          </q-tabs>
-          <div class="absolute-center lt-md nunito">
-            <q-btn flat dense size="30px" class="row justify-center" @click="home">
+          <q-space class="lt-md" />
+          <div class="lt-md nunito row justify-center">
+            <q-btn flat dense class="row justify-center" @click="home">
               <q-avatar round class="ss-header">
                 <img src="@/assets/images/seras.svg" />
               </q-avatar>
@@ -40,8 +27,17 @@
                     class="text-caption font-logo ">ome</span></span></span>
             </q-btn>
           </div>
-          <!-- toolbar 3 -->
-          <div class="absolute-right col-xl-5 col-lg-4 col-md-4 row justify-end items-center q-gutter-x-sm">
+          <q-space />
+          <!-- toolbar right -->
+          <div class="row justify-end items-center q-gutter-x-sm">
+            <q-input v-if="$route.name !== 'search'" color="teal-7" dark dense standout outlined
+              :label="$t('btn.search')" v-model="text" input-class="text-left" class="q-ml-md gt-sm"
+              @keyup.enter="search" :error="text.length > 20" hide-bottom-space no-error-icon>
+              <template v-slot:append>
+                <q-icon v-if="text === ''" name="search" />
+                <q-icon v-else name="close" class="cursor-pointer" @click="text = ''" />
+              </template>
+            </q-input>
             <q-btn dense flat class="gt-sm" @click="goD2R">
               <q-icon name="fas fa-star-of-david" size="22px" color="d2r" />
               <span class="q-ml-sm gt-lg">D2R</span>
@@ -66,7 +62,7 @@
               <q-icon :name="signStatus ? 'fas fa-sign-out-alt' : 'fas fa-user-circle'" size="20px" />
               <span class="q-ml-sm gt-lg">{{ signStatus ? $t('signOut.title') : $t('signIn.title') }}</span>
             </q-btn>
-            <q-btn-dropdown class="gt-sm" dense dropdown-icon="language" no-icon-animation stretch size="md"
+            <q-btn-dropdown class="gt-sm" dense dropdown-icon="language" no-icon-animation size="md"
               content-style="background-color:rgba(255,255,255,0.8) !important;box-shadow: 0 0 4px 0 rgba(0,0,0,1);">
               <q-list class="text-grey-10" separator>
                 <q-item dense :dark="false" v-for="(option, index) in options" :key="index" clickable v-close-popup
@@ -78,20 +74,28 @@
                 </q-item>
               </q-list>
             </q-btn-dropdown>
-            <q-input v-if="$route.name !== 'search'" color="teal-7" dark dense standout outlined
-              :label="$t('btn.search')" v-model="text" input-class="text-left" class="col-2 q-ml-md gt-md"
-              @keyup.enter="search" :error="text.length > 20" hide-bottom-space no-error-icon>
-              <template v-slot:append>
-                <q-icon v-if="text === ''" name="search" />
-                <q-icon v-else name="close" class="cursor-pointer" @click="text = ''" />
-              </template>
-            </q-input>
             <div>
               <q-toggle class="q-px-xs" dense v-model="$q.dark.mode" @input="toggleDark" color="grey-7" size="sm"
                 icon-color="blue-grey-10" icon="fas fa-adjust" />
             </div>
           </div>
         </q-toolbar>
+        <!-- tabs -->
+        <q-tabs class="nunito text-weight-bold gt-sm" narrow-indicator indicator-color="teal-4" active-color="teal-4"
+          align="left" no-caps>
+
+          <q-route-tab v-for="someItem in someList" :key="someItem.sid" :to="`/@${someItem.name}`">
+            <q-icon :name="someItem.icon ? someItem.icon : someItem.owner === true ? 'fas fa-cube' : 'fas fa-cubes'"
+              class="q-ma-sm" size="20px" color="amber-7" />
+            <div class="ellipsis">{{ someItem.name }}</div>
+          </q-route-tab>
+          <q-route-tab v-if="currentSome" :to="`/@${currentSome.name}`">
+            <q-icon :name="currentSome.icon ? currentSome.icon : 'fas fa-question'" class="q-ma-sm" size="20px"
+              color="amber-7" />
+            <span class="ellipsis">{{ currentSome.name }}</span>
+          </q-route-tab>
+        </q-tabs>
+
       </q-header>
       <q-drawer no-swipe-open no-swipe-close no-swipe-backdrop v-model="drawer" side="left" behavior="mobile"
         :width="240" class="nunito text-weight-bold" elevated>
@@ -216,31 +220,33 @@
         <router-view name="carousel" />
         <div :class="['row q-mx-sm', $q.screen.lt.md ? 'q-mt-sm' : 'q-mt-lg']">
           <div class="gt-sm col row justify-end" style="padding:90px 6px 0 0;">
-            <adsense v-if="noAD === false && $q.screen.gt.sm === true && isProduction === true"
-              data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838" width="160px" height="600px"
-              horizontal="right" :key="`al-${key}`">
+            <adsense v-if="noAD === false && $q.screen.gt.md === true && isProduction === true" class="overflow-hidden"
+              data-ad-client="ca-pub-5110777286519562" data-ad-slot="7331759838"
+              :width="$q.screen.gt.md ? '160px' : '120px'" height="600px" horizontal="right" :key="`al-${key}`">
             </adsense>
           </div>
           <q-page class="col-xl-6 col-lg-8 col-md-10 col-12">
             <router-view />
           </q-page>
-          <div class="gt-sm col column items-start q-gutter-y-sm" style="padding:90px 0 0 6px;">
-            <adsense v-if="noAD === false && $q.screen.gt.sm === true && isProduction === true"
-              data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221" width="160px" height="600px" fixed
-              horizontal="left" :key="`ar-${key}`">
+          <div class="gt-sm col row items-start" style="padding:90px 0 0 6px;">
+            <adsense v-if="noAD === false && $q.screen.gt.md === true && isProduction === true"
+              data-ad-client="ca-pub-5110777286519562" data-ad-slot="7962315221"
+              :width="$q.screen.gt.md ? '160px' : '120px'" height="600px" fixed horizontal="left" :key="`ar-${key}`">
             </adsense>
           </div>
         </div>
         <div class="platform-ios-only q-py-md"></div>
-        <q-page-sticky v-show="pageScroller" v-if="writeCheck" position="bottom-right" :offset="[0, 0]">
-          <q-btn push
-            :style="$q.screen.gt.lg ? 'right:23vw;bottom:20px' : $q.screen.gt.md ? 'right:14vw;bottom:20px' : 'right:10px;bottom:30px'"
-            round size="md" icon="edit" color="orange" :to="`/@${$route.params.sname}/a`" />
+        <q-page-sticky v-show="pageScroller" v-if="writeCheck" position="bottom-right" :offset="[0, 10]"
+          style="z-index: 1;">
+          <q-btn push :style="$q.screen.gt.lg ? 'right:23vw' : $q.screen.gt.md ? 'right:14vw' : 'right:10px'" round
+            :size="$q.screen.gt.md ? 'md' : 'sm'" icon="edit" color="orange" :to="`/@${$route.params.sname}/a`" />
+          <div class="full-width platform-ios-only q-py-sm"></div>
         </q-page-sticky>
-        <q-page-scroller v-show="pageScroller" position="bottom-left" :scroll-offset="150" :offset="[0, 0]">
-          <q-btn push
-            :style="$q.screen.gt.lg ? 'left:23vw;bottom:20px' : $q.screen.gt.md ? 'left:14vw;bottom:20px' : 'left:10px;bottom:30px'"
-            round size="md" icon="keyboard_arrow_up" color="teal-4" />
+        <q-page-scroller v-show="pageScroller" position="bottom-left" :scroll-offset="150" :offset="[0, 10]"
+          style="z-index: 1;">
+          <q-btn push :style="$q.screen.gt.lg ? 'left:23vw' : $q.screen.gt.md ? 'left:14vw' : 'left:10px'" round
+            :size="$q.screen.gt.md ? 'md' : 'sm'" icon="keyboard_arrow_up" color="teal-4" />
+          <div class="full-width platform-ios-only q-py-sm"></div>
         </q-page-scroller>
       </q-page-container>
       <q-footer v-if="$q.screen.gt.sm" :class=" $q.dark.isActive ? 'q-dark' : 'bg-grey-2 text-grey-7'"
@@ -307,6 +313,10 @@
           this.$q.cookies.set(process.env.VUE_APP_LANGUAGE_NAME, val, { path: '/', expires: '7300d' })
           this.$router.go()
         }
+      },
+      '$q.screen.gt.md': function (val, old) {
+        if (val !== old)
+          this.key++
       }
     },
     computed: {
@@ -317,10 +327,10 @@
         currentSome: 'getCurrentSome',
         pageScroller: 'getPageScroller',
         independent: 'getIndependent',
-        noAD: 'getNoAD'
+        noAD: 'getNoAD',
       }),
       writeCheck() {
-        return this.routeName === 'some' && this.signStatus === true && this.someList.find(s => s.name === this.$route.params.sname)
+        return this.routeName === 'some' && this.signStatus === true && this.someList.find(s => s.name === this.$route.params.sname) && this.someList.find(s => s.name === this.$route.params.sname).auth.write
       }
     },
     created() {

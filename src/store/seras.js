@@ -21,6 +21,13 @@ export default new Vuex.Store({
     getCategory: state => {
       return state.categoryInfo
     },
+    getCategoryByCid: state => cid => {
+      if (cid !== undefined) {
+        return state.categoryInfo ? state.categoryInfo.find(c => c.cid === cid) : null
+      }
+
+      return state.categoryInfo
+    },
     getSomeList: state => {
       return state.someList
     },

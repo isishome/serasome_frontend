@@ -2,31 +2,28 @@
   <div>
     <q-ajax-bar ref="uploadBar" position="bottom" color="primary" size="4px" skip-hijack />
     <q-dialog v-model="editView" :maximized="$q.screen.lt.md" full-height transition-show="show" transition-hide="hide"
-      @before-hide="beforeHide" @before-show="resetPost" no-esc-dismiss no-backdrop-dismiss>
-      <q-card :class="['column no-padding no-scroll', $q.screen.gt.sm ? 'dialog-width' : '']">
+      @before-hide="beforeHide" @before-show="resetPost" persistent>
+      <q-card :class="$q.screen.gt.sm ? 'dialog-width' : ''">
         <q-inner-loading :showing="value && postInfo.title === null">
           <q-spinner-bars size="200px" color="teal-8" />
         </q-inner-loading>
-        <q-card-section class="gt-sm no-padding full-width">
-          <div class="row justify-between items-center q-pa-sm q-gutter-x-xs">
-            <div class="col font-title">
-              {{$t('post.thing')}}
-            </div>
-            <div class="col-1 text-right">
-              <q-btn flat round v-close-popup size="sm" icon="close" :disable="processPosting" />
-            </div>
-          </div>
-        </q-card-section>
-        <q-separator />
-        <q-scroll-area class="col full-width" :thumb-style="thumbStyle">
-          <q-card-section>
-            <q-form ref="form" @submit="onSubmit" class="column full-width q-gutter-y-xs">
-              <div class="full-width">
-                <q-input dense outlined hide-bottom-space :disable="processPosting" maxlength="200" type="text"
-                  v-model="postInfo.title" :label="$t('post.title')"
-                  :rules="[val => !!val && val.trim() !== '' || '']" />
+        <q-form ref="form" @submit="onSubmit" class="column full-height">
+          <q-card-section class="gt-sm no-padding full-width">
+            <div class="row justify-between items-center q-pa-sm q-gutter-x-xs">
+              <div class="col font-title">
+                {{$t('post.thing')}}
               </div>
-              <div class="column full-width relative-position" :class="fullScreen === true ? 'full-screen' : ''">
+              <div class="col-1 text-right">
+                <q-btn flat round v-close-popup size="sm" icon="close" :disable="processPosting" />
+              </div>
+            </div>
+          </q-card-section>
+          <q-separator />
+          <q-card-section class="col">
+            <div class="column q-gutter-y-xs full-height">
+              <q-input dense outlined hide-bottom-space :disable="processPosting" maxlength="200" type="text"
+                v-model="postInfo.title" :label="$t('post.title')" :rules="[val => !!val && val.trim() !== '' || '']" />
+              <div class="col column relative-position" :class="fullScreen === true ? 'full-screen' : ''">
                 <editor-menu-bar class="editor-menu-bar" :editor="editor"
                   v-slot="{ commands, isActive, getMarkAttrs, getNodeAttrs }">
                   <q-toolbar class="bg-transparent no-padding row justify-between items-start"
@@ -119,106 +116,102 @@
                     </div>
                   </q-toolbar>
                 </editor-menu-bar>
-                <q-scroll-area class="full-width contents editor-contents q-pa-md"
-                  :class="[!fullScreen ? 'contents-area' : '', postInfo.contents === null ? '' : isBlankContents ? 'invalid-contents' : 'valid-contents']"
+                <q-scroll-area class="col contents editor-contents"
+                  :class="postInfo.contents === null ? '' : isBlankContents ? 'invalid-contents' : 'valid-contents'"
                   :thumb-style="thumbStyle">
-                  <editor-content spellcheck="false" :editor="editor" class="full-height" />
+                  <editor-content spellcheck="false" :editor="editor" class="full-height q-pa-sm" />
                 </q-scroll-area>
               </div>
-              <q-list separator class="q-pa-sm">
-                <q-item dense>
-                  <q-item-section side>
-                    <q-radio dense :disable="getYoutubeId(postInfo.youtube) === null" v-model="postInfo.thumb"
-                      :val="postInfo.youtube" size="xs" />
+            </div>
+          </q-card-section>
+          <q-card-section class="row q-gutter-y-sm full-width">
+            <q-list separator dense class="col-12">
+              <q-item class="no-padding">
+                <q-item-section side>
+                  <q-radio dense :disable="getYoutubeId(postInfo.youtube) === null" v-model="postInfo.thumb"
+                    :val="postInfo.youtube" size="xs" />
+                </q-item-section>
+                <q-item-section>
+                  <q-input dense outlined hide-bottom-space :disable="processPosting" type="text"
+                    v-model="postInfo.youtube" :label="$t('post.youtubeUrl')"
+                    :rules="[val => (val.trim() === '' || getYoutubeId(val) !== null) || '']" @input="validYoutube" />
+                </q-item-section>
+              </q-item>
+            </q-list>
+            <q-uploader class="col-12" style="max-height:20vh" ref="uploader" :disable="processPosting"
+              :accept="limitFileCnt !== -1 ? 'image/*' : '.exe, .zip, .tar, .jar, .7z, .rar, .bat, .cmd, .hwp, .txt, .doc, .docx, .ppt, .pptx, .xls, .xlss, image/*, video/*, audio/*'"
+              :factory="factoryFn"
+              :label="limitFileCnt !== -1 ? `attach image (10m * ${limitFileCnt})` : 'attach file (10m)'"
+              :filter="checkFiles" @added="uploadAdded" @removed="uploadRemoved" @start="uploadStart"
+              @finish="uploadFinish" @uploaded="uploaded" @failed="uploadFailed" flat bordered multiple hide-upload-btn
+              batch>
+              <template v-slot:list="scope">
+                <q-list separator>
+                  <q-item dense v-for="file in scope.files" :key="file.name">
+                    <q-item-section side v-if="file.__img">
+                      <q-radio dense v-if="file.__img" v-model="postInfo.thumb" :val="file.name" size="xs" />
+                    </q-item-section>
+                    <q-item-section v-if="file.__img" style="width:20%" thumbnail>
+                      <q-img :src="file.__img.src" :ratio="3/2" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label lines="2">
+                        {{ file.name }}
+                      </q-item-label>
+                      <q-item-label caption>
+                        Status: {{ file.__status }}
+                      </q-item-label>
+                      <q-item-label caption>
+                        {{ file.__sizeLabel }} / {{ file.__progressLabel }}
+                      </q-item-label>
+                    </q-item-section>
+                    <q-item-section top side>
+                      <q-btn v-if="file.__img" size="md" flat round dense icon="link"
+                        @click="copyThumbnail(file.__img.src)" />
+                      <q-btn size="md" flat round dense icon="delete" @click="scope.removeFile(file)" />
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </template>
+            </q-uploader>
+            <q-list v-if="postInfo.files && postInfo.files.length > 0" style="max-height:15vh" class="col-12 scroll"
+              bordered separator dense>
+              <template v-for="file in postInfo.files">
+                <q-item v-if="file.deleted !== true" :key="file.fid">
+                  <q-item-section v-if="file.type === 'image'" side>
+                    <q-radio dense v-model="postInfo.thumb" :val="file.origin" size="xs" />
+                  </q-item-section>
+                  <q-item-section v-if="file.type === 'image'" style="width:20%" thumbnail>
+                    <q-img :src="file.clipboard" :ratio="3/2" />
                   </q-item-section>
                   <q-item-section>
-                    <q-input dense outlined hide-bottom-space :disable="processPosting" type="text"
-                      v-model="postInfo.youtube" :label="$t('post.youtubeUrl')"
-                      :rules="[val => (val.trim() === '' || getYoutubeId(val) !== null) || '']" @input="validYoutube" />
+                    <q-item-label lines="2">
+                      {{file.origin}}
+                    </q-item-label>
+                  </q-item-section>
+                  <q-item-section top side>
+                    <q-btn v-if="file.type === 'image'" flat round dense icon="link"
+                      @click="copyThumbnail(file.clipboard)" />
+                    <q-btn size="md" flat round dense icon="delete" @click="deleteFile(file)" />
                   </q-item-section>
                 </q-item>
-              </q-list>
-              <div class="full-width">
-                <q-uploader class="full-width" style="max-height:25vh" ref="uploader" :disable="processPosting"
-                  :accept="limitFileCnt !== -1 ? 'image/*' : '.exe, .zip, .tar, .jar, .7z, .rar, .bat, .cmd, .hwp, .txt, .doc, .docx, .ppt, .pptx, .xls, .xlss, image/*, video/*, audio/*'"
-                  :factory="factoryFn"
-                  :label="limitFileCnt !== -1 ? `attach image (10m * ${limitFileCnt})` : 'attach file (10m)'"
-                  :filter="checkFiles" @added="uploadAdded" @removed="uploadRemoved" @start="uploadStart"
-                  @finish="uploadFinish" @uploaded="uploaded" @failed="uploadFailed" flat bordered multiple
-                  hide-upload-btn batch>
-                  <template v-slot:list="scope">
-                    <q-list separator>
-                      <q-item dense v-for="file in scope.files" :key="file.name">
-                        <q-item-section side v-if="file.__img">
-                          <q-radio dense v-if="file.__img" v-model="postInfo.thumb" :val="file.name" size="xs" />
-                        </q-item-section>
-                        <q-item-section v-if="file.__img" style="width:10%" thumbnail>
-                          <q-img :src="file.__img.src" width="100%" :ratio="3/2" />
-                        </q-item-section>
-                        <q-item-section class="gt-xs">
-                          <q-item-label class="ellipsis">
-                            {{ file.name }}
-                          </q-item-label>
-                          <q-item-label caption>
-                            Status: {{ file.__status }}
-                          </q-item-label>
-                          <q-item-label caption>
-                            {{ file.__sizeLabel }} / {{ file.__progressLabel }}
-                          </q-item-label>
-                        </q-item-section>
-                        <q-item-section top side>
-                          <q-btn v-if="file.__img" size="md" flat round dense icon="link"
-                            @click="copyThumbnail(file.__img.src)" />
-                          <q-btn size="md" flat round dense icon="delete" @click="scope.removeFile(file)" />
-                        </q-item-section>
-                      </q-item>
-                    </q-list>
-                  </template>
-                </q-uploader>
-              </div>
-              <div v-if="postInfo.files && postInfo.files.length > 0" class="full-width scroll"
-                style="max-height: 25vh;">
-                <q-list bordered separator class="q-pa-sm">
-                  <template v-for="file in postInfo.files">
-                    <q-item dense v-if="file.deleted !== true" :key="file.fid">
-                      <q-item-section v-if="file.type === 'image'" side>
-                        <q-radio dense v-model="postInfo.thumb" :val="file.origin" size="xs" />
-                      </q-item-section>
-                      <q-item-section v-if="file.type === 'image'" style="width:10%" thumbnail>
-                        <q-img :src="file.clipboard" width="100%" :ratio="3/2" />
-                      </q-item-section>
-                      <q-item-section class="gt-xs">
-                        <q-item-label class="ellipsis">
-                          {{file.origin}}
-                        </q-item-label>
-                      </q-item-section>
-                      <q-item-section top side>
-                        <q-btn v-if="file.type === 'image'" flat round dense icon="link"
-                          @click="copyThumbnail(file.clipboard)" />
-                        <q-btn size="md" flat round dense icon="delete" @click="deleteFile(file)" />
-                      </q-item-section>
-                    </q-item>
-                  </template>
-                </q-list>
-              </div>
-              <div>
-                <q-btn push class="full-width" dense :loading="processPosting" color="teal-4" type="submit" size="lg"
-                  :label="$route.name === 'post-modify' ? $t('btn.modify') :$t('btn.posting')" />
-              </div>
-            </q-form>
+              </template>
+            </q-list>
           </q-card-section>
-          <div class="lt-md" style="height:16vh"></div>
-        </q-scroll-area>
-        <q-separator />
-        <q-card-section v-if="fullScreen === false" class="lt-md q-pa-sm fixed-bottom btn-place no-pointer-events">
-          <div class="q-px-none row justify-end items-center q-gutter-x-xs">
-            <div>
-              <q-btn class="all-pointer-events" v-close-popup round color="red-5" size="md" icon="close" />
+          <q-card-actions>
+            <q-btn push class="gt-sm full-width" dense :loading="processPosting" color="teal-4" type="submit" size="lg"
+              :label="$route.name === 'post-modify' ? $t('btn.modify') :$t('btn.posting')" />
+          </q-card-actions>
+          <q-card-section class="platform-ios-only"></q-card-section>
+          <q-page-sticky v-if="fullScreen === false" class="lt-md" position="bottom-right" :offset="[10, 10]"
+            style="z-index: 1;">
+            <div class="q-px-none row justify-end items-center q-gutter-x-sm">
+              <q-btn class="all-pointer-events" v-close-popup round color="blue-grey-8" size="sm" icon="close" />
+              <q-btn class="all-pointer-events" round color="positive" size="sm" icon="check" type="submit" />
             </div>
-            <div class="col-12 platform-ios-only ios">
-            </div>
-          </div>
-        </q-card-section>
+            <div class="full-width platform-ios-only q-py-sm"></div>
+          </q-page-sticky>
+        </q-form>
       </q-card>
     </q-dialog>
     <ss-prompt v-model="linkPop" :title="$t('post.link')" :contents="url" :rules="rules" @ok="setLink"
@@ -703,29 +696,63 @@
     padding: 4px;
   }
 
-  .contents-area {
-    height: calc(67vh - 130px);
+  .editor-contents {
+    transition: all 0.1s;
+    box-sizing: border-box;
+    border-radius: 0 0 4px 4px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+    position: relative !important;
+    z-index: 1000 !important;
+    padding: 2px;
+  }
+
+  .body--dark .editor-contents {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+  }
+
+  .editor-contents.invalid-contents {
+    box-shadow: inset 0 0 0 1px rgba(204, 0, 0, 1);
+  }
+
+  .editor-contents.valid-contents {
+    box-shadow: inset 0 0 0 1px var(--q-color-primary);
+  }
+
+  .editor-contents:focus-within {
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .12);
+  }
+
+  .body--dark .editor-contents:focus-within {
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
+  }
+
+  .editor-contents.invalid-contents:focus-within {
+    box-shadow: inset 0 0 0 2px rgba(204, 0, 0, 1);
+  }
+
+  .editor-contents.valid-contents:focus-within {
+    box-shadow: inset 0 0 0 2px var(--q-color-primary);
+  }
+
+  .full-screen .editor-menu-bar {
+    position: relative !important;
   }
 
   .editor-menu-bar {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
+    background-color: rgb(240, 240, 240) !important;
     z-index: 1;
-    background-color: #fafafa !important;
-    border-radius: 4px;
+    border-radius: 4px 4px 0 0;
   }
 
   .body--dark .editor-menu-bar {
-    background-color: #151939 !important;
+    background-color: rgb(18, 29, 58) !important;
   }
 
-  .body--light .editor-menu-bar .is-active {
-    background-color: #DDDDDD;
-  }
-
-  .body--dark .editor-menu-bar .is-active {
-    background-color: rgba(255, 255, 255, 0.5);
+  .editor-menu-bar .is-active {
+    background-color: rgba(0, 0, 0, 0.2);
   }
 
   .full-screen {
@@ -738,40 +765,11 @@
     z-index: 9999;
   }
 
-  .full-screen .editor-menu-bar {
-    position: relative !important;
-    height: 10vh;
-  }
-
-  .full-screen .editor-contents {
-    height: 89vh !important;
-  }
-
   .body--light .full-screen {
     background-color: #FFFFFF;
   }
 
   .body--dark .full-screen {
     background-color: #17213b;
-  }
-
-  .btn-place .ios {
-    padding-bottom: 4vh;
-  }
-
-  .editor-contents {
-    padding: 12px;
-    transition: all 0.1s;
-    border: solid 1px #DDDDDD;
-    box-sizing: border-box;
-    border-radius: 4px;
-  }
-
-  .editor-contents.invalid-contents {
-    border-color: #CC0000;
-  }
-
-  .editor-contents.valid-contents {
-    border-color: #027BE3;
   }
 </style>

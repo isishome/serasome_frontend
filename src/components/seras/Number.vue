@@ -1,9 +1,11 @@
 <template>
-  <div style="width:5.8vh;height:5.8vh">
+  <div style="width:10%;aspect-ratio: 1;">
     <figure class="ball overflow-hidden non-selectable cursor-pointer"
       :class="[$q.dark.isActive ? 'dark' : '', ballColor]" v-touch-swipe.mouse="handleSwipe">
       <q-avatar ref="avt" :color="$q.dark.isActive ? 'grey-3' :'grey-4'"
-        :text-color="$q.dark.isActive ? 'grey-8' :'black'" size="3vh" class="text-weight-bolder absolute-center">
+        :text-color="$q.dark.isActive ? 'grey-8' :'black'"
+        class="text-weight-bolder absolute-center row justify-center items-center"
+        :style="`width:${size};height:${size};font-size:${fontSize}`">
         {{num}}
       </q-avatar>
     </figure>
@@ -30,6 +32,10 @@
       color: {
         type: String,
         default: null
+      },
+      size: {
+        type: String,
+        default: 'md'
       }
     },
     created() {
@@ -67,11 +73,13 @@
           className = 'tens-fourth'
 
         return className
+      },
+      fontSize() {
+        return this.$q.screen.lt.sm ? '1em' : this.$q.screen.lt.md ? '2em' : this.$q.screen.lt.lg ? '2em' : this.$q.screen.lt.xl ? '2.5em' : '3em'
       }
     },
     methods: {
-      handleSwipe({ evt, ...info }) {
-        evt
+      handleSwipe({ ...info }) {
         const direction = info.direction.substring(0, 1)
         let duration = (info.duration / 200).toFixed(1)
         duration = duration < 0.1 ? 0.1 : duration

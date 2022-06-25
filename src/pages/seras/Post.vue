@@ -19,14 +19,8 @@
         </div>
       </div>
       <q-separator inset spaced />
-      <q-infinite-scroll v-if="routeName !== 'post'" ref="some" @load="onLoad" class="q-mt-md relative-position">
-        <ss-post-list v-if="some" :list="items" :pid="pid" :loading="loading" @view="view"></ss-post-list>
-        <template v-slot:loading>
-          <div class="row justify-center items-center q-my-md">
-            <q-spinner-dots :color="$q.dark.isActive ? 'grey-4' : 'teal-4'" size="40px" />
-          </div>
-        </template>
-      </q-infinite-scroll>
+      <ss-post-list class="q-pa-sm q-mt-md" ref="some" v-if="routeName !== 'post' && some" :list="items" :pid="pid"
+        :loading="loading" @view="view" @load="onLoad"></ss-post-list>
     </div>
   </div>
 </template>

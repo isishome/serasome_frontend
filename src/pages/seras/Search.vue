@@ -20,15 +20,9 @@
           </q-input>
         </div>
         <q-separator inset spaced />
-        <q-infinite-scroll ref="some" @load="onLoad" class="q-mt-md">
-          <ss-post-list :list="items" :loading="loading" :pid="pid" @view="view"></ss-post-list>
-          <template v-slot:loading>
-            <div class="row justify-center items-center q-my-md">
-              <q-spinner-dots color="primary" size="40px" />
-            </div>
-          </template>
-        </q-infinite-scroll>
-        <q-space class="q-my-xl" />
+        <ss-post-list class="q-pa-sm q-mt-md" ref="some" :list="items" :loading="loading" :pid="pid" @view="view"
+          @load="onLoad">
+        </ss-post-list>
       </div>
     </div>
   </div>

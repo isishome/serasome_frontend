@@ -84,9 +84,9 @@
   }
 }
 
-.input-tip{
-  background-color: rgba(200,90,100,1) !important;
-  max-width:75%;
+.input-tip {
+  background-color: rgba(200, 90, 100, 1) !important;
+  max-width: 75%;
 }
 
 .grecaptcha-badge {

@@ -41,8 +41,8 @@
             </q-scroll-area>
           </q-btn-dropdown>
           <q-separator />
-          <q-btn :loading="processJoin" color="teal-4" type="submit" size="md" :label="$t('join.title')"
-            class="full-width" />
+          <q-btn :loading="processJoin" :disable="disable" color="teal-4" type="submit" size="md"
+            :label="$t('join.title')" class="full-width" />
         </q-form>
       </q-card-section>
       <q-card-section class="no-padding no-margin">
@@ -152,7 +152,8 @@
         dialogName: null,
         dialogShow: false,
         termsPolicy: this.$t('join.termsPolicy').split('|'),
-        processJoin: false
+        processJoin: false,
+        disable: false
       }
     },
     computed: {
@@ -201,6 +202,7 @@
             token: token
           }).then(function (response) {
             if (response.data == '') {
+              vm.disable = true
               vm.$q.notify({
                 type: 'positive',
                 color: 'positive',
@@ -211,10 +213,9 @@
                 router.push('/').catch(() => { })
               }, 5000)
             }
-            else
-              vm.processJoin = false
           })
-          .catch(function () {
+          .catch(() => { })
+          .then(() => {
             vm.processJoin = false
           })
       }
