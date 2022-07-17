@@ -6,7 +6,7 @@
         <q-form @submit="onSubmit" class="q-gutter-y-sm column">
           <q-input :disable="processModify || key === 'email' || key === 'name'" color="teal-4"
             v-for="(field, key) in joinForm" :key="key" maxlength="32"
-            :type="!field.isPwd && field.type === 'password'? 'text' : field.type" v-model="field.value"
+            :type="!field.isPwd && field.type === 'password' ? 'text' : field.type" v-model="field.value"
             :label="field.label" :rules="field.rules" @blur="field.error = false"
             @input="field.error = !field.rules[0](field.value)" outlined hide-hint dense no-error-icon
             hide-bottom-space>
@@ -16,7 +16,7 @@
             </template>
             <q-tooltip v-if="field.hint" no-parent-event :offset="[0, 0]" anchor="top start" self="bottom start"
               v-model="field.error" content-class="input-tip">
-              {{field.hint}}
+              {{ field.hint }}
             </q-tooltip>
           </q-input>
           <q-btn-dropdown outline dense unelevated cover menu-anchor="top left" size="md" class="q-pa-xs"
@@ -24,7 +24,7 @@
             <template v-slot:label>
               <div class="row items-center no-wrap">
                 <q-icon size="xs" left :color="category.color" :name="category.icon" />
-                <span>{{category.name}}</span>
+                <span>{{ category.name }}</span>
               </div>
             </template>
             <q-scroll-area style="height:9.2rem">
@@ -35,7 +35,7 @@
                     <q-avatar size="md" :color="item.color" text-color="white" :icon="item.icon" />
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label class="text-uppercase">{{item.name}}</q-item-label>
+                    <q-item-label class="text-uppercase">{{ item.name }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -68,127 +68,127 @@
   </div>
 </template>
 <script>
-  import {
-    mapGetters
-  } from 'vuex'
+import {
+  mapGetters
+} from 'vuex'
 
-  export default {
-    name: 'Join',
-    data() {
-      return {
-        FB: {},
-        fbInfo: {},
-        scope: {},
-        email: null,
-        category: { cid: null, name: this.$t('main.category'), icon: 'fas fa-star', color: 'yellow-14' },
-        joinForm: {
-          'email': {
-            type: 'text',
-            label: this.$t('signIn.email'),
-            value: '',
-            rules: [val => new RegExp('^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$', 'i').test(val)]
-          },
-          'name': {
-            type: 'text',
-            label: this.$t('join.uniqueSomeName'),
-            value: '',
-            rules: [val => new RegExp('^[0-1a-zA-Z]{4,16}$').test(val)]
-          },
-          'currentPassword': {
-            type: 'password',
-            label: this.$t('myInfo.currentPassword'),
-            value: '',
-            rules: [val => new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$ %\\^&\\*])(?=.{8,}).*$').test(val)],
-            isPwd: true
-          },
-          'password': {
-            type: 'password',
-            label: this.$t('myInfo.NewPassword'),
-            value: '',
-            rules: [val => new RegExp('^(|(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$ %\\^&\\*])(?=.{8,}).*)$').test(val)],
-            isPwd: true,
-            error: false,
-            hint: this.$t('signIn.passwordHint')
-          },
-          'passwordConfirm': {
-            type: 'password',
-            label: this.$t('myInfo.confirmNewPassword'),
-            value: '',
-            rules: [val => val === this.joinForm['password'].value],
-            isPwd: true
-          }
+export default {
+  name: 'Join',
+  data() {
+    return {
+      FB: {},
+      fbInfo: {},
+      scope: {},
+      email: null,
+      category: { cid: null, name: this.$t('main.category'), icon: 'star', color: 'yellow-14' },
+      joinForm: {
+        'email': {
+          type: 'text',
+          label: this.$t('signIn.email'),
+          value: '',
+          rules: [val => new RegExp('^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$', 'i').test(val)]
         },
-        loading: false,
-        processModify: false
-      }
-    },
-    created() {
-      this.getInfo()
-    },
-    computed: {
-      ...mapGetters({
-        signStatus: 'getSignStatus',
-        categoryInfo: 'getCategory'
-      })
-    },
-    methods: {
-      getInfo() {
-        const self = this
-
-        this.axios
-          .get('/seras/account/info')
-          .then(function (response) {
-            self.joinForm.email.value = response.data.email
-            self.joinForm.name.value = response.data.name
-
-            const findCg = self.categoryInfo.find(c => c.cid === response.data.cid)
-
-            if (findCg !== null)
-              self.category = findCg
-
-          })
+        'name': {
+          type: 'text',
+          label: this.$t('join.uniqueSomeName'),
+          value: '',
+          rules: [val => new RegExp('^[0-1a-zA-Z]{4,16}$').test(val)]
+        },
+        'currentPassword': {
+          type: 'password',
+          label: this.$t('myInfo.currentPassword'),
+          value: '',
+          rules: [val => new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$ %\\^&\\*])(?=.{8,}).*$').test(val)],
+          isPwd: true
+        },
+        'password': {
+          type: 'password',
+          label: this.$t('myInfo.NewPassword'),
+          value: '',
+          rules: [val => new RegExp('^(|(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$ %\\^&\\*])(?=.{8,}).*)$').test(val)],
+          isPwd: true,
+          error: false,
+          hint: this.$t('signIn.passwordHint')
+        },
+        'passwordConfirm': {
+          type: 'password',
+          label: this.$t('myInfo.confirmNewPassword'),
+          value: '',
+          rules: [val => val === this.joinForm['password'].value],
+          isPwd: true
+        }
       },
-      onSubmit() {
-        const self = this
-        const router = self.$router
-        self.processModify = true
+      loading: false,
+      processModify: false
+    }
+  },
+  created() {
+    this.getInfo()
+  },
+  computed: {
+    ...mapGetters({
+      signStatus: 'getSignStatus',
+      categoryInfo: 'getCategory'
+    })
+  },
+  methods: {
+    getInfo() {
+      const self = this
 
-        this.axios
-          .post('/seras/account/modify', {
-            cPwd: this.joinForm.currentPassword.value,
-            pwd: this.joinForm.password.value,
-            cid: this.category.cid
-          }).then(function (response) {
-            if (response.data == '') {
-              self.$q.notify({
-                type: 'positive',
-                color: 'positive',
-                message: self.$t('myInfo.message.successChange')
-              })
+      this.axios
+        .get('/seras/account/info')
+        .then(function (response) {
+          self.joinForm.email.value = response.data.email
+          self.joinForm.name.value = response.data.name
 
-              router.push('/').catch(() => { })
-            }
-          })
-          .catch(function () { })
-          .then(function () {
-            self.processModify = false
-          })
-      }
+          const findCg = self.categoryInfo.find(c => c.cid === response.data.cid)
+
+          if (findCg !== null)
+            self.category = findCg
+
+        })
+    },
+    onSubmit() {
+      const self = this
+      const router = self.$router
+      self.processModify = true
+
+      this.axios
+        .post('/seras/account/modify', {
+          cPwd: this.joinForm.currentPassword.value,
+          pwd: this.joinForm.password.value,
+          cid: this.category.cid
+        }).then(function (response) {
+          if (response.data == '') {
+            self.$q.notify({
+              type: 'positive',
+              color: 'positive',
+              message: self.$t('myInfo.message.successChange')
+            })
+
+            router.push('/').catch(() => { })
+          }
+        })
+        .catch(function () { })
+        .then(function () {
+          self.processModify = false
+        })
     }
   }
+}
 </script>
 <style scoped>
-  .info-card {
-    width: 100%;
-    max-width: 400px;
-  }
+.info-card {
+  width: 100%;
+  max-width: 400px;
+}
 
-  .category-selected {
-    color: white;
-    background-color: #F2C037;
-  }
+.category-selected {
+  color: white;
+  background-color: #F2C037;
+}
 
-  .disconnect {
-    background: repeating-linear-gradient(-45deg, #444, #444 5px, #888 0, #888 25px) !important;
-  }
+.disconnect {
+  background: repeating-linear-gradient(-45deg, #444, #444 5px, #888 0, #888 25px) !important;
+}
 </style>

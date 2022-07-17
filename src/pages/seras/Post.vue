@@ -13,8 +13,8 @@
         </div>
         <div>
           <q-btn dense round flat size="sm" v-if="postingAvailable && signStatus && !owner"
-            :icon="linked === true ? 'fas fa-unlink' : 'fas fa-link'" :color="linked ? 'red-10' : 'green-10'"
-            class="q-pa-xs" @click="link">
+            :icon="linked === true ? 'link_off' : 'link'" :color="linked ? 'red-10' : 'green-10'" class="q-pa-xs"
+            @click="link">
           </q-btn>
         </div>
       </div>

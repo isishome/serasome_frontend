@@ -5,7 +5,7 @@
       <q-card-section class="no-padding">
         <q-form :autofocus="$q.screen.gt.sm" @submit="checkJoin" class="q-gutter-y-sm column">
           <q-input :disable="processJoin" color="teal-4" v-for="(field, key) in joinForm" :key="key" maxlength="32"
-            :type="!field.isPwd && field.type === 'password'? 'text' : field.type" v-model="field.value"
+            :type="!field.isPwd && field.type === 'password' ? 'text' : field.type" v-model="field.value"
             :label="field.label" :rules="field.rules" @blur="field.error = false"
             @input="field.error = !field.rules[0](field.value)" outlined hide-hint dense no-error-icon
             hide-bottom-space>
@@ -15,7 +15,7 @@
             </template>
             <q-tooltip v-if="field.hint" no-parent-event :offset="[0, 0]" anchor="top start" self="bottom start"
               v-model="field.error" content-class="input-tip">
-              {{field.hint}}
+              {{ field.hint }}
             </q-tooltip>
           </q-input>
           <q-btn-dropdown outline dense unelevated cover menu-anchor="top left" size="md" class="q-pa-xs"
@@ -23,7 +23,7 @@
             <template v-slot:label>
               <div class="row items-center no-wrap">
                 <q-icon size="xs" left :color="category.color" :name="category.icon" />
-                <span>{{category.name}}</span>
+                <span>{{ category.name }}</span>
               </div>
             </template>
             <q-scroll-area style="height:9.2rem">
@@ -34,7 +34,7 @@
                     <q-avatar size="md" :color="item.color" text-color="white" :icon="item.icon" />
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label class="text-uppercase">{{item.name}}</q-item-label>
+                    <q-item-label class="text-uppercase">{{ item.name }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -49,25 +49,25 @@
         <div class="q-my-sm text-caption terms-policy">
           <template v-for="(word, index) in termsPolicy">
             <span :key="index" v-if="word.indexOf('#terms#') !== -1">
-              <a href="" @click.prevent="showDialog('terms')">{{word.replace(/#[a-zA-Z-]*#/gi,'')}}</a>
+              <a href="" @click.prevent="showDialog('terms')">{{ word.replace(/#[a-zA-Z-]*#/gi, '') }}</a>
             </span>
-            <span :key="index" v-else-if="word.indexOf('#privacy-policy#') !== -1">
-              <a href="" @click.prevent="showDialog('privacyPolicy')">{{word.replace(/#[a-zA-Z-]*#/gi,'')}}</a>
+            <span :key="`pp${index}`" v-else-if="word.indexOf('#privacy-policy#') !== -1">
+              <a href="" @click.prevent="showDialog('privacyPolicy')">{{ word.replace(/#[a-zA-Z-]*#/gi, '') }}</a>
             </span>
-            <span :key="index" v-else-if="word.indexOf('#cookies-policy#') !== -1">
-              <a href="" @click.prevent="showDialog('cookiesPolicy')">{{word.replace(/#[a-zA-Z-]*#/gi,'')}}</a>
+            <span :key="`cp${index}`" v-else-if="word.indexOf('#cookies-policy#') !== -1">
+              <a href="" @click.prevent="showDialog('cookiesPolicy')">{{ word.replace(/#[a-zA-Z-]*#/gi, '') }}</a>
             </span>
-            <span :key="index" v-else>
-              {{word}}
+            <span :key="`else${index}`" v-else>
+              {{ word }}
             </span>
           </template>
         </div>
       </q-card-section>
       <q-separator />
       <q-card-section class="row justify-end items-center text-teal-4 q-gutter-x-md text-caption">
-        <div>{{$t('join.message.haveRegisterAccount')}}</div>
+        <div>{{ $t('join.message.haveRegisterAccount') }}</div>
         <router-link to="/sign" class="text-amber-7">
-          {{$t('signIn.title')}}</router-link>
+          {{ $t('signIn.title') }}</router-link>
       </q-card-section>
     </q-card>
     <q-dialog v-model="dialogShow" full-height :maximized="$q.screen.lt.md" @before-hide="beforeCloseDialog">
@@ -98,162 +98,162 @@
   </div>
 </template>
 <script>
-  import {
-    mapGetters
-  } from 'vuex'
+import {
+  mapGetters
+} from 'vuex'
 
-  const terms = () => import(/* webpackChunkName: "group-policy" */ './Dialogs/Terms')
-  const privacyPolicy = () => import(/* webpackChunkName: "group-policy" */ './Dialogs/PrivacyPolicy')
-  const cookiesPolicy = () => import(/* webpackChunkName: "group-policy" */ './Dialogs/CookiesPolicy')
+const terms = () => import(/* webpackChunkName: "group-policy" */ './Dialogs/Terms')
+const privacyPolicy = () => import(/* webpackChunkName: "group-policy" */ './Dialogs/PrivacyPolicy')
+const cookiesPolicy = () => import(/* webpackChunkName: "group-policy" */ './Dialogs/CookiesPolicy')
 
-  export default {
-    name: 'Join',
-    components: {
-      ssTerms: terms,
-      ssPrivacyPolicy: privacyPolicy,
-      ssCookiesPolicy: cookiesPolicy,
-    },
-    data() {
-      return {
-        FB: {},
-        fbInfo: {},
-        scope: {},
-        category: { cid: null, name: this.$t('main.category'), icon: 'fas fa-star', color: 'yellow-14' },
-        joinForm: {
-          'email': {
-            type: 'email',
-            label: this.$t('signIn.email'),
-            value: '',
-            rules: [val => new RegExp('^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$', 'i').test(val)]
-          },
-          'password': {
-            type: 'password',
-            label: this.$t('signIn.password'),
-            value: '',
-            rules: [val => new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$ %\\^&\\*])(?=.{8,}).*$').test(val)],
-            isPwd: true,
-            error: false,
-            hint: this.$t('signIn.passwordHint')
-          },
-          'passwordConfirm': {
-            type: 'password',
-            label: this.$t('join.confirmPassword'),
-            value: '',
-            rules: [val => val === this.joinForm['password'].value],
-            isPwd: true
-          },
-          'uniqueName': {
-            type: 'text',
-            label: this.$t('join.uniqueSomeName'),
-            value: '',
-            rules: [val => new RegExp('^[0-9a-zA-Z]{4,16}$').test(val)]
-          }
+export default {
+  name: 'Join',
+  components: {
+    ssTerms: terms,
+    ssPrivacyPolicy: privacyPolicy,
+    ssCookiesPolicy: cookiesPolicy,
+  },
+  data() {
+    return {
+      FB: {},
+      fbInfo: {},
+      scope: {},
+      category: { cid: null, name: this.$t('main.category'), icon: 'star', color: 'yellow-14' },
+      joinForm: {
+        'email': {
+          type: 'email',
+          label: this.$t('signIn.email'),
+          value: '',
+          rules: [val => new RegExp('^([a-zA-Z0-9_\\.\\-])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+$', 'i').test(val)]
         },
-        dialogName: null,
-        dialogShow: false,
-        termsPolicy: this.$t('join.termsPolicy').split('|'),
-        processJoin: false,
-        disable: false
-      }
+        'password': {
+          type: 'password',
+          label: this.$t('signIn.password'),
+          value: '',
+          rules: [val => new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$ %\\^&\\*])(?=.{8,}).*$').test(val)],
+          isPwd: true,
+          error: false,
+          hint: this.$t('signIn.passwordHint')
+        },
+        'passwordConfirm': {
+          type: 'password',
+          label: this.$t('join.confirmPassword'),
+          value: '',
+          rules: [val => val === this.joinForm['password'].value],
+          isPwd: true
+        },
+        'uniqueName': {
+          type: 'text',
+          label: this.$t('join.uniqueSomeName'),
+          value: '',
+          rules: [val => new RegExp('^[0-9a-zA-Z]{4,16}$').test(val)]
+        }
+      },
+      dialogName: null,
+      dialogShow: false,
+      termsPolicy: this.$t('join.termsPolicy').split('|'),
+      processJoin: false,
+      disable: false
+    }
+  },
+  computed: {
+    ...mapGetters({
+      categoryInfo: 'getCategory'
+    })
+  },
+  mounted() {
+    this.createRecaptcha()
+  },
+  methods: {
+    showDialog(val) {
+      this.dialogName = val
+      this.dialogShow = true
     },
-    computed: {
-      ...mapGetters({
-        categoryInfo: 'getCategory'
+    beforeCloseDialog() {
+      this.dialogName = null
+    },
+    checkJoin() {
+      const routeName = this.$route.name
+
+      if (routeName === 'join')
+        this.onSubmit(null, null)
+    },
+    onSubmit(fuid, guid) {
+      const vm = this
+      this.processJoin = true
+      window.grecaptcha.ready(function () {
+        window.grecaptcha.execute(process.env.VUE_APP_GOOGLE_RC_SITEKEY, { action: 'submit' }).then(function (token) {
+          vm.checkToken(token, fuid, guid)
+        })
       })
     },
-    mounted() {
-      this.createRecaptcha()
-    },
-    methods: {
-      showDialog(val) {
-        this.dialogName = val
-        this.dialogShow = true
-      },
-      beforeCloseDialog() {
-        this.dialogName = null
-      },
-      checkJoin() {
-        const routeName = this.$route.name
+    checkToken(token, fuid, guid) {
+      let vm = this
+      const router = vm.$router
 
-        if (routeName === 'join')
-          this.onSubmit(null, null)
-      },
-      onSubmit(fuid, guid) {
-        const vm = this
-        this.processJoin = true
-        window.grecaptcha.ready(function () {
-          window.grecaptcha.execute(process.env.VUE_APP_GOOGLE_RC_SITEKEY, { action: 'submit' }).then(function (token) {
-            vm.checkToken(token, fuid, guid)
-          })
+      this.axios
+        .post('/seras/account/join', {
+          email: this.joinForm.email.value,
+          pwd: this.joinForm.password.value,
+          uniqueName: this.joinForm.uniqueName.value,
+          cid: this.category.cid,
+          fuid: fuid,
+          guid: guid,
+          token: token
+        }).then(function (response) {
+          if (response.data == '') {
+            vm.disable = true
+            vm.$q.notify({
+              type: 'positive',
+              color: 'positive',
+              message: vm.$t('join.message.success')
+            })
+
+            vm.timer = setTimeout(() => {
+              router.push('/').catch(() => { })
+            }, 5000)
+          }
         })
-      },
-      checkToken(token, fuid, guid) {
-        let vm = this
-        const router = vm.$router
-
-        this.axios
-          .post('/seras/account/join', {
-            email: this.joinForm.email.value,
-            pwd: this.joinForm.password.value,
-            uniqueName: this.joinForm.uniqueName.value,
-            cid: this.category.cid,
-            fuid: fuid,
-            guid: guid,
-            token: token
-          }).then(function (response) {
-            if (response.data == '') {
-              vm.disable = true
-              vm.$q.notify({
-                type: 'positive',
-                color: 'positive',
-                message: vm.$t('join.message.success')
-              })
-
-              vm.timer = setTimeout(() => {
-                router.push('/').catch(() => { })
-              }, 5000)
-            }
-          })
-          .catch(() => { })
-          .then(() => {
-            vm.processJoin = false
-          })
-      }
-    },
-    beforeDestroy() {
-      clearTimeout(this.timer)
-      this.removeRecaptcha()
+        .catch(() => { })
+        .then(() => {
+          vm.processJoin = false
+        })
     }
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer)
+    this.removeRecaptcha()
   }
+}
 </script>
 <style scoped>
-  .category-selected {
-    color: white;
-    background-color: #F2C037;
-  }
+.category-selected {
+  color: white;
+  background-color: #F2C037;
+}
 
-  .terms-policy a {
-    color: inherit;
-    text-decoration: none;
-    font-weight: bold;
-  }
+.terms-policy a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-  .post-width {
-    width: 50vw !important;
-    max-width: none !important;
-    min-width: 1024px;
-  }
+.post-width {
+  width: 50vw !important;
+  max-width: none !important;
+  min-width: 1024px;
+}
 
-  .join-card {
-    width: 100%;
-    max-width: 400px;
-  }
+.join-card {
+  width: 100%;
+  max-width: 400px;
+}
 
-  a {
-    text-decoration: none;
-  }
+a {
+  text-decoration: none;
+}
 
-  a:hover {
-    text-decoration: underline;
-  }
+a:hover {
+  text-decoration: underline;
+}
 </style>
