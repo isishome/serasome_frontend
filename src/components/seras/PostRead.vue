@@ -156,16 +156,16 @@
           <q-card-section class="gt-sm no-padding">
             <div class="fit q-px-sm row justify-between items-center q-gutter-x-xs">
               <div class="row no-padding q-gutter-x-md">
-                <q-btn v-if="postInfo.files && postInfo.files.length > 0" size="sm" flat round icon="attach_file"
+                <q-btn v-if="postInfo.files && postInfo.files.length > 0" size="md" flat round icon="attach_file"
                   @click="goAttach" />
-                <q-btn size="sm" flat round icon="sms" @click="goComment" />
+                <q-btn size="md" flat round icon="sms" @click="goComment" />
               </div>
               <div class="row justify-start q-gutter-x-md">
-                <q-btn v-if="isPost && signStatus && postInfo.auth.del" size="sm" round flat icon="delete"
+                <q-btn v-if="isPost && signStatus && postInfo.auth.del" size="md" round flat icon="delete"
                   @click="postDeleteConfirm = !postDeleteConfirm" />
-                <q-btn v-if="isPost && signStatus && postInfo.auth.modify" size="sm" round flat icon="edit"
+                <q-btn v-if="isPost && signStatus && postInfo.auth.modify" size="md" round flat icon="edit"
                   @click="postModify" />
-                <q-btn v-if="!isPost" size="sm" round flat icon="arrow_circle_right" @click="goSome(postInfo.sname)" />
+                <q-btn v-if="!isPost" size="md" round flat icon="arrow_circle_right" @click="goSome(postInfo.sname)" />
               </div>
             </div>
           </q-card-section>

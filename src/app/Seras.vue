@@ -38,8 +38,8 @@
                 <q-icon v-else name="close" class="cursor-pointer" @click="text = ''" />
               </template>
             </q-input>
-            <q-btn dense flat class="gt-sm" @click="goD2R">
-              <q-icon name="star" size="22px" color="d2r" />
+            <q-btn dense flat outline class="gt-sm" @click="goD2R">
+              <q-avatar icon="stars" size="md" />
               <span class="q-ml-sm gt-lg">D2R</span>
             </q-btn>
             <q-btn dense flat class="gt-sm" to="/lotto">
@@ -85,7 +85,7 @@
           align="left" no-caps>
 
           <q-route-tab v-for="someItem in someList" :key="someItem.sid" :to="`/@${someItem.name}`">
-            <q-icon :name="someItem.icon ? someItem.icon : someItem.owner === true ? 'view_in_ar' : 'view_in_ars'"
+            <q-icon :name="someItem.icon ? someItem.icon : someItem.owner === true ? 'copyright' : 'auto_awesome'"
               class="q-ma-sm" size="20px" color="amber-7" />
             <div class="ellipsis">{{ someItem.name }}</div>
           </q-route-tab>
@@ -151,7 +151,7 @@
               active-class="bg-teal-4">
               <q-item-section avatar>
                 <q-icon size="24px"
-                  :name="someItem.icon ? someItem.icon : someItem.owner === true ? 'view_in_ar' : 'view_in_ars'" />
+                  :name="someItem.icon ? someItem.icon : someItem.owner === true ? 'copyright' : 'auto_awesome'" />
               </q-item-section>
               <q-item-section>
                 {{ someItem.name }}
@@ -169,7 +169,8 @@
             <q-separator />
             <q-item clickable @click="goD2R">
               <q-item-section avatar>
-                <q-icon size="24px" name="star" class="text-d2r d2r-logo-w" />
+                <q-avatar icon="stars" size="24px" font-size="24px" />
+                <!-- <q-icon size="24px" name="star" class="text-d2r d2r-logo-w" /> -->
               </q-item-section>
               <q-item-section>
                 D2R
