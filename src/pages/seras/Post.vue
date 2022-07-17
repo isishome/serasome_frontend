@@ -7,7 +7,7 @@
       <div v-if="some" class="row justify-between items-center q-px-md">
         <div class="row items-center">
           <q-icon
-            :name="some.icon ? some.icon : some.owner === true ? 'copyright' : some.linked === true ? 'link' : 'link_off'"
+            :name="some.icon ? some.icon : some.owner === true ? 'copyright' : some.linked === true ? 'auto_awesome' : 'help'"
             class="q-ma-sm" size="20px" color="amber-7" />
           <div class="font-title text-h5 text-teal-7 q-ml-xs">{{ some.name }}</div>
         </div>
