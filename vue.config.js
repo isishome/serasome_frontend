@@ -33,6 +33,6 @@ module.exports = {
     'highlight.js',
   ],
   productionSourceMap: false,
-  outputDir: '../../../publish/serasome_frontend',
+  outputDir: './seras',
   assetsDir: 'static'
 }
