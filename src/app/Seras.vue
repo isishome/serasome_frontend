@@ -39,7 +39,7 @@
               </template>
             </q-input>
             <q-btn dense flat outline class="gt-sm" @click="goD2R">
-              <q-avatar icon="stars" size="md" />
+              <q-avatar color="black" text-color="red" class="rotate-180" icon="align_vertical_center" size="sm" />
               <span class="q-ml-sm gt-lg">D2R</span>
             </q-btn>
             <q-btn dense flat class="gt-sm" to="/lotto">
@@ -169,8 +169,7 @@
             <q-separator />
             <q-item clickable @click="goD2R">
               <q-item-section avatar>
-                <q-avatar icon="stars" size="24px" font-size="24px" />
-                <!-- <q-icon size="24px" name="star" class="text-d2r d2r-logo-w" /> -->
+                <q-avatar icon="align_vertical_center" color="black" text-color="red" class="rotate-180" size="sm" />
               </q-item-section>
               <q-item-section>
                 D2R
