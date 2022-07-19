@@ -6,7 +6,7 @@
           <!-- toolbar left -->
           <div class="row justify-start items-center nunito">
             <q-btn dense flat class="lt-md" @click="drawer = !drawer">
-              <q-icon name="menu" size="16px" />
+              <q-icon name="menu" size="sm" />
             </q-btn>
             <q-btn dense flat padding="xs" size="30px" class="gt-sm" @click="home">
               <q-avatar class="ss-header">
