@@ -46,6 +46,12 @@ const routes = [
     },
     children: [
       {
+        path: 'a91gA-WjgT',
+        redirect:() => {
+          location.href = 'https://quasar.serasome.com/intro/start'
+        }
+      },
+      {
         name: 'post-add',
         path: 'a',
         component: post
