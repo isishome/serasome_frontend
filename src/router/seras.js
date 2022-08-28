@@ -47,8 +47,38 @@ const routes = [
     children: [
       {
         path: 'a91gA-WjgT',
-        redirect:() => {
+        redirect: () => {
           location.href = 'https://quasar.serasome.com/intro/start'
+        }
+      },
+      {
+        path: 'leyDv0Q6gz',
+        redirect: () => {
+          location.href = 'https://quasar.serasome.com/intro/why'
+        }
+      },
+      {
+        path: 'Mupo-Ck1Xg',
+        redirect: () => {
+          location.href = 'https://quasar.serasome.com/intro/why'
+        }
+      },
+      {
+        path: 'PXLsJnSP6O',
+        redirect: () => {
+          location.href = 'https://quasar.serasome.com/flexgrid/flexbox'
+        }
+      },
+      {
+        path: '-tJ2RFfzS2',
+        redirect: () => {
+          location.href = 'https://quasar.serasome.com/flexgrid/gridrow'
+        }
+      },
+      {
+        path: 'J3d8F5S8MQ',
+        redirect: () => {
+          location.href = 'https://quasar.serasome.com/flexgrid/gridcolumn'
         }
       },
       {
