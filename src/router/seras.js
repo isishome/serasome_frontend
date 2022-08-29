@@ -82,6 +82,12 @@ const routes = [
         }
       },
       {
+        path: '9Hr_YqV7Q',
+        redirect: () => {
+          location.href = 'https://serasome.com/@Electronics/9Hr_YqV7Q'
+        }
+      },
+      {
         name: 'post-add',
         path: 'a',
         component: post
