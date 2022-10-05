@@ -127,14 +127,10 @@
           <q-card-section class="row q-gutter-y-sm full-width">
             <q-list separator dense class="col-12">
               <q-item class="no-padding">
-                <q-item-section side>
-                  <q-radio dense :disable="getYoutubeId(postInfo.youtube) === null" v-model="postInfo.thumb"
-                    :val="postInfo.youtube" size="xs" />
-                </q-item-section>
                 <q-item-section>
                   <q-input dense outlined hide-bottom-space :disable="processPosting" type="text"
                     v-model="postInfo.youtube" :label="$t('post.youtubeUrl')"
-                    :rules="[val => (val.trim() === '' || getYoutubeId(val) !== null) || '']" @input="validYoutube" />
+                    :rules="[val => (val.trim() === '' || getYoutubeId(val) !== null) || '']" />
                 </q-item-section>
               </q-item>
             </q-list>
@@ -148,9 +144,6 @@
               <template v-slot:list="scope">
                 <q-list separator>
                   <q-item dense v-for="file in scope.files" :key="file.name">
-                    <q-item-section side v-if="file.__img">
-                      <q-radio dense v-if="file.__img" v-model="postInfo.thumb" :val="file.name" size="xs" />
-                    </q-item-section>
                     <q-item-section v-if="file.__img" style="width:20%" thumbnail>
                       <q-img :src="file.__img.src" :ratio="3/2" />
                     </q-item-section>
@@ -178,9 +171,6 @@
               bordered separator dense>
               <template v-for="file in postInfo.files">
                 <q-item v-if="file.deleted !== true" :key="file.fid">
-                  <q-item-section v-if="file.type === 'image'" side>
-                    <q-radio dense v-model="postInfo.thumb" :val="file.origin" size="xs" />
-                  </q-item-section>
                   <q-item-section v-if="file.type === 'image'" style="width:20%" thumbnail>
                     <q-img :src="file.clipboard" :ratio="3/2" />
                   </q-item-section>
@@ -221,555 +211,528 @@
   </div>
 </template>
 <script>
-  import {
-    copyToClipboard
-  } from 'quasar'
+import {
+  copyToClipboard
+} from 'quasar'
 
-  import {
-    mapActions
-  } from 'vuex'
+import {
+  mapActions
+} from 'vuex'
 
-  import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
-  import {
-    Bold,
-    Italic,
-    Strike,
-    Underline,
-    Code,
-    Heading,
-    Blockquote,
-    HorizontalRule,
-    ListItem,
-    OrderedList,
-    BulletList,
-    History,
-    HardBreak,
-    Table,
-    TableHeader,
-    TableCell,
-    TableRow
-  } from 'tiptap-extensions'
-  const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
-  import CustomLink from '@/plugin/tiptap/CustomLink'
-  import Alignment from '@/plugin/tiptap/Alignment'
-  import CustomImage from '@/plugin/tiptap/CustomImage'
-  import CustomCodeBlock from '@/plugin/tiptap/CustomCodeBlock'
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap'
+import {
+  Bold,
+  Italic,
+  Strike,
+  Underline,
+  Code,
+  Heading,
+  Blockquote,
+  HorizontalRule,
+  ListItem,
+  OrderedList,
+  BulletList,
+  History,
+  HardBreak,
+  Table,
+  TableHeader,
+  TableCell,
+  TableRow
+} from 'tiptap-extensions'
+const Prompt = () => import(/* webpackChunkName: "group-component" */ '@/components/seras/Prompt')
+import CustomLink from '@/plugin/tiptap/CustomLink'
+import Alignment from '@/plugin/tiptap/Alignment'
+import CustomImage from '@/plugin/tiptap/CustomImage'
+import CustomCodeBlock from '@/plugin/tiptap/CustomCodeBlock'
 
-  export default {
-    name: 'ss-post-edit',
-    components: {
-      'ss-prompt': Prompt,
-      EditorContent,
-      EditorMenuBar
+export default {
+  name: 'ss-post-edit',
+  components: {
+    'ss-prompt': Prompt,
+    EditorContent,
+    EditorMenuBar
+  },
+  props: {
+    value: {
+      type: String,
+      default: null
     },
-    props: {
-      value: {
-        type: String,
-        default: null
-      },
-      limitFileCnt: {
-        type: Number,
-        default: 5
-      }
-    },
-    data() {
-      return {
-        editView: true,
-        editor: new Editor({
-          content: null,
-          extensions: [
-            new Bold(),
-            new Italic(),
-            new Strike(),
-            new Underline(),
-            new Code(),
-            new Heading({ levels: [1, 2, 3] }),
-            new Blockquote(),
-            new HorizontalRule(),
-            new ListItem(),
-            new OrderedList(),
-            new BulletList(),
-            new CustomLink(),
-            new Alignment(),
-            new CustomImage(),
-            new CustomCodeBlock(),
-            new History(),
-            new HardBreak(),
-            new Table({
-              resizable: true,
-            }),
-            new TableHeader(),
-            new TableCell(),
-            new TableRow()
-          ],
-          onUpdate: ({ getHTML }) => {
-            this.postInfo.contents = getHTML()
-          }
-        }),
-        linkPop: false,
-        url: null,
-        imagePop: false,
-        command: null,
-        codeBlock: {
-          class: '',
-          options: [
-            { label: 'Javascript', value: 'javascript' },
-            { label: 'HTML', value: 'html' },
-            { label: 'CSS', value: 'css' },
-            { label: 'DOS', value: 'dos' },
-            { label: 'Bash', value: 'bash' }
-          ]
-        },
-        rules: [],
-        fullScreen: false,
-        postInfo: {
-          sname: this.$route.params.sname,
-          title: null,
-          contents: null,
-          youtube: null,
-          thumb: null,
-          files: [],
-          deleteList: [],
-        },
-        fileCnt: 0,
-        blobList: [],
-        processPosting: false,
-        limitFileSize: 10485760
-      }
-    },
-    created() {
-      if (this.value)
-        this.postCont()
-    },
-    computed: {
-      isSelectionEmpty() {
-        const { view } = this.editor;
-        const { selection } = view.state;
-        return selection.empty;
-      },
-      isBlankContents() {
-        return !this.postInfo.contents || this.postInfo.contents.replace(/\s/gi, '').replace(/<\/?p>/gi, '') === ''
-      },
-      removeWithOptions() {
-        return [...this.codeBlock.options, { label: 'Remove', value: 'remove' }]
-      },
-      isModify() {
-        return this.value !== null
-      }
-    },
-    methods: {
-      ...mapActions({
-        addItem: 'addItem',
-        modifyItem: 'modifyItem'
-      }),
-      showLink(command, attrs) {
-        if (!this.isSelectionEmpty) {
-          this.command = command
-          this.rules = [val => (!val || new RegExp('^https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([\\\\-a-zA-Z0-9()@:%_+.~#?&/=]*)$', 'i').test(val)) || this.$t('post.message.invalidLink')]
-          this.url = attrs.href
-          this.linkPop = true
-        }
-      },
-      setLink(url) {
-        if (this.command !== null)
-          this.command({ href: url === '' ? null : url })
-
-        this.cancelPrompt()
-      },
-      showImage(command) {
-        this.command = command
-        this.rules = [val => new RegExp('^(blob:)?https?://(?:localhost|(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6})\\b([\\\\-a-zA-Z0-9()@:%_+.~#?&/=]*)$', 'i').test(val) || this.$t('post.message.invalidImage')]
-        this.imagePop = true
-      },
-      setImage(src) {
-        if (this.command !== null) {
-          this.command({ 'src': src })
-        }
-
-        this.cancelPrompt()
-      },
-      cancelPrompt() {
-        this.url = null
-        this.command = null
-        this.rules = []
-        this.linkPop = false
-        this.imagePop = false
-      },
-      codeBlockUpdate(command, attrs, selected) {
-        if (attrs.value === selected.value)
-          return
-        else if (attrs.value !== selected.value && selected.value !== 'remove')
-          command(selected)
-        else
-          command()
-      },
-      validYoutube() {
-        if (this.getYoutubeId(this.postInfo.youtube) !== null && (this.postInfo.thumb === null || this.getYoutubeId(this.postInfo.thumb) !== null))
-          this.postInfo.thumb = this.postInfo.youtube
-        else if (this.getYoutubeId(this.postInfo.youtube) === null && this.getYoutubeId(this.postInfo.thumb) !== null)
-          this.postInfo.thumb = null
-      },
-      factoryFn() {
-        return {
-          url: `${this.axios.defaults.baseURL}/seras/post/write`,
-          method: 'POST',
-          withCredentials: true,
-          formFields: [
-            {
-              'name': 'sname',
-              'value': encodeURIComponent(this.postInfo.sname)
-            },
-            {
-              'name': 'pid',
-              'value': this.value
-            },
-            {
-              'name': 'title',
-              'value': encodeURIComponent(this.postInfo.title)
-            },
-            {
-              'name': 'contents',
-              'value': encodeURIComponent(this.postInfo.contents)
-            },
-            {
-              'name': 'youtube',
-              'value': encodeURIComponent(this.postInfo.youtube)
-            },
-            {
-              'name': 'thumb',
-              'value': encodeURIComponent(this.postInfo.thumb)
-            },
-            {
-              'name': 'deleteList',
-              'value': encodeURIComponent(JSON.stringify(this.postInfo.deleteList))
-            }
-          ]
-        }
-      },
-      uploaded(info) {
-        this.processPosting = false
-        this.editor.setOptions({
-          editable: true
-        })
-
-        if (this.isModify)
-          this.modifyItem(JSON.parse(info.xhr.response))
-        else
-          this.addItem(JSON.parse(info.xhr.response))
-
-        this.$q.notify({
-          type: 'positive',
-          color: 'positive',
-          message: this.isModify ? this.$t('post.message.completeModify') : this.$t('post.message.completePosting')
-        })
-
-        this.blobList = []
-        this.editView = false
-      },
-      copyThumbnail(thumbnailSrc) {
-        copyToClipboard(thumbnailSrc)
-          .then(() => {
-            this.$q.notify({
-              type: 'positive',
-              color: 'positive',
-              message: this.$t('post.message.successClipboard')
-            })
-          })
-          .catch(() => {
-            this.$q.notify({
-              type: 'negative',
-              color: 'negative',
-              message: this.$t('post.message.failedClipboard')
-            })
-          })
-      },
-      checkFiles(files) {
-        let msgs = []
-        const uploadObj = this.$refs.uploader
-
-        const limitFileCnt = this.limitFileCnt - this.fileCnt
-        let currentFileCnt = uploadObj.files.length
-
-        files = files.filter((file) => {
-          let result = false
-
-          if (this.limitFileCnt !== -1 && currentFileCnt + 1 > limitFileCnt) {
-            const uploadedFileMsg = this.fileCnt > 0 ? `<br />${this.$t('post.alreadyAttachCount')} : ${this.fileCnt}` : ''
-            msgs.push(`${file.name}<br />${this.$t('post.currentAttachCount')} : ${currentFileCnt}개${uploadedFileMsg}<br />→ [${this.$t('post.limitNumber')}(${this.limitFileCnt})]`)
-          }
-          else if (file.size > this.limitFileSize)
-            msgs.push(`${file.name}<br />${this.$t('post.fileSize')} : ${file.size} bytes<br />→ [${this.$t('post.limitSize')}(${this.limitFileSize} bytes)].`)
-          else {
-            currentFileCnt++
-            result = true
-          }
-
-          return result
-        })
-
-        if (msgs.length > 0) {
-          this.$q.notify({
-            type: 'warning',
-            color: 'warning',
-            html: true,
-            message: msgs.join('<br/>'),
-          })
-        }
-
-        return files
-      },
-      uploadAdded(files) {
-        files.filter((file) => {
-          if (file.__img) {
-            const findBlob = this.blobList.find(f => f.blob === file.__img.src)
-
-            if (!findBlob) {
-              this.blobList.push({ 'blob': file.__img.src, 'name': file.name })
-              this.editor.commands.image({ 'src': file.__img.src, 'name': file.name })
-              this.editor.commands.hard_break()
-
-              if (this.postInfo.thumb === null)
-                this.postInfo.thumb = file.name
-            }
-          }
-        })
-      },
-      uploadRemoved(files) {
-        files.filter((file) => {
-          if (file.__img) {
-            const findIndex = this.blobList.findIndex(f => f.blob === file.__img.src)
-
-            if (findIndex !== -1) {
-              const newContents = this.postInfo.contents.replace(file.__img.src, 'remove_image').replace(new RegExp('<(\\w+)\\s[^>]*src=\\"remove_image\\"[^>]*>', 'igm'), '')
-              this.blobList.splice(findIndex, 1)
-              this.editor.setContent(newContents, true)
-
-              if (this.postInfo.thumb === file.name) {
-                if (this.blobList.length > 0)
-                  this.postInfo.thumb = this.blobList[0].name
-                else
-                  this.postInfo.thumb = null
-              }
-            }
-          }
-        })
-      },
-      deleteFile(file) {
-        const findIndex = this.postInfo.files.findIndex(f => f.fid === file.fid)
-
-        if (findIndex !== -1) {
-          const newContents = this.postInfo.contents.replace(file.clipboard, 'remove_image').replace(new RegExp('<(\\w+)\\s[^>]*src=\\"remove_image\\"[^>]*>', 'igm'), '')
-          file.deleted = true
-          this.postInfo.deleteList.push(file.fid)
-          this.postInfo.files.splice(findIndex, 1)
-          this.editor.setContent(newContents, true)
-
-          if (this.postInfo.thumb === file.origin)
-            this.postInfo.thumb = null
-        }
-      },
-      uploadStart() {
-        this.$refs.uploadBar.start()
-      },
-      uploadFinish() {
-        this.$refs.uploadBar.stop()
-      },
-      uploadFailed(info) {
-        this.processPosting = false
-        this.editor.setOptions({
-          editable: true
-        })
-        if (info.xhr.response)
-          this.$q.notify({
-            type: 'negative',
-            color: 'negative',
-            message: info.xhr.response
-          })
-        else
-          this.$q.notify({
-            type: 'negative',
-            color: 'negative',
-            message: info.xhr
-          })
-      },
-      resetPost() {
-        this.postInfo.title = null
-        this.postInfo.contents = null
-        this.editor.clearContent()
-        this.postInfo.youtube = ''
-        this.postInfo.deleteList = []
-        this.postInfo.files = []
-        this.fileCnt = 0
-        this.blobList = []
-        this.postInfo.thumb = null
-        this.fullScreen = false
-
-        if (this.$refs.editor && this.$refs.editor.refreshToolbar)
-          this.$refs.editor.refreshToolbar()
-
-        if (this.$refs.form && this.$refs.form.reset)
-          this.$refs.form.reset()
-      },
-      postCont() {
-        const self = this
-        this.axios
-          .get('/seras/post/cont', {
-            params: {
-              'pid': this.value
-            }
-          })
-          .then(function (response) {
-            if (response.data && response.data !== null) {
-              self.postInfo.sname = response.data.sname
-              self.postInfo.title = response.data.title
-              self.editor.setContent(response.data.contents, true)
-              self.postInfo.youtube = response.data.youtube
-              self.postInfo.files = response.data.files
-              self.postInfo.thumb = response.data.thumb
-              self.postInfo.fileCnt = response.data.files ? response.data.files.length : 0
-            }
-          })
-          .catch(() => { })
-      },
-      post() {
-        let self = this
-        this.axios
-          .post('/seras/post/write', {
-            sname: encodeURIComponent(this.postInfo.sname),
-            pid: this.value,
-            title: encodeURIComponent(this.postInfo.title),
-            contents: encodeURIComponent(this.postInfo.contents),
-            youtube: encodeURIComponent(this.postInfo.youtube),
-            thumb: encodeURIComponent(this.postInfo.thumb),
-            deleteList: encodeURIComponent(JSON.stringify(this.postInfo.deleteList))
-          }).then(function (response) {
-            self.uploaded({ 'xhr': { 'response': JSON.stringify(response.data) } })
-          })
-          .catch(function () { })
-          .then(function () {
-            self.processPosting = false
-            self.editor.setOptions({
-              editable: true
-            })
-          })
-      },
-      onSubmit() {
-        if (this.isBlankContents) {
-          this.postInfo.contents = ''
-          this.editor.view.dom.focus()
-          return
-        }
-
-        this.processPosting = true
-        this.editor.setOptions({
-          editable: false
-        })
-        const uploadObj = this.$refs.uploader
-
-        if (uploadObj.files.length > 0 && uploadObj.canUpload)
-          uploadObj.upload()
-        else
-          this.post()
-
-      },
-      beforeHide() {
-        this.$nextTick(() => {
-          this.$router.replace({ name: 'some', params: { sname: this.postInfo.sname } }).catch(() => { })
-        })
-      }
-    },
-    beforeDestroy() {
-      this.editor.destroy()
+    limitFileCnt: {
+      type: Number,
+      default: 5
     }
+  },
+  data() {
+    return {
+      editView: true,
+      editor: new Editor({
+        content: null,
+        extensions: [
+          new Bold(),
+          new Italic(),
+          new Strike(),
+          new Underline(),
+          new Code(),
+          new Heading({ levels: [1, 2, 3] }),
+          new Blockquote(),
+          new HorizontalRule(),
+          new ListItem(),
+          new OrderedList(),
+          new BulletList(),
+          new CustomLink(),
+          new Alignment(),
+          new CustomImage(),
+          new CustomCodeBlock(),
+          new History(),
+          new HardBreak(),
+          new Table({
+            resizable: true,
+          }),
+          new TableHeader(),
+          new TableCell(),
+          new TableRow()
+        ],
+        onUpdate: ({ getHTML }) => {
+          this.postInfo.contents = getHTML()
+        }
+      }),
+      linkPop: false,
+      url: null,
+      imagePop: false,
+      command: null,
+      codeBlock: {
+        class: '',
+        options: [
+          { label: 'Javascript', value: 'javascript' },
+          { label: 'HTML', value: 'html' },
+          { label: 'CSS', value: 'css' },
+          { label: 'DOS', value: 'dos' },
+          { label: 'Bash', value: 'bash' }
+        ]
+      },
+      rules: [],
+      fullScreen: false,
+      postInfo: {
+        sname: this.$route.params.sname,
+        title: null,
+        contents: null,
+        youtube: null,
+        files: [],
+        deleteList: [],
+      },
+      fileCnt: 0,
+      blobList: [],
+      processPosting: false,
+      limitFileSize: 10485760
+    }
+  },
+  created() {
+    if (this.value)
+      this.postCont()
+  },
+  computed: {
+    isSelectionEmpty() {
+      const { view } = this.editor;
+      const { selection } = view.state;
+      return selection.empty;
+    },
+    isBlankContents() {
+      return !this.postInfo.contents || this.postInfo.contents.replace(/\s/gi, '').replace(/<\/?p>/gi, '') === ''
+    },
+    removeWithOptions() {
+      return [...this.codeBlock.options, { label: 'Remove', value: 'remove' }]
+    },
+    isModify() {
+      return this.value !== null
+    }
+  },
+  methods: {
+    ...mapActions({
+      addItem: 'addItem',
+      modifyItem: 'modifyItem'
+    }),
+    showLink(command, attrs) {
+      if (!this.isSelectionEmpty) {
+        this.command = command
+        this.rules = [val => (!val || new RegExp('^https?://(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([\\\\-a-zA-Z0-9()@:%_+.~#?&/=]*)$', 'i').test(val)) || this.$t('post.message.invalidLink')]
+        this.url = attrs.href
+        this.linkPop = true
+      }
+    },
+    setLink(url) {
+      if (this.command !== null)
+        this.command({ href: url === '' ? null : url })
+
+      this.cancelPrompt()
+    },
+    showImage(command) {
+      this.command = command
+      this.rules = [val => new RegExp('^(blob:)?https?://(?:localhost|(www\\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6})\\b([\\\\-a-zA-Z0-9()@:%_+.~#?&/=]*)$', 'i').test(val) || this.$t('post.message.invalidImage')]
+      this.imagePop = true
+    },
+    setImage(src) {
+      if (this.command !== null) {
+        this.command({ 'src': src })
+      }
+
+      this.cancelPrompt()
+    },
+    cancelPrompt() {
+      this.url = null
+      this.command = null
+      this.rules = []
+      this.linkPop = false
+      this.imagePop = false
+    },
+    codeBlockUpdate(command, attrs, selected) {
+      if (attrs.value === selected.value)
+        return
+      else if (attrs.value !== selected.value && selected.value !== 'remove')
+        command(selected)
+      else
+        command()
+    },
+    factoryFn() {
+      return {
+        url: `${this.axios.defaults.baseURL}/seras/post/write`,
+        method: 'POST',
+        withCredentials: true,
+        formFields: [
+          {
+            'name': 'sname',
+            'value': encodeURIComponent(this.postInfo.sname)
+          },
+          {
+            'name': 'pid',
+            'value': this.value
+          },
+          {
+            'name': 'title',
+            'value': encodeURIComponent(this.postInfo.title)
+          },
+          {
+            'name': 'contents',
+            'value': encodeURIComponent(this.postInfo.contents)
+          },
+          {
+            'name': 'youtube',
+            'value': encodeURIComponent(this.postInfo.youtube)
+          },
+          {
+            'name': 'deleteList',
+            'value': encodeURIComponent(JSON.stringify(this.postInfo.deleteList))
+          }
+        ]
+      }
+    },
+    uploaded(info) {
+      this.processPosting = false
+      this.editor.setOptions({
+        editable: true
+      })
+
+      if (this.isModify)
+        this.modifyItem(JSON.parse(info.xhr.response))
+      else
+        this.addItem(JSON.parse(info.xhr.response))
+
+      this.$q.notify({
+        type: 'positive',
+        color: 'positive',
+        message: this.isModify ? this.$t('post.message.completeModify') : this.$t('post.message.completePosting')
+      })
+
+      this.blobList = []
+      this.editView = false
+    },
+    copyThumbnail(thumbnailSrc) {
+      copyToClipboard(thumbnailSrc)
+        .then(() => {
+          this.$q.notify({
+            type: 'positive',
+            color: 'positive',
+            message: this.$t('post.message.successClipboard')
+          })
+        })
+        .catch(() => {
+          this.$q.notify({
+            type: 'negative',
+            color: 'negative',
+            message: this.$t('post.message.failedClipboard')
+          })
+        })
+    },
+    checkFiles(files) {
+      let msgs = []
+      const uploadObj = this.$refs.uploader
+
+      const limitFileCnt = this.limitFileCnt - this.fileCnt
+      let currentFileCnt = uploadObj.files.length
+
+      files = files.filter((file) => {
+        let result = false
+
+        if (this.limitFileCnt !== -1 && currentFileCnt + 1 > limitFileCnt) {
+          const uploadedFileMsg = this.fileCnt > 0 ? `<br />${this.$t('post.alreadyAttachCount')} : ${this.fileCnt}` : ''
+          msgs.push(`${file.name}<br />${this.$t('post.currentAttachCount')} : ${currentFileCnt}개${uploadedFileMsg}<br />→ [${this.$t('post.limitNumber')}(${this.limitFileCnt})]`)
+        }
+        else if (file.size > this.limitFileSize)
+          msgs.push(`${file.name}<br />${this.$t('post.fileSize')} : ${file.size} bytes<br />→ [${this.$t('post.limitSize')}(${this.limitFileSize} bytes)].`)
+        else {
+          currentFileCnt++
+          result = true
+        }
+
+        return result
+      })
+
+      if (msgs.length > 0) {
+        this.$q.notify({
+          type: 'warning',
+          color: 'warning',
+          html: true,
+          message: msgs.join('<br/>'),
+        })
+      }
+
+      return files
+    },
+    uploadAdded(files) {
+      files.filter((file) => {
+        if (file.__img) {
+          const findBlob = this.blobList.find(f => f.blob === file.__img.src)
+
+          if (!findBlob) {
+            this.blobList.push({ 'blob': file.__img.src, 'name': file.name })
+            this.editor.commands.image({ 'src': file.__img.src, 'name': file.name })
+            this.editor.commands.hard_break()
+          }
+        }
+      })
+    },
+    uploadRemoved(files) {
+      files.filter((file) => {
+        if (file.__img) {
+          const findIndex = this.blobList.findIndex(f => f.blob === file.__img.src)
+
+          if (findIndex !== -1) {
+            const newContents = this.postInfo.contents.replace(file.__img.src, 'remove_image').replace(new RegExp('<(\\w+)\\s[^>]*src=\\"remove_image\\"[^>]*>', 'igm'), '')
+            this.blobList.splice(findIndex, 1)
+            this.editor.setContent(newContents, true)
+          }
+        }
+      })
+    },
+    deleteFile(file) {
+      const findIndex = this.postInfo.files.findIndex(f => f.fid === file.fid)
+
+      if (findIndex !== -1) {
+        const newContents = this.postInfo.contents.replace(file.clipboard, 'remove_image').replace(new RegExp('<(\\w+)\\s[^>]*src=\\"remove_image\\"[^>]*>', 'igm'), '')
+        file.deleted = true
+        this.postInfo.deleteList.push(file.fid)
+        this.postInfo.files.splice(findIndex, 1)
+        this.editor.setContent(newContents, true)
+      }
+    },
+    uploadStart() {
+      this.$refs.uploadBar.start()
+    },
+    uploadFinish() {
+      this.$refs.uploadBar.stop()
+    },
+    uploadFailed(info) {
+      this.processPosting = false
+      this.editor.setOptions({
+        editable: true
+      })
+      if (info.xhr.response)
+        this.$q.notify({
+          type: 'negative',
+          color: 'negative',
+          message: info.xhr.response
+        })
+      else
+        this.$q.notify({
+          type: 'negative',
+          color: 'negative',
+          message: info.xhr
+        })
+    },
+    resetPost() {
+      this.postInfo.title = null
+      this.postInfo.contents = null
+      this.editor.clearContent()
+      this.postInfo.youtube = ''
+      this.postInfo.deleteList = []
+      this.postInfo.files = []
+      this.fileCnt = 0
+      this.blobList = []
+      this.fullScreen = false
+
+      if (this.$refs.editor && this.$refs.editor.refreshToolbar)
+        this.$refs.editor.refreshToolbar()
+
+      if (this.$refs.form && this.$refs.form.reset)
+        this.$refs.form.reset()
+    },
+    postCont() {
+      const self = this
+      this.axios
+        .get('/seras/post/cont', {
+          params: {
+            'pid': this.value
+          }
+        })
+        .then(function (response) {
+          if (response.data && response.data !== null) {
+            self.postInfo.sname = response.data.sname
+            self.postInfo.title = response.data.title
+            self.editor.setContent(response.data.contents, true)
+            self.postInfo.youtube = response.data.youtube
+            self.postInfo.files = response.data.files
+            self.postInfo.fileCnt = response.data.files ? response.data.files.length : 0
+          }
+        })
+        .catch(() => { })
+    },
+    post() {
+      let self = this
+      this.axios
+        .post('/seras/post/write', {
+          sname: encodeURIComponent(this.postInfo.sname),
+          pid: this.value,
+          title: encodeURIComponent(this.postInfo.title),
+          contents: encodeURIComponent(this.postInfo.contents),
+          youtube: encodeURIComponent(this.postInfo.youtube),
+          deleteList: encodeURIComponent(JSON.stringify(this.postInfo.deleteList))
+        }).then(function (response) {
+          self.uploaded({ 'xhr': { 'response': JSON.stringify(response.data) } })
+        })
+        .catch(function () { })
+        .then(function () {
+          self.processPosting = false
+          self.editor.setOptions({
+            editable: true
+          })
+        })
+    },
+    onSubmit() {
+      if (this.isBlankContents) {
+        this.postInfo.contents = ''
+        this.editor.view.dom.focus()
+        return
+      }
+
+      this.processPosting = true
+      this.editor.setOptions({
+        editable: false
+      })
+      const uploadObj = this.$refs.uploader
+
+      if (uploadObj.files.length > 0 && uploadObj.canUpload)
+        uploadObj.upload()
+      else
+        this.post()
+
+    },
+    beforeHide() {
+      this.$nextTick(() => {
+        this.$router.replace({ name: 'some', params: { sname: this.postInfo.sname } }).catch(() => { })
+      })
+    }
+  },
+  beforeDestroy() {
+    this.editor.destroy()
   }
+}
 </script>
 <style scoped>
-  .dialog-width {
-    width: 1280px;
-    max-width: 90vw;
-  }
+.dialog-width {
+  width: 1280px;
+  max-width: 90vw;
+}
 
-  .editor-content {
-    height: calc(100% - 50px);
-    border: solid 1px #BBBBBB;
-    border-radius: 4px;
-    padding: 4px;
-  }
+.editor-content {
+  height: calc(100% - 50px);
+  border: solid 1px #BBBBBB;
+  border-radius: 4px;
+  padding: 4px;
+}
 
-  .editor-contents {
-    transition: all 0.1s;
-    box-sizing: border-box;
-    border-radius: 0 0 4px 4px;
-    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
-    position: relative !important;
-    z-index: 1000 !important;
-    padding: 2px;
-  }
+.editor-contents {
+  transition: all 0.1s;
+  box-sizing: border-box;
+  border-radius: 0 0 4px 4px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+  position: relative !important;
+  z-index: 1000 !important;
+  padding: 2px;
+}
 
-  .body--dark .editor-contents {
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
-  }
+.body--dark .editor-contents {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+}
 
-  .editor-contents.invalid-contents {
-    box-shadow: inset 0 0 0 1px rgba(204, 0, 0, 1);
-  }
+.editor-contents.invalid-contents {
+  box-shadow: inset 0 0 0 1px rgba(204, 0, 0, 1);
+}
 
-  .editor-contents.valid-contents {
-    box-shadow: inset 0 0 0 1px var(--q-color-primary);
-  }
+.editor-contents.valid-contents {
+  box-shadow: inset 0 0 0 1px var(--q-color-primary);
+}
 
-  .editor-contents:focus-within {
-    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .12);
-  }
+.editor-contents:focus-within {
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .12);
+}
 
-  .body--dark .editor-contents:focus-within {
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
-  }
+.body--dark .editor-contents:focus-within {
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.28);
+}
 
-  .editor-contents.invalid-contents:focus-within {
-    box-shadow: inset 0 0 0 2px rgba(204, 0, 0, 1);
-  }
+.editor-contents.invalid-contents:focus-within {
+  box-shadow: inset 0 0 0 2px rgba(204, 0, 0, 1);
+}
 
-  .editor-contents.valid-contents:focus-within {
-    box-shadow: inset 0 0 0 2px var(--q-color-primary);
-  }
+.editor-contents.valid-contents:focus-within {
+  box-shadow: inset 0 0 0 2px var(--q-color-primary);
+}
 
-  .full-screen .editor-menu-bar {
-    position: relative !important;
-  }
+.full-screen .editor-menu-bar {
+  position: relative !important;
+}
 
-  .editor-menu-bar {
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    background-color: rgb(240, 240, 240) !important;
-    z-index: 1;
-    border-radius: 4px 4px 0 0;
-  }
+.editor-menu-bar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  background-color: rgb(240, 240, 240) !important;
+  z-index: 1;
+  border-radius: 4px 4px 0 0;
+}
 
-  .body--dark .editor-menu-bar {
-    background-color: rgb(18, 29, 58) !important;
-  }
+.body--dark .editor-menu-bar {
+  background-color: rgb(18, 29, 58) !important;
+}
 
-  .editor-menu-bar .is-active {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
+.editor-menu-bar .is-active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
 
-  .full-screen {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    height: 100vh !important;
-    z-index: 9999;
-  }
+.full-screen {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  height: 100vh !important;
+  z-index: 9999;
+}
 
-  .body--light .full-screen {
-    background-color: #FFFFFF;
-  }
+.body--light .full-screen {
+  background-color: #FFFFFF;
+}
 
-  .body--dark .full-screen {
-    background-color: #17213b;
-  }
+.body--dark .full-screen {
+  background-color: #17213b;
+}
 </style>
