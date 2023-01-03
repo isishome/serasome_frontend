@@ -77,16 +77,6 @@
                 </q-item>
               </q-list>
               <q-separator class="lt-md" />
-              <!-- <div class="q-py-xs">
-                <adsense v-if="$q.platform.is.mobile === true && isProduction === true"
-                  data-ad-client="ca-pub-5110777286519562" data-ad-slot="2114657714" width="300px" height="50px"
-                  :key="`acm-${key}`">
-                </adsense>
-                <adsense v-if="$q.platform.is.desktop === true && isProduction === true"
-                  data-ad-client="ca-pub-5110777286519562" data-ad-slot="5160898238" width="728px" height="90px"
-                  :key="`acd-${key}`">
-                </adsense>
-              </div> -->
               <div class="q-pa-md" style="min-height:calc(90vh - 360px)">
                 <div v-if="postInfo.youtube">
                   <q-video :ratio="16 / 9"
